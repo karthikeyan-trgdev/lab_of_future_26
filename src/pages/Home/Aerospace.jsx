@@ -103,7 +103,7 @@ engineers. Aero modelling helps build creativity, critical thinking, and real-wo
 engineering skills through hands-on learning. Students explore RC planes, model 
 aircraft, aerodynamics, and drones while understanding lift, thrust, balance, and 
 control. The real excitement? Not watching an aircraft fly — but seeing their own 
-design take off.</p>
+design take off. - moses</p>
             <div className="aero-why-cta-row">
               <NavLink to="/programs" className="aero-why-btn aero-why-btn--dark">
                 Enroll Now
