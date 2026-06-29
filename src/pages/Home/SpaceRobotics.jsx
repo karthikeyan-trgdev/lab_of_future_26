@@ -211,16 +211,7 @@ const WhySpaceScience = () => (
           <span className="why-title-bold">SPACE ROBOTICS</span>
         </h2>
         <p className="why-desc">
-          Space is no longer the final frontier &mdash; it&apos;s the next
-          workplace. Rovers explore Mars. Robotic arms repair satellites.
-          Autonomous systems go where humans can&apos;t.
-        </p>
-        <p className="why-desc">
-          At Lab of Future, the space robotics program don&apos;t just teach
-          technology, they run missions. Every class is hands-on. Every
-          project is real. The benefits of robotics for kids go far beyond
-          screens &mdash; logic, resilience, creativity and the confidence
-          to build what comes next.
+          Space is no longer the final frontier — it's the next workplace. Rovers explore Mars. Robotic arms repair satellites. Autonomous systems go where humans can't. At Lab of Future, the space robotics program doesn't just teach technology, they run missions. Every class is hands-on. Every project is real. The benefits of robotics for kids go far beyond screens — logic, resilience, creativity and the confidence to build what comes next.
         </p>
         <div className="why-cta-row">
           <NavLink to="/student-portal" className="why-btn why-btn--primary">
@@ -750,10 +741,8 @@ const HandsRevealSection = () => {
             WHY START <span className="hands-badge">YOUNG?</span>
           </h2>
           <p className="hands-desc">
-            Early <strong>STEM education in Dubai</strong> gives children a head
-            start. Robotics for young children builds{" "}
-            <strong>logic, patience and courage</strong> — the earlier they
-            start, the further they go.
+            No one becomes a space scientist at university. It begins much earlier, when a child is given the right tools to build logic, patience, and courage.
+
           </p>
         </div>
 
@@ -762,9 +751,8 @@ const HandsRevealSection = () => {
             WHAT DOES LOF <span className="hands-badge">DO?</span>
           </h2>
           <p className="hands-desc">
-            LOF transforms curiosity into capability. Students move from
-            consuming facts to building models, asking questions,
-            experimenting, presenting ideas.
+            Real tools. Real builds. Real engineers. The most immersive robotics and STEM program Dubai has seen.
+
           </p>
         </div>
       </div>
@@ -796,37 +784,51 @@ const AGE_GROUPS = [
   {
     label: "Ages 6–7",
     points: [
-      "First contact with robots. Kids explore movement, motors, wheels and lights.",
-      "These age-based robotics classes in Dubai build curiosity, observation and early problem-solving from day one.",
+      "Discover the basics of robotics.",
+  "Explore movement, motors, wheels, and lights.",
+  "Develop observation and problem-solving skills.",
+  "Build curiosity through hands-on activities.",
+  "Learn through fun, age-appropriate projects."
     ],
   },
   {
     label: "Ages 8–10",
     points: [
-      "Working models, visual programming, circuits and sensors.",
-      "They start testing, debugging and tackling real creative challenges with growing confidence.",
+      "Build interactive robotic models.",
+  "Learn visual programming fundamentals.",
+  "Experiment with circuits and sensors.",
+  "Practice testing and debugging.",
+  "Solve creative engineering challenges."
     ],
   },
   {
     label: "Ages 11–14",
     points: [
-      "Advanced sensors, actuators, robotic arms and autonomous systems.",
-      "Text-based coding begins. Data drives every decision.",
-      "This is where the robotics curriculum for kids gets serious.",
+     "Work with advanced sensors and actuators.",
+  "Build robotic arms and autonomous systems.",
+  "Begin text-based programming.",
+  "Use data to improve robot performance.",
+  "Develop real-world robotics skills."
     ],
   },
   {
     label: "Ages 15–18",
     points: [
-      "AI-integrated robotics, embedded programming and IoT.",
-      "Competition-ready builds, portfolio projects and engineering thinking that prepares them for what comes next.",
+       "Build AI-powered robotic systems.",
+  "Learn embedded programming and IoT.",
+  "Create competition-ready robotics projects.",
+  "Develop a professional engineering portfolio.",
+  "Strengthen problem-solving and design thinking."
     ],
   },
   {
     label: "Ages 18+",
     points: [
-      "Research-led prototyping with industry tools.",
-      "Advanced automation, AI robotics and product development for students heading into higher education, internships or startups.",
+      "Prototype using industry-standard tools.",
+  "Explore advanced automation and AI robotics.",
+  "Develop innovative robotic products.",
+  "Gain experience with research-driven projects.",
+  "Prepare for higher education, internships, and startups."
     ],
   },
 ];
@@ -963,8 +965,8 @@ const AgePrograms = () => (
 // placeholder gradient is shown
 const LEARN_ITEMS = [
   { label: "Think critically", img: learnThinkCritically },
-  { label: "Understand how the world works", img: learnUnderstandWorld },
-  { label: "Build scientific models", img: learnBuildModels },
+  { label: "Understand How Robots Workld", img: learnUnderstandWorld },
+  { label: "Build Working Robotic Models", img: learnBuildModels },
   { label: "Use tools and technology", img: learnUseTools },
   { label: "Communicate ideas clearly", img: learnCommunicate },
   { label: "Work in teams", img: learnWorkTeams },
@@ -987,7 +989,6 @@ const StudentsLearn = () => (
           </article>
         ))}
       </div>
-
       <p className="learn-foot">
         In robotics, every challenge creates a new possibility.
       </p>
@@ -1012,17 +1013,10 @@ const Certificates = () => (
       {/* LEFT — title + bulleted points (blue highlights) */}
       <div className="cert-robotics-text">
         <h2 className="cert-robotics-title prog-section-title">CERTIFICATES</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam illo ea blanditiis distinctio quis magni enim quisquam laudantium quam eligendi? Accusamus fuga distinctio, quo rem laboriosam eum enim, aspernatur, pariatur quasi tempora aut blanditiis architecto! Excepturi expedita.</p>
-        <ul className="cert-robotics-list">
-          <li>
-            Level-based <strong>robotics certification for kids</strong> tied to
-            real project performance.
-          </li>
-          <li>
-            <strong>STEM certificates for children</strong> who build, not just
-            attend.
-          </li>
-        </ul>
+        <p>Level-based robotics certification for kids tied to real project performance. STEM certificates for children who build, not just attend.
+
+        </p>
+        
       </div>
 
       {/* RIGHT — coverflow slider sitting above the robot hand.
@@ -1106,9 +1100,7 @@ const WhySpaceForCareers = () => (
         <span className="careers-title-badge">FUTURE CAREERS?</span>
       </h2>
       <p className="careers-sub">
-        Robotics teaches the future workforce skills.
-        <br />
-        Even if students never become engineers, they gain:
+       Aerospace. Healthcare. Defence. AI. Manufacturing. These are the robotics skills for future jobs that actually matter.
       </p>
 
       <div className="careers-skills-grid">
@@ -1144,7 +1136,7 @@ const WhySpaceForCareers = () => (
       <p className="careers-footer">
         The robotics field is not only about machines. It is where coding,
         electronics, design and AI all meet.
-        <br />
+        
         Learning robotics prepares students for many careers.
       </p>
     </div>
@@ -1159,22 +1151,23 @@ const COMPETITION_ITEMS = [
   {
     icon: calenderIcon,
     title: "Monthly Themed Competitions",
-    desc: "This builds participation before external contests.",
+    desc: "Build routine practice and keep skills sharp all year. ",
   },
   {
     icon: olympiadIcon,
     title: "Olympiad & National Competition Readiness",
-    desc: "This builds participation before external contests.",
+    desc: " Prepare for the best robotics competitions for kids in Dubai.",
   },
   {
     icon: portfolioIcon,
     title: "Portfolio-Based Competitions",
-    desc: "Students submit projects, prototypes, coding tools, research posters",
+    desc: "Prototypes, code logs and research posters become real robotics contest Dubai entries.",
   },
   {
     icon: recognitionIcon,
     title: "Recognition Ecosystem",
-    desc: "Children will get visible progress",
+    desc: "Celebrate progress, resilience, teamwork and confidence at every level.",
+
   },
 ];
 
@@ -1188,11 +1181,7 @@ const Competitions = () => (
           </h2>
           <p className="competitions-subtitle prog-section-subtitle">
             Showcase your robotics skills. Solve real-world challenges.
-            Get recognised for what you build. Showcase your robotics skills. Solve real-world challenges.
-            Get recognised for what you build. Showcase your robotics skills. Solve real-world challenges.
-            Get recognised for what you build.Showcase your robotics skills. Solve real-world challenges.
-            Get recognised for what you build.Showcase your robotics skills. Solve real-world challenges.
-            Get recognised for what you build.
+            
           </p>
           <NavLink
           to="/programs"
@@ -1233,19 +1222,19 @@ const Competitions = () => (
 const FAQ_ITEMS = [
   {
     q: "Core Science & Research Pathways",
-    a: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor.",
+    a: " For students who love discovery. Space robotics opens routes into planetary research, mission science, materials testing and exploration systems. They learn to ask sharper questions, design machines for extreme environments and work at the edge of what's known.",
   },
   {
     q: "Engineering & Technology Pathways",
-    a: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis.",
+    a: "This is where the robotics engineer career path begins. Students design and build automated systems, rovers, robotic arms, drones and aerospace hardware. These pathways connect directly to manufacturing, defence, healthcare technology, satellites and advanced engineering.",
   },
   {
     q: "Data, AI & Simulation Pathways",
-    a: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo nemo enim.",
+    a: "For the ones who love to code. Machine learning, computer vision, autonomous navigation, digital twins and intelligent software — these are the AI and robotics careers redefining every industry. Students who start here learn to make physical robots think, adapt and act.",
   },
   {
     q: "Emerging & Interdisciplinary Pathways",
-    a: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident similique sunt.",
+    a: "STEM careers for students expand when robotics meets people and impact. Biomedical engineering, assistive devices, smart cities, education technology and sustainability all need builders who can turn real problems into working solutions.",
   },
 ];
 
@@ -1297,19 +1286,19 @@ const CareerPathways = () => {
 const CHOOSE_PATH_ITEMS = [
   {
     title: "Love Physics & Math?",
-    points: ["Astrophysics", "Aerospace", "Astrodynamics"],
+    points: ["Space research, Mission planning, Space systems"],
   },
   {
     title: "Love coding & AI?",
-    points: ["Space Data Science", "Simulation"],
+    points: ["Robot programming, AI robotics, Automation"],
   },
   {
     title: "Love building things?",
-    points: ["Robotics", "Satellite Engineering"],
+    points: ["Robotics engineering, Mechatronics, Aerospace robotics"],
   },
   {
     title: "Love people & impact?",
-    points: ["Policy", "Education", "Communication"],
+    points: ["Biomedical robotics, Assistive technology, STEM education"],
   },
 ];
 
@@ -1586,21 +1575,39 @@ const ModesToJoin = () => (
 
 const PROJECTS = [
   {
-    title: "Project 1",
-    desc: "Lorem ipsum is simply dummy text of the printing and typesetting industry.",
-    student: "Student Name",
+    title: "SPARC: Solar Panel Autonomous Robotic Cleaner",
+    desc: "A semi-autonomous robot that cleans Mars-environment solar panels using microfiber cleaning and adaptive airflow. Energy-aware, fault-tolerant and mission-ready.",
+    student: "Ansh, Areeba, Radhika & Iddhant",
     meta: "Class | Section",
   },
   {
-    title: "Project 2",
-    desc: "Lorem ipsum is simply dummy text of the printing and typesetting industry.",
-    student: "Student Name",
+    title: "Mars Solar Panel Cleaning Rover",
+    desc: "An autonomous rover that navigates solar panel surfaces, removing Martian dust using a rotating brush — minimal power, zero surface damage.",
+    student: " Leon, Oleg, Rasesh & Iniyan",
     meta: "Class | Section",
   },
   {
-    title: "Project 3",
-    desc: "Lorem ipsum is simply dummy text of the printing and typesetting industry.",
-    student: "Student Name",
+    title: "OSCAR: Autonomous Routing Cart",
+    desc: "A cost-effective indoor navigation robot using sensor fusion — no camera, no LiDAR. One of the most ambitious real-world robotics projects for school students in Dubai.",
+    student: "Saptaparna & Josh ",
+    meta: "Class | Section",
+  },
+    {
+    title: "Smart Line-Following Robot",
+    desc: "Infrared sensors. Arduino programming. Autonomous movement. A standout among student robotics projects that shows what focused engineering looks like. ",
+    student: "Ishaan",
+    meta: "Class | Section",
+  },
+  {
+    title: "Smart Space Helmet",
+    desc: "3D-designed in Tinkercad, fitted with real temperature and humidity sensors. A wearable prototype that bridges design, electronics and space science.",
+    student: "Yatika Kesari",
+    meta: "Class | Section",
+  },
+  {
+    title: "Sumo Fighting Robot",
+    desc: "ESP32-powered. Mobile-controlled. Competition-ready. Built from scratch — a real engineering challenge that proves robotics projects for kids can be seriously impressive.",
+    student: "Ashirwad",
     meta: "Class | Section",
   },
 ];
@@ -1615,7 +1622,7 @@ const StudentProjects = () => (
       <p className="projects-desc">
         Whether you&apos;re learning from home or inside our lab, every
         student follows a mission path built around real robotics projects
-        for kids &mdash; not textbook exercises.
+        for kids &mdash; <br/>not textbook exercises.
       </p>
 
       <div className="projects-slider">
@@ -1637,7 +1644,7 @@ const StudentProjects = () => (
           {PROJECTS.map((p, i) => (
             <SwiperSlide key={i} className="projects-slide">
               <article className="projects-card">
-                <div className="projects-card-imgwrap">
+                       <div className="projects-card-imgwrap">
                   <img
                     className="projects-card-img"
                     src={projectImg}
@@ -1685,12 +1692,12 @@ const IMPACT_CARDS = [
   {
     icon: impactIcon1,
     title: "Real-World\nProblem Solving",
-    desc: "You won't just learn theory; you'll tackle challenges like Mars habitat design, satellite communication, and climate modeling.",
+    desc: "The benefits of robotics education become real when students build solutions for safety, water, energy, accessibility and exploration. You'll tackle challenges the world actually needs solved.",
   },
   {
     icon: impactIcon2,
     title: 'The "Maker"\nMindset',
-    desc: "Gain mastery over tools like AI-driven simulation, robotic engineering, and 3D prototyping.",
+    desc: "Every discovery over tools like this STEM learning outcomes ecosystem and maker methodology prototyping.",
   },
   {
     icon: impactIcon3,
@@ -1706,11 +1713,10 @@ const ProjectImpact = () => (
         <h2 className="impact-title prog-section-title">
           <span className="impact-title-badge">PROJECT</span> IMPACT
         </h2>
-        <p className="impact-subtitle prog-section-subtitle">From Curiosity to Capability</p>
+        <p className="impact-subtitle prog-section-subtitle"> What They Build Here, They Carry Forever.</p>
         <p className="impact-desc">
-          Science isn&apos;t just about reading; it&apos;s about doing. Every
-          project at Lab of Future is designed to take you from a curious
-          observer to an active builder.
+          Science isn't just about reading, it's about living it. Every project at Lab of Future is a new chance for a student's curiosity to discover.
+
         </p>
       </div>
 
@@ -1738,43 +1744,43 @@ const ProjectImpact = () => (
 const FAQ_ROBOTICS = [
   {
     q: "Why should kids learn robotics early?",
-    a: "Robotics builds logic, patience and confidence at an age when children's brains are most adaptive. Hands-on building turns abstract concepts into intuition, and the earlier they start, the sooner they can tackle real projects.",
+    a: "Kids should learn robotics early because it turns curiosity into creation. They do not just use technology; they build it, test it, improve it, and understand how machines solve real-world problems. ",
   },
   {
     q: "What makes Lab of Future different from other robotics programs?",
-    a: "Every class is project-led, not lecture-led. Students don't just learn parts — they design, build and present working systems. Our curriculum is mentor-driven, age-staged, and aligned with real industry skills.",
+    a: "We combine robotics, space missions, coding, engineering, teamwork, and project-based learning. Students build real prototypes instead of only following theory, making every class feel like a mission. ",
   },
   {
     q: "What is the right age to start robotics for kids?",
-    a: "Curiosity-led play can begin from age 6 with simple builds and observation activities. Structured robotics with sensors and code typically begins around age 8, with deeper engineering tracks from age 11 onward.",
+    a: " Children can begin robotics from age 6. We support age groups 6–7, 8–10, 11–14, 15–18, and 18+, with each level designed for the learner’s stage. ",
   },
   {
     q: "Is there an age-based STEM robotics learning path?",
-    a: "Yes. Our curriculum is split into four age bands (6–7, 8–10, 11–14, 15–18). Each band has its own concepts, tools and project complexity so progress always matches the child's stage of development.",
+    a: "Yes. The programme follows an age-wise pathway where students move from simple machines and visual logic to sensors, coding, autonomous systems, AI integration, and advanced robotics portfolios. ",
   },
   {
     q: "What skills does robotics teach children?",
-    a: "Logical thinking, design thinking, mechanical reasoning, basic electronics and code, teamwork, presenting ideas, and the resilience to debug something that didn't work the first time.",
+    a: "Robotics teaches critical thinking, coding, electronics, design, teamwork, communication, debugging, creativity, and problem-solving. Students learn how to build, test, fail, improve, and explain their ideas clearly. ",
   },
   {
     q: "Do children get a certificate after completing the robotics course?",
-    a: "Yes. Students earn level-based completion certificates and skill badges tied to real project performance — recognised across the Lab of Future learning ecosystem.",
+    a: "Yes. Students receive certificates that recognise participation, project work, skill growth, and course completion. These certificates help showcase progress and learning outcomes. ",
   },
   {
     q: "Why are robotics skills important for future jobs?",
-    a: "Most future roles — even outside engineering — will involve interpreting data from machines, working alongside automation, or designing intelligent systems. Robotics is the most hands-on way to build the underlying instincts.",
+    a: "Robotics skills are important because future industries will depend on automation, AI, smart machines, sensors, drones, space systems, and intelligent devices. Students who learn robotics early gain a strong future-ready foundation.",
   },
   {
     q: "What are the benefits of robotics competitions for students?",
-    a: "Competitions push children to ship — to a deadline, against constraints, in front of judges. They build pressure tolerance, teamwork under stress, and a portfolio of real outcomes they can show schools and mentors.",
+    a: "Robotics competitions build confidence, teamwork, quick thinking, resilience, technical discipline, and presentation skills. Students learn to solve challenges under pressure and improve their ideas through real testing. ",
   },
   {
     q: "What career paths are available after learning robotics?",
-    a: "Robotics opens the door to mechatronics, AI/ML, autonomous systems, aerospace, biomedical devices, space robotics, simulation engineering, and design — and adjacent fields like product management and industrial design.",
+    a: "Robotics can lead to careers in robotics engineering, aerospace, AI, automation, software engineering, electronics, drones, IoT, biomedical engineering, research, entrepreneurship, and space technology. ",
   },
   {
     q: "How do I know if robotics is right for my child?",
-    a: "If your child likes building, taking things apart, asking how things work, or solving puzzles — robotics will give them a structured outlet for all of it. Most parents notice a step-change in confidence within a few months.",
+    a: "Robotics may be right for a child who enjoys building, experimenting, solving puzzles, asking how things work, coding, designing, or creating models. Curiosity is the best starting point. ",
   },
 ];
 
@@ -1909,9 +1915,7 @@ const CtaRobotics = () => (
           IT WILL BE BUILT
         </h2>
         <p className="cta-robotics-desc">
-          Give your child more than knowledge. Give them direction, confidence,
-          and capability &mdash; and the tools to shape the world beyond our
-          planet.
+          Every great engineer started somewhere. We set up the foundation — and the tools to shape the world.
         </p>
         <div className="cta-robotics-actions">
           <NavLink to="/student-portal" className="cta-robotics-btn cta-robotics-btn--primary">

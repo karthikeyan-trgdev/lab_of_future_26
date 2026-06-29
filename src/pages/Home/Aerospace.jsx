@@ -98,12 +98,7 @@ const WhyAeromodelling = () => (
 
           {/* LEFT — text + bullets + CTAs */}
           <div className="aero-why-text">
-            <p>The future needs students who can design, test, solve problems, and think like 
-engineers. Aero modelling helps build creativity, critical thinking, and real-world 
-engineering skills through hands-on learning. Students explore RC planes, model 
-aircraft, aerodynamics, and drones while understanding lift, thrust, balance, and 
-control. The real excitement? Not watching an aircraft fly — but seeing their own 
-design take off. - moses</p>
+            <p>The future needs students who can design, test, solve problems, and think like engineers. Aero modelling helps build creativity, critical thinking, and real-world engineering skills through<br/> ands-on learning. Students explore RC planes, model aircraft, aerodynamics, and drones while understanding lift, thrust, balance, and control. The real excitement? Not watching an aircraft fly — but seeing their own design take off.</p>
             <div className="aero-why-cta-row">
               <NavLink to="/programs" className="aero-why-btn aero-why-btn--dark">
                 Enroll Now
@@ -138,11 +133,7 @@ const AeroWhyStartYoung = () => (
             <span className="aero-young-badge">Future Way?</span>
           </h2>
           <p className="aero-young-desc">
-            At Lab of Future, aero modelling turns classroom science into real-world 
-application. Through RC planes, model aircraft, aerodynamics, and drones, students 
-apply physics, mathematics, engineering, and design to understand lift, thrust, 
-drag, balance, and motion — building problem-solving skills used in aviation, 
-aerospace, robotics, and future technologies. 
+          At Lab of Future, aero modelling turns classroom science into real-world application. Through RC planes, model aircraft, aerodynamics, and drones, students apply physics, mathematics, engineering, and design to understand lift, thrust, drag, balance, and motion — building problem-solving skills used in aviation, aerospace, robotics, and future technologies.
           </p>
         </div>
         <div className="aero-young-block">
@@ -151,9 +142,7 @@ aerospace, robotics, and future technologies.
             <span className="aero-young-badge">YOUNG?</span>
           </h2>
           <p className="aero-young-desc">
-            Aviation for kids works best when curiosity is still fearless. Through model aircraft 
-and hands-on children activities in Dubai, students build focus, confidence, 
-problem-solving, and early STEM thinking. 
+            Aviation for kids works best when curiosity is still fearless. Through model aircraft and hands-on children activities in Dubai, students build focus, confidence, problem-solving, and early STEM thinking.
           </p>
         </div>
       </div>
@@ -241,31 +230,45 @@ const AGE_GROUPS = [
   {
     label: "Ages 6–7",
     points: [
-      "First contact with flight. Children explore paper gliders, simple wings, balance, and safe launches, building curiosity through playful model aircraft activities.",
-    ],
+  "Introduction to the fundamentals of flight.",
+  "Explore paper gliders and simple wing designs.",
+  "Learn about balance, lift, and basic aerodynamics through playful model aircraft activities."
+],
   },
   {
     label: "Ages 8–10",
     points: [
-      "Students build model aircraft, test wing shapes, adjust weight, and observe how lift, drag, and stability affect every flight. ",
+        "Build and test model aircraft.",
+  "Experiment with different wing shapes.",
+  "Adjust weight for improved flight performance.",
+  "Explore lift, drag, and flight stability.",
     ],
   },
   {
     label: "Ages 11–14",
     points: [
-      "RC plane basics begin. Students explore controls, aerodynamics, propulsion, and flight testing while improving designs through real launch feedback.",
+   "Learn the fundamentals of RC aircraft.",
+  "Understand flight controls and aerodynamics.",
+  "Explore propulsion systems and flight mechanics.",
+  "Improve designs using launch feedback."
     ],
   },
   {
     label: "Ages 15–18",
     points: [
-      "Advanced builds include RC planes, model rocket concepts, payload thinking, flight data, and design optimisation for stronger aerospace understanding. ",
+      "Build advanced RC aircraft.",
+  "Explore model rocket concepts.",
+  "Learn payload planning and integration.",
+   "Optimize designs using engineering principles."
     ],
   },
   {
     label: "Ages 18+",
     points: [
-      "Industry-focused aero modelling with advanced aircraft design, testing methods, model rocket systems, documentation, and aerospace project development.",
+       "Develop industry-level aircraft models.",
+  "Master advanced design and testing methods.",
+  "Build and evaluate model rocket systems.",
+  "Create professional technical documentation.",
     ],
   },
 ];

@@ -1360,11 +1360,8 @@ const WhySpaceScience = () => (
         <h2 className="why-title prog-section-title">
           WHY <span className="why-title-bold">SPACE SCIENCE & ASTRONOMY?</span>
         </h2>
-        <p className="why-desc">Children are naturally curious about the sky, but curiosity fades when learning becomes
-memorisation. The benefits of space science for kids go far beyond planets and rockets.
-Space is one of the few disciplines that blends science, engineering, creativity, observation,
-problem-solving, and technology into one learning journey. Why children should learn
-astronomy is simple: it teaches them how to think, question, and explore.</p>
+        <p className="why-desc">Children are naturally curious about the sky, but curiosity fades when learning becomes memorisation. The benefits of space science for kids go far beyond planets and rockets. Space is one of the few disciplines that blends science, engineering, creativity, observation, problem-solving, and technology into one learning journey. Astronomy doesn't just teach children about space. It teaches them how to think, question, and explore; and that changes everything.
+</p>
         <NavLink
           to="/programs"
           className="glass-btn glass-btn--light header-btn"
@@ -1387,33 +1384,41 @@ const AGE_GROUPS = [
   {
     label: "Ages 6–7",
     points: [
-      "Perfect for astronomy for beginners, students explore planets, moon phases, rockets,astronauts, telescopes, stars, galaxies, and early Mars exploration through storytelling, models, missions, rover-building, and playful discovery — ideal space classes for 6 year olds.",
+        "Explore planets, stars, moon phases, and galaxies through discovery.",
+  "Learn about rockets, astronauts, telescopes, and early Mars missions.",
+  "Build curiosity through storytelling, rover models, and hands-on activities."
     ],
   },
   {
     label: "Ages 8–10",
     points: [
-      "Students move into hands-on astronomy projects, combining Earth and space phenomena, observation, model building, virtual exploration, scientific thinking, and creative problem-solving.",
+      "Apply concepts through hands-on astronomy projects and model building.",
+  "Understand Earth-space phenomena through observation and experiments.",
+  "Strengthen scientific thinking, creativity, and problem-solving skills.",
     ],
   },
   {
     label: "Ages 11–14",
     points: [
-      "Students deepen their learning through advanced astronomy classes, robotics, programming, scientific inquiry, engineering challenges, and space electronics for kids.",
+       "Explore advanced astronomy, robotics, and scientific inquiry.",
+  "Learn coding, programming, electronics, and engineering challenges.",
+  "Build systems, test ideas, and solve real-world space problems."
     ],
   },
   {
     label: "Ages 15–18",
     points: [
-      "A space research program for students exploring AI, spectroscopy, astrophotography, rocketry, microgravity, drone missions, celestial navigation, and aerospace engineering for high school students.",
-    ],
+       "Explore AI, rocketry, astrophotography, and spectroscopy.",
+  "Work on drone systems, celestial navigation, and microgravity concepts.",
+  "Develop research, engineering, and future aerospace skills."
+      ],  
   },
   {
     label: "Ages 18 & above",
     points: [
-      "Specialised tracks in aerospace, astrophysics, and robotics",
-      "Capstone research aligned with real-world space challenges",
-      "Mentorship, collaboration, and pathways to industry",
+       "Explore specialised space science, astronomy, and certification pathways.",
+  "Strengthen research, technical, and interdisciplinary problem-solving skills.",
+  "Engage in deeper learning for future careers and personal exploration."
     ],
   },
 ];
@@ -1597,7 +1602,9 @@ const Certificates = () => (
     <div className="cert-inner container">
       <div className="cert-text">
         <h2 className="cert-title prog-section-title">CERTIFICATES</h2>
-        <p>Every milestone matters — students earn skill-based certificates through hands-on projects, practical experiences, and meaningful learning journeys that demonstrate real knowledge, creativity, problem-solving abilities, and industry-relevant skills.</p>
+        <p>Every Skill Earned. Every Milestone Recognised.</p>
+      
+        
       </div>
 
       <div className="cert-slider">
@@ -1694,10 +1701,8 @@ const WhySpaceForCareers = () => (
   <section className="careers-section">
     <div className="container">
       <h2 className="careers-title prog-section-title">WHY SPACE FOR FUTURE CAREERS?</h2>
-      <p className="careers-sub">The future of space goes far beyond astronauts. Space careers for students now include
-satellite engineering, research, AI in astronomy, mission design, science communication,
-and coding for space science. At LOF, students build the curiosity and data analysis
-skills these future industries demand.</p>
+      <p className="careers-sub">The space economy will be worth $1 trillion by 2040. It needs coders, engineers, data scientists, AI specialists and designers, not just astronauts. Space careers for students now span everything from AI in astronomy to aerospace engineering — and Lab of Future builds students the industry is actually waiting for.
+</p>
 
       <div className="careers-skills-grid">
         {/* Row 1 — 4 cards */}
@@ -1810,27 +1815,28 @@ structured national science competition training.</p>
 const FAQ_ITEMS = [
   {
     q: "Astrophysics & Space Research",
-    a: "For students fascinated by stars, galaxies, black holes, and cosmic mysteries. This astrophysics pathway builds scientific reasoning, observation, and analytical thinking for future space research careers.",
+    a: "Astrophysics & Observational Astronomy. Your astrophysics pathway starts here. For students who need to understand why — not just what. Learn through telescopes, physics, mathematics, and real astronomical observation.", 
+
   },
   {
     q: "Aerospace & Satellite Engineering",
     a: "Design rockets, satellites, habitats, and mission systems while understanding how real spacecraft are engineered and launched.",
   },
   {
-    q: "Space Data Science & AI",
-    a: "The future of space runs on data. Students explore space data science, coding, simulations, pattern recognition, and AI-powered systems used in astronomy and missions.",
+    q: "Space Research & Data Science",
+    a: "The space data science pathway trains students to analyse astronomical data, find patterns, and apply computational methods to real space missions.",
   },
   {
     q: "Astrobiology & Planetary Science",
-    a: "Explore one of humanity’s biggest questions: could life exist elsewhere? Students investigate planets, habitability, ecosystems, and astrobiology through cross-disciplinary exploration.",
+    a: "Could life exist beyond Earth? This interdisciplinary pathway combines astronomy, biology, chemistry, and planetary science to explore one of humanity's biggest questions.",
   },
     {
-    q: "Space Policy, Communication & Media",
-    a: "The future of space needs storytellers, educators, and decision-makers. Students explore space policy and communication, journalism, outreach, and science communication.",
+    q: "Exoplanet & Habitability Research",
+    a: "Students discover how scientists search for Earth-like worlds and study conditions that may support life beyond our solar system.",
   },
       {
-    q: "Space Art & Visualisation",
-    a: "For creators who love both imagination and science. Space art and visualisation transforms scientific ideas into immersive experiences, storytelling, and futuristic design.",
+    q: "Climate & Earth Observation Science",
+    a: "Using satellite data and remote sensing tools, students analyse climate systems, environmental change, and planetary monitoring.",
   },
 ];
 
@@ -1843,8 +1849,11 @@ const CareerPathways = () => {
     <section className="career-pathways-section">
       <div className="container">
         <h2 className="career-pathways-title prog-section-title">CAREER PATHWAYS</h2>
-        <p className="prog-section-subtitle">Most students know they love space. Few know where that curiosity can lead. At the Lab of
-Future, students discover real pathways early enough to meaningfully explore them.  </p>
+        <p className="prog-section-subtitle">
+           One Passion. Countless Career Directions.
+  </p>
+  <p>Most programmes tell students what careers exist. We let them walk the path early enough to actually choose.
+</p>
         <div className="faq-list">
           {FAQ_ITEMS.map((item, i) => (
             <div
@@ -1882,19 +1891,23 @@ Future, students discover real pathways early enough to meaningfully explore the
 const CHOOSE_PATH_ITEMS = [
   {
     title: "Love Physics & Math?",
-    points: ["Astrophysics", "Aerospace", "Astrodynamics"],
+    points: ["Astrophysics", "Planetary Science", "Astrodynamics", "Space Research"],
+    
+     
+     
   },
+  
   {
     title: "Love coding & AI?",
-    points: ["Space Data Science", "Simulation"],
+    points: ["Space Data Science","AI for Space Science","Simulation & Modelling","Cybersecurity"],
   },
   {
     title: "Love building things?",
-    points: ["Robotics", "Satellite Engineering"],
+    points: ["Robotics","Satellite Engineering","Aerospace Systems","Space Hardware Design"],
   },
   {
     title: "Love people & impact?",
-    points: ["Policy", "Education", "Communication"],
+    points: ["Space Policy","Science Communication","Space Design & Visualisation","Entrepreneurship"],
   },
 ];
 
@@ -2165,21 +2178,33 @@ school programs, immersive camps, or DIY learning experiences — all guided by 
 
 const PROJECTS = [
   {
-    title: "Project 1",
-    desc: "Lorem ipsum is simply dummy text of the printing and typesetting industry.",
+    title: "Investigating Exoplanets Using ESA CHEOPS Data",
+    desc: "Analysing real satellite data to detect planets 800 light years away — using the same methods professional astronomers use. ",
+    student: "Yathika · Age 11 | Space & Astronomy Research Track",
+    meta: "Class | Section",
+  },
+  {
+    title: "Mission Mars: Rescue the Ice Crystals ",
+    desc: "Designing and programming an autonomous Mars rover to collect fragile ice samples and return safely to base.",
     student: "Student Name",
     meta: "Class | Section",
   },
   {
-    title: "Project 2",
-    desc: "Lorem ipsum is simply dummy text of the printing and typesetting industry.",
+    title: "Touchdown Lander Deployment System",
+    desc: "Building and triggering a 4-legged lander deployment mechanism — modelled after Artemis & Chandrayaan landing systems.",
     student: "Student Name",
     meta: "Class | Section",
   },
-  {
-    title: "Project 3",
-    desc: "Lorem ipsum is simply dummy text of the printing and typesetting industry.",
-    student: "Student Name",
+   {
+    title: "Student-Made CubeSat Launched Into Stratosphere ",
+    desc: "Representing the UAE, our students built and launched a real CubeSat into the stratosphere as part of Orbita Mission 25...",
+    student: "Team UAE · Orbita Mission 25 | Space Research Track",
+    meta: "Class | Section",
+  },
+   {
+    title: "3D-printed Space Debris Collection System",
+    desc: "AI-Powered Space Debris Collection System 3D-designed and 3D-printed a fully automated system to capture, recognise, compress and collect space debris in orbit...",
+    student: "Akanksha Juliette · Age 16 | Space & Astronomy Research Track Mentored by Vitali Braun, ESA Engineer",
     meta: "Class | Section",
   },
 ];
@@ -2188,12 +2213,9 @@ const StudentProjects = () => (
   <section className="projects-section">
     <div className="container">
       <h2 className="projects-title prog-section-title">STUDENT PROJECTS</h2>
-      <p className="projects-subtitle prog-section-subtitle">From Curiosity to Creation</p>
-      <p className="projects-desc">At LOF, learning becomes tangible. Students work on student space projects including
-Mars rovers, rockets, satellite systems, telescope builds, mission simulations, AI models,
-and working astronomy prototypes. Every project begins with a question and ends with
-something students can proudly explain, demonstrate, and defend. Because real learning is
-not memorised — it is built, tested, and experienced.</p>
+      <p className="projects-subtitle prog-section-subtitle">Real Projects. Real Science. Real Pride.</p>
+      <p className="projects-desc">These aren't school assignments. These are real student space projects and astronomy prototypes — built by real students using actual satellite data, real tools, and genuine scientific methods.
+</p>
 
       <div className="projects-slider">
         <Swiper
@@ -2262,17 +2284,17 @@ const IMPACT_CARDS = [
   {
     icon: impactIcon1,
     title: "Real-World\nProblem Solving",
-    desc: "You won't just learn theory; you'll tackle challenges like Mars habitat design, satellite communication, and climate modeling.",
+    desc: "Students tackle challenges no textbook has solved — detecting invisible planets using real satellite data, designing systems that survive on Mars, and launching hardware into the stratosphere. This is real-world problem solving, not theory.",
   },
   {
     icon: impactIcon2,
     title: 'The "Maker"\nMindset',
-    desc: "Gain mastery over tools like AI-driven simulation, robotic engineering, and 3D prototyping.",
+    desc: "Every project is built, tested and defended. Students develop a true maker mindset — working with real datasets, real tools and real scientific workflows. Not simulations. Not worksheets. Real science.",
   },
   {
     icon: impactIcon3,
     title: "Measurable\nGrowth",
-    desc: "Walk away with more than just a certificate—you'll have a portfolio of working prototypes that prove your skills to the world.",
+    desc: "Students leave with more than a certificate. They leave with a science portfolio built from real project outcomes — proof of what they can actually do. To universities, competitions and future mentors, that portfolio speaks louder than any grade.",
   },
 ];
 
@@ -2281,13 +2303,8 @@ const ProjectImpact = () => (
     <div className="container">
       <div className="impact-head">
         <h2 className="impact-title prog-section-title">PROJECT IMPACT</h2>
-        <p className="impact-subtitle prog-section-subtitle">From Curiosity to Capability</p>
-        <p className="impact-desc">A grade reflects performance on one day. A project reflects capability for life.
-At LOF, students build through real challenges, experimentation, and problem-solving that
-strengthen confidence and curiosity over time. We focus on measurable skill development
-through observation, research, communication, and independent thinking. Every student
-leaves with meaningful work, experiences, and a growing science portfolio building
-journey that extends far beyond a classroom.</p>
+        <p className="impact-subtitle prog-section-subtitle">Real Skills. Real Proof. Real Future.</p>
+        <p className="impact-desc">Every project at Lab of Future begins with a real question and ends with a documented answer. Our real-world STEM projects are designed to take a curious mind and turn it into an active builder — developing measurable skill development at every stage.</p>
       </div>
 
       <div className="impact-grid">
@@ -2781,7 +2798,7 @@ const FutureBuilt = () => {
       {/* sticky content — fades in once the video has reached its end frame */}
       <div className="future-content">
         <h2 className="future-title">
-          THE FUTURE WON&apos;T BE TAUGHT
+          THE FUTURE WON&apos;T BE MEMORISED
           <br />
           IT WILL BE BUILT
         </h2>
@@ -3054,7 +3071,7 @@ const FAQ_ROBOTICS = [
   },
   {
     q: "How long is the program?",
-    a: "The program duration varies by age, level, and learning pathway. Students progress through five structured levels—from Beginner to Mastery—ensuring age-appropriate learning and continuous skill development.",
+    a: "Our astronomy course duration varies by age, level, and learning pathway. Students progress through 5 structured levels — Beginner to Mastery, ensuring age-appropriate learning and continuous skill development.",
   },
   {
     q: "How do I get started?",
