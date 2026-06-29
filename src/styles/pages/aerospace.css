@@ -1,0 +1,6157 @@
+/* =========================================================
+   DRONES — theme overrides.
+   Scoped under .aerospace-page so the file only adjusts
+   colours / gradients / glows; layout, fonts, sizes are all
+   inherited from home.css.
+   Palette:
+     primary   #ff6a00  (vivid orange — robotic / industrial)
+     secondary #00e6ff  (electric cyan — circuitry)
+     accent    #ffb347  (warm amber highlight)
+     deep bg   #0a0612  (very dark warm-violet)
+========================================================= */
+
+.aerospace-page {
+  /* Theme palette — pure black / white / grey scale.  No blues, no
+     warm accents.  Every rule that consumes these tokens paints in
+     greyscale only. */
+  --sr-primary: #1a1a1a;       /* near-black for titles + accents */
+  --sr-secondary: #4a4a4a;     /* mid grey */
+  --sr-accent: #6a6a6a;        /* lighter grey */
+  --sr-deep: #f6f6f6;          /* near-white background */
+  --sr-glow: rgba(26, 26, 26, 0.45);     /* black glow */
+  --sr-glow-cyan: rgba(74, 74, 74, 0.35); /* mid-grey glow */
+}
+
+/* ---- Hero ---- */
+.aerospace-page .hero {
+  background: var(--sr-deep);
+}
+
+/* Backdrop image — corridor / robotics studio photo. Fills the
+   whole hero behind the robot canvas. */
+.aerospace-page .hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url("../../assets/programs/space-robotics/robotics-hero-bg.webp")
+    center / cover no-repeat;
+  z-index: 1;
+}
+
+/* The robot canvas sits ABOVE the bg image. */
+.aerospace-page .hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: auto !important; /* required for OrbitControls drag input */
+}
+
+/* Belt-and-braces — every <canvas> inside the hero must receive
+   pointer events for OrbitControls drag to work. */
+.aerospace-page .hero-canvas canvas {
+  pointer-events: auto !important;
+  touch-action: none !important; /* let OrbitControls handle touch */
+}
+
+/* Hero title — absolutely centred over the hero, above the robot
+   canvas. Pointer-events off so the robot drag interaction still
+   works through the text area. */
+.aerospace-page .hero-text-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 6;        /* above the white bottom gradient (z-index 5) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+  padding: 0 1.5rem;
+}
+
+.aerospace-page .hero-heading {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  font-size: clamp(2.6rem, 8vw, 6.5rem);
+  line-height: 1;
+  /* Override SpaceScience's gradient — solid white with subtle
+     glow so the title pops over the corridor backdrop. */
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #ffffff;
+  color: #ffffff;
+  /* Black glow — multiple stacked shadows give a soft halo that
+     hugs the letters and deepens the centre, replacing the previous
+     blue/white tint. */
+  text-shadow:
+    0 0 12px rgba(0, 0, 0, 0.85),
+    0 0 28px rgba(0, 0, 0, 0.75),
+    0 0 48px rgba(0, 0, 0, 0.6),
+    0 4px 22px rgba(0, 0, 0, 0.55);
+  filter: none;
+}
+
+.aerospace-page .hero-word {
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+}
+
+/* WHITE fade — sits ABOVE the robot canvas so it fades the robot's
+   feet into white, blending the hero into the next section. */
+.aerospace-page .hero::after {
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(255, 255, 255, 0.78) 25%,
+    rgba(255, 255, 255, 0.35) 55%,
+    transparent 100%
+  );
+  z-index: 5;        /* above .hero-canvas (z-index 3) */
+  pointer-events: none;
+}
+
+/* Vignette over the bg image so the centred robot reads clearly. */
+.aerospace-page .hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 55%,
+    transparent 0%,
+    rgba(10, 6, 18, 0.35) 70%,
+    rgba(10, 6, 18, 0.65) 100%
+  );
+}
+
+/* Flare disabled on the robotics hero — the bg image already
+   provides the lighting atmosphere. */
+.aerospace-page .hero-flare {
+  display: none;
+}
+
+/* Hero title — navy/blue gradient (was warm orange/amber) */
+.aerospace-page .hero-title,
+.aerospace-page .hero h1 {
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #cccccc 35%,
+    var(--sr-primary) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 14px var(--sr-glow));
+}
+
+.aerospace-page .hero-sub,
+.aerospace-page .hero p {
+  color: rgba(200, 215, 240, 0.78);
+}
+
+/* =========================================================
+   WHY DRONES — white section, left text + right
+   interactive Zeb robot, matches the supplied design.
+========================================================= */
+
+.aerospace-page .why-section--robotics {
+  position: relative;
+  background:
+    /* soft white veil so text/buttons stay readable on any pixel */
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    url("../../assets/programs/space-robotics/about-bg.webp") center / cover
+      no-repeat;
+  color: #1a1a1a;
+  padding: clamp(3rem, 8vh, 6rem) 0;
+  overflow: hidden;
+}
+
+/* Repurpose the section's ::before / ::after as WHITE fades — top and
+   bottom of the section bloom into white so the bg image blends
+   smoothly into whatever sits above/below. */
+.aerospace-page .why-section--robotics::before,
+.aerospace-page .why-section--robotics::after {
+  display: block !important;
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 22% !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+}
+
+.aerospace-page .why-section--robotics::before {
+  top: 0 !important;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0) 100%
+  ) !important;
+}
+
+.aerospace-page .why-section--robotics::after {
+  bottom: 0 !important;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0) 100%
+  ) !important;
+}
+
+/* Make sure the actual content sits above the two fades. */
+.aerospace-page .why-section--robotics .why-container {
+  position: relative;
+  z-index: 3;
+}
+
+.aerospace-page .why-section--robotics .why-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+/* =========================================================
+   CERTIFICATES — drones redesign.
+   Dark gradient section, bg-shape-3 panel, title + bullets
+   LEFT with drone placeholder, coverflow slider RIGHT.
+========================================================= */
+
+/* Section: dark gradient background + reset home.css overrides */
+.aerospace-page .drones-cert-section {
+  background: linear-gradient(160deg, #606060 0%, #353535 55%, #3a3a3a 100%) !important;
+  min-height: unset !important;
+  padding: 100px 0px !important;
+  display: block !important;
+  align-items: initial !important;
+  overflow: visible !important;
+}
+
+.aerospace-page .drones-cert-section::before,
+.aerospace-page .drones-cert-section::after {
+  display: none !important;
+}
+
+/* bg-shape-3.webp overlaid on the gradient — stretches to fill */
+.aerospace-page .drones-cert-shape {
+  width: 100%;
+  background: url("../../assets/programs/drones/bg-shape-3.webp") center / 100% 100% no-repeat;
+  padding: 100px 50px;
+}
+
+/* Two-column grid inside the container */
+.aerospace-page .drones-cert-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
+}
+
+/* ── LEFT: text column ── */
+.aerospace-page .drones-cert-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.aerospace-page .drones-cert-title {
+  margin: 0;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  line-height: 1.05;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  filter: none;
+}
+
+.aerospace-page .drones-cert-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.aerospace-page .drones-cert-list li {
+  position: relative;
+  padding-left: 1.3rem;
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.aerospace-page .drones-cert-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.58em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+/* Drone placeholder — reserves space at bottom-left */
+.aerospace-page .drones-cert-drone {
+  min-height: clamp(180px, 24vh, 260px);
+  margin-top: auto;
+}
+
+/* ── RIGHT: coverflow slider ── */
+.aerospace-page .drones-cert-slider-wrap {
+  overflow: hidden;
+  width: 100%;
+}
+
+.aerospace-page .drones-cert-swiper {
+  width: 100%;
+  padding: 30px 0 50px;
+  overflow: visible;
+}
+
+.aerospace-page .drones-cert-slide {
+  width: clamp(160px, 20vw, 260px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto !important;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.aerospace-page .drones-cert-slide img {
+  display: block;
+  width:70%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+  -webkit-user-drag: none;
+}
+
+.aerospace-page .drones-cert-slide:not(.swiper-slide-active) {
+  opacity: 0.75;
+  filter: brightness(0.85);
+}
+
+.aerospace-page .drones-cert-slider-wrap,
+.aerospace-page .drones-cert-swiper,
+.aerospace-page .drones-cert-swiper .swiper-wrapper,
+.aerospace-page .drones-cert-slide {
+  pointer-events: auto !important;
+}
+
+@media (max-width: 900px) {
+  .aerospace-page .drones-cert-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .aerospace-page .drones-cert-drone {
+    display: none;
+  }
+  .aerospace-page .drones-cert-slide {
+    width: clamp(140px, 40vw, 220px);
+  }
+}
+
+/* =========================================================
+   WHY ROBOTICS FOR FUTURE CAREERS — light theme overrides.
+   Layout/grid structure stays the same as home.css; only the
+   colors, frame artwork, and background change here.
+========================================================= */
+.aerospace-page .careers-section--robotics {
+  position: relative !important;
+  /* future-careers.png as the backdrop, with a soft white veil so the
+     title + skill cards + footer copy stay readable on any pixel. */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.288) 0%,
+      rgba(255, 255, 255, 0.86) 100%
+    ),
+    url("../../assets/programs/drones/students-learn-bg.png")
+      center / cover no-repeat !important;
+  color: #1a1a1a !important;
+  padding: clamp(3rem, 8vh, 6rem) 0 clamp(2rem, 5vh, 4rem) !important;
+  overflow: hidden !important;
+  background-position: bottom;
+}
+
+/* Title */
+.aerospace-page .careers-section--robotics .careers-title {
+  color: #1a1a1a !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  text-shadow: none !important;
+  filter: none !important;
+  font-size: clamp(1.6rem, 3vw, 2.6rem) !important;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.6rem !important;
+}
+
+.aerospace-page .careers-section--robotics .careers-title-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  background: #1a1a1a;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Subtitle and footer */
+.aerospace-page .careers-section--robotics .careers-sub,
+.aerospace-page .careers-section--robotics .careers-footer {
+  color: #404040 !important;
+  text-shadow: none !important;
+  text-align: center;
+}
+
+/* ── 2×2 grid override ── */
+.aerospace-page .drones-careers-grid {
+  display: grid !important;
+  flex-direction: unset !important;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 2vw, 2rem);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Remove row wrappers — not used in new markup but keep safe */
+.aerospace-page .drones-careers-grid .careers-row {
+  display: contents;
+}
+
+/* Card — drones future-careers frame, bigger for 2-up layout */
+.aerospace-page .drones-career-card {
+  flex: none !important;
+  max-width: none !important;
+  width: 100% !important;
+  aspect-ratio: 4 / 2.5 !important;
+  background:
+    url("../../assets/programs/drones/future-careers-box-frame.png")
+    center / 100% 100% no-repeat !important;
+  backdrop-filter: none !important;
+  border-radius: 0 !important;
+  overflow: hidden;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.aerospace-page .drones-career-card:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.05) drop-shadow(0 10px 28px rgba(0,0,0,0.3));
+}
+
+/* Image fills the frame's inner area (inset ~5% sides, ~5% top, ~20% bottom for label) */
+.aerospace-page .drones-career-card .careers-skill-img {
+  position: absolute !important;
+  top: 5% !important;
+  left: 6% !important;
+  right: 6% !important;
+  bottom: 20% !important;
+  width: 88% !important;
+  height: auto !important;
+  object-fit: cover !important;
+  border-radius: 4px !important;
+}
+
+/* Label — white bold text at bottom of frame */
+.aerospace-page .drones-career-card .careers-skill-label {
+  position: absolute !important;
+  text-align: left;
+  bottom: 13% !important;
+  left: 12% !important;
+  right: 4% !important;
+  font-size: clamp(0.8rem, 1.1vw, 1rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6) !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1 !important;
+}
+
+@media (max-width: 640px) {
+  .aerospace-page .drones-careers-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   SPACE-CAREERS WRAPPER — robotics override.
+   home.css paints a dark space-themed photo backdrop and black
+   top/bottom gradients on the wrapper.  Reset all three so the
+   Careers + Competitions sections each show their own light
+   backgrounds underneath.
+========================================================= */
+.aerospace-page .space-careers-wrapper--robotics {
+  background: transparent !important;
+}
+.aerospace-page .space-careers-wrapper--robotics::before,
+.aerospace-page .space-careers-wrapper--robotics::after {
+  display: none !important;
+  background: none !important;
+  content: none !important;
+}
+
+/* =========================================================
+   COMPETITIONS — light theme override.
+   Layout + grid inherited from home.css; only colours, title
+   style and card chrome change here.
+========================================================= */
+/* Dark theme */
+.aerospace-page .competitions-section--robotics {
+  position: relative !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  padding: clamp(3rem, 8vh, 6rem) 0 !important;
+  overflow: hidden !important;
+}
+
+/* Title */
+.aerospace-page .competitions-section--robotics .competitions-label-text {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-shadow: none !important;
+  filter: none !important;
+  margin-bottom: 0.8rem !important;
+}
+
+.aerospace-page .competitions-section--robotics .competitions-label-badge {
+  display: inline-block;
+  padding: 0.18em 0.6em;
+  background: #ffffff;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  font-size: clamp(1.7rem, 3vw, 2.6rem) !important;
+}
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-title-badge{
+    font-size: clamp(1.7rem, 3vw, 2.6rem) !important;
+}
+
+/* Subtitle */
+.aerospace-page .competitions-section--robotics .competitions-subtitle {
+  color: rgba(255, 255, 255, 0.75) !important;
+  text-shadow: none !important;
+  max-width: 46ch;
+}
+
+/* Card — white background, dark text */
+.aerospace-page .competitions-section--robotics .comp-card-outer {
+  background: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+  color: #1a1a1a !important;
+}
+
+.aerospace-page .competitions-section--robotics .comp-card-outer:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55) !important;
+}
+
+.aerospace-page .competitions-section--robotics .comp-card-outer::after {
+  display: none !important;
+  content: none !important;
+}
+
+.aerospace-page .competitions-section--robotics .comp-card-title {
+  color: #1a1a1a !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+  background: none !important;
+}
+
+.aerospace-page .competitions-section--robotics .comp-card-desc {
+  color: #444444 !important;
+}
+
+/* Icon box — black */
+.aerospace-page .competitions-section--robotics .comp-card-icon {
+  background: #000000 !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Enroll button — dark-btn.svg pill */
+.aerospace-page .drones-comp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 64px;
+  margin-top: var(--space-s, 1rem);
+  background: url("../../assets/programs/drones/dark-btn.svg") no-repeat center / 100% 100%;
+  border: none;
+  border-radius: 0;
+  color: #ffffff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-size: clamp(0.7rem, 0.9vw, 0.85rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.aerospace-page .drones-comp-btn:hover {
+  filter: brightness(1.15) drop-shadow(0 4px 16px rgba(255,255,255,0.2));
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   CAREER PATHWAYS — light theme override.
+   home.css wraps the section in a dark faq-bg.webp backdrop
+   with heavy black gradients and paints the accordion rows in
+   dark glass.  Reset all three so the section reads as a clean
+   light-blue panel, matches the supplied design.
+========================================================= */
+
+/* Wrapper — shared competition-bg backdrop for both inner sections */
+.aerospace-page .faq-section-wrapper {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.82) 100%),
+    url("../../assets/programs/drones/competition-bg.webp") center / cover no-repeat;
+  background-color: #0a0a0c;
+}
+
+.aerospace-page .faq-section-wrapper .faq-bg-anim {
+  display: none !important;
+}
+
+.aerospace-page .faq-section-wrapper .faq-bg-overlay {
+  display: none !important;
+}
+
+/* Career Pathways — transparent so wrapper bg shows through */
+.aerospace-page .career-pathways-section--robotics {
+  position: relative !important;
+  background: transparent !important;
+  color: #1a1a1a !important;
+  padding: clamp(3rem, 8vh, 6rem) 0 clamp(2rem, 4vh, 3rem) !important;
+  text-align: center;
+}
+
+/* Title */
+.aerospace-page .career-pathways-section--robotics .career-pathways-title {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #1a1a1a !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+  text-shadow: none !important;
+  filter: none !important;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.04em;
+}
+
+.aerospace-page .career-pathways-section--robotics .career-pathways-badge {
+  display: inline-block;
+  padding: 0.18em 0.5em;
+  margin-right: 0.4em;
+  background: #1a1a1a;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Accordion list */
+.aerospace-page .career-pathways-section--robotics .faq-list {
+  text-align: left;
+  max-width: 880px;
+}
+
+/* Accordion row — semi-transparent dark pill */
+.aerospace-page .career-pathways-section--robotics .faq-q-outer {
+  background: transparent !important;
+  padding: 0 !important;
+  clip-path: none !important;
+  border-radius: 14px;
+  filter: none !important;
+}
+
+.aerospace-page .career-pathways-section--robotics .faq-q-outer:hover {
+  filter: brightness(1.08) !important;
+}
+
+.aerospace-page .career-pathways-section--robotics .faq-q-inner {
+  background: rgba(255, 255, 255, 0.55) !important;
+  border: 1.5px solid rgba(0, 0, 0, 0.18) !important;
+  border-radius: 14px;
+  clip-path: none !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  padding: 1rem 1.6rem;
+}
+
+/* Question text */
+.aerospace-page .career-pathways-section--robotics .faq-q-text {
+  color: #1a1a1a !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+  font-weight: 600 !important;
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem) !important;
+}-page .career-pathways-section--robotics .faq-q-arrow {
+  color: #1a1a1a !important;
+  font-size: 0.8rem !important;
+}
+
+/* Answer text */
+.aerospace-page .career-pathways-section--robotics .faq-answer-body p {
+  color: #404040 !important;
+}
+
+.aerospace-page .career-pathways-section--robotics .faq-answer {
+  min-height: 0 !important;
+}
+.aerospace-page .career-pathways-section--robotics .faq-answer-body {
+  min-height: 0 !important;
+}
+
+/* =========================================================
+   HOW TO CHOOSE THE RIGHT PATH — light theme override.
+   Layout / grid / card shape stays inherited from home.css.
+   Only colour theme, title, frame artwork and section bg are
+   swapped to match the supplied design.
+========================================================= */
+/* Choose Right Path — transparent so wrapper bg shows through */
+.aerospace-page .choose-path-section--robotics {
+  position: relative !important;
+  background: transparent !important;
+  padding: clamp(2rem, 4vh, 3rem) 0 clamp(4rem, 9vh, 6rem) !important;
+  text-align: center;
+}
+
+/* Title */
+.aerospace-page .choose-path-section--robotics .choose-path-title {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  text-shadow: none !important;
+  filter: none !important;
+  font-size: clamp(1.2rem, 2.3vw, 2.1rem) !important;
+  letter-spacing: 0.05em;
+  font-weight: 900 !important;
+}
+
+.aerospace-page .choose-path-section--robotics .choose-path-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  margin: 0 0.18em;
+  background: #000000;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Card — drones right-path-box-frame.png */
+.aerospace-page .choose-path-section--robotics .choose-card {
+  background:
+    url("../../assets/programs/drones/right-path-box-frame.png")
+    center / 100% 100% no-repeat !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.aerospace-page .choose-path-section--robotics .choose-card:hover {
+  transform: translateY(-6px);
+  filter: brightness(1.1)
+    drop-shadow(0 12px 28px rgba(0, 0, 0, 0.55)) !important;
+}
+
+/* Card title */
+.aerospace-page .choose-path-section--robotics .choose-card-title {
+  color: #1a1a1a !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+  font-weight: 700 !important;
+}
+
+/* "Consider" label */
+.aerospace-page .choose-path-section--robotics .choose-card-consider {
+  color: #404040 !important;
+}
+
+/* Bullet list */
+.aerospace-page .choose-path-section--robotics .choose-card-list li {
+  color: #404040 !important;
+}
+
+.aerospace-page .choose-path-section--robotics .choose-card-list li::before {
+  background: #1a1a1a !important;
+}
+
+/* =========================================================
+   WHO ARE WE ASSOCIATED WITH — light theme override.
+   home.css gives this section a dark space background, top/bottom
+   black gradients, and white blinking stars.  Reset all three so
+   the section reads as a clean pale-blue panel that matches the
+   supplied design, swap the box frame artwork for the robotics
+   variant, and tone the connector lines down to navy.
+========================================================= */
+.aerospace-page .assoc-section--robotics {
+  position: relative !important;
+  background:linear-gradient(180deg, rgba(255, 255, 255, 0.878) 0%, rgb(255 255 255 / 94%) 100%), url(/src/assets/programs/space-robotics/associated-with-bg.webp) center / cover no-repeat !important;
+  background-color: #f6f6f6 !important;
+  padding: 100px 0px !important;
+  overflow: hidden;
+}
+
+/* Kill the home.css top + bottom black gradient overlays. */
+.aerospace-page .assoc-section--robotics::before,
+.aerospace-page .assoc-section--robotics::after {
+  display: none !important;
+  background: none !important;
+  content: none !important;
+}
+
+/* The white blinking stars only read on a dark backdrop — drop them
+   on the light theme so they don't show as scattered white dots. */
+.aerospace-page .assoc-section--robotics .assoc-blink-stars {
+  display: none !important;
+}
+
+/* Title — reset white/glow, swap to navy with the blue badge
+   wrapping the word ASSOCIATED. */
+.aerospace-page .assoc-section--robotics .assoc-title {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #1a1a1a !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+  text-shadow: none !important;
+  filter: none !important;
+  font-size: clamp(1.3rem, 2.6vw, 2.2rem) !important;
+  letter-spacing: 0.05em !important;
+  font-weight: 900 !important;
+}
+
+.aerospace-page .assoc-section--robotics .assoc-title-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  margin: 0 0.18em;
+  background: #1a1a1a;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Box frame — swap to the robotics asset, and replace the bluish
+   drop-shadow with a softer navy shadow that sits on the light bg. */
+.aerospace-page .assoc-section--robotics .assoc-box-frame {
+  background:
+    url("../../assets/programs/space-robotics/associated-client-frame.svg")
+    center / 100% 100% no-repeat !important;
+  filter: drop-shadow(0 6px 14px rgba(26, 26, 26, 0.18)) !important;
+}
+
+/* Lighting glow — sits BELOW the box frame (was overlapping at
+   top:76%).  Anchor to the bottom of the box so the glow reads as
+   light spilling DOWN from under the frame instead of bleeding
+   across the logo. */
+.aerospace-page .assoc-section--robotics .assoc-box-light {
+  top: auto !important;
+  bottom: -50% !important;
+  width: 100% !important;
+  transform: translateX(-50%) !important;
+  z-index: 0 !important;
+}
+
+/* Centre LOF box — light pill, navy text/border so it stands out
+   on the pale-blue background. */
+
+
+/* Connector lines — navy on the light backdrop (the SpaceScience
+   bright-blue look would all but disappear against #f6f6f6). */
+
+.aerospace-page .assoc-section--robotics .assoc-lines path {
+  stroke: #1a1a1a !important;
+  filter: drop-shadow(0 0 2px rgba(26, 26, 26, 0.35)) !important;
+}
+
+/* Mute the line-pulse keyframe colours on this theme — keep it
+   subtle so it reads as a static blue line, not a bright pulse. */
+.aerospace-page .assoc-section--robotics .assoc-lines path {
+  animation: assocDraw 1.8s ease forwards,
+    assocLinePulseRobotics 4s ease-in-out 1.8s infinite !important;
+}
+
+@keyframes assocLinePulseRobotics {
+  0%, 100% {
+    stroke: #1a1a1a;
+    filter: drop-shadow(0 0 2px rgba(26, 26, 26, 0.35));
+  }
+  50% {
+    stroke: #4a4a4a;
+    filter: drop-shadow(0 0 4px rgba(74, 74, 74, 0.55));
+  }
+}
+
+/* =========================================================
+   Shared light-theme background for the next four sections.
+   Same pale blue + dotted pattern used by the careers /
+   pathways / choose-path / associated blocks so the whole
+   lower half of the page reads as one continuous light zone.
+========================================================= */
+.aerospace-page .vetted-section--robotics,
+.aerospace-page .modes-section--robotics,
+.aerospace-page .projects-section--robotics,
+.aerospace-page .impact-section--robotics {
+  position: relative !important;
+  background-color: #f6f6f6 !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='2' cy='2' r='1' fill='%2386a8e7' opacity='0.18'/></svg>") !important;
+  background-repeat: repeat !important;
+  background-size: 30px 30px !important;
+  color: #1a1a1a !important;
+  overflow: hidden !important;
+}
+
+/* Shared title-badge style (matches the WHY / CAREER / ASSOCIATED
+   pattern). Applied to every robotics section title. */
+.aerospace-page .vetted-section--robotics .vetted-title-badge,
+.aerospace-page .modes-section--robotics .modes-title-badge,
+.aerospace-page .projects-section--robotics .projects-title-badge,
+.aerospace-page .impact-section--robotics .impact-title-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  margin-right: 0.2em;
+  background: #1a1a1a;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Shared title reset — kills SpaceScience gradient / glow */
+.aerospace-page .vetted-section--robotics .vetted-title,
+.aerospace-page .modes-section--robotics .modes-title,
+.aerospace-page .projects-section--robotics .projects-title,
+.aerospace-page .impact-section--robotics .impact-title {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #1a1a1a !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+/* =========================================================
+   VETTED BY — light theme. Photo stages keep the cinematic
+   beam effect, the name plate uses the robotics frame artwork.
+========================================================= */
+
+/* Section layout — single column with title on TOP and the four
+   team members in a 4-column row. */
+.aerospace-page .vetted-section--robotics {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.82) 0%,
+      rgba(255, 255, 255, 0.72) 100%
+    )
+      center / cover no-repeat !important;
+  background-color: #f6f6f6 !important;
+  padding: 100px 0px 100px 20px !important;
+}
+
+.aerospace-page .vetted-section--robotics .vetted-inner {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: clamp(2rem, 4vh, 3rem) !important;
+  min-height: 0 !important;
+  align-items: stretch !important;
+}
+
+/* Title block goes to the top, centred. */
+.aerospace-page .vetted-section--robotics .vetted-right {
+  align-self: center !important;
+  min-height: 0 !important;
+  text-align: center !important;
+  margin-bottom: 200px;
+}
+
+.aerospace-page .vetted-section--robotics .vetted-title {
+  text-align: center !important;
+  margin: 0 0 clamp(1.5rem, 3vh, 2.5rem) !important;
+  font-size: clamp(1.6rem, 3vw, 2.6rem) !important;
+  letter-spacing: 0.04em;
+  font-weight: 900 !important;
+}
+
+/* 4 members in a single row */
+.aerospace-page .vetted-section--robotics .vetted-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: clamp(1rem, 2.5vw, 2.5rem) !important;
+  justify-items: center !important;
+  width: 100%;
+}
+
+/* Each card fills its column up to a reasonable cap so all four
+   members read at the same size. */
+.aerospace-page .vetted-section--robotics .vetted-card {
+  width: 100% !important;
+  max-width: 280px !important;
+}
+
+/* Stack to 2-then-1 columns on smaller viewports so cards stay
+   legible without shrinking past usefulness. */
+@media (max-width: 900px) {
+  .aerospace-page .vetted-section--robotics .vetted-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 520px) {
+  .aerospace-page .vetted-section--robotics .vetted-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.aerospace-page .vetted-section--robotics .vetted-subtitle,
+.aerospace-page .vetted-section--robotics .vetted-name,
+.aerospace-page .vetted-section--robotics .vetted-role {
+  color: #1a1a1a !important;
+}
+
+/* Plate stretches to 100% of its grid column (no max-width cap)
+   so the frame is never visually cropped or pushed off-screen. */
+.aerospace-page .vetted-section--robotics .vetted-plate {
+  width: 100% !important;
+  max-width: none !important;
+  aspect-ratio: 3.2 / 1 !important;
+  background:
+    url("../../assets/programs/space-robotics/vetted-frame.png")
+    center / 100% 100% no-repeat !important;
+  padding: 0 8% !important;
+  filter: drop-shadow(0 6px 14px rgba(40, 45, 55, 0.32)) !important;
+  overflow: visible !important;
+}
+
+/* Every member's photo container is exactly the same size so all
+   four cards line up uniformly across the row. */
+.aerospace-page .vetted-section--robotics .vetted-stage {
+  width: 100% !important;
+  max-width: 180px !important;
+  aspect-ratio: 1 / 1 !important;
+  margin: 0 auto !important;
+}
+
+.aerospace-page .vetted-section--robotics .vetted-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===== Dark-grey halo overrides for the vetted photos =====
+   Replace every blue/cyan glow + holographic wash from home.css
+   with a neutral dark-grey treatment so the portraits read against
+   the light section background without the cyan tint. */
+
+/* Drop-shadow halo on the portrait img */
+.aerospace-page .vetted-section--robotics .vetted-photo img {
+  filter: brightness(1.02) saturate(0.95)
+    drop-shadow(0 0 14px rgba(45, 48, 58, 0.55))
+    drop-shadow(0 0 28px rgba(45, 48, 58, 0.35)) !important;
+}
+
+/* Holographic colour wash → soft dark-grey wash */
+.aerospace-page .vetted-section--robotics .vetted-photo::before {
+  background: linear-gradient(
+    160deg,
+    rgba(60, 65, 80, 0.18) 0%,
+    rgba(70, 75, 90, 0.10) 45%,
+    rgba(80, 85, 100, 0.14) 100%
+  ) !important;
+}
+
+/* Scanlines + interference band → neutral grey */
+.aerospace-page .vetted-section--robotics .vetted-photo::after {
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(200, 200, 200, 0.18) 48%,
+      rgba(215, 215, 215, 0.26) 50%,
+      rgba(200, 200, 200, 0.18) 52%,
+      transparent 100%
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(170, 170, 170, 0.14) 0 1px,
+      transparent 1px 4px
+    ) !important;
+  background-size: 100% 220%, 100% 4px !important;
+  background-repeat: no-repeat, repeat !important;
+}
+
+/* Projector beams from below — dark grey instead of blue */
+.aerospace-page .vetted-section--robotics .vetted-beam {
+  background: linear-gradient(
+    to top,
+    rgba(60, 65, 75, 0.45) 0%,
+    rgba(60, 65, 75, 0.14) 45%,
+    rgba(60, 65, 75, 0.04) 72%,
+    rgba(60, 65, 75, 0) 92%
+  ) !important;
+}
+
+/* Bright intersection ground glow → soft dark-grey */
+.aerospace-page .vetted-section--robotics .vetted-stage::after {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(200, 205, 215, 0.7) 0%,
+    rgba(80, 85, 95, 0.4) 40%,
+    rgba(60, 65, 75, 0) 75%
+  ) !important;
+}
+
+.aerospace-page .vetted-section--robotics .vetted-name {
+  color: #1a1a1a !important;
+  font-weight: 700;
+}
+
+.aerospace-page .vetted-section--robotics .vetted-role {
+  color: #404040 !important;
+}
+
+.aerospace-page .vetted-section--robotics .vetted-li {
+  color: #1a1a1a !important;
+}
+
+/* =========================================================
+   MODES TO JOIN — dark drone theme
+========================================================= */
+.aerospace-page .modes-section--robotics {
+  background: linear-gradient(160deg, #1e2024 0%, #16181c 50%, #0e1013 100%) !important;
+  background-color: #16181c !important;
+  padding: clamp(3rem, 7vh, 5.5rem) 0 clamp(4rem, 8vh, 6rem) !important;
+  color: #ffffff !important;
+}
+
+.aerospace-page .modes-section--robotics .modes-title {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+.aerospace-page .modes-section--robotics .modes-title-badge {
+  background: #ffffff !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+.aerospace-page .modes-section--robotics .modes-subtitle {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 700 !important;
+  text-shadow: none !important;
+  letter-spacing: 0.06em !important;
+}
+
+.aerospace-page .modes-section--robotics .modes-desc {
+  color: rgba(255, 255, 255, 0.7) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.7) !important;
+  text-shadow: none !important;
+}
+
+/* Cards — drone modes-to-join-frame */
+.aerospace-page .modes-section--robotics .modes-card {
+  background:
+    url("../../assets/programs/drones/modes-to-join-frame.png")
+    center / 100% 100% no-repeat !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.aerospace-page .modes-section--robotics .modes-card:hover {
+  transform: translateY(-5px);
+  filter: brightness(1.06)
+    drop-shadow(0 12px 28px rgba(0, 0, 0, 0.55)) !important;
+}
+
+.aerospace-page .modes-section--robotics .modes-card-label {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 800 !important;
+  text-shadow: none !important;
+  letter-spacing: 0.05em !important;
+}
+
+.aerospace-page .modes-section--robotics .modes-card-imgwrap {
+  border-radius: 6px !important;
+  overflow: hidden !important;
+}
+
+.aerospace-page .modes-section--robotics .modes-card-img {
+  object-fit: cover !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0px 10px;
+  border-radius: 10px;
+}
+
+.aerospace-page .modes-section--robotics .modes-grid {
+  max-width: 1000px !important;
+  gap: clamp(1.5rem, 3vw, 3rem) !important;
+}
+
+/* modes-stage-wrapper: kill the space-bg image and fade overlays
+   so the modes section controls its own background */
+.aerospace-page .modes-stage-wrapper {
+  background: transparent !important;
+}
+.aerospace-page .modes-stage-wrapper::before,
+.aerospace-page .modes-stage-wrapper::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* =========================================================
+   MODES TO JOIN + STUDENT PROJECTS — shared dark→light-grey wrapper
+========================================================= */
+.aerospace-page .drones-modes-projects-wrapper {
+  background: linear-gradient(180deg, #1a1a1a 0%, #222222 30%, #393939 65%, #191919 100%);
+}
+.aerospace-page .drones-modes-projects-wrapper .modes-stage-wrapper {
+  background: transparent !important;
+}
+.aerospace-page .drones-modes-projects-wrapper .modes-stage-wrapper::before,
+.aerospace-page .drones-modes-projects-wrapper .modes-stage-wrapper::after {
+  display: none !important;
+  content: none !important;
+}
+/* Modes section: transparent so wrapper gradient shows */
+.aerospace-page .drones-modes-projects-wrapper .modes-section--robotics {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* =========================================================
+   STUDENT PROJECTS — dark→light drone theme
+========================================================= */
+.aerospace-page .projects-section--robotics {
+  background: transparent !important;
+  background-color: transparent !important;
+  padding: clamp(2rem, 5vh, 4rem) 0 clamp(3rem, 7vh, 5rem) !important;
+}
+
+.aerospace-page .projects-section--robotics .projects-title {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+.aerospace-page .projects-section--robotics .projects-title-badge {
+  background: #ffffff !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+.aerospace-page .projects-section--robotics .projects-subtitle {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 700 !important;
+  text-shadow: none !important;
+  letter-spacing: 0.06em !important;
+}
+
+.aerospace-page .projects-section--robotics .projects-desc {
+  color: rgba(255, 255, 255, 0.75) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.75) !important;
+  text-shadow: none !important;
+}
+
+/* Project card — drone frame, light card bg, dark text */
+.aerospace-page .drones-project-card {
+  background:
+    url("../../assets/programs/drones/project-box-frame.png")
+    center / 100% 100% no-repeat !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.aerospace-page .drones-project-card .projects-card-title {
+  color: #1a1a1a !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+}
+
+.aerospace-page .drones-project-card .projects-card-desc {
+  color: #404040 !important;
+  -webkit-text-fill-color: #404040 !important;
+}
+
+.aerospace-page .drones-project-card .projects-card-name {
+  color: #1a1a1a !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+}
+
+.aerospace-page .drones-project-card .projects-card-meta {
+  color: #606060 !important;
+  -webkit-text-fill-color: #606060 !important;
+}
+
+.aerospace-page .drones-project-card .projects-card-img {
+  object-fit: cover !important;
+  margin-left: 0 !important;
+}
+
+/* Stats on the lighter part of the gradient */
+.aerospace-page .drones-projects-stats {
+  margin-top: clamp(2rem, 4vh, 3rem) !important;
+}
+
+.aerospace-page .drones-projects-stats .projects-stat-num {
+  color: #1a1a1a !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+}
+
+.aerospace-page .drones-projects-stats .projects-stat-lbl {
+  color: #3a3a3a !important;
+  -webkit-text-fill-color: #3a3a3a !important;
+}
+
+.aerospace-page .drones-projects-stats .projects-stat {
+  border-color: rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Project card chrome — keep the original home.css frame artwork
+   (it was working). Only text colours need swapping for the light
+   section background. */
+.aerospace-page .projects-section--robotics .projects-card {
+  color: #1a1a1a !important;
+  padding:30px
+}
+
+.aerospace-page .projects-section--robotics .projects-card-title {
+  color: #1a1a1a !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+}
+
+.aerospace-page .projects-section--robotics .projects-card-desc {
+  color: #404040 !important;
+}
+
+.aerospace-page .projects-section--robotics .projects-card-name {
+  color: #1a1a1a !important;
+  font-weight: 700;
+}
+
+.aerospace-page .projects-section--robotics .projects-card-meta {
+  color: #404040 !important;
+}
+
+/* Stats row — navy numbers, slate labels, blue divider */
+.aerospace-page .projects-section--robotics .projects-stat-num {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  background: none !important;
+}
+
+.aerospace-page .projects-section--robotics .projects-stat-lbl {
+  color: #fff !important;
+}
+
+.aerospace-page .projects-section--robotics .projects-stat + .projects-stat {
+  border-left-color: rgba(255, 255, 255, 0.28) !important;
+}
+
+/* =========================================================
+   PROJECT IMPACT — light theme.
+========================================================= */
+.aerospace-page .impact-section--robotics {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.82) 0%,
+      rgba(255, 255, 255, 0.72) 100%
+    ),
+    url("../../assets/programs/drones/competition-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #f6f6f6 !important;
+  padding: clamp(3rem, 7vh, 5rem) 0 clamp(4rem, 9vh, 6rem) !important;
+}
+
+.aerospace-page .impact-section--robotics .impact-subtitle {
+  color: #1a1a1a !important;
+  font-weight: 700;
+}
+
+.aerospace-page .impact-section--robotics .impact-desc {
+  color: #404040 !important;
+  text-shadow: none !important;
+}
+
+.aerospace-page .impact-section--robotics .impact-card {
+  background: rgba(255, 255, 255, 0.78) !important;
+  border: 1.5px solid rgba(26, 26, 26, 0.25) !important;
+  box-shadow:
+    0 12px 28px rgba(26, 26, 26, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.aerospace-page .impact-section--robotics .impact-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(26, 26, 26, 0.55) !important;
+  box-shadow:
+    0 18px 36px rgba(26, 26, 26, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+.aerospace-page .impact-section--robotics .impact-card-title {
+  color: #1a1a1a !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+}
+
+.aerospace-page .impact-section--robotics .impact-card-desc {
+  color: #404040 !important;
+}
+
+/* Icon box — solid blue plate with white icon, padded + rounded. */
+.aerospace-page .impact-section--robotics .impact-card-icon {
+  background: #1a1a1a !important;
+  border: 1px solid rgba(26, 26, 26, 0.3) !important;
+  border-radius: 16px !important;
+  padding: 0.9rem !important;
+  box-shadow:
+    0 8px 18px rgba(26, 26, 26, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Force the SVG/PNG icon to render WHITE on the blue plate.
+   brightness(0) drops the colour to black, invert(1) flips it
+   to white — works for any single-colour or dark icon artwork. */
+.aerospace-page .impact-section--robotics .impact-card-icon img {
+  filter: brightness(0) invert(1) !important;
+}
+
+/* =========================================================
+   FAQ — two-column accordion on a light background, with empty
+   centre space reserved for the robot model.
+========================================================= */
+.aerospace-page .faq-robotics-section {
+  position: relative;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    url("../../assets/programs/drones/students-learn-bg.png")
+      bottom / cover no-repeat;
+  background-color: #f6f6f6;
+  padding: 100px 0px;
+  color: #1a1a1a;
+  overflow: hidden;
+}
+
+.aerospace-page .faq-robotics-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+  color: #1a1a1a;
+  margin-bottom: 100px;
+  line-height: 1.2;
+}
+
+/* Badge highlight on the second word — matches the other section
+   titles (modes / impact / careers / vetted) so the FAQ heading
+   reads as part of the same family. */
+.aerospace-page .faq-robotics-title-badge {
+  display: inline-block;
+  background: #1a1a1a;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  padding: 0.08em 0.4em;
+  border-radius: 6px;
+  line-height: 1.1;
+  margin-top: 0.2em;
+}
+
+/* Two columns with a wide centre gap to leave room for the robot.
+   On smaller screens the gap collapses and rows stack. */
+.aerospace-page .faq-robotics-grid {
+  display: grid;
+  grid-template-columns: 1fr clamp(150px, 24vw, 150px) 1fr;
+  gap: 1.2rem clamp(1rem, 3vw, 2rem);
+  align-items: start;
+}
+
+.aerospace-page .faq-robotics-grid > .faq-robotics-col:first-child {
+  grid-column: 1;
+}
+.aerospace-page .faq-robotics-grid > .faq-robotics-col:last-child {
+  grid-column: 3;
+}
+
+.aerospace-page .faq-robotics-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.aerospace-page .faq-robotics-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.aerospace-page .faq-robotics-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.9rem 1.2rem;
+  background: rgba(220, 220, 220, 0.55);
+  border: 1.5px solid rgba(26, 26, 26, 0.32);
+  border-radius: 20px 0px 20px 0px;
+  color: #1a1a1a;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  text-align: left;
+  cursor: pointer;
+  transition: filter 0.18s ease, transform 0.18s ease,
+    background 0.18s ease;
+}
+
+.aerospace-page .faq-robotics-q:hover {
+  background: rgba(220, 220, 220, 0.75);
+  filter: drop-shadow(0 6px 14px rgba(26, 26, 26, 0.18));
+  transform: translateY(-1px);
+}
+
+.aerospace-page .faq-robotics-q-arrow {
+  display: inline-flex;
+  font-size: 0.7rem;
+  color: #1a1a1a;
+  transition: transform 0.32s ease;
+  flex-shrink: 0;
+}
+
+.aerospace-page .faq-robotics-item.is-open .faq-robotics-q-arrow {
+  transform: rotate(180deg);
+}
+
+/* Smooth grid-row accordion */
+.aerospace-page .faq-robotics-a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.36s ease;
+  /* min-height: 0 is required for the grid-row 0fr → 1fr trick to
+     actually collapse on some browsers; without it the row keeps
+     its content's intrinsic height and the panel never closes. */
+  min-height: 0;
+}
+.aerospace-page .faq-robotics-item.is-open .faq-robotics-a {
+  grid-template-rows: 1fr;
+}
+
+.aerospace-page .faq-robotics-a-body {
+  overflow: hidden;
+  min-height: 0;
+  padding: 0 1.2rem;
+  font-family: var(--font-sans);
+  font-size: clamp(0.82rem, 1vw, 0.94rem);
+  line-height: 1.6;
+  color: #404040;
+}
+
+.aerospace-page .faq-robotics-item.is-open .faq-robotics-a-body {
+  padding: 0.6rem 1.2rem 0.9rem;
+}
+
+/* Collapse the centre robot-gap on small screens */
+@media (max-width: 900px) {
+  .aerospace-page .faq-robotics-grid {
+    grid-template-columns: 1fr;
+  }
+  .aerospace-page .faq-robotics-grid > .faq-robotics-col:first-child,
+  .aerospace-page .faq-robotics-grid > .faq-robotics-col:last-child {
+    grid-column: 1;
+  }
+}
+
+/* =========================================================
+   CTA — "The future won't be taught, it will be built"
+   Two-column layout: empty stage on the left (for the robot),
+   title + copy + buttons on the right.
+========================================================= */
+.aerospace-page .cta-robotics-section {
+  position: relative;
+  background:
+    url("../../assets/programs/drones/cta-bg.webp")
+    center / cover no-repeat;
+  background-color: #f0f0f0;
+  padding: 150px 0px;
+  overflow: hidden;
+}
+/* White fade top */
+.aerospace-page .cta-robotics-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 38%;
+  background: linear-gradient(to bottom, #ffffff 0%, transparent 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+/* White fade bottom */
+.aerospace-page .cta-robotics-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 38%;
+  background: linear-gradient(to top, #ffffff 0%, transparent 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+.aerospace-page .cta-robotics-inner {
+  position: relative;
+  z-index: 2;
+}
+
+.aerospace-page .cta-robotics-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: center;
+}
+
+.cta-robotics-section img{
+  object-fit: contain;
+}
+/* LEFT — small-robot canvas stage. Explicit height so R3F's 100%
+   resolves to a real pixel value instead of collapsing to zero. */
+.aerospace-page .cta-robotics-stage {
+  position: relative;
+  height: clamp(280px, 40vh, 420px);
+}
+
+/* R3F renders a wrapper div around the canvas — both must fill the stage. */
+.aerospace-page .cta-robotics-stage > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.aerospace-page .cta-robotics-stage canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  touch-action: none;
+}
+
+.aerospace-page .cta-robotics-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  max-width: 38rem;
+}
+
+.aerospace-page .cta-robotics-title {
+  margin: 0;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+  font-size: clamp(1.5rem, 2.6vw, 2.4rem);
+  color: #1a1a1a;
+  text-transform: uppercase;
+}
+
+.aerospace-page .cta-robotics-desc {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+  line-height: 1.65;
+  color: #404040;
+}
+
+.aerospace-page .cta-robotics-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 0.4rem;
+  flex-wrap: wrap;
+}
+
+/* CTA buttons use the SAME SVG-pill chrome as the WHY-section
+   buttons — 200×80 px, light-btn.svg / dark-btn.svg artwork, white
+   text, soft blue drop-shadow on hover. */
+.aerospace-page .cta-robotics-btn {
+  width: 200px;
+  height: 80px;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 120% 100%;
+  backdrop-filter: none;
+  box-shadow: none;
+  color: #ffffff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.16s ease, filter 0.16s ease;
+}
+
+/* Both CTA buttons use the DRONE-theme dark pill artwork (matches
+   the hero CTA and Why Drones buttons), not the generic
+   /assets/dark-btn.svg the robotics page used. */
+.aerospace-page .cta-robotics-btn--primary,
+.aerospace-page .cta-robotics-btn--secondary {
+  background-image: url("../../assets/programs/drones/dark-btn.svg");
+}
+
+.aerospace-page .cta-robotics-btn:hover,
+.aerospace-page .cta-robotics-btn:focus-visible {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 6px 18px rgba(150, 150, 150, 0.45));
+}
+
+@media (max-width: 900px) {
+  .aerospace-page .cta-robotics-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .aerospace-page .cta-robotics-text {
+    margin: 0 auto;
+  }
+  .aerospace-page .cta-robotics-actions {
+    justify-content: center;
+  }
+  .aerospace-page .cta-robotics-stage {
+    min-height: 220px;
+  }
+}
+
+/* =========================================================
+   EXPLORE OUR OTHER PROGRAMS — drone bg + new frame.
+========================================================= */
+.aerospace-page .explore-section--robotics {
+  position: relative !important;
+  background:
+    url("../../assets/programs/drones/other-programs-bg.webp")
+    center / cover no-repeat !important;
+  color: #1a1a1a !important;
+  padding:150px 0px !important;
+  overflow: hidden !important;
+}
+
+/* Title — white on dark bg */
+.aerospace-page .explore-section--robotics .explore-title {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  text-shadow: none !important;
+  filter: none !important;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem) !important;
+  font-weight: 900 !important;
+  text-align: center;
+  margin-bottom: clamp(2rem, 4vh, 3rem) !important;
+}
+
+.aerospace-page .explore-section--robotics .explore-title-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  margin-right: 0.18em;
+  background: #000000;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Cards — drone other-programs-frame */
+.aerospace-page .explore-section--robotics .explore-card {
+  background:
+    url("../../assets/programs/drones/other-programs-frame.png")
+    center / 100% 100% no-repeat !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 20px !important;
+  border-radius: 0px !important;
+}
+
+.aerospace-page .explore-section--robotics .explore-card img {
+  object-fit: contain;
+}
+
+
+
+.aerospace-page .explore-section--robotics .explore-card-label {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  font-weight: 900 !important;
+}
+
+/* Other-programs slide image — use contain instead of cover so the
+   whole tile artwork shows without being cropped. */
+.aerospace-page .explore-section--robotics .explore-card-img,
+.aerospace-page .explore-section--robotics .explore-card-imgwrap img {
+  object-fit: contain !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+.explore-card-imgwrap{
+  padding:10px;
+}
+/* =========================================================
+   FOOTER newsletter input — strip the inset shadow that the
+   home.css rule paints on the box.
+========================================================= */
+.aerospace-page .site-footer-form input,
+.aerospace-page .site-footer-form input:focus {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+/* =========================================================
+   Bump font-weight on every "box title" across the page — the
+   small headings that sit inside cards / tiles / pills. */
+.aerospace-page .why-section--robotics .why-title,
+.aerospace-page .why-section--robotics .why-title-bold,
+.aerospace-page .careers-section--robotics .careers-skill-label,
+.aerospace-page .competitions-section--robotics .comp-card-title,
+.aerospace-page .career-pathways-section--robotics .faq-q-text,
+.aerospace-page .choose-path-section--robotics .choose-card-title,
+.aerospace-page .modes-section--robotics .modes-card-label,
+.aerospace-page .projects-section--robotics .projects-card-title,
+.aerospace-page .impact-section--robotics .impact-card-title,
+.aerospace-page .vetted-section--robotics .vetted-name,
+.aerospace-page .cert-section--robotics .cert-robotics-list strong,
+.aerospace-page .faq-robotics-q-text,
+.aerospace-page .explore-section--robotics .explore-card-label {
+  font-weight: 900 !important;
+}
+
+/* =========================================================
+   SITE FOOTER — light robotics theme, scoped to .aerospace-page
+   only.  The SpaceScience footer keeps the dark blue/space backdrop.
+========================================================= */
+
+/* =========================================================
+   FOOTER — dark drone theme
+========================================================= */
+.aerospace-page .site-footer {
+  background: linear-gradient(180deg, #0e1013 0%, #16181c 100%) !important;
+  background-color: #0e1013 !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  padding: clamp(3rem, 7vh, 5rem) 0 !important;
+}
+
+.aerospace-page .site-footer-inner {
+  padding-right: 0 !important;
+}
+
+/* Logo — invert if needed on dark bg */
+.aerospace-page .site-footer-logo {
+  filter: brightness(0) invert(1) !important;
+}
+
+/* Column titles — white */
+.aerospace-page .site-footer-col-title {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Links */
+.aerospace-page .site-footer-list a,
+.aerospace-page .site-footer-contact a {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+.aerospace-page .site-footer-list a:hover,
+.aerospace-page .site-footer-contact a:hover {
+  color: #ffffff !important;
+}
+
+.aerospace-page .site-footer-contact li {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/* Icons */
+.aerospace-page .site-footer-icon {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* Social links */
+.aerospace-page .site-footer-socials a {
+  color: rgba(255, 255, 255, 0.75) !important;
+  filter: none !important;
+}
+.aerospace-page .site-footer-socials a:hover {
+  color: #ffffff !important;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4)) !important;
+}
+
+/* Stay-Connected copy */
+.aerospace-page .site-footer-stay-desc {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Form — dark field, white text, white border */
+.aerospace-page .site-footer-form input {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+.aerospace-page .site-footer-form input::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+.aerospace-page .site-footer-form button {
+  background: #ffffff !important;
+  color: #0e1013 !important;
+  border: none !important;
+}
+.aerospace-page .site-footer-form button:hover {
+  background: rgba(255, 255, 255, 0.88) !important;
+  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Bottom strip */
+.aerospace-page .site-footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+.aerospace-page .site-footer-copy,
+.aerospace-page .site-footer-policy {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+.aerospace-page .site-footer-policy a {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+.aerospace-page .site-footer-policy a:hover {
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   WHAT WILL STUDENTS LEARN — background image + dedicated
+   top/bottom white gradient overlays.
+========================================================= */
+.aerospace-page .learn-section {
+  position: relative !important;
+  overflow: hidden !important;
+  /* what-students-learn-bg.webp as the backdrop, with a soft white veil
+     so the title + skill cards stay readable on any pixel. */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.78) 0%,
+      rgba(255, 255, 255, 0.6) 100%
+    ),
+    url("../../assets/programs/space-robotics/what-students-learn-bg.webp")
+      center / cover no-repeat !important;
+}
+
+.aerospace-page .learn-section::before,
+.aerospace-page .learn-section::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 22% !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+}
+
+.aerospace-page .learn-section::before {
+  top: 0 !important;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0) 100%
+  ) !important;
+}
+
+.aerospace-page .learn-section::after {
+  bottom: 0 !important;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0) 100%
+  ) !important;
+}
+
+/* Section content stays above the fades. */
+.aerospace-page .learn-section > * {
+  position: relative;
+  z-index: 3;
+}
+
+
+/* =========================================================
+   GLOBAL WHITE TOP/BOTTOM FADES — applied to every other
+   major section on the Space Robotics page so consecutive
+   sections always bloom into white at their seams.
+========================================================= */
+
+.aerospace-page .age-section,
+.aerospace-page .learn-section,
+.aerospace-page .cert-section,
+.aerospace-page .careers-section,
+.aerospace-page .competitions-section,
+.aerospace-page .career-pathways-section,
+.aerospace-page .choose-path-section,
+.aerospace-page .assoc-section,
+.aerospace-page .modes-section,
+.aerospace-page .projects-section,
+.aerospace-page .impact-section,
+.aerospace-page .tracking-section,
+.aerospace-page .explore-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.aerospace-page .age-section::before,
+.aerospace-page .learn-section::before,
+.aerospace-page .cert-section::before,
+.aerospace-page .careers-section::before,
+.aerospace-page .competitions-section::before,
+.aerospace-page .career-pathways-section::before,
+.aerospace-page .choose-path-section::before,
+.aerospace-page .assoc-section::before,
+.aerospace-page .modes-section::before,
+.aerospace-page .projects-section::before,
+.aerospace-page .impact-section::before,
+.aerospace-page .tracking-section::before,
+.aerospace-page .explore-section::before,
+.aerospace-page .age-section::after,
+.aerospace-page .learn-section::after,
+.aerospace-page .cert-section::after,
+.aerospace-page .careers-section::after,
+.aerospace-page .competitions-section::after,
+.aerospace-page .career-pathways-section::after,
+.aerospace-page .choose-path-section::after,
+.aerospace-page .assoc-section::after,
+.aerospace-page .modes-section::after,
+.aerospace-page .projects-section::after,
+.aerospace-page .impact-section::after,
+.aerospace-page .tracking-section::after,
+.aerospace-page .explore-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 18%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.aerospace-page .age-section::before,
+.aerospace-page .learn-section::before,
+.aerospace-page .cert-section::before,
+.aerospace-page .careers-section::before,
+.aerospace-page .competitions-section::before,
+.aerospace-page .career-pathways-section::before,
+.aerospace-page .choose-path-section::before,
+.aerospace-page .assoc-section::before,
+.aerospace-page .modes-section::before,
+.aerospace-page .projects-section::before,
+.aerospace-page .impact-section::before,
+.aerospace-page .tracking-section::before,
+.aerospace-page .explore-section::before {
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.6) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.aerospace-page .age-section::after,
+.aerospace-page .learn-section::after,
+.aerospace-page .cert-section::after,
+.aerospace-page .careers-section::after,
+.aerospace-page .competitions-section::after,
+.aerospace-page .career-pathways-section::after,
+.aerospace-page .choose-path-section::after,
+.aerospace-page .assoc-section::after,
+.aerospace-page .modes-section::after,
+.aerospace-page .projects-section::after,
+.aerospace-page .impact-section::after,
+.aerospace-page .tracking-section::after,
+.aerospace-page .explore-section::after {
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.6) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* Lift immediate children above the fades for each section. */
+.aerospace-page .age-section > *,
+.aerospace-page .learn-section > *,
+.aerospace-page .cert-section > *,
+.aerospace-page .careers-section > *,
+.aerospace-page .competitions-section > *,
+.aerospace-page .career-pathways-section > *,
+.aerospace-page .choose-path-section > *,
+.aerospace-page .assoc-section > *,
+.aerospace-page .modes-section > *,
+.aerospace-page .projects-section > *,
+.aerospace-page .impact-section > *,
+.aerospace-page .tracking-section > *,
+.aerospace-page .explore-section > * {
+  position: relative;
+  z-index: 3;
+}
+
+.aerospace-page .why-section--robotics .why-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.aerospace-page .why-section--robotics .why-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  font-size: clamp(1.9rem, 3.4vw, 2.85rem);
+  color: #1a1a1a;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #1a1a1a;
+  filter: none;
+}
+
+/* Blue badge wrapping just the word WHY */
+.aerospace-page .why-section--robotics .why-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  background: #1a1a1a;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.aerospace-page .why-section--robotics .why-title-bold {
+  color: #1a1a1a;
+  -webkit-text-fill-color: #1a1a1a;
+}
+
+.aerospace-page .why-section--robotics .why-desc {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+  line-height: 1.65;
+  color: #404040;
+  max-width: 55ch;
+}
+
+/* CTA row */
+.aerospace-page .why-section--robotics .why-cta-row {
+  display: flex;
+  gap: 0.85rem;
+  margin-top: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* Both Why-section buttons match the header "Enroll Now" pill exactly:
+   200×80 px, light-btn.svg artwork, white text. No variant differences. */
+.aerospace-page .why-section--robotics .why-btn {
+  width: 240px;
+  height: 80px;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: url("../../assets/dark-btn.svg") no-repeat center / 120% 100%;
+  backdrop-filter: none;
+  box-shadow: none;
+  color: #ffffff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.16s ease, filter 0.16s ease;
+}
+
+/* Both why-section buttons now use the DARK pill artwork. */
+.aerospace-page .why-section--robotics .why-btn--primary,
+.aerospace-page .why-section--robotics .why-btn--secondary {
+  background-image: url("../../assets/dark-btn.svg");
+}
+
+.aerospace-page .why-section--robotics .why-btn:hover,
+.aerospace-page .why-section--robotics .why-btn:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: none;
+  filter: drop-shadow(0 6px 18px rgba(150, 150, 150, 0.45));
+}
+
+/* Right column — Zeb canvas blends straight into the white section
+   (no rounded box, no background, no overflow clip). */
+.aerospace-page .why-section--robotics .why-right {
+  position: relative;
+  min-height: clamp(420px, 60vh, 640px);
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.aerospace-page .why-section--robotics .why-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  inset: 0;
+  background: transparent !important;
+}
+
+/* Responsive — stack columns on small screens */
+@media (max-width: 900px) {
+  .aerospace-page .why-section--robotics .why-container {
+    grid-template-columns: 1fr;
+  }
+  .aerospace-page .why-section--robotics .why-right {
+    min-height: 380px;
+  }
+}
+
+/* ---- Section headings — robotics warm gradient ---- */
+
+
+/* ---- Eyebrows / labels / accent text ---- */
+.aerospace-page .eyebrow,
+.aerospace-page .section-eyebrow,
+.aerospace-page [class*="eyebrow"] {
+  color: var(--sr-accent);
+  letter-spacing: 0.3em;
+}
+
+/* ---- Tiles / cards — warm border + orange glow on hover ---- */
+
+
+.aerospace-page .card:hover,
+.aerospace-page .tile:hover,
+.aerospace-page [class*="-card"]:hover {
+  border-color: rgba(255, 170, 90, 0.7);
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.55),
+    0 0 28px var(--sr-glow),
+    inset 0 1px 1px rgba(255, 220, 180, 0.18);
+}
+
+/* ---- Primary buttons / CTA — gradient orange ---- */
+
+/* ---- Secondary / links — cyber-cyan accent ---- */
+.aerospace-page a:not([class*="btn"]):not([class*="cta"]),
+.aerospace-page .link-accent {
+  color: #fff;
+  transition: color 0.18s ease, text-shadow 0.18s ease;
+}
+
+.aerospace-page a:not([class*="btn"]):not([class*="cta"]):hover {
+  color: #6ff2ff;
+  text-shadow: 0 0 12px var(--sr-glow-cyan);
+}
+
+/* ---- Subtle backgrounds / overlays ---- */
+.aerospace-page .space-careers-overlay,
+.aerospace-page [class*="-overlay"] {
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 40%,
+    rgba(255, 106, 0, 0.18) 0%,
+    rgba(10, 6, 18, 0) 60%
+  );
+}
+
+.aerospace-page .faq-bg-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 6, 18, 0.4) 0%,
+    rgba(10, 6, 18, 0.85) 50%,
+    rgba(10, 6, 18, 0.95) 100%
+  );
+}
+
+/* ---- Page-wide body background tint (sits behind sections that
+   reveal their parent) ---- */
+.aerospace-page {
+  background-color: var(--sr-deep);
+}
+
+/* ---- Robotics accent strips / dividers ---- */
+.aerospace-page hr,
+.aerospace-page .divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--sr-primary) 50%,
+    transparent 100%
+  );
+}
+
+/* ---- Selection colour (small touch but consistent) ---- */
+.aerospace-page ::selection {
+  background: var(--sr-primary);
+  color: #fff;
+}
+
+
+/* =========================================================
+   AGE PROGRAMS SECTION — drones overrides
+   Replaces the dark space theme with the light/white
+   design from the reference. Uses age-box-frame.png for
+   all cards (single reusable frame).
+========================================================= */
+
+.aerospace-page .age-section {
+  background: transparent;
+  padding: clamp(2.5rem, 5vh, 4rem) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.aerospace-page .age-section-deco {
+  position: absolute;
+  width: clamp(90px, 11vw, 170px);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.75;
+  z-index: 1;
+}
+.aerospace-page .age-section-deco--tl {
+  top: 0;
+  left: 0;
+}
+.aerospace-page .age-section-deco--br {
+  bottom: 0;
+  right: 0;
+  transform: rotate(180deg);
+}
+
+/* All 5 cards — age-shape.svg (229×277) frame */
+.aerospace-page .age-card,
+.aerospace-page .age-card:nth-child(1),
+.aerospace-page .age-card:nth-child(2),
+.aerospace-page .age-card:nth-child(3),
+.aerospace-page .age-card:nth-child(4),
+.aerospace-page .age-card:nth-child(5) {
+  background-image: url('../../assets/programs/drones/age-shape.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  aspect-ratio: 229 / 277;
+  padding: 0;
+  position: relative;
+  display: block;
+}
+
+/* Age label — sits in the notched header strip at the top */
+.aerospace-page .age-card-label {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  white-space: nowrap;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+}
+
+/* Bullet list — sits below the header strip */
+.aerospace-page .age-card-list {
+  position: absolute;
+  top: 30%;
+  left: 9%;
+  right: 7%;
+  margin: 0;
+  padding: 0 0 0 1rem;
+  list-style: disc;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.aerospace-page .age-card-list li {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 0;
+  padding-left: 5px;
+}
+
+.aerospace-page .age-card-list li::marker {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.age-card-list li::before {
+  display: none;
+}
+@media (max-width: 992px) {
+  .aerospace-page .age-card,
+  .aerospace-page .age-card:nth-child(1),
+  .aerospace-page .age-card:nth-child(2),
+  .aerospace-page .age-card:nth-child(3),
+  .aerospace-page .age-card:nth-child(4),
+  .aerospace-page .age-card:nth-child(5) {
+    aspect-ratio: auto;
+    min-height: 260px;
+  }
+}
+
+/* =========================================================
+   WHAT WILL STUDENTS LEARN — drones overrides
+   Light gray background, box-frame cards with real photos,
+   4-up top row + 3-up centered bottom row.
+========================================================= */
+
+.aerospace-page .learn-section {
+  background-image: url("../../assets/programs/drones/students-learn-bg.png") !important;
+  background-size: cover !important;
+  background-position: bottom !important;
+  background-repeat: no-repeat !important;
+  padding: 100px 0px;
+}
+
+/* Remove the dark top/bottom gradient overlays */
+.aerospace-page .learn-section::before,
+.aerospace-page .learn-section::after {
+  display: none;
+}
+
+/* Title — dark navy, badge wraps "LEARN?" */
+.aerospace-page .learn-title {
+  color: #1a1a1a;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #1a1a1a;
+  filter: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-bottom: 0.6rem;
+}
+
+.aerospace-page .learn-badge {
+  display: inline-block;
+  padding: 0.12em 0.45em;
+  background: #1a1a1a;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  border-radius: 4px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+}
+
+.aerospace-page .learn-sub {
+  color: #404040;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: clamp(1.8rem, 3.5vh, 3rem);
+}
+
+/* 4-column grid — 7 cards fill rows 1-2 (cols 1-3), drone slot at row 2 col 4 */
+.aerospace-page .learn-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(0.8rem, 1.8vw, 1.6rem);
+  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+/* Card — drones box frame */
+.aerospace-page .learn-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: clamp(14px, 1.8vw, 22px);
+  background:
+    url('../../assets/programs/drones/students-learn-box-frame.png')
+    center / 100% 100% no-repeat;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Photo fills the frame's image area */
+.aerospace-page .learn-card-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  display: block;
+  margin-bottom: 0.75rem;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* Label */
+.aerospace-page .learn-card-label {
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 800;
+  font-size: clamp(13px, 1.1vw, 17px);
+  text-align: center;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  padding: 30px 0px;
+}
+
+/* Empty slot reserved for drone — visible placeholder */
+.aerospace-page .learn-drone-slot {
+  display: block;
+  /* drone will sit here once re-enabled */
+}
+
+/* Footer line */
+.aerospace-page .learn-foot {
+  color: #404040;
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .aerospace-page .learn-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .aerospace-page .learn-drone-slot {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .aerospace-page .learn-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.projects-card {
+  background: url('../../assets/programs/space-robotics/project-box-frame.svg') center / 100%
+    100% no-repeat;
+}
+
+
+/* ============================================================
+   MINIMAL TARGETED FIXES — these rules are SCOPED and SAFE.
+   No pointer-events tricks, no aggressive global selectors.
+   ============================================================ */
+
+/* #2 Hero robot drag — give the canvas pointer events so
+   OrbitControls receives mouse + touch input. */
+.aerospace-page .hero-canvas {
+  pointer-events: auto !important;
+}
+.aerospace-page .hero-canvas canvas {
+  touch-action: none;
+  cursor: grab;
+}
+.aerospace-page .hero-canvas canvas:active {
+  cursor: grabbing;
+}
+
+/* #4a FAQ-robotics accordion — max-height transition (the grid
+   trick was failing silently). */
+.aerospace-page .faq-robotics-a {
+  display: block !important;
+  grid-template-rows: unset !important;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.aerospace-page .faq-robotics-item.is-open .faq-robotics-a {
+  max-height: 800px;
+}
+.aerospace-page .faq-robotics-a-body {
+  padding: 0.5rem 1.2rem 1rem;
+}
+
+/* #4b Career-pathways accordion — same max-height fix. */
+.aerospace-page .career-pathways-section--robotics .faq-answer {
+  display: block !important;
+  grid-template-rows: unset !important;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.aerospace-page .career-pathways-section--robotics .faq-item.is-open .faq-answer {
+  max-height: 800px;
+}
+
+/* #5 Vetted-by — uniform photo, 100%-wide plate. */
+.aerospace-page .vetted-section--robotics .vetted-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.aerospace-page .vetted-section--robotics .vetted-stage {
+  width: 180px !important;
+  max-width: 180px !important;
+  min-width: 180px !important;
+  height: 180px !important;
+  aspect-ratio: 1 / 1 !important;
+  margin: 0 auto;
+}
+.aerospace-page .vetted-section--robotics .vetted-plate {
+  width: 100% !important;
+  max-width: none !important;
+  margin-top: 1rem;
+}
+
+/* #6 Other-programs image — contain (not cover). */
+.aerospace-page .explore-section--robotics .explore-card-img {
+  object-fit: contain !important;
+}
+
+/* #7 Footer newsletter input — no shadow. */
+.aerospace-page .site-footer-form input,
+.aerospace-page .site-footer-form input:focus,
+.aerospace-page .site-footer-form input:hover {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+/* =============================================================
+   UNIFIED SECTION TITLE FONT-SIZE — every section heading shares
+   the SAME clamp() so the typography reads as one consistent
+   scale across the page.  Hero title and the special "WHY
+   DRONES?" outline title are excluded (they're intentionally
+   larger / design-specific).
+   ============================================================= */
+.aerospace-page .drones-cert-title,
+.aerospace-page .careers-section--robotics .careers-title,
+.aerospace-page .career-pathways-section--robotics .career-pathways-title,
+.aerospace-page .choose-path-section--robotics .choose-path-title,
+.aerospace-page .assoc-section--robotics .assoc-title,
+.aerospace-page .vetted-section--robotics .vetted-title,
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-title,
+.aerospace-page .modes-section--robotics .modes-title,
+.aerospace-page .projects-section--robotics .projects-title,
+.aerospace-page .impact-section--robotics .impact-title,
+.aerospace-page .faq-robotics-title,
+.aerospace-page .cta-robotics-title,
+.aerospace-page .explore-section--robotics .explore-title,
+.aerospace-page .why-section--robotics .why-title,
+.aerospace-page .learn-title,
+.aerospace-page .drones-start-title {
+  font-size: clamp(1.7rem, 3vw, 2.6rem) !important;
+  letter-spacing: 0.03em !important;
+  line-height: 1.15 !important;
+}
+
+/* =============================================================
+   "AFTER" CONNECTOR LINES — the SVG line tree that sits AFTER
+   the "WHO ARE WE ASSOCIATED WITH" title.  Solid theme grey
+   (no animated pulse) so the lines read as a clean, consistent
+   diagram on either background.
+   ============================================================= */
+.aerospace-page .assoc-section--robotics .assoc-lines path,
+.aerospace-page .drones-assoc-vetted-wrapper .assoc-section--robotics .assoc-lines path {
+  stroke: #2a2a2a !important;
+  stroke-dasharray: unset !important;
+  stroke-dashoffset: 0 !important;
+  filter: none !important;
+  animation: none !important;
+}
+
+/* #8 Box-title font-weights → 900. */
+.aerospace-page .why-title,
+.aerospace-page .why-title-bold,
+.aerospace-page .cert-robotics-title,
+.aerospace-page .careers-title,
+.aerospace-page .careers-skill-label,
+.aerospace-page .competitions-label-text,
+.aerospace-page .comp-card-title,
+.aerospace-page .career-pathways-title,
+.aerospace-page .faq-q-text,
+.aerospace-page .choose-path-title,
+.aerospace-page .choose-card-title,
+.aerospace-page .assoc-title,
+.aerospace-page .vetted-title,
+.aerospace-page .vetted-name,
+.aerospace-page .modes-title,
+.aerospace-page .modes-card-label,
+.aerospace-page .projects-title,
+.aerospace-page .projects-card-title,
+.aerospace-page .impact-title,
+.aerospace-page .impact-card-title,
+.aerospace-page .faq-robotics-title,
+.aerospace-page .faq-robotics-q-text,
+.aerospace-page .cta-robotics-title,
+.aerospace-page .explore-title,
+.aerospace-page .explore-card-label {
+  font-weight: 900 !important;
+}
+
+
+/* ============================================================
+   REMOVE ALL HOVER DROP-SHADOW EFFECTS ACROSS THE ROBOTICS PAGE.
+   Strips both `filter: drop-shadow()` and any blurred box-shadow
+   that appears only on hover. Loaded last → wins every override.
+   ============================================================ */
+.aerospace-page *:hover,
+.aerospace-page *:focus-visible,
+.aerospace-page *:focus,
+.aerospace-page *:active {
+  filter: none !important;
+  -webkit-filter: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+/* Re-enable transform / translate / color hover (those don't paint
+   a shadow). Only the drop-shadow / glow filters are killed above. */
+
+   .aerospace-page .career-pathways-section--robotics .faq-q-text {
+  color: #1a1a1a !important;
+  font-weight: 600 !important;
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem) !important;
+}
+.aerospace-page .choose-path-section--robotics .choose-card-title{
+  font-weight: 700 !important;
+  font-size:20px
+}
+.choose-card-list li{
+  font-size:17px
+}
+.choose-card-consider{
+  font-size:17px
+}
+.aerospace-page .vetted-section--robotics .vetted-role{
+  font-size:17px
+}
+.aerospace-page .modes-section--robotics .modes-card-label{
+  font-size:17px
+}
+.aerospace-page .faq-robotics-q-text{
+  font-weight: 600 !important;
+}
+.aerospace-page .explore-section--robotics .explore-card-label{
+  font-size:17px
+}
+.site-footer-copy, .site-footer-policy{
+  font-size: 17px !important;
+  font-weight: 600 !important
+}
+.site-footer-form{
+  background: transparent  !important;
+}
+
+/* ============================================================
+   DRONES HERO — dark hex backdrop, 3D drone left, metallic title
+   + tagline + CTA on the right.
+   ============================================================ */
+.aerospace-page .hero.drones-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 640px;
+  background: #050608;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* Dark backdrop + faint hexagonal pattern */
+.aerospace-page .drones-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-color: #050608;
+  background-image: url("../../assets/programs/drones/hero-bg.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Soft vignette to deepen the corners and frame the centre */
+.aerospace-page .drones-hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 80% 70% at 50% 50%,
+      transparent 0%,
+      rgba(0, 0, 0, 0.35) 75%,
+      rgba(0, 0, 0, 0.6) 100%
+    );
+}
+
+/* Content grid — drone canvas left, copy right */
+.aerospace-page .drones-hero-grid {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  padding: clamp(60px, 7vh, 80px) clamp(1rem, 4vw, 3rem) 0;
+}
+
+/* LEFT — 3D drone target rect.  Sized to roughly match the
+   vertical extent of the title block on the right (title +
+   tagline + description + CTA ≈ 420–540px tall) so the
+   drone reads as vertically aligned with the copy. */
+.aerospace-page .drones-hero-stage {
+  position: relative;
+  width: 100%;
+  height: clamp(380px, 50vh, 540px);
+  align-self: center;
+}
+
+.aerospace-page .drones-hero-stage canvas {
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
+  cursor: grab;
+  touch-action: none;
+}
+.aerospace-page .drones-hero-stage canvas:active {
+  cursor: grabbing;
+}
+
+/* LEFT — title + copy block */
+.aerospace-page .drones-hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  color: #e6e6e6;
+  max-width: none;
+  min-width: 0;
+  overflow: visible;
+}
+
+/* Hero title — black-to-grey gradient.
+   Single-word title on one line.  Generous right padding + width
+   max-content so the gradient text + filter bounding box never
+   clips the trailing "S".  Drop-shadow filter removed because it
+   was creating a tight filter bounding box that cut the last
+   letter of the gradient-clipped text. */
+.aerospace-page .drones-hero-title {
+  margin: 0;
+  padding: 0.05em 0.45em 0.05em 0;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  font-size: clamp(2.2rem, 6vw, 5.2rem);
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: visible;
+  width: max-content;
+  max-width: 100%;
+  background-image: linear-gradient(
+    180deg,
+    #a8a8a8 0%,
+    #6a6a6a 45%,
+    #2a2a2a 75%,
+    #0a0a0a 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: none;
+  text-shadow: none;
+}
+
+/* Tagline — wide-tracked white caps */
+.aerospace-page .drones-hero-tagline {
+  margin: 0;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: #d5dbe6;
+  text-transform: uppercase;
+}
+
+/* Description copy — muted grey */
+.aerospace-page .drones-hero-desc {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  line-height: 1.6;
+  color: #9aa3b3;
+  max-width: 46ch;
+}
+
+/* CTA — same dimensions as the header "Enroll Now" pill
+   (.header-btn): 210 × 80 px, dark-btn.svg artwork stretched
+   `120% 100%`.  All other typography/colour rules match the header
+   button so the two pills read as a family. */
+.aerospace-page .drones-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 210px;
+  height: 80px;
+  min-width: 0;
+  margin-top: 0.6rem;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background:
+    url("../../assets/programs/drones/dark-btn.svg")
+    no-repeat center / 120% 100%;
+  backdrop-filter: none;
+  box-shadow: none;
+  color: #ffffff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+.aerospace-page .drones-hero-cta-arrow {
+  color: #ff3344;
+  font-weight: 900;
+}
+.aerospace-page .drones-hero-cta:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+/* Responsive — stack the columns on smaller screens */
+@media (max-width: 900px) {
+  .aerospace-page .drones-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding-top: clamp(5rem, 12vh, 8rem);
+    padding-bottom: clamp(3rem, 8vh, 6rem);
+  }
+  .aerospace-page .drones-hero-stage {
+    height: clamp(280px, 40vh, 420px);
+    order: 1;
+  }
+  .aerospace-page .drones-hero-text {
+    order: 2;
+    max-width: 100%;
+  }
+  /* Title size is already responsive via the main clamp() — no
+     mobile override needed. Matches SpaceScience + SpaceRobotics. */
+}
+
+
+/* ============================================================
+   SECTION DIVIDER OVERLAYS — kill every ::before/::after that
+   paints a white gradient at section seams (these were the soft
+   bloom transitions between sections on the robotics page).
+   The drone page should have hard section edges with no fades.
+   ============================================================ */
+.aerospace-page .why-section--robotics::before,
+.aerospace-page .why-section--robotics::after,
+.aerospace-page .cert-section--robotics::before,
+.aerospace-page .cert-section--robotics::after,
+.aerospace-page .learn-section::before,
+.aerospace-page .learn-section::after,
+.aerospace-page .age-section::before,
+.aerospace-page .age-section::after,
+.aerospace-page .careers-section::before,
+.aerospace-page .careers-section::after,
+.aerospace-page .careers-section--robotics::before,
+.aerospace-page .careers-section--robotics::after,
+.aerospace-page .competitions-section::before,
+.aerospace-page .competitions-section::after,
+.aerospace-page .competitions-section--robotics::before,
+.aerospace-page .competitions-section--robotics::after,
+.aerospace-page .career-pathways-section::before,
+.aerospace-page .career-pathways-section::after,
+.aerospace-page .career-pathways-section--robotics::before,
+.aerospace-page .career-pathways-section--robotics::after,
+.aerospace-page .choose-path-section::before,
+.aerospace-page .choose-path-section::after,
+.aerospace-page .choose-path-section--robotics::before,
+.aerospace-page .choose-path-section--robotics::after,
+.aerospace-page .assoc-section::before,
+.aerospace-page .assoc-section::after,
+.aerospace-page .assoc-section--robotics::before,
+.aerospace-page .assoc-section--robotics::after,
+.aerospace-page .vetted-section::before,
+.aerospace-page .vetted-section::after,
+.aerospace-page .vetted-section--robotics::before,
+.aerospace-page .vetted-section--robotics::after,
+.aerospace-page .modes-section::before,
+.aerospace-page .modes-section::after,
+.aerospace-page .modes-section--robotics::before,
+.aerospace-page .modes-section--robotics::after,
+.aerospace-page .projects-section::before,
+.aerospace-page .projects-section::after,
+.aerospace-page .projects-section--robotics::before,
+.aerospace-page .projects-section--robotics::after,
+.aerospace-page .impact-section::before,
+.aerospace-page .impact-section::after,
+.aerospace-page .impact-section--robotics::before,
+.aerospace-page .impact-section--robotics::after,
+.aerospace-page .tracking-section::before,
+.aerospace-page .tracking-section::after,
+.aerospace-page .explore-section::before,
+.aerospace-page .explore-section::after,
+.aerospace-page .explore-section--robotics::before,
+.aerospace-page .explore-section--robotics::after,
+.aerospace-page .space-careers-wrapper--robotics::before,
+.aerospace-page .space-careers-wrapper--robotics::after,
+.aerospace-page .faq-section-wrapper::before,
+.aerospace-page .faq-section-wrapper::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+}
+
+/* =========================================================
+   DRONES: ASSOCIATED WITH + VETTED BY — shared dark wrapper
+========================================================= */
+.aerospace-page .drones-assoc-vetted-wrapper {
+  background:
+    url("../../assets/programs/drones/associated-vetted-bg.webp")
+    center / contain no-repeat;
+  background-color: #ffffff;
+}
+.aerospace-page .drones-assoc-vetted-wrapper::before,
+.aerospace-page .drones-assoc-vetted-wrapper::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Both inner sections become transparent — wrapper carries the bg */
+.aerospace-page .drones-assoc-vetted-wrapper .assoc-section--robotics {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  overflow: visible !important;
+}
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics,
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics::before,
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics::after {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  color: #ffffff !important;
+}
+
+/* ---- ASSOCIATED WITH: dark text → white ---- */
+.aerospace-page .drones-assoc-vetted-wrapper .assoc-section--robotics .assoc-title {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-shadow: none !important;
+}
+.aerospace-page .drones-assoc-vetted-wrapper .assoc-section--robotics .assoc-title-badge {
+  background: #ffffff !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+/* Connector lines — theme grey/black (was rgba(255,255,255,0.5)).
+   Static line that animates between #1a1a1a (deep black) and
+   #6a6a6a (mid grey) so it reads against both light and dark
+   backgrounds and stays on the drone palette. */
+.aerospace-page .drones-assoc-vetted-wrapper .assoc-section--robotics .assoc-lines path {
+  stroke: #4a4a4a !important;
+  stroke-dasharray: unset !important;
+  stroke-dashoffset: 0 !important;
+  filter: drop-shadow(0 0 2px rgba(26, 26, 26, 0.45)) !important;
+  animation: assocLinePulseDronesGrey 4s ease-in-out infinite !important;
+}
+
+@keyframes assocLinePulseDronesGrey {
+  0%, 100% { stroke: #1a1a1a; }
+  50%      { stroke: #6a6a6a; }
+}
+/* Logo box frame: drone asset */
+.aerospace-page .drones-assoc-vetted-wrapper .assoc-section--robotics .assoc-box-frame {
+  background:
+    url("../../assets/programs/drones/associated-client-frame.svg")
+    center / 100% 100% no-repeat !important;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55)) !important;
+}
+/* Lighting glow stays at bottom */
+.aerospace-page .drones-assoc-vetted-wrapper .assoc-section--robotics .assoc-box-light {
+  bottom: -45% !important;
+  top: auto !important;
+  opacity: 0.75;
+}
+/* Center LOF box on dark bg */
+/* Drone image overlay — hidden until a proper drone PNG asset is provided */
+.aerospace-page .assoc-drone-img {
+  display: none !important;
+}
+
+/* ---- VETTED BY: dark theme, 2-column + 2×2 grid ----
+   The left column (title + drone landing slot + static drone img)
+   aligns to the TOP of the row so the "VETTED BY" title sits at
+   the top of the section.  The drone-traveler lands at the
+   .drone-wp-vetted sentinel which is positioned right BELOW the
+   title in the JSX. */
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-inner {
+  display: grid !important;
+  grid-template-columns: 1fr 1.2fr !important;
+  align-items: flex-start !important;
+  gap: clamp(2rem, 4vw, 5rem) !important;
+  flex-direction: unset !important;
+  padding: 0px 150px;
+}
+.aerospace-page .assoc-tree{
+  padding: 0px 150px;
+}
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-left-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-title {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-align: left !important;
+  font-size: clamp(2rem, 5vw, 3.8rem) !important;
+  line-height: 1.1 !important;
+}
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-title-badge {
+  background: #ffffff !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+/* Drone image in vetted left col — hidden until a proper drone PNG is provided */
+.aerospace-page .vetted-drone-img {
+  display: none !important;
+}
+/* 2×2 grid */
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: clamp(1rem, 2vw, 1.6rem) !important;
+  grid-template-rows: auto !important;
+}
+/* Card layout: photo + plate */
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-card {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-stage {
+  width: 100% !important;
+  max-width: none !important;
+  aspect-ratio: 3 / 2.8 !important;
+  position: relative !important;
+  overflow: hidden !important;
+  display: block !important;
+  margin: 0 !important;
+}
+/* Hide beams and glow ring — not needed on dark bg */
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-beam,
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-stage::after {
+  display: none !important;
+}
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-photo {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  inset: 0 !important;
+  clip-path: none !important;
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+  transform: none !important;
+}
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics.vetted-section--in .vetted-photo {
+  opacity: 1 !important;
+  transform: none !important;
+}
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-photo::before,
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-photo::after {
+  display: none !important;
+}
+/* contain shows the full portrait cutout without cropping */
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-photo img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  filter: none !important;
+}
+/* Name plate — drone frame */
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-plate {
+  background:
+    url("../../assets/programs/drones/team-name-frame.png")
+    center / 100% 100% no-repeat !important;
+  width: 100% !important;
+  padding: clamp(0.7rem, 1.2vw, 1rem) clamp(0.8rem, 1.5vw, 1.2rem) !important;
+  min-height: clamp(52px, 7vw, 72px) !important;
+  flex-shrink: 0;
+}
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-name {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: clamp(0.7rem, 1.1vw, 0.95rem) !important;
+}
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-role {
+  color: rgba(255, 255, 255, 0.7) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.7) !important;
+  font-size: clamp(0.6rem, 0.9vw, 0.82rem) !important;
+}
+.aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-li {
+  color: #ffffff !important;
+}
+
+@media (max-width: 860px) {
+  .aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-inner {
+    grid-template-columns: 1fr !important;
+  }
+  .aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-left-col {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+@media (max-width: 520px) {
+  .aerospace-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ============================================================
+   HERO BOTTOM RADIUS — soften the bottom edge of the hero into
+   a rounded shape that flows into the next section.
+   overflow is VISIBLE so the drone (rendered by the fixed
+   DroneTraveler) and the title's drop-shadows extend past the
+   hero box without being clipped.  The rounded corner is
+   painted by the background layers below (.drones-hero-bg /
+   .drones-hero-vignette) which DO clip to the radius.
+   ============================================================ */
+.aerospace-page .hero.drones-hero {
+  border-bottom-left-radius: clamp(28px, 4vw, 30px);
+  border-bottom-right-radius: clamp(28px, 4vw, 30px);
+  overflow: visible !important;
+}
+
+.aerospace-page .drones-hero-bg,
+.aerospace-page .drones-hero-vignette {
+  border-bottom-left-radius: clamp(28px, 4vw, 64px);
+  border-bottom-right-radius: clamp(28px, 4vw, 64px);
+  overflow: hidden;
+}
+
+/* ============================================================
+   WHITE GRADIENT OVERLAYS
+   — top fade on Other Programs, bottom fade on FAQ wrapper.
+   These come AFTER the global suppression block so they win.
+   ============================================================ */
+
+/* FAQ section wrapper — needs position:relative for ::after to anchor */
+.aerospace-page .faq-section-wrapper {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Other Programs: white fade at the top */
+.aerospace-page .explore-section--robotics::before {
+  display: block !important;
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 28% !important;
+  background: linear-gradient(to bottom, #000000 0%, transparent 100%) !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+}
+
+/* FAQ wrapper: white fade at the bottom */
+.aerospace-page .faq-section-wrapper::after {
+  display: block !important;
+  content: '' !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 28% !important;
+  background: linear-gradient(to top, #ffffff 0%, transparent 100%) !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+}
+
+/* The white bottom fade that previously bled the hero into the
+   next section is no longer needed — the rounded bottom corners
+   handle the transition visually. */
+.aerospace-page .hero.drones-hero::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+}
+
+
+/* ============================================================
+   WHY DRONES? — section redesigned to match the reference.
+   White page bg, large outlined+solid title above a big BLACK
+   rounded panel (bg-shape-1.svg) with text on the left + drone
+   on the right.  Geometric corner decorations from element-1.svg.
+   ============================================================ */
+.aerospace-page .drones-why-section {
+  position: relative !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  min-height: unset !important;
+  padding: 100px 0px;
+  overflow: visible !important;
+  color: #0a0a0a;
+}
+
+/* Neutralise the black gradient overlays injected by the base
+   .why-section class from home.css. */
+.aerospace-page .drones-why-section::before,
+.aerospace-page .drones-why-section::after {
+  display: none !important;
+}
+
+.aerospace-page .drones-why-inner {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ---- Decorative geometric elements (element-1.svg) ----------------
+   Placed at the page corners outside the black shape and one inside
+   the top-right of the shape.  Pointer-events off so they never
+   intercept interaction. */
+.aerospace-page .drones-why-element {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  user-select: none;
+  width: clamp(80px, 10vw, 160px);
+  height: auto;
+  opacity: 0.85;
+}
+
+.aerospace-page .drones-why-element--tr-outer {
+  top: -1.5rem;
+  right: -1.5rem;
+  z-index: 1;
+}
+
+.aerospace-page .drones-why-element--bl-outer {
+  bottom: -1.5rem;
+  left: -1.5rem;
+  transform: rotate(180deg);
+  z-index: 1;
+}
+
+/* ---- Title sits IN the notch carved out of the panel's top-left.
+   The notch in bg-shape-1.svg lives at SVG coords y:80–237 / x:100–667
+   which is roughly the top-left corner of the panel.  Title is
+   absolutely positioned within .drones-why-inner so it overlaps that
+   notch area.                                                       */
+.aerospace-page .drones-why-title {
+  position: absolute;
+  top: 7%;
+  left: 3%;
+  z-index: 6;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  font-size: clamp(1.8rem, 4vw, 3.4rem);
+  text-transform: uppercase;
+  color: #0a0a0a;
+  -webkit-text-fill-color: #0a0a0a;
+}
+
+/* WHY — outlined (transparent fill, dark stroke). */
+.aerospace-page .drones-why-title-outline {
+  -webkit-text-stroke: 2px #0a0a0a;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 900;
+}
+
+/* DRONES? — solid black */
+.aerospace-page .drones-why-title-bold {
+  color: #0a0a0a !important;
+  -webkit-text-fill-color: #0a0a0a !important;
+  font-weight: 900;
+}
+
+/* ---- The notched panel ------------------------------------------
+   bg-shape-1.svg is the dark card with the notch, dot patterns, and
+   gradient fill.  We render it as a CSS background here (100%×100%
+   fill) so it scales with the container while content sits above it.
+   aspect-ratio matches the SVG's native proportions compressed to a
+   comfortable section height (1514:620 ≈ 2.44:1). */
+.aerospace-page .drones-why-shape {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  aspect-ratio: 1514 / 720;
+  background-image: url("../../assets/programs/drones/bg-shape-1.webp");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  color: #ffffff;
+}
+
+.aerospace-page .drones-why-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+/* Content layer positioned in viewBox coordinates over the SVG.
+   SVG main panel area = x:100–1413.76 (out of 1514) → left/right ~6.6%
+                       y:80–753 (out of 873)        → top ~9%, bottom ~13.7%
+   Left column lives below the notch (y > 237 → top ~27%).
+   Right column lives in the right half (x > 667 → left ~44%) which
+   has no notch and can extend up to the panel top.                  */
+.aerospace-page .drones-why-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(1rem, 2.5vw, 2.5rem);
+  /* Match the SVG's panel inset: left/right ≈ 7%, top ≈ 9%, bottom ≈ 15%
+     so content fits inside the rounded edges. */
+  padding: 14% 7% 15% 7%;
+}
+
+/* ---- LEFT column text -------------------------------------------- */
+.aerospace-page .drones-why-text {
+  align-self: start;
+  /* Push the text down past the notch (notch bottom ≈ 27% of panel
+     height, content already inset 9% from top, so add ~18% relative
+     to panel width — keeps text comfortably below the notch). */
+  padding-top: 10px;
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  line-height: 1.55;
+  max-width: 100%;
+}
+
+.aerospace-page .drones-why-text p {
+  margin: 0 0 0.6rem;
+  color: #ffffff;
+}
+
+.aerospace-page .drones-why-list {
+  list-style: disc;
+  padding-left: 1.2rem;
+  margin: 0 0 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.aerospace-page .drones-why-list li {
+  color: #ffffff;
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  line-height: 1.5;
+}
+
+.aerospace-page .drones-why-list li::marker {
+  color: #ffffff;
+}
+
+/* ---- CTA buttons ------------------------------------------------- */
+.aerospace-page .drones-why-cta-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.1rem;
+  flex-wrap: wrap;
+}
+
+.aerospace-page .drones-why-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(140px, 12vw, 170px);
+  height: clamp(48px, 4.5vw, 58px);
+  padding: 0;
+  border: none;
+  background:
+    url("../../assets/programs/drones/dark-btn.svg")
+    no-repeat center / 120% 100%;
+  color: #ffffff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: clamp(0.7rem, 0.85vw, 0.85rem);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+.aerospace-page .drones-why-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+/* ---- RIGHT column — 3D drone canvas ------------------------------ */
+.aerospace-page .drones-why-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.aerospace-page .drones-why-image canvas {
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
+  cursor: grab;
+  touch-action: none;
+}
+.aerospace-page .drones-why-image canvas:active {
+  cursor: grabbing;
+}
+
+/* ---- Responsive ------------------------------------------------- */
+@media (max-width: 900px) {
+  .aerospace-page .drones-why-shape {
+    aspect-ratio: auto;
+    min-height: 760px;
+  }
+  .aerospace-page .drones-why-content {
+    grid-template-columns: 1fr;
+    padding: 18% 8% 6%;
+    gap: 1.5rem;
+  }
+  .aerospace-page .drones-why-text {
+    padding-top: 0;
+  }
+  .aerospace-page .drones-why-image {
+    height: 280px;
+  }
+  .aerospace-page .drones-why-title {
+    top: 2%;
+    left: 8%;
+    font-size: 1.6rem;
+  }
+}
+
+/* =========================================================
+   WHY START YOUNG — bg-shape-2.svg panel + drone + text
+   ======================================================= */
+
+/* Shared wrapper — single gradient across both sub-sections */
+.aerospace-page .drones-start-age-wrapper {
+  background: linear-gradient(180deg, #3d3d3d 0%, #202020 45%, #595959 100%);
+}
+
+.aerospace-page .drones-start-section {
+  background: transparent;
+  padding: 100px 0px 0px 0px;
+  position: relative;
+}
+
+.aerospace-page .drones-start-inner {
+  position: relative;
+  width: 100%;
+}
+
+/* Panel — bg-shape-2.svg at its natural 1514:798 proportions,
+   slightly compressed vertically (1514:700) to keep the section
+   from being too tall on wide screens. */
+.aerospace-page .drones-start-shape {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1514 / 700;
+  background-image: url("../../assets/programs/drones/bg-shape-22.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Two-column layout overlaid on the panel */
+.aerospace-page .drones-start-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 42fr 58fr;
+  align-items: stretch;
+}
+
+/* LEFT — drone canvas */
+.aerospace-page .drones-start-drone {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.aerospace-page .drones-start-drone canvas {
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
+}
+
+/* RIGHT — text blocks */
+.aerospace-page .drones-start-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1.2rem, 3vh, 2.2rem);
+  padding: 10% 8% 18% 4%;
+  color: #ffffff;
+}
+
+.aerospace-page .drones-start-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.aerospace-page .drones-start-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  font-size: clamp(1.3rem, 2.2vw, 2.2rem);
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.28em;
+}
+
+/* Boxed highlight — "YOUNG?" / "DO?" */
+.aerospace-page .drones-start-badge {
+  display: inline-block;
+  background: #fff;
+  color: #000;
+  padding: 0.05em 0.3em;
+  border-radius: 3px;
+  line-height: 1.15;
+}
+
+.aerospace-page .drones-start-desc {
+  font-size: clamp(0.8rem, 0.95vw, 0.95rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+}
+
+/* ---- Responsive ----------------------------------------- */
+@media (max-width: 900px) {
+  .aerospace-page .drones-start-shape {
+    aspect-ratio: auto;
+    min-height: 600px;
+  }
+  .aerospace-page .drones-start-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: 280px 1fr;
+  }
+  .aerospace-page .drones-start-content {
+    padding: 6% 7% 10%;
+  }
+  .aerospace-page .age-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .aerospace-page .age-card,
+  .aerospace-page .age-card:nth-child(1),
+  .aerospace-page .age-card:nth-child(2),
+  .aerospace-page .age-card:nth-child(3),
+  .aerospace-page .age-card:nth-child(4),
+  .aerospace-page .age-card:nth-child(5) {
+    aspect-ratio: 229 / 277;
+  }
+}
+
+/* =========================================================
+   DRONE TRAVELER — waypoint anchor divs
+   Invisible 0×0 position anchors the drone canvas flies to.
+   Flow-based anchors (start, learn, cert, vetted) need no
+   extra CSS. Sections that need off-flow positioning are
+   given position:relative + an absolute child.
+========================================================= */
+
+/* Sections that host absolute-positioned waypoints */
+.aerospace-page .careers-section,
+.aerospace-page .competitions-section,
+.aerospace-page .choose-path-section,
+.aerospace-page .modes-section,
+.aerospace-page .projects-section,
+.aerospace-page .impact-section,
+.aerospace-page .faq-robotics-section {
+  position: relative;
+}
+
+/* All waypoint divs: zero size, pointer-events off */
+.drone-wp-careers,
+.drone-wp-comp,
+.drone-wp-choose,
+.drone-wp-modes,
+.drone-wp-projects,
+.drone-wp-impact,
+.drone-wp-faq,
+.drone-wp-vetted {
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* WHY ROBOTICS FOR FUTURE CAREERS — top-left, smaller drone */
+.drone-wp-careers {
+  position: absolute;
+  top: 4rem;
+  left: 5%;
+}
+
+/* COMPETITIONS — left column, lower third */
+.drone-wp-comp {
+  position: absolute;
+  bottom: 30%;
+  left: 5%;
+}
+
+/* HOW TO CHOOSE — top-right corner */
+.drone-wp-choose {
+  position: absolute;
+  top: 4rem;
+  right: 8%;
+}
+
+/* MODES TO JOIN — top-left */
+.drone-wp-modes {
+  position: absolute;
+  top: 4rem;
+  left: 5%;
+}
+
+/* STUDENT PROJECTS — top-right */
+.drone-wp-projects {
+  position: absolute;
+  top: 4rem;
+  right: 8%;
+}
+
+/* PROJECT IMPACT — top-right */
+.drone-wp-impact {
+  position: absolute;
+  top: 4rem;
+  right: 8%;
+}
+
+/* FAQ — horizontal center, roughly one-third down */
+.drone-wp-faq {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+
+.modes-title::after, .projects-title::after, .impact-title::after, .community-title::after, .tracking-title::after, .explore-title::after{
+  background: linear-gradient(90deg, transparent 0%, rgba(80, 160, 255, 0) 8%, rgb(0 0 0 / 95%) 50%, rgba(80, 160, 255, 0) 92%, transparent 100%);
+}
+
+/* =============================================================
+   AEROMODELLING HERO — immersive full-viewport section with
+   sky/mountain background and aircraft image.  Uses .aero-hero
+   (not .hero) so no existing hero cascade applies.
+   ============================================================= */
+.aerospace-page .aero-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: #001830;
+}
+
+/* Sky / mountain photo fills the full hero */
+.aerospace-page .aero-hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url("../../assets/programs/aeromodelling/hero-bg.webp")
+    center / cover no-repeat;
+  z-index: 1;
+}
+
+/* Aircraft — positioned upper-center, tilted slightly toward the right */
+.aerospace-page .aero-hero-aircraft {
+  position: absolute;
+  top: 25%;
+  left: 30%;
+  transform: translateX(-35%);
+  width: clamp(340px, 52vw, 680px);
+  z-index: 3;
+  pointer-events: none;
+  filter: drop-shadow(0 28px 52px rgba(0, 0, 0, 0.32));
+}
+
+.aerospace-page .aero-hero-aircraft img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* White gradient at the bottom — blends hero into the white why-section */
+.aerospace-page .aero-hero-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 170px;
+  background: linear-gradient(
+    to top,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.92) 25%,
+    rgba(255, 255, 255, 0.55) 60%,
+    transparent 100%
+  );
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Text content — anchored to the bottom-left of the hero */
+.aerospace-page .aero-hero-content {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  padding: 0px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.aerospace-page .aero-hero-title {
+  text-align: center;
+  margin: 0 0 0.12em;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  font-size: clamp(3.2rem, 9.5vw, 6rem);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  text-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.242),
+    0 6px 28px rgba(0, 0, 0, 0.219);
+}
+
+.aerospace-page .aero-hero-tagline {
+  margin: 0 0 0.9em;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-size: clamp(0.78rem, 1.1vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.aerospace-page .aero-hero-desc {
+  margin: 0 0 1.8em;
+  text-align: center;
+  max-width: 100%;
+  font-size: clamp(0.88rem, 1.05vw, 1rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+
+/* Mobile — stack text below aircraft */
+@media (max-width: 640px) {
+  .aerospace-page .aero-hero-aircraft {
+    top: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(280px, 88vw, 420px);
+  }
+
+  .aerospace-page .aero-hero-title {
+    font-size: clamp(2.6rem, 11vw, 4rem);
+  }
+}
+
+/* =============================================================
+   AEROMODELLING — WHY SECTION
+   Background: why-aeromodeling-bg.webp (sky/mountains)
+   Panel shape: why-aeromodeling-shape.png (blue card)
+   Right image: why-aeromodelling-right.png (exploded kit)
+   Buttons: dark-btn.svg + light-btn.svg from aeromodelling/
+   Gradient overlays: white (not black) at top + bottom
+   ============================================================= */
+.aerospace-page .aero-why-section {
+  position: relative;
+  background: url("../../assets/programs/aeromodelling/why-aeromodeling-bg.webp")
+    center / cover no-repeat;
+  padding: 100px 0;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+/* White gradient at top + bottom — blends into hero above and
+   next section below (replaces the default black overlay). */
+.aerospace-page .aero-why-section::before,
+.aerospace-page .aero-why-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 200px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.aerospace-page .aero-why-section::before {
+  top: 0;
+  background: linear-gradient(to bottom, #ffffff 0%, transparent 100%);
+}
+
+.aerospace-page .aero-why-section::after {
+  bottom: 0;
+  background: linear-gradient(to top, #ffffff 0%, transparent 100%);
+}
+
+.aerospace-page .aero-why-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Title — positioned above / overlapping the panel's top-left notch */
+.aerospace-page .aero-why-title {
+  position: absolute;
+  top: 11%;
+  left: 7%;
+  z-index: 6;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  font-size: clamp(1.8rem, 4vw, 3.0rem);
+  text-transform: uppercase;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+}
+
+/* WHY — white outlined text */
+.aerospace-page .aero-why-title-outline {
+  padding: 5px;
+  background: #1a408b;
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+}
+
+/* AEROMODELLING — solid white */
+.aerospace-page .aero-why-title-bold {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 900;
+}
+
+/* Blue panel shape — uses why-aeromodeling-shape.png */
+.aerospace-page .aero-why-shape {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  aspect-ratio: 1514 / 720;
+  background-image: url("../../assets/programs/aeromodelling/why-aeromodeling-shape.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  overflow: visible;
+}
+
+/* Content grid — left text + right image, pinned over the panel */
+.aerospace-page .aero-why-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(1rem, 2.5vw, 2.5rem);
+  padding: 14% 7% 15% 7%;
+}
+
+/* Left column — text */
+.aerospace-page .aero-why-text {
+  align-self: start;
+  padding-top: 10px;
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  line-height: 1.55;
+}
+
+.aerospace-page .aero-why-text p {
+  margin: 0 0 0.6rem;
+  color: #ffffff;
+}
+
+.aerospace-page .aero-why-list {
+  list-style: disc;
+  padding-left: 1.2rem;
+  margin: 0 0 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.aerospace-page .aero-why-list li {
+  color: #ffffff;
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  line-height: 1.5;
+}
+
+.aerospace-page .aero-why-list li::marker {
+  color: #ffffff;
+}
+
+/* CTA row */
+.aerospace-page .aero-why-cta-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.1rem;
+  flex-wrap: wrap;
+}
+
+/* Shared button base */
+.aerospace-page .aero-why-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+  height: 80px;
+  margin-left:-30px;
+  padding: 0;
+  border: none;
+  color: #ffffff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: clamp(0.68rem, 0.85vw, 0.84rem);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+/* Primary — dark-btn.svg (filled) */
+.aerospace-page .aero-why-btn--dark {
+  background:
+    url("../../assets/programs/aeromodelling/dark-btn.svg")
+    no-repeat center / 120% 100%;
+}
+
+/* Secondary — light-btn.svg (outline) */
+.aerospace-page .aero-why-btn--light {
+  background:
+    url("../../assets/programs/aeromodelling/light-btn.svg")
+    no-repeat center / 120% 100%;
+}
+
+.aerospace-page .aero-why-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+/* Right column — image */
+.aerospace-page .aero-why-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  margin-top: -125px;
+}
+
+.aerospace-page .aero-why-image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  max-height: 100%;
+  display: block;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .aerospace-page .aero-why-shape {
+    aspect-ratio: unset;
+    min-height: 480px;
+  }
+
+  .aerospace-page .aero-why-content {
+    grid-template-columns: 1fr;
+    padding: 20% 6% 10%;
+  }
+
+  .aerospace-page .aero-why-image {
+    display: none;
+  }
+}
+
+/* =============================================================
+   AEROMODELLING — WHY START YOUNG + AGE PROGRAMS
+   Background: why-young-bg.webp (shared wrapper)
+   Age card frame: age-frame.png
+   ============================================================= */
+
+.aerospace-page .aero-start-age-wrapper {
+  position: relative;
+  background: url("../../assets/programs/aeromodelling/why-young-bg.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  overflow: hidden;
+}
+
+/* White gradient at top to blend from why-aeromodelling section */
+.aerospace-page .aero-start-age-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(to bottom, #ffffff 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* White gradient at bottom before students learn section */
+.aerospace-page .aero-start-age-wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(to top, #ffffff 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* WHY START YOUNG section */
+.aerospace-page .aero-young-section {
+  position: relative;
+  z-index: 2;
+  padding: 100px 0px 500px 0px;
+}
+
+/* Two-column text layout */
+.aerospace-page .aero-young-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.aerospace-page .aero-young-block {
+  color: #0a0f2e;
+}
+
+.aerospace-page .aero-young-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  font-size: clamp(1.3rem, 2.2vw, 2rem);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0 0 0.85rem;
+  color: #0a0f2e;
+  line-height: 1.15;
+}
+
+.aerospace-page .aero-young-badge {
+  background: #1a408b;
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+}
+
+.aerospace-page .aero-young-desc {
+  font-size: clamp(0.85rem, 1vw, 0.98rem);
+  color: #1e2a4a;
+  line-height: 1.65;
+  margin: 0 0 0.6rem;
+}
+
+/* Aircraft image — centred, sits between text and age cards */
+.aerospace-page .aero-young-aircraft {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2vw;
+}
+
+.aerospace-page .aero-young-aircraft img {
+  width: clamp(340px, 68vw, 780px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.18));
+  transform: scaleX(-1); /* flip to face right for variety */
+}
+
+/* AGE PROGRAMS section — white background, separate from the bg-image wrapper */
+.aerospace-page .aero-age-section {
+  position: relative;
+  z-index: 2;
+  background: #ffffff;
+  padding: clamp(40px, 6vh, 72px) 0 clamp(48px, 7vh, 80px);
+}
+
+.aerospace-page .aero-age-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(0.5rem, 1.2vw, 1.2rem);
+}
+
+/* Each card uses age-frame.png as the entire background shape */
+.aerospace-page .aero-age-card {
+  position: relative;
+  background-image: url("../../assets/programs/aeromodelling/age-frame.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  aspect-ratio: 4 / 4;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.aerospace-page .aero-age-card-label {
+  position: absolute;
+  top: 3%;
+  left: 40%;
+  transform: translateX(-50%);
+  width: 90%;
+  text-align: center;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 800;
+  font-size: clamp(0.62rem, 0.9vw, 0.88rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.aerospace-page .aero-age-card-list {
+  position: absolute;
+  top: 20%;
+  left: 0;
+  right: 0;
+  bottom: 8%;
+  padding: 0px 40px;
+  margin: 0;
+  list-style: disc;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  overflow: hidden;
+}
+
+.aerospace-page .aero-age-card-list li {
+  font-size: 14px;
+  color: #1e2a4a;
+  line-height: 1.4;
+}
+
+/* Mobile age cards — 2 columns */
+@media (max-width: 768px) {
+  .aerospace-page .aero-age-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .aerospace-page .aero-young-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =============================================================
+   AEROMODELLING — STUDENTS LEARN SECTION
+   Background: students-learn-bg.webp
+   Card frame: students-learn-frame.png
+   ============================================================= */
+
+.aerospace-page .aero-learn-section {
+  position: relative;
+  background: url("../../assets/programs/aeromodelling/students-learn-bg.webp")
+    center / cover no-repeat;
+  padding: clamp(80px, 10vh, 120px) 0 clamp(60px, 8vh, 100px);
+  overflow: hidden;
+  color: #0a0f2e;
+}
+
+/* White gradient top + bottom */
+.aerospace-page .aero-learn-section::before,
+.aerospace-page .aero-learn-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 200px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.aerospace-page .aero-learn-section::before {
+  top: 0;
+  background: linear-gradient(to bottom, #ffffff 0%, transparent 100%);
+}
+
+.aerospace-page .aero-learn-section::after {
+  bottom: 0;
+  background: linear-gradient(to top, #ffffff 0%, transparent 100%);
+}
+
+.aerospace-page .aero-learn-section > * {
+  position: relative;
+  z-index: 2;
+}
+
+.aerospace-page .aero-learn-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  font-size: clamp(1.5rem, 3.2vw, 2.8rem);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #0a0f2e;
+  margin: 0 0 0.5rem;
+}
+
+.aerospace-page .aero-learn-badge {
+  color: #2563eb;
+  -webkit-text-fill-color: #2563eb;
+}
+
+.aerospace-page .aero-learn-sub {
+  text-align: center;
+  color: #1e2a4a;
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+  margin: 0 0 clamp(2rem, 4vh, 3.5rem);
+  opacity: 0.8;
+}
+
+/* 4 + 3 card grid */
+.aerospace-page .aero-learn-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(0.8rem, 1.5vw, 1.5rem);
+  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+
+/* Individual card */
+.aerospace-page .aero-learn-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  text-align: center;
+}
+
+.aerospace-page .aero-learn-card-img-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background-image: url("../../assets/programs/aeromodelling/students-learn-frame.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 11% 10% 0%;
+  gap: 0.4rem;
+}
+
+.aerospace-page .aero-learn-card-img-wrap img {
+  width: 100%;
+  min-height: 0;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.aerospace-page .aero-learn-card-label {
+  flex-shrink: 0;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #0a0f2e;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 1.3;
+  padding: 30px 0px;
+}
+
+.aerospace-page .aero-learn-foot {
+  text-align: center;
+  font-size: clamp(0.8rem, 0.95vw, 0.92rem);
+  color: #1e2a4a;
+  opacity: 0.7;
+  max-width: 60ch;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .aerospace-page .aero-learn-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+/* =============================================================
+   AEROMODELLING — CERTIFICATES SECTION
+   Background: certificate-bg.webp (dark)
+   ============================================================= */
+
+.aerospace-page .aero-cert-section {
+  position: relative;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.716), rgba(0, 0, 0, 0.45)),
+    url("../../assets/programs/aeromodelling/certificate-bg.webp")
+    center / cover no-repeat;
+  padding: 200px 0px 200px 0px;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+/* Subtle dark overlay so text stays readable */
+.aerospace-page .aero-cert-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 4, 20, 0.45);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.aerospace-page .aero-cert-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Two-column inner layout */
+.aerospace-page .aero-cert-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+/* LEFT — text column */
+.aerospace-page .aero-cert-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  font-size: clamp(1.8rem, 3.5vw, 3.2rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 1.2rem;
+}
+
+.aerospace-page .aero-cert-list {
+  list-style: disc;
+  padding-left: 1.3rem;
+  margin: 0 0 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.aerospace-page .aero-cert-list li {
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.55;
+}
+
+.aerospace-page .aero-cert-list li::marker {
+  color: #ffffff;
+}
+
+/* Aircraft — pinned at bottom of left column */
+.aerospace-page .aero-cert-aircraft {
+  width: clamp(200px, 38vw, 420px);
+  margin-top: auto;
+}
+
+.aerospace-page .aero-cert-aircraft img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 28px rgba(0, 0, 0, 0.45));
+}
+
+/* RIGHT — fanned certificate images */
+.aerospace-page .aero-cert-images {
+  position: relative;
+  height: clamp(260px, 30vw, 420px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aerospace-page .aero-cert-card {
+  position: absolute;
+  width: clamp(160px, 22vw, 280px);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+}
+
+.aerospace-page .aero-cert-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Fan — left card rotated left, right card rotated right, centre on top */
+.aerospace-page .aero-cert-card--0 {
+  transform: rotate(-12deg) translateX(-55%);
+  z-index: 1;
+  opacity: 0.85;
+}
+
+.aerospace-page .aero-cert-card--1 {
+  transform: rotate(0deg) translateY(-5%);
+  z-index: 3;
+}
+
+.aerospace-page .aero-cert-card--2 {
+  transform: rotate(12deg) translateX(55%);
+  z-index: 2;
+  opacity: 0.85;
+}
+
+@media (max-width: 768px) {
+  .aerospace-page .aero-cert-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .aerospace-page .aero-cert-images {
+    height: clamp(200px, 50vw, 320px);
+  }
+
+  .aerospace-page .aero-cert-aircraft {
+    width: clamp(180px, 60vw, 340px);
+  }
+}
+
+/* =============================================================
+   AEROMODELLING — FUTURE CAREERS + COMPETITIONS SHARED WRAPPER
+   Background: future-and-competition-bg.webp (dark navy blueprint)
+   ============================================================= */
+
+.aerospace-page .aero-careers-comp-wrapper {
+  position: relative;
+  background: url("../../assets/programs/aeromodelling/future-and-competition-bg.webp")
+    center / cover no-repeat;
+  overflow: hidden;
+}
+
+/* =============================================================
+   FUTURE CAREERS SECTION
+   Card frame: future-career-box-frame.png
+   ============================================================= */
+
+.aerospace-page .aero-career-section {
+  position: relative;
+  z-index: 1;
+  padding: 150px 0px;
+  color: #ffffff;
+}
+
+.aerospace-page .aero-career-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  font-size: clamp(1.4rem, 2.8vw, 2.4rem);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  margin: 0 0 0.6rem;
+  text-align: center;
+}
+
+.aerospace-page .aero-career-badge {
+  display: inline-block;
+  padding: 0.1em 0.45em;
+  background: #ffffff;
+  color: #0a0f2e;
+  -webkit-text-fill-color: #0a0f2e;
+  border-radius: 4px;
+  line-height: 1.1;
+}
+
+.aerospace-page .aero-career-sub {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(0.88rem, 1vw, 1rem);
+  line-height: 1.6;
+  margin: 0 0 clamp(2rem, 4vh, 3.5rem);
+}
+
+/* 4+3 flexbox grid — last 3 auto-centre */
+.aerospace-page .aero-career-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(0.8rem, 1.4vw, 1.4rem);
+  margin-bottom: clamp(2rem, 4vh, 3rem);
+}
+
+.aerospace-page .aero-career-card {
+  position: relative;
+  flex: 0 0 calc(25% - 3.5rem);
+  background-image: url("../../assets/programs/aeromodelling/future-career-box-frame.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  aspect-ratio: 4 / 3.6;
+}
+
+/* Image fills the top portion of the frame, label area reserved at bottom */
+.aerospace-page .aero-career-card-img {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  right: 7%;
+  bottom: 22%;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+.aerospace-page .aero-career-card-label {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size:15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.aerospace-page .aero-career-footer {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(0.82rem, 0.95vw, 0.95rem);
+  line-height: 1.7;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .aerospace-page .aero-career-card {
+    flex: 0 0 calc(50% - 0.7rem);
+  }
+}
+
+@media (max-width: 560px) {
+  .aerospace-page .aero-career-card {
+    flex: 0 0 calc(100% - 0rem);
+  }
+}
+
+/* =============================================================
+   AERO COMPETITIONS SECTION
+   Color theme: dark navy cards, vivid-blue icon boxes, white text
+   ============================================================= */
+
+.aerospace-page .aero-comp-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(50px, 7vh, 90px) 0 clamp(60px, 9vh, 110px);
+  color: #ffffff;
+}
+
+/* Badge — white pill like existing but with blue accent */
+.aerospace-page .aero-comp-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  background: #ffffff;
+  color: #0a0f2e;
+  -webkit-text-fill-color: #0a0f2e;
+  border-radius: 4px;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  font-size: clamp(1.6rem, 2.8vw, 2.5rem);
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.aerospace-page .aero-comp-subtitle {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: clamp(0.85rem, 1vw, 0.98rem);
+  max-width: 100%;
+  text-align: left;
+  line-height: 1.6;
+  margin: 0.9rem 0 1.4rem;
+}
+
+/* Enroll button — reuse aero dark-btn SVG */
+.aerospace-page .aero-comp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+  height: 80px;
+  margin-left:-30px;
+  padding: 0;
+  border: none;
+  background: url("../../assets/programs/aeromodelling/dark-btn.svg")
+    no-repeat center / 120% 100%;
+  color: #ffffff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: clamp(0.72rem, 0.88vw, 0.88rem);
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+.aerospace-page .aero-comp-btn:hover {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 6px 18px rgba(86, 138, 255, 0.45));
+}
+
+/* Competition cards — dark navy, blue icon accent */
+.aerospace-page .aero-comp-card {
+  background: rgba(10, 18, 52, 0.82);
+  border: 1px solid rgba(100, 154, 255, 0.523);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  padding: 1.4rem 1.2rem 1.1rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  backdrop-filter: blur(6px);
+}
+
+.aerospace-page .aero-comp-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(37, 99, 235, 0.28);
+}
+
+/* Icon box — vivid blue, centred */
+.aerospace-page .aero-comp-card-icon {
+  width: clamp(48px, 4.5vw, 60px);
+  height: clamp(48px, 4.5vw, 60px);
+  background: #2563eb;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.aerospace-page .aero-comp-card-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(10);
+}
+
+.aerospace-page .aero-comp-card-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: clamp(0.75rem, 0.95vw, 0.92rem);
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  margin: 0 0 0.3rem;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.aerospace-page .aero-comp-card-desc {
+  font-size: clamp(0.75rem, 0.88vw, 0.85rem);
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.5;
+  margin: 0;
+  text-align: center;
+}
+
+
+/* =============================================================
+   AEROMODELLING — CAREER PATHWAY WRAPPER
+   ============================================================= */
+
+.aerospace-page .aero-career-pathway-wrapper {
+  position: relative;
+  background: url("../../assets/programs/aeromodelling/career-pathway-bg.png")
+    center / cover no-repeat;
+  overflow: hidden;
+}
+
+.aerospace-page .aero-pathway-section {
+  position: relative;
+  z-index: 1;
+  padding: 150px 0px;
+  color: #ffffff;
+}
+
+.aerospace-page .aero-pathway-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  text-align: center;
+  margin: 0 0 clamp(2rem, 4vh, 3rem);
+}
+
+.aerospace-page .aero-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.aerospace-page .aero-faq-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(100, 155, 255, 0.35);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.aerospace-page .aero-faq-item.is-open {
+  border-color: rgba(100, 155, 255, 0.7);
+}
+
+.aerospace-page .aero-faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.4rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.aerospace-page .aero-faq-q-text {
+  font-family: var(--font-sans);
+  font-size: clamp(0.88rem, 1.05vw, 1rem);
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.aerospace-page .aero-faq-q-arrow {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.6);
+  transition: transform 0.22s ease;
+}
+
+.aerospace-page .aero-faq-item.is-open .aero-faq-q-arrow {
+  transform: rotate(180deg);
+}
+
+.aerospace-page .aero-faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.28s ease;
+}
+
+.aerospace-page .aero-faq-item.is-open .aero-faq-answer {
+  grid-template-rows: 1fr;
+}
+
+.aerospace-page .aero-faq-answer-body {
+  overflow: hidden;
+  padding: 0 1.4rem;
+}
+
+.aerospace-page .aero-faq-item.is-open .aero-faq-answer-body {
+  padding-bottom: 1rem;
+}
+
+.aerospace-page .aero-faq-answer-body p {
+  font-size: clamp(0.82rem, 0.95vw, 0.92rem);
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* =============================================================
+   AEROMODELLING — RIGHT PATH + ASSOCIATED WRAPPER
+   ============================================================= */
+
+.aerospace-page .aero-right-path-assoc-wrapper {
+  position: relative;
+  background: url("../../assets/programs/aeromodelling/right-path-and-associated-bg.png")
+    center / cover no-repeat;
+  overflow: hidden;
+}
+
+.aerospace-page .aero-right-path-section {
+  position: relative;
+  z-index: 1;
+  padding: 150px 0px 200px 0px;
+}
+
+.aerospace-page .aero-right-path-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  font-size: clamp(1.4rem, 2.8vw, 2.4rem);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom:50px;
+}
+
+.aerospace-page .aero-right-path-badge {
+  display: inline-block;
+  padding: 0.08em 0.4em;
+  background: #ffffff;
+  color: #0a0f2e;
+  -webkit-text-fill-color: #0a0f2e;
+  border-radius: 4px;
+}
+
+.aerospace-page .aero-right-path-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(0.8rem, 1.5vw, 1.5rem);
+}
+
+.aerospace-page .aero-right-path-card {
+  background-image: url("../../assets/programs/aeromodelling/right-path-box-frame.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  padding: 40px 20px 30px 50px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.aerospace-page .aero-right-path-card-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: clamp(0.78rem, 1vw, 0.95rem);
+  color: #ffffff;
+  margin-top:20px;
+  letter-spacing: 0.01em;
+  line-height: normal;
+}
+
+.aerospace-page .aero-right-path-consider {
+  font-size: clamp(0.78rem, 0.9vw, 0.85rem);
+  color: rgba(255, 255, 255, 0.78);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.aerospace-page .aero-right-path-list {
+  list-style: disc;
+  padding-left: 1.1rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.aerospace-page .aero-right-path-list li {
+  font-size: clamp(0.75rem, 0.88vw, 0.85rem);
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.45;
+}
+
+@media (max-width: 768px) {
+  .aerospace-page .aero-right-path-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.aerospace-page .aero-assoc-section {
+  position: relative;
+  z-index: 1;
+  padding-bottom: clamp(60px, 9vh, 100px);
+}
+
+.aerospace-page .aero-assoc-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  font-size: clamp(1.4rem, 2.8vw, 2.4rem);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom:50px;
+}
+
+.aerospace-page .aero-assoc-badge {
+  display: inline-block;
+  padding: 0.08em 0.4em;
+  background: #ffffff;
+  color: #0a0f2e;
+  -webkit-text-fill-color: #0a0f2e;
+  border-radius: 4px;
+}
+
+.aerospace-page .aero-assoc-box {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+.aerospace-page .aero-assoc-box-frame {
+  width: 250px;
+  height: 150px;
+  background-image: url("../../assets/programs/aeromodelling/associated-box-frame.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+}
+
+.aerospace-page .aero-assoc-box-logo {
+  max-width: 85%;
+  max-height: 70%;
+  object-fit: contain;
+  filter: brightness(1.1);
+}
+
+.aerospace-page .aero-assoc-box-light {
+  width:200px;
+  height: auto;
+  margin-top: -4px;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* =============================================================
+   AEROMODELLING — VETTED BY WRAPPER
+   ============================================================= */
+
+.aerospace-page .aero-vetted-wrapper {
+  position: relative;
+  background: url("../../assets/programs/aeromodelling/vetted-by-bg.webp")
+    center / cover no-repeat;
+  overflow: hidden;
+}
+
+.aerospace-page .aero-vetted-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(70px, 10vh, 110px) 0 clamp(60px, 9vh, 100px);
+}
+
+.aerospace-page .aero-vetted-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  margin: 0 0 1.5rem;
+}
+
+.aerospace-page .aero-vetted-aircraft {
+  width: 500px;
+  margin-top: 1rem;
+}
+
+.aerospace-page .aero-vetted-aircraft img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 28px rgba(0, 0, 0, 0.45));
+  transform: scaleX(1);
+}
+
+.aerospace-page .aero-vetted-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.aerospace-page .aero-vetted-plate {
+  position: relative;
+  width:100%;
+  background-image: url("../../assets/programs/aeromodelling/team-designation-box-frame.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  margin-top: -8px;
+}
+
+.aerospace-page .aero-vetted-plate .vetted-name {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  display: block;
+  line-height: 1.2;
+}
+
+.aerospace-page .aero-vetted-plate .vetted-role {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+  display: block;
+  line-height: 1.2;
+}
+
+.aerospace-page .aero-vetted-plate .vetted-li {
+  flex-shrink: 0;
+  color: #ffffff;
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+
+/* =============================================================
+   AEROMODELLING — MODES TO JOIN + STUDENT PROJECTS (shared wrapper)
+   Background: modes-and-students-project-bg.webp
+   ============================================================= */
+
+.aerospace-page .aero-modes-projects-wrapper {
+  position: relative;
+  background: url("../../assets/programs/aeromodelling/modes-and-students-project-bg.webp")
+    center / cover no-repeat;
+  overflow: hidden;
+}
+
+/* ── MODES TO JOIN ───────────────────────────────────────── */
+
+.aerospace-page .aero-modes-section {
+  position: relative;
+  z-index: 1;
+  padding: 150px 0px;
+  color: #ffffff;
+}
+
+.aerospace-page .aero-modes-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  text-align: center;
+  margin: 0 0 0.4rem;
+}
+
+.aerospace-page .aero-modes-subtitle {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-size: clamp(0.78rem, 1vw, 0.92rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  text-align: center;
+  margin: 0 auto 0.6rem;
+  text-align:center;
+}
+
+.aerospace-page .aero-modes-desc {
+  font-size: clamp(0.82rem, 0.95vw, 0.92rem);
+  color: rgba(255, 255, 255, 0.65);
+  text-align: center;
+  max-width: 52ch;
+  margin: 0 auto clamp(2rem, 4vh, 3.5rem);
+  line-height: 1.6;
+}
+
+/* 3-card grid */
+.aerospace-page .aero-modes-grid {
+  display: flex;
+  justify-content: center;
+  gap: clamp(1rem, 2vw, 2rem);
+  flex-wrap: wrap;
+}
+
+/* Card — modes-to-join-box-frame.png as full background */
+.aerospace-page .aero-mode-card {
+  position: relative;
+  width: clamp(160px, 22vw, 260px);
+  aspect-ratio: 3 / 4.2;
+  background-image: url("../../assets/programs/aeromodelling/modes-to-join-box-frame.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  cursor: default;
+}
+
+.aerospace-page .aero-mode-card-img {
+  position: absolute;
+  top: 7%;
+  left: 8%;
+  right: 8%;
+  bottom: 22%;
+  width: 85%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+
+.aerospace-page .aero-mode-card-label {
+  position: absolute;
+  bottom: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: clamp(0.7rem, 0.9vw, 0.88rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+/* ── STUDENT PROJECTS ────────────────────────────────────── */
+
+.aerospace-page .aero-projects-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(40px, 6vh, 70px) 0 clamp(60px, 9vh, 100px);
+  color: #ffffff;
+}
+
+.aerospace-page .aero-projects-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  text-align: center;
+  margin: 0 0 0.4rem;
+}
+
+.aerospace-page .aero-projects-subtitle {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-size: clamp(0.78rem, 1vw, 0.92rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  text-align: center;
+  margin: 0 auto 0.6rem;
+}
+
+.aerospace-page .aero-projects-desc {
+  font-size: clamp(0.82rem, 0.95vw, 0.92rem);
+  color: rgba(255, 255, 255, 0.65);
+  text-align: center;
+  max-width: 52ch;
+  margin: 0 auto clamp(1.5rem, 3vh, 2.5rem);
+  line-height: 1.6;
+}
+
+.aerospace-page .aero-projects-slider {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: clamp(2rem, 4vh, 3.5rem);
+}
+
+/* Project slide card — horizontal: image left, text right */
+.aerospace-page .aero-project-card {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  background-image: url("../../assets/programs/aeromodelling/students-box-frame.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  min-height: clamp(140px, 20vw, 300px);
+  overflow: hidden;
+}
+
+.aerospace-page .aero-project-card-img-wrap {
+  flex-shrink: 0;
+  width: clamp(100px, 18vw, 300px);
+  padding: 6% 3% 6% 6%;
+}
+
+.aerospace-page .aero-project-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+
+.aerospace-page .aero-project-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 7% 6% 7% 3%;
+}
+
+.aerospace-page .aero-project-card-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: clamp(0.78rem, 1vw, 0.95rem);
+  color: #ffffff;
+  margin: 0 0 0.4rem;
+  letter-spacing: 0.02em;
+}
+
+.aerospace-page .aero-project-card-desc {
+  font-size: clamp(0.72rem, 0.88vw, 0.85rem);
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.5;
+  margin: 0 0 auto;
+}
+
+.aerospace-page .aero-project-card-student {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin-top: 0.6rem;
+}
+
+.aerospace-page .aero-project-card-name {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-size: clamp(0.65rem, 0.8vw, 0.78rem);
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.aerospace-page .aero-project-card-meta {
+  font-size: clamp(0.62rem, 0.75vw, 0.72rem);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Stats row */
+.aerospace-page .aero-projects-stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.aerospace-page .aero-projects-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0 clamp(2rem, 5vw, 5rem);
+}
+
+.aerospace-page .aero-projects-stat--divider {
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.aerospace-page .aero-projects-stat-num {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: #ffffff;
+  line-height: 1;
+}
+
+.aerospace-page .aero-projects-stat-lbl {
+  font-size: clamp(0.72rem, 0.88vw, 0.85rem);
+  color: rgba(255, 255, 255, 0.72);
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 640px) {
+  .aerospace-page .aero-mode-card {
+    width: clamp(140px, 42vw, 200px);
+  }
+
+  .aerospace-page .aero-projects-stat--divider {
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    padding-top: 1rem;
+    width: 100%;
+    padding-left: 0;
+  }
+}
+
+
+/* =============================================================
+   AEROMODELLING — PROJECT IMPACT SECTION
+   Background: project-impact-bg.webp
+   Aircraft: project-impact-aircraft.png (top-right, small)
+   Color theme: dark navy, blue accent icons, white text
+   ============================================================= */
+
+.aerospace-page .aero-impact-section {
+  position: relative;
+  background: url("../../assets/programs/aeromodelling/project-impact-bg.webp")
+    center / cover no-repeat;
+  padding: 150px 0px;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+/* Aircraft — top-right corner, small decorative */
+.aerospace-page .aero-impact-aircraft {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  width: clamp(100px, 14vw, 180px);
+  height: auto;
+  object-fit: contain;
+  opacity: 0.75;
+  pointer-events: none;
+  z-index: 0;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.4));
+}
+
+.aerospace-page .aero-impact-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Head block */
+.aerospace-page .aero-impact-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  text-align: center;
+  margin: 0 0 0.4rem;
+}
+
+.aerospace-page .aero-impact-badge {
+  display: inline-block;
+  padding: 0.08em 0.4em;
+  background: #ffffff;
+  color: #0a0f2e;
+  -webkit-text-fill-color: #0a0f2e;
+  border-radius: 4px;
+}
+
+.aerospace-page .aero-impact-subtitle {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-size: clamp(0.78rem, 1vw, 0.92rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  margin: 0 auto 0.7rem;
+}
+.aerospace-page .aero-impact-section .sec-bottom-content{
+  text-align: center;
+  margin-top: 2rem;
+  }
+
+.aerospace-page .aero-impact-desc {
+  font-size: clamp(0.82rem, 0.95vw, 0.92rem);
+  color: rgba(255, 255, 255, 0.65);
+  text-align: center;
+  max-width: 54ch;
+  margin: 0 auto clamp(2.5rem, 5vh, 4rem);
+  line-height: 1.65;
+}
+
+/* 3-card grid */
+.aerospace-page .aero-impact-section .impact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+/* Card */
+.aerospace-page .aero-impact-card {
+  background: rgba(10, 18, 52, 0.72);
+  border: 1px solid rgba(100, 155, 255, 0.22);
+  border-radius: 14px;
+  padding: clamp(1.4rem, 3vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  backdrop-filter: blur(8px);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.aerospace-page .aero-impact-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 40px rgba(37, 99, 235, 0.25);
+}
+
+/* Icon box — blue accent */
+.aerospace-page .aero-impact-card-icon {
+  width: clamp(48px, 5vw, 64px);
+  height: clamp(48px, 5vw, 64px);
+  background: #2563eb;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  flex-shrink: 0;
+}
+
+.aerospace-page .aero-impact-card-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(10);
+}
+
+.aerospace-page .aero-impact-card-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: clamp(0.85rem, 1.1vw, 1.05rem);
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  letter-spacing: 0.02em;
+  white-space: pre-line;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.aerospace-page .aero-impact-card-desc {
+  font-size: clamp(0.78rem, 0.9vw, 0.88rem);
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .aerospace-page .aero-impact-section .impact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =============================================================
+   AEROMODELLING PAGE — SECTION OVERRIDES
+   Appended after all earlier rules so they take priority.
+   Scope: .aerospace-page ensures no bleed to other pages.
+   ============================================================= */
+
+/* -------------------------------------------------------
+   1. FAQ — career-pathway-bg.png background, dark-navy theme
+   ------------------------------------------------------- */
+
+.aerospace-page .faq-robotics-section {
+  background:
+    url("../../assets/programs/aeromodelling/career-pathway-bg.png")
+    center / cover no-repeat !important;
+  background-color: #0a0f2e !important;
+  color: #ffffff !important;
+  padding: 150px 0px !important;
+}
+
+/* Remove any old pseudo-element overlays by redefining them as none */
+.aerospace-page .faq-robotics-section::before,
+.aerospace-page .faq-robotics-section::after {
+  display: none !important;
+}
+
+/* Title */
+.aerospace-page .faq-robotics-title {
+  color: #ffffff !important;
+}
+
+/* Badge (QUESTIONS highlight) */
+.aerospace-page .faq-robotics-title-badge {
+  background: #ffffff !important;
+  color: #0a0f2e !important;
+  -webkit-text-fill-color: #0a0f2e !important;
+}
+
+/* Accordion question button */
+.aerospace-page .faq-robotics-q {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1.5px solid rgba(100, 155, 255, 0.35) !important;
+  color: #ffffff !important;
+}
+
+.aerospace-page .faq-robotics-q:hover {
+  background: rgba(37, 99, 235, 0.25) !important;
+  filter: drop-shadow(0 6px 14px rgba(37, 99, 235, 0.3)) !important;
+}
+
+/* Arrow */
+.aerospace-page .faq-robotics-q-arrow {
+  color: #93c5fd !important;
+}
+
+/* Answer body */
+.aerospace-page .faq-robotics-a-body {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* -------------------------------------------------------
+   2. CTA — cta-bg.webp, white text on dark
+   ------------------------------------------------------- */
+
+.aerospace-page .cta-robotics-section {
+  background:
+    url("../../assets/programs/aeromodelling/cta-bg.webp")
+    center / cover no-repeat !important;
+  background-color: #0a0f2e !important;
+}
+
+/* Remove old white-fade overlays */
+.aerospace-page .cta-robotics-section::before {
+  background: linear-gradient(to bottom, #0a0f2e 0%, transparent 100%) !important;
+}
+.aerospace-page .cta-robotics-section::after {
+  background: linear-gradient(to top, #0a0f2e 0%, transparent 100%) !important;
+}
+
+/* Title */
+.aerospace-page .cta-robotics-title {
+  color: #ffffff !important;
+}
+
+/* Description */
+.aerospace-page .cta-robotics-desc {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+/* Buttons — use aeromodelling dark-btn.svg */
+.aerospace-page .cta-robotics-btn--primary,
+.aerospace-page .cta-robotics-btn--secondary {
+  background-image: url("../../assets/programs/aeromodelling/dark-btn.svg") !important;
+}
+
+.aerospace-page .cta-robotics-btn:hover,
+.aerospace-page .cta-robotics-btn:focus-visible {
+  filter: drop-shadow(0 6px 18px rgba(37, 99, 235, 0.55)) !important;
+}
+
+/* -------------------------------------------------------
+   3. OTHER PROGRAMS — other-programs-bg.webp + other-programs-frame.png
+   ------------------------------------------------------- */
+
+.aerospace-page .explore-section--robotics {
+  background:
+    url("../../assets/programs/aeromodelling/other-programs-bg.webp")
+    center / cover no-repeat !important;
+  background-color: #0a0f2e !important;
+}
+
+/* Title — white on dark */
+.aerospace-page .explore-section--robotics .explore-title {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  margin-bottom: 50px !important;
+}
+
+/* Badge */
+.aerospace-page .explore-section--robotics .explore-title-badge {
+  background: #ffffff !important;
+  color: #0a0f2e !important;
+  -webkit-text-fill-color: #0a0f2e !important;
+}
+
+/* Cards — aeromodelling frame */
+.aerospace-page .explore-section--robotics .explore-card {
+  background:
+    url("../../assets/programs/aeromodelling/other-programs-frame.png")
+    center / 100% 100% no-repeat !important;
+}
+
+/* Label — white */
+.aerospace-page .explore-section--robotics .explore-card-label {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* -------------------------------------------------------
+   4. FOOTER — footer-bg.webp, matching dark-navy theme
+   ------------------------------------------------------- */
+
+.aerospace-page .site-footer {
+  background:
+    url("../../assets/programs/aeromodelling/footer-bg.webp")
+    center / cover no-repeat !important;
+  background-color: #050a1e !important;
+}
+
+/* =============================================================
+   AEROMODELLING PAGE — SECTION GRADIENT OVERLAYS
+   Appended at end; higher source order wins same-specificity.
+   ============================================================= */
+
+/* -----------------------------------------------------------
+   1. WHAT WILL STUDENTS LEARN — white tint over bg image
+   -----------------------------------------------------------
+   Stack a semi-transparent white plane as the first CSS
+   background layer; the webp sits behind it unchanged.
+   ----------------------------------------------------------- */
+.aerospace-page .aero-learn-section {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)),
+    url("../../assets/programs/aeromodelling/students-learn-bg.webp")
+    center / cover no-repeat !important;
+}
+
+/* -----------------------------------------------------------
+   2. CERTIFICATE — black gradient top + bottom
+   Replace the existing full-cover rgba overlay with fades.
+   ----------------------------------------------------------- */
+.aerospace-page .aero-cert-section::before {
+  inset: unset !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: auto !important;
+  height: 220px !important;
+  background: linear-gradient(to bottom, #000000 0%, transparent 100%) !important;
+  z-index: 1 !important;
+}
+.aerospace-page .aero-cert-section::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 220px !important;
+  background: linear-gradient(to top, #000000 0%, transparent 100%) !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+.aerospace-page .aero-cert-section > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* -----------------------------------------------------------
+   3. FUTURE CAREERS + COMPETITIONS wrapper
+   ----------------------------------------------------------- */
+.aerospace-page .aero-careers-comp-wrapper::before,
+.aerospace-page .aero-careers-comp-wrapper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 220px;
+  pointer-events: none;
+  z-index: 1;
+}
+.aerospace-page .aero-careers-comp-wrapper::before {
+  top: 0;
+  background: linear-gradient(to bottom, #000000 0%, transparent 100%);
+}
+.aerospace-page .aero-careers-comp-wrapper::after {
+  bottom: 0;
+  background: linear-gradient(to top, #000000 0%, transparent 100%);
+}
+.aerospace-page .aero-careers-comp-wrapper > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* -----------------------------------------------------------
+   4. RIGHT PATH + ASSOCIATED wrapper
+   ----------------------------------------------------------- */
+.aerospace-page .aero-right-path-assoc-wrapper::before,
+.aerospace-page .aero-right-path-assoc-wrapper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 220px;
+  pointer-events: none;
+  z-index: 1;
+}
+.aerospace-page .aero-right-path-assoc-wrapper::before {
+  top: 0;
+  background: linear-gradient(to bottom, #000000 0%, transparent 100%);
+}
+.aerospace-page .aero-right-path-assoc-wrapper::after {
+  bottom: 0;
+  background: linear-gradient(to top, #000000 0%, transparent 100%);
+}
+.aerospace-page .aero-right-path-assoc-wrapper > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* -----------------------------------------------------------
+   5. VETTED BY wrapper
+   ----------------------------------------------------------- */
+.aerospace-page .aero-vetted-wrapper::before,
+.aerospace-page .aero-vetted-wrapper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 220px;
+  pointer-events: none;
+  z-index: 1;
+}
+.aerospace-page .aero-vetted-wrapper::before {
+  top: 0;
+  background: linear-gradient(to bottom, #000000 0%, transparent 100%);
+}
+.aerospace-page .aero-vetted-wrapper::after {
+  bottom: 0;
+  background: linear-gradient(to top, #000000 0%, transparent 100%);
+}
+.aerospace-page .aero-vetted-wrapper > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* -----------------------------------------------------------
+   6. MODES TO JOIN + STUDENT PROJECTS wrapper
+   ----------------------------------------------------------- */
+.aerospace-page .aero-modes-projects-wrapper::before,
+.aerospace-page .aero-modes-projects-wrapper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 220px;
+  pointer-events: none;
+  z-index: 1;
+}
+.aerospace-page .aero-modes-projects-wrapper::before {
+  top: 0;
+  background: linear-gradient(to bottom, #000000 0%, transparent 100%);
+}
+.aerospace-page .aero-modes-projects-wrapper::after {
+  bottom: 0;
+  background: linear-gradient(to top, #000000 0%, transparent 100%);
+}
+.aerospace-page .aero-modes-projects-wrapper > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* -----------------------------------------------------------
+   7. PROJECT IMPACT — top + bottom black gradients
+   ----------------------------------------------------------- */
+.aerospace-page .aero-impact-section::before,
+.aerospace-page .aero-impact-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 200px;
+  pointer-events: none;
+  z-index: 0;
+}
+.aerospace-page .aero-impact-section::before {
+  top: 0;
+  background: linear-gradient(to bottom, #000000 0%, transparent 100%);
+}
+.aerospace-page .aero-impact-section::after {
+  bottom: 0;
+  background: linear-gradient(to top, #000000 0%, transparent 100%);
+}
+.aerospace-page .aero-impact-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* -----------------------------------------------------------
+   8. FAQ — restore ::before/::after with black gradients
+   (earlier rule had display:none — override it here)
+   ----------------------------------------------------------- */
+.aerospace-page .faq-robotics-section::before,
+.aerospace-page .faq-robotics-section::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 200px !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+.aerospace-page .faq-robotics-section::before {
+  top: 0 !important;
+  background: linear-gradient(to bottom, #000000 0%, transparent 100%) !important;
+}
+.aerospace-page .faq-robotics-section::after {
+  bottom: 0 !important;
+  background: linear-gradient(to top, #000000 0%, transparent 100%) !important;
+}
+.aerospace-page .faq-robotics-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* -----------------------------------------------------------
+   9. CTA — update fades from dark-navy to pure black
+   ----------------------------------------------------------- */
+.aerospace-page .cta-robotics-section::before {
+  background: linear-gradient(to bottom, #000000 0%, transparent 100%) !important;
+}
+.aerospace-page .cta-robotics-section::after {
+  background: linear-gradient(to top, #000000 0%, transparent 100%) !important;
+}
+
+/* -----------------------------------------------------------
+   10. OTHER PROGRAMS — top + bottom black gradients
+   ----------------------------------------------------------- */
+.aerospace-page .explore-section--robotics::before,
+.aerospace-page .explore-section--robotics::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 200px;
+  pointer-events: none;
+  z-index: 1;
+}
+.aerospace-page .explore-section--robotics::before {
+  top: 0;
+  background: linear-gradient(to bottom, #000000 0%, transparent 100%);
+}
+.aerospace-page .explore-section--robotics::after {
+  bottom: 0;
+  background: linear-gradient(to top, #000000 0%, transparent 100%);
+}
+.aerospace-page .explore-section--robotics .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* =============================================================
+   AEROMODELLING — GRADIENT OVERLAY FIXES (round 2)
+   ============================================================= */
+
+/* -----------------------------------------------------------
+   1. CERTIFICATE — clean rewrite of top gradient
+      inset:unset can be unreliable; use explicit position props
+   ----------------------------------------------------------- */
+.aerospace-page .aero-cert-section {
+  position: relative;
+  overflow: hidden;
+}
+.aerospace-page .aero-cert-section::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: auto !important;
+  width: auto !important;
+  height: 220px !important;
+  background: linear-gradient(to bottom, #000000 0%, transparent 100%) !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+.aerospace-page .aero-cert-section::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: auto !important;
+  width: auto !important;
+  height: 220px !important;
+  background: linear-gradient(to top, #000000 0%, transparent 100%) !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+.aerospace-page .aero-cert-section > * {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* -----------------------------------------------------------
+   2. CAREER PATHWAY wrapper — top + bottom black gradients
+   ----------------------------------------------------------- */
+.aerospace-page .aero-career-pathway-wrapper::before,
+.aerospace-page .aero-career-pathway-wrapper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 220px;
+  pointer-events: none;
+  z-index: 1;
+}
+.aerospace-page .aero-career-pathway-wrapper::before {
+  top: 0;
+  background: linear-gradient(to bottom, #000000 0%, transparent 100%);
+}
+.aerospace-page .aero-career-pathway-wrapper::after {
+  bottom: 0;
+  background: linear-gradient(to top, #000000 0%, transparent 100%);
+}
+.aerospace-page .aero-career-pathway-wrapper > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* -----------------------------------------------------------
+   3. OTHER PROGRAMS — override the display:none !important
+      from line ~3093 so the black fades actually render
+   ----------------------------------------------------------- */
+.aerospace-page .explore-section--robotics::before,
+.aerospace-page .explore-section--robotics::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 200px !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+.aerospace-page .explore-section--robotics::before {
+  top: 0 !important;
+  background: linear-gradient(to bottom, #000000 0%, transparent 100%) !important;
+}
+.aerospace-page .explore-section--robotics::after {
+  bottom: 0 !important;
+  background: linear-gradient(to top, #000000 0%, transparent 100%) !important;
+}
+.aerospace-page .explore-section--robotics .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* AEROMODELLING — footer dark overlay on background image */
+.aerospace-page .site-footer {
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url("../../assets/programs/aeromodelling/footer-bg.webp")
+    center / cover no-repeat !important;
+  background-color: #050a1e !important;
+}
+
+body.aerospace-page .header-btn {
+    background: url('/src/assets/programs/aeromodelling/dark-btn.svg') no-repeat center / 120% 100% !important;
+}

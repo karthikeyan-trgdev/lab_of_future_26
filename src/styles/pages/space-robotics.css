@@ -1,0 +1,2933 @@
+/* =========================================================
+   SPACE ROBOTICS — theme overrides.
+   Scoped under .space-robotics-page so the file only adjusts
+   colours / gradients / glows; layout, fonts, sizes are all
+   inherited from home.css.
+   Palette:
+     primary   #ff6a00  (vivid orange — robotic / industrial)
+     secondary #00e6ff  (electric cyan — circuitry)
+     accent    #ffb347  (warm amber highlight)
+     deep bg   #0a0612  (very dark warm-violet)
+========================================================= */
+
+.space-robotics-page {
+  /* Theme palette — navy/blue throughout. The previous orange/amber
+     accents (--sr-primary: #ff6a00, --sr-accent: #ffb347) have been
+     replaced with navy blues so no rule that reads these tokens can
+     paint orange anywhere on the page. */
+  --sr-primary: #1d3b8a;       /* was #ff6a00 — vivid orange */
+  --sr-secondary: #2f63c8;     /* was #00e6ff — cyan */
+  --sr-accent: #4a7fc4;        /* was #ffb347 — warm amber */
+  --sr-deep: #f3f6fc;          /* was #0a0612 — dark warm-violet */
+  --sr-glow: rgba(29, 59, 138, 0.45);     /* was rgba(255,106,0,0.55) */
+  --sr-glow-cyan: rgba(47, 99, 200, 0.35); /* was rgba(0,230,255,0.45) */
+}
+
+/* ---- Hero ---- */
+.space-robotics-page .hero {
+  background: var(--sr-deep);
+}
+
+/* Backdrop image — corridor / robotics studio photo. Fills the
+   whole hero behind the robot canvas. */
+.space-robotics-page .hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url("../../assets/programs/space-robotics/robotics-hero-bg.webp")
+    center / cover no-repeat;
+  z-index: 1;
+}
+
+/* The robot canvas sits ABOVE the bg image. */
+.space-robotics-page .hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: auto !important; /* required for OrbitControls drag input */
+}
+
+/* Belt-and-braces — every <canvas> inside the hero must receive
+   pointer events for OrbitControls drag to work. */
+.space-robotics-page .hero-canvas canvas {
+  pointer-events: auto !important;
+  touch-action: none !important; /* let OrbitControls handle touch */
+}
+
+/* Hero title — absolutely centred over the hero, above the robot
+   canvas. Pointer-events off so the robot drag interaction still
+   works through the text area. */
+.space-robotics-page .hero-text-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 6;        /* above the white bottom gradient (z-index 5) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+  padding: 0 1.5rem;
+}
+
+.space-robotics-page .hero-heading {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  font-size: clamp(2.6rem, 8vw, 6.5rem);
+  line-height: 1;
+  /* Override SpaceScience's gradient — solid white with subtle
+     glow so the title pops over the corridor backdrop. */
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #ffffff;
+  color: #ffffff;
+  /* Black glow — multiple stacked shadows give a soft halo that
+     hugs the letters and deepens the centre, replacing the previous
+     blue/white tint. */
+  text-shadow:
+    0 0 12px rgba(0, 0, 0, 0.85),
+    0 0 28px rgba(0, 0, 0, 0.75),
+    0 0 48px rgba(0, 0, 0, 0.6),
+    0 4px 22px rgba(0, 0, 0, 0.55);
+  filter: none;
+}
+
+.space-robotics-page .hero-word {
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+}
+
+/* WHITE fade — sits ABOVE the robot canvas so it fades the robot's
+   feet into white, blending the hero into the next section. */
+.space-robotics-page .hero::after {
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(255, 255, 255, 0.78) 25%,
+    rgba(255, 255, 255, 0.35) 55%,
+    transparent 100%
+  );
+  z-index: 5;        /* above .hero-canvas (z-index 3) */
+  pointer-events: none;
+}
+
+/* Vignette over the bg image so the centred robot reads clearly. */
+.space-robotics-page .hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 55%,
+    transparent 0%,
+    rgba(10, 6, 18, 0.35) 70%,
+    rgba(10, 6, 18, 0.65) 100%
+  );
+}
+
+/* Flare disabled on the robotics hero — the bg image already
+   provides the lighting atmosphere. */
+.space-robotics-page .hero-flare {
+  display: none;
+}
+
+/* Hero title — navy/blue gradient (was warm orange/amber) */
+.space-robotics-page .hero-title,
+.space-robotics-page .hero h1 {
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #c4d6f4 35%,
+    var(--sr-primary) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 14px var(--sr-glow));
+}
+
+.space-robotics-page .hero-sub,
+.space-robotics-page .hero p {
+  color: rgba(200, 215, 240, 0.78);
+}
+
+/* =========================================================
+   WHY SPACE ROBOTICS — white section, left text + right
+   interactive Zeb robot, matches the supplied design.
+========================================================= */
+
+.space-robotics-page .why-section--robotics {
+  position: relative;
+  background:
+    /* soft white veil so text/buttons stay readable on any pixel */
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    url("../../assets/programs/space-robotics/about-bg.webp") center / cover
+      no-repeat;
+  color: #0d1117;
+  padding: clamp(3rem, 8vh, 6rem) 0;
+  overflow: hidden;
+}
+
+/* Repurpose the section's ::before / ::after as WHITE fades — top and
+   bottom of the section bloom into white so the bg image blends
+   smoothly into whatever sits above/below. */
+.space-robotics-page .why-section--robotics::before,
+.space-robotics-page .why-section--robotics::after {
+  display: block !important;
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 22% !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+}
+
+.space-robotics-page .why-section--robotics::before {
+  top: 0 !important;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0) 100%
+  ) !important;
+}
+
+.space-robotics-page .why-section--robotics::after {
+  bottom: 0 !important;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0) 100%
+  ) !important;
+}
+
+/* Make sure the actual content sits above the two fades. */
+.space-robotics-page .why-section--robotics .why-container {
+  position: relative;
+  z-index: 3;
+}
+
+.space-robotics-page .why-section--robotics .why-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+/* =========================================================
+   CERTIFICATES — robotics design.
+   Layout: title + blue-highlighted bullet list on the LEFT,
+           coverflow slider on the RIGHT, with a robot arm
+           reaching in from the bottom-right corner (bleeds
+           OUT of the section boundary).
+========================================================= */
+.space-robotics-page .cert-section--robotics {
+  position: relative !important;
+  overflow: hidden !important;
+background: #ffffff !important;
+  /* home.css forces min-height: 92vh + display: flex + align-items: center
+     on .cert-section, which was making this section ~92% of viewport tall
+     and centring the content — that's where the huge blank space came
+     from. Reset all three. */
+  min-height: clamp(440px, 56vh, 560px) !important;
+  display: block !important;
+  align-items: initial !important;
+  padding: clamp(2rem, 5vh, 4rem) 0 clamp(3rem, 6vh, 5rem) !important;
+}
+
+/* Section content grid — text LEFT, slider stage RIGHT */
+.space-robotics-page .cert-section--robotics .cert-robotics-inner {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
+  /* Explicit width / centring — `.container` only sets max-width, so
+     without these the inner could collapse to its content width and
+     leave the grid columns invisible. */
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 3rem);
+}
+
+/* ── LEFT: title + bullet list ────────────────────────── */
+.space-robotics-page .cert-section--robotics .cert-robotics-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 32rem;
+}
+
+/* ── RIGHT: coverflow slider stage ─────────────────────── */
+.space-robotics-page .cert-section--robotics .cert-robotics-stage {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  /* overflow: hidden is REQUIRED here — without it the swiper's
+     internal transforms cause the section to collapse and the cert
+     section disappears entirely on this page. */
+  overflow: hidden;
+}
+
+.space-robotics-page .cert-section--robotics .cert-robotics-stage .swiper-3d{
+  perspective: 850px;
+}
+
+.space-robotics-page .cert-section--robotics .cert-robotics-swiper {
+  width: 100%;
+  padding:50px 0px 300px 0px;
+  overflow: visible;
+}
+
+/* Same pattern as home.css `.cert-slide`: explicit slide width so
+   Swiper's coverflow engine has a known size to lay out around.
+   Without this, slides came back at 0×0 and the right column looked
+   blank. */
+.space-robotics-page .cert-section--robotics .cert-robotics-slide {
+  width: clamp(160px, 18vw, 240px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.space-robotics-page .cert-section--robotics .cert-robotics-slide img {
+  display: block;
+  width: 80%;
+  height: auto;
+  border-radius: 10px;
+  /* Stop the browser's native "drag this image" ghost effect, but
+     KEEP pointer-events so Swiper still sees pointermove events
+     when the user starts a drag on top of the certificate art. */
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.space-robotics-page .cert-section--robotics .cert-robotics-slide {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Make absolutely sure events reach the Swiper container — overrides
+   any pointer-events:none inherited from earlier global rules. */
+.space-robotics-page .cert-section--robotics .cert-robotics-stage,
+.space-robotics-page .cert-section--robotics .cert-robotics-swiper,
+.space-robotics-page .cert-section--robotics .cert-robotics-swiper
+  .swiper-wrapper,
+.space-robotics-page .cert-section--robotics .cert-robotics-slide {
+  pointer-events: auto !important;
+}
+
+/* Dim non-active slides slightly so the centred one pops */
+.space-robotics-page
+  .cert-section--robotics
+  .cert-robotics-slide:not(.swiper-slide-active) {
+  opacity: 0.72;
+  filter: brightness(0.94) saturate(0.97);
+}
+
+/* ── Robot hand — bleeds OUT of the right edge, much larger now ── */
+.space-robotics-page .cert-section--robotics .cert-robot-hand--corner {
+  position: absolute;
+  right: -10%;
+  top: 50%;
+  width: 95%;
+  max-width: 1400px;
+  z-index: 1;
+  pointer-events: none;
+  line-height: 0;
+  transform: translateY(-50%);
+  transform-origin: center right;
+}
+
+.space-robotics-page .cert-section--robotics .cert-robot-hand--corner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.space-robotics-page .cert-section--robotics .cert-robotics-title {
+  margin: 0 0 0.3rem;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  font-size: clamp(2rem, 3.4vw, 2.85rem);
+  line-height: 1.05;
+  color: #1d3b8a;
+  -webkit-text-fill-color: #1d3b8a;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  filter: none;
+}
+
+.space-robotics-page .cert-section--robotics .cert-robotics-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.space-robotics-page .cert-section--robotics .cert-robotics-list li {
+  position: relative;
+  padding-left: 1.3rem;
+  font-size: clamp(0.96rem, 1.1vw, 1.05rem);
+  line-height: 1.55;
+  color: #2a3142;
+}
+
+/* Bullet marker — solid blue dot */
+.space-robotics-page .cert-section--robotics .cert-robotics-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #1d3b8a;
+}
+
+/* Highlighted phrases inside the bullets */
+.space-robotics-page .cert-section--robotics .cert-robotics-list strong {
+  color: #1d3b8a;
+  font-weight: 700;
+}
+
+/* ── BOTTOM: robot arm spanning the section width ──────── */
+.space-robotics-page .cert-section--robotics .cert-robot-hand {
+  position: absolute;
+  right: -25%;
+  bottom: -35%;
+  z-index: 2;
+  pointer-events: none;
+  line-height: 0;
+}
+
+.careers-skill-img{
+  left:6% !important;
+}
+.space-robotics-page .cert-section--robotics .cert-robot-hand img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* The cert section opts out of the global fade group's top fade so
+   the white top of the section reads as clean white, while keeping a
+   bottom fade-into-white that the global rules can paint. */
+.space-robotics-page .cert-section--robotics::before {
+  display: none !important;
+}
+
+/* Responsive — stack columns on small screens */
+@media (max-width: 900px) {
+  .space-robotics-page .cert-section--robotics .cert-robotics-inner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .space-robotics-page .cert-section--robotics .cert-robotics-stack {
+    height: clamp(280px, 40vh, 400px);
+  }
+  .space-robotics-page .cert-section--robotics {
+    padding-bottom: 0;
+    min-height: auto;
+  }
+}
+
+/* =========================================================
+   WHY ROBOTICS FOR FUTURE CAREERS — light theme overrides.
+   Layout/grid structure stays the same as home.css; only the
+   colors, frame artwork, and background change here.
+========================================================= */
+.space-robotics-page .careers-section--robotics {
+  position: relative !important;
+  /* future-careers.png as the backdrop, with a soft white veil so the
+     title + skill cards + footer copy stay readable on any pixel. */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.288) 0%,
+      rgba(255, 255, 255, 0.86) 100%
+    ),
+    url("../../assets/programs/space-robotics/future-careers.png")
+      center / cover no-repeat !important;
+  background-color: #ffffff !important;
+  color: #0d1b3a !important;
+  padding: clamp(3rem, 8vh, 6rem) 0 clamp(2rem, 5vh, 4rem) !important;
+  overflow: hidden !important;
+}
+
+/* Title — dark navy + a blue badge wrapping "FUTURE CAREERS?" */
+.space-robotics-page .careers-section--robotics .careers-title {
+  color: #0d1b3a !important;
+  -webkit-text-fill-color: #0d1b3a !important;
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  text-shadow: none !important;
+  filter: none !important;
+  font-size: clamp(1.6rem, 3vw, 2.6rem) !important;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.6rem !important;
+}
+
+/* Blue badge wrapping the FUTURE CAREERS? phrase */
+.space-robotics-page .careers-section--robotics .careers-title-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  background: #1d3b8a;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Subtitle and footer — muted slate text */
+.space-robotics-page .careers-section--robotics .careers-sub,
+.space-robotics-page .careers-section--robotics .careers-footer {
+  color: #3a4252 !important;
+  text-shadow: none !important;
+}
+
+/* Skill cards — use the robotics future-career-frames artwork
+   instead of the SpaceScience version. */
+.space-robotics-page .careers-section--robotics .careers-skill-card {
+  background:
+    url("../../assets/programs/space-robotics/future-career-frames.png")
+    center / 100% 100% no-repeat !important;
+  backdrop-filter: none !important;
+}
+
+.space-robotics-page .careers-section--robotics .careers-skill-card:hover {
+  transform: translateY(-5px);
+  filter: brightness(1.04)
+    drop-shadow(0 10px 24px rgba(29, 59, 138, 0.28));
+}
+
+/* Skill label — dark blue text on the new frame */
+.space-robotics-page .careers-section--robotics .careers-skill-label {
+  color: #1d3b8a !important;
+  font-weight: 800;
+  text-shadow: none !important;
+  font-size: 17px;
+}
+
+/* =========================================================
+   SPACE-CAREERS WRAPPER — robotics override.
+   home.css paints a dark space-themed photo backdrop and black
+   top/bottom gradients on the wrapper.  Reset all three so the
+   Careers + Competitions sections each show their own light
+   backgrounds underneath.
+========================================================= */
+.space-robotics-page .space-careers-wrapper--robotics {
+  background: #ffffff !important;
+}
+.space-robotics-page .space-careers-wrapper--robotics::before,
+.space-robotics-page .space-careers-wrapper--robotics::after {
+  display: none !important;
+  background: none !important;
+  content: none !important;
+}
+
+/* =========================================================
+   COMPETITIONS — light theme override.
+   Layout + grid inherited from home.css; only colours, title
+   style and card chrome change here.
+========================================================= */
+.space-robotics-page .competitions-section--robotics {
+  position: relative !important;
+  /* competition-bg.webp as the backdrop, with a soft white veil so the
+     title + competition cards stay readable on any pixel. */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.78) 0%,
+      rgba(255, 255, 255, 0.86) 100%
+    ),
+    url("../../assets/programs/space-robotics/competition-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #ffffff !important;
+  color: #0d1b3a !important;
+  padding: clamp(3rem, 8vh, 6rem) 0 !important;
+  overflow: hidden !important;
+}
+
+/* Title — reset SpaceScience gradient/glow and wrap the heading in
+   a blue badge that matches the other robotics-section titles. */
+.space-robotics-page .competitions-section--robotics
+  .competitions-label-text {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #0d1b3a !important;
+  -webkit-text-fill-color: #0d1b3a !important;
+  text-shadow: none !important;
+  filter: none !important;
+  margin-bottom: 0.8rem !important;
+}
+
+.space-robotics-page .competitions-section--robotics
+  .competitions-label-badge {
+  display: inline-block;
+  padding: 0.18em 0.6em;
+  background: #1d3b8a;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+/* Subtitle — slate body text */
+.space-robotics-page .competitions-section--robotics .competitions-subtitle {
+  color: #3a4252 !important;
+  text-shadow: none !important;
+  max-width: 100%;
+  width:100%;
+  text-align: left;
+}
+
+/* Card chrome — light card with a subtle blue border + soft shadow */
+.space-robotics-page .competitions-section--robotics .comp-card-outer {
+  background: #ffffff !important;
+  border: 1px solid rgba(29, 59, 138, 0.18) !important;
+  box-shadow:
+    0 14px 36px rgba(15, 30, 70, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+  color: #0d1b3a !important;
+}
+
+.space-robotics-page .competitions-section--robotics .comp-card-outer:hover {
+  transform: translateY(-3px);
+  border-color: rgba(29, 59, 138, 0.5) !important;
+  box-shadow:
+    0 22px 48px rgba(29, 59, 138, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+/* If the home.css rule paints a ::after corner accent, kill it on
+   the light theme so we get a clean card. */
+.space-robotics-page .competitions-section--robotics .comp-card-outer::after {
+  display: none !important;
+  background: none !important;
+  content: none !important;
+}
+
+.space-robotics-page .competitions-section--robotics .comp-card-title {
+  color: #1d3b8a !important;
+  -webkit-text-fill-color: #1d3b8a !important;
+  background: none !important;
+}
+
+.space-robotics-page .competitions-section--robotics .comp-card-desc {
+  color: #3a4252 !important;
+}
+
+.space-robotics-page .competitions-section--robotics .comp-card-icon {
+  border: 1px solid rgba(29, 59, 138, 0.2) !important;
+}
+
+.space-robotics-page .competitions-section--robotics .comp-card-icon img {
+  filter: none !important;
+}
+
+/* =========================================================
+   CAREER PATHWAYS — light theme override.
+   home.css wraps the section in a dark faq-bg.webp backdrop
+   with heavy black gradients and paints the accordion rows in
+   dark glass.  Reset all three so the section reads as a clean
+   light-blue panel, matches the supplied design.
+========================================================= */
+
+/* Wrapper — kill the dark backdrop image and the heavy gradient
+   overlay so the inner section's light theme shows through. */
+.space-robotics-page .faq-section-wrapper {
+  background: #f3f6fc;
+}
+
+.space-robotics-page .faq-section-wrapper .faq-bg-anim {
+  background: none !important;
+  display: none !important;
+}
+
+.space-robotics-page .faq-section-wrapper .faq-bg-overlay {
+  background: none !important;
+  display: none !important;
+}
+
+/* Section — career-pathway-bg.webp backdrop with soft white veil */
+.space-robotics-page .career-pathways-section--robotics {
+  position: relative !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.82) 0%,
+      rgba(255, 255, 255, 0.72) 100%
+    ),
+    url("../../assets/programs/space-robotics/career-pathway-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #f3f6fc !important;
+  color: #0d1b3a !important;
+  padding: clamp(3rem, 8vh, 6rem) 0 !important;
+  text-align: center;
+}
+
+/* Title — reset white/glow + wrap the word CAREER in a blue badge */
+.space-robotics-page .career-pathways-section--robotics
+  .career-pathways-title {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #0d1b3a !important;
+  -webkit-text-fill-color: #0d1b3a !important;
+  text-shadow: none !important;
+  filter: none !important;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.04em;
+}
+
+.space-robotics-page .career-pathways-section--robotics
+  .career-pathways-badge {
+  display: inline-block;
+  padding: 0.18em 0.5em;
+  margin-right: 0.4em;
+  background: #1d3b8a;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Accordion list */
+.space-robotics-page .career-pathways-section--robotics .faq-list {
+  text-align: left;
+  max-width: 880px;
+  margin-top:50px
+}
+.choose-path-grid{
+  margin-top:50px
+}
+.assoc-tree{
+    margin-top:50px
+}
+/* Question button — light blue card with a subtle blue outline.
+   Kill the gradient border + clip-path chrome and replace with a
+   simple rounded pill so each row reads as a flat blue capsule. */
+.space-robotics-page .career-pathways-section--robotics .faq-q-outer {
+  background: transparent !important;
+  padding: 0 !important;
+  clip-path: none !important;
+  border-radius: 14px;
+  filter: none !important;
+}
+
+.space-robotics-page .career-pathways-section--robotics .faq-q-outer:hover {
+  filter: brightness(1.02)
+    drop-shadow(0 6px 16px rgba(29, 59, 138, 0.18)) !important;
+}
+
+.space-robotics-page .career-pathways-section--robotics .faq-q-inner {
+  background: rgba(218, 228, 248, 0.55) !important;
+  border: 1.5px solid rgba(29, 59, 138, 0.32);
+  border-radius: 14px;
+  clip-path: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 1rem 1.6rem;
+}
+
+/* Question text — dark navy */
+.space-robotics-page .career-pathways-section--robotics .faq-q-text {
+  color: #1d3b8a !important;
+  font-weight: 600 !important;
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem) !important;
+}
+
+/* Arrow — dark navy chevron */
+.space-robotics-page .career-pathways-section--robotics .faq-q-arrow {
+  color: #1d3b8a !important;
+  font-size: 0.8rem !important;
+}
+
+/* Answer body — slate text */
+.space-robotics-page .career-pathways-section--robotics .faq-answer-body p {
+  color: #3a4252 !important;
+}
+
+/* Grid-rows 0fr → 1fr accordion trick needs min-height: 0 on the
+   grid + body so the panel can actually collapse to 0 and expand. */
+.space-robotics-page .career-pathways-section--robotics .faq-answer {
+  min-height: 0 !important;
+}
+.space-robotics-page .career-pathways-section--robotics .faq-answer-body {
+  min-height: 0 !important;
+}
+
+/* =========================================================
+   HOW TO CHOOSE THE RIGHT PATH — light theme override.
+   Layout / grid / card shape stays inherited from home.css.
+   Only colour theme, title, frame artwork and section bg are
+   swapped to match the supplied design.
+========================================================= */
+.space-robotics-page .choose-path-section--robotics {
+  position: relative !important;
+  background:
+    radial-gradient(
+      ellipse 55% 50% at 10% 35%,
+      rgba(120, 160, 235, 0.10) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 50% 45% at 90% 75%,
+      rgba(120, 160, 235, 0.10) 0%,
+      transparent 60%
+    ),
+    #f3f6fc !important;
+  padding: clamp(3rem, 7vh, 5rem) 0 clamp(4rem, 9vh, 6rem) !important;
+  text-align: center;
+}
+
+/* Title — reset SpaceScience white-on-blue glow, swap to navy with
+   a dark blue badge wrapping the CHOOSE word. */
+.space-robotics-page .choose-path-section--robotics .choose-path-title {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #0d1b3a !important;
+  -webkit-text-fill-color: #0d1b3a !important;
+  text-shadow: none !important;
+  filter: none !important;
+  font-size: clamp(1.2rem, 2.3vw, 2.1rem) !important;
+  letter-spacing: 0.05em;
+  font-weight: 900 !important;
+}
+
+.space-robotics-page .choose-path-section--robotics .choose-path-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  margin: 0 0.18em;
+  background: #1d3b8a;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Card chrome — swap to the robotics choose-path-frame.png and drop
+   the blur backdrop (frame is opaque on the light section bg). */
+.space-robotics-page .choose-path-section--robotics .choose-card {
+  background:
+    url("../../assets/programs/space-robotics/choose-path-frame.png")
+    center / 100% 100% no-repeat !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.space-robotics-page .choose-path-section--robotics .choose-card:hover {
+  transform: translateY(-6px);
+  filter: brightness(1.03)
+    drop-shadow(0 12px 24px rgba(29, 59, 138, 0.28)) !important;
+}
+
+/* Card title — navy on the light frame */
+.space-robotics-page .choose-path-section--robotics .choose-card-title {
+  color: #1d3b8a !important;
+  -webkit-text-fill-color: #1d3b8a !important;
+  font-weight: 700 !important;
+}
+
+/* "Consider" subheading — slate */
+.space-robotics-page .choose-path-section--robotics .choose-card-consider {
+  color: #3a4252 !important;
+}
+
+/* Bullet list — slate text, navy dots */
+.space-robotics-page .choose-path-section--robotics .choose-card-list li {
+  color: #3a4252 !important;
+}
+
+.space-robotics-page
+  .choose-path-section--robotics
+  .choose-card-list li::before {
+  background: #1d3b8a !important;
+}
+
+/* =========================================================
+   WHO ARE WE ASSOCIATED WITH — light theme override.
+   home.css gives this section a dark space background, top/bottom
+   black gradients, and white blinking stars.  Reset all three so
+   the section reads as a clean pale-blue panel that matches the
+   supplied design, swap the box frame artwork for the robotics
+   variant, and tone the connector lines down to navy.
+========================================================= */
+.space-robotics-page .assoc-section--robotics {
+  position: relative !important;
+  background:linear-gradient(180deg, rgba(255, 255, 255, 0.878) 0%, rgb(255 255 255 / 94%) 100%), url(/src/assets/programs/space-robotics/associated-with-bg.webp) center / cover no-repeat !important;
+  background-color: #f3f6fc !important;
+  padding: clamp(5rem, 10vh, 8rem) clamp(1rem, 3vw, 2rem)
+    clamp(5rem, 10vh, 8rem) !important;
+  overflow: hidden;
+}
+
+/* Kill the home.css top + bottom black gradient overlays. */
+.space-robotics-page .assoc-section--robotics::before,
+.space-robotics-page .assoc-section--robotics::after {
+  display: none !important;
+  background: none !important;
+  content: none !important;
+}
+
+/* The white blinking stars only read on a dark backdrop — drop them
+   on the light theme so they don't show as scattered white dots. */
+.space-robotics-page .assoc-section--robotics .assoc-blink-stars {
+  display: none !important;
+}
+
+/* Title — reset white/glow, swap to navy with the blue badge
+   wrapping the word ASSOCIATED. */
+.space-robotics-page .assoc-section--robotics .assoc-title {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #0d1b3a !important;
+  -webkit-text-fill-color: #0d1b3a !important;
+  text-shadow: none !important;
+  filter: none !important;
+  font-size: clamp(1.3rem, 2.6vw, 2.2rem) !important;
+  letter-spacing: 0.05em !important;
+  font-weight: 900 !important;
+}
+
+.space-robotics-page .assoc-section--robotics .assoc-title-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  margin: 0 0.18em;
+  background: #1d3b8a;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Box frame — swap to the robotics asset, and replace the bluish
+   drop-shadow with a softer navy shadow that sits on the light bg. */
+.space-robotics-page .assoc-section--robotics .assoc-box-frame {
+  background:
+    url("../../assets/programs/space-robotics/associated-client-frame.svg")
+    center / 100% 100% no-repeat !important;
+  filter: drop-shadow(0 6px 14px rgba(29, 59, 138, 0.18)) !important;
+}
+
+/* Lighting glow — sits BELOW the box frame (was overlapping at
+   top:76%).  Anchor to the bottom of the box so the glow reads as
+   light spilling DOWN from under the frame instead of bleeding
+   across the logo. */
+.space-robotics-page .assoc-section--robotics .assoc-box-light {
+  top: auto !important;
+  bottom: -50% !important;
+  width: 100% !important;
+  transform: translateX(-50%) !important;
+  z-index: 0 !important;
+}
+
+/* Centre LOF box — light pill, navy text/border so it stands out
+   on the pale-blue background. */
+
+
+/* Connector lines — navy on the light backdrop (the SpaceScience
+   bright-blue look would all but disappear against #f3f6fc). */
+
+.space-robotics-page .assoc-section--robotics .assoc-lines path {
+  stroke: #1d3b8a !important;
+  filter: drop-shadow(0 0 2px rgba(29, 59, 138, 0.35)) !important;
+}
+
+/* Mute the line-pulse keyframe colours on this theme — keep it
+   subtle so it reads as a static blue line, not a bright pulse. */
+.space-robotics-page .assoc-section--robotics .assoc-lines path {
+  animation: assocDraw 1.8s ease forwards,
+    assocLinePulseRobotics 4s ease-in-out 1.8s infinite !important;
+}
+
+@keyframes assocLinePulseRobotics {
+  0%, 100% {
+    stroke: #1d3b8a;
+    filter: drop-shadow(0 0 2px rgba(29, 59, 138, 0.35));
+  }
+  50% {
+    stroke: #2f63c8;
+    filter: drop-shadow(0 0 4px rgba(47, 99, 200, 0.55));
+  }
+}
+
+/* =========================================================
+   Shared light-theme background for the next four sections.
+   Same pale blue + dotted pattern used by the careers /
+   pathways / choose-path / associated blocks so the whole
+   lower half of the page reads as one continuous light zone.
+========================================================= */
+.space-robotics-page .vetted-section--robotics,
+.space-robotics-page .modes-section--robotics,
+.space-robotics-page .projects-section--robotics,
+.space-robotics-page .impact-section--robotics {
+  position: relative !important;
+  background-color: #f3f6fc !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='2' cy='2' r='1' fill='%2386a8e7' opacity='0.18'/></svg>") !important;
+  background-repeat: repeat !important;
+  background-size: 30px 30px !important;
+  color: #0d1b3a !important;
+  overflow: hidden !important;
+}
+
+/* Shared title-badge style (matches the WHY / CAREER / ASSOCIATED
+   pattern). Applied to every robotics section title. */
+.space-robotics-page .vetted-section--robotics .vetted-title-badge,
+.space-robotics-page .modes-section--robotics .modes-title-badge,
+.space-robotics-page .projects-section--robotics .projects-title-badge,
+.space-robotics-page .impact-section--robotics .impact-title-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  margin-right: 0.2em;
+  background: #1d3b8a;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Shared title reset — kills SpaceScience gradient / glow */
+.space-robotics-page .vetted-section--robotics .vetted-title,
+.space-robotics-page .modes-section--robotics .modes-title,
+.space-robotics-page .projects-section--robotics .projects-title,
+.space-robotics-page .impact-section--robotics .impact-title {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #0d1b3a !important;
+  -webkit-text-fill-color: #0d1b3a !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+/* =========================================================
+   VETTED BY — light theme. Photo stages keep the cinematic
+   beam effect, the name plate uses the robotics frame artwork.
+========================================================= */
+
+/* Section layout — single column with title on TOP and the four
+   team members in a 4-column row. */
+.space-robotics-page .vetted-section--robotics {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.82) 0%,
+      rgba(255, 255, 255, 0.72) 100%
+    )
+      center / cover no-repeat !important;
+  background-color: #f3f6fc !important;
+  padding: clamp(5rem, 10vh, 8rem) 0 clamp(5rem, 10vh, 8rem) !important;
+}
+
+.space-robotics-page .vetted-section--robotics .vetted-inner {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: clamp(2rem, 4vh, 3rem) !important;
+  min-height: 0 !important;
+  align-items: stretch !important;
+}
+
+/* Title block goes to the top, centred. */
+.space-robotics-page .vetted-section--robotics .vetted-right {
+  align-self: center !important;
+  min-height: 0 !important;
+  text-align: center !important;
+  margin-bottom: 200px;
+}
+.space-robotics-page .vetted-right{
+  position: relative !important;
+  margin-bottom:150px !important;
+}
+.space-robotics-page .vetted-section--robotics .vetted-title {
+  text-align: center !important;
+  margin: 0 0 clamp(1.5rem, 3vh, 2.5rem) !important;
+  font-size: clamp(1.6rem, 3vw, 2.6rem) !important;
+  letter-spacing: 0.04em;
+  font-weight: 900 !important;
+}
+
+/* 4 members in a single row */
+.space-robotics-page .vetted-section--robotics .vetted-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: clamp(1rem, 2.5vw, 2.5rem) !important;
+  justify-items: center !important;
+  width: 100%;
+}
+
+/* Each card fills its column up to a reasonable cap so all four
+   members read at the same size. */
+.space-robotics-page .vetted-section--robotics .vetted-card {
+  width: 100% !important;
+  max-width: 280px !important;
+}
+
+/* Stack to 2-then-1 columns on smaller viewports so cards stay
+   legible without shrinking past usefulness. */
+@media (max-width: 900px) {
+  .space-robotics-page .vetted-section--robotics .vetted-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 520px) {
+  .space-robotics-page .vetted-section--robotics .vetted-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.space-robotics-page .vetted-section--robotics .vetted-subtitle,
+.space-robotics-page .vetted-section--robotics .vetted-name,
+.space-robotics-page .vetted-section--robotics .vetted-role {
+  color: #1d3b8a !important;
+}
+
+/* Plate stretches to 100% of its grid column (no max-width cap)
+   so the frame is never visually cropped or pushed off-screen. */
+.space-robotics-page .vetted-section--robotics .vetted-plate {
+  width: 100% !important;
+  max-width: none !important;
+  aspect-ratio: 3.2 / 1 !important;
+  background:
+    url("../../assets/programs/space-robotics/vetted-frame.png")
+    center / 100% 100% no-repeat !important;
+  padding: 0 8% !important;
+  filter: drop-shadow(0 6px 14px rgba(40, 45, 55, 0.32)) !important;
+  overflow: visible !important;
+}
+
+/* Every member's photo container is exactly the same size so all
+   four cards line up uniformly across the row. */
+.space-robotics-page .vetted-section--robotics .vetted-stage {
+  width: 100% !important;
+  max-width: 180px !important;
+  aspect-ratio: 1 / 1 !important;
+  margin: 0 auto !important;
+}
+
+.space-robotics-page .vetted-section--robotics .vetted-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===== Dark-grey halo overrides for the vetted photos =====
+   Replace every blue/cyan glow + holographic wash from home.css
+   with a neutral dark-grey treatment so the portraits read against
+   the light section background without the cyan tint. */
+
+/* Drop-shadow halo on the portrait img */
+.space-robotics-page .vetted-section--robotics .vetted-photo img {
+  filter: brightness(1.02) saturate(0.95)
+    drop-shadow(0 0 14px rgba(45, 48, 58, 0.55))
+    drop-shadow(0 0 28px rgba(45, 48, 58, 0.35)) !important;
+}
+
+/* Holographic colour wash → soft dark-grey wash */
+.space-robotics-page .vetted-section--robotics .vetted-photo::before {
+  background: linear-gradient(
+    160deg,
+    rgba(60, 65, 80, 0.18) 0%,
+    rgba(70, 75, 90, 0.10) 45%,
+    rgba(80, 85, 100, 0.14) 100%
+  ) !important;
+}
+
+/* Scanlines + interference band → neutral grey */
+.space-robotics-page .vetted-section--robotics .vetted-photo::after {
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(190, 195, 210, 0.18) 48%,
+      rgba(210, 215, 225, 0.26) 50%,
+      rgba(190, 195, 210, 0.18) 52%,
+      transparent 100%
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(160, 165, 180, 0.14) 0 1px,
+      transparent 1px 4px
+    ) !important;
+  background-size: 100% 220%, 100% 4px !important;
+  background-repeat: no-repeat, repeat !important;
+}
+
+/* Projector beams from below — dark grey instead of blue */
+.space-robotics-page .vetted-section--robotics .vetted-beam {
+  background: linear-gradient(
+    to top,
+    rgba(60, 65, 75, 0.45) 0%,
+    rgba(60, 65, 75, 0.14) 45%,
+    rgba(60, 65, 75, 0.04) 72%,
+    rgba(60, 65, 75, 0) 92%
+  ) !important;
+}
+
+/* Bright intersection ground glow → soft dark-grey */
+.space-robotics-page .vetted-section--robotics .vetted-stage::after {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(200, 205, 215, 0.7) 0%,
+    rgba(80, 85, 95, 0.4) 40%,
+    rgba(60, 65, 75, 0) 75%
+  ) !important;
+}
+
+.space-robotics-page .vetted-section--robotics .vetted-name {
+  color: #0d1b3a !important;
+  font-weight: 700;
+}
+
+.space-robotics-page .vetted-section--robotics .vetted-role {
+  color: #3a4252 !important;
+}
+
+.space-robotics-page .vetted-section--robotics .vetted-li {
+  color: #1d3b8a !important;
+}
+
+/* =========================================================
+   MODES TO JOIN — light theme + lighter frame.
+========================================================= */
+.space-robotics-page .modes-section--robotics {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.432) 0%,
+      rgba(255, 255, 255, 0.956) 100%
+    ),
+    url("../../assets/programs/space-robotics/modes-to-join-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #f3f6fc !important;
+  padding: clamp(3rem, 7vh, 5rem) 0 clamp(4rem, 8vh, 6rem) !important;
+}
+
+.space-robotics-page .modes-section--robotics .modes-subtitle,
+.space-robotics-page .modes-section--robotics .modes-desc {
+  color: #3a4252 !important;
+  text-shadow: none !important;
+}
+
+.space-robotics-page .modes-section--robotics .modes-subtitle {
+  color: #0d1b3a !important;
+  font-weight: 700;
+}
+
+/* Mode cards — use the supplied box-frame artwork, same look as the
+   learn-section cards. No border / shadow / blur (the frame artwork
+   already carries the chrome). */
+.space-robotics-page .modes-section--robotics .modes-card {
+  background:
+    url("../../assets/programs/space-robotics/what-students-learn/what-students-learn-box-frame.png")
+    center / 100% 100% no-repeat !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.space-robotics-page .modes-section--robotics .modes-card:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.03)
+    drop-shadow(0 10px 22px rgba(29, 59, 138, 0.22)) !important;
+}
+
+.space-robotics-page .modes-section--robotics .modes-card-label {
+  color: #1d3b8a !important;
+  -webkit-text-fill-color: #1d3b8a !important;
+  font-weight: 800;
+}
+
+/* =========================================================
+   STUDENT PROJECTS — light theme.
+========================================================= */
+.space-robotics-page .projects-section--robotics {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.919) 0%,
+      rgba(255, 255, 255, 0.83) 100%
+    ),
+    url("../../assets/programs/space-robotics/student-projects.webp")
+      center / cover no-repeat !important;
+  background-color: #f3f6fc !important;
+  padding: clamp(3rem, 7vh, 5rem) 0 clamp(3rem, 7vh, 5rem) !important;
+}
+
+.space-robotics-page .projects-section--robotics .projects-subtitle {
+  color: #0d1b3a !important;
+  font-weight: 700;
+}
+
+.space-robotics-page .projects-section--robotics .projects-desc {
+  color: #3a4252 !important;
+  text-shadow: none !important;
+}
+
+/* Project card chrome — keep the original home.css frame artwork
+   (it was working). Only text colours need swapping for the light
+   section background. */
+.space-robotics-page .projects-section--robotics .projects-card {
+  color: #0d1b3a !important;
+  padding:30px
+}
+
+.space-robotics-page .projects-section--robotics .projects-card-title {
+  color: #1d3b8a !important;
+  -webkit-text-fill-color: #1d3b8a !important;
+}
+
+.space-robotics-page .projects-section--robotics .projects-card-desc {
+  color: #3a4252 !important;
+}
+
+.space-robotics-page .projects-section--robotics .projects-card-name {
+  color: #0d1b3a !important;
+  font-weight: 700;
+}
+
+.space-robotics-page .projects-section--robotics .projects-card-meta {
+  color: #3a4252 !important;
+}
+
+/* Stats row — navy numbers, slate labels, blue divider */
+.space-robotics-page .projects-section--robotics .projects-stat-num {
+  color: #1d3b8a !important;
+  -webkit-text-fill-color: #1d3b8a !important;
+  background: none !important;
+}
+
+.space-robotics-page .projects-section--robotics .projects-stat-lbl {
+  color: #3a4252 !important;
+}
+
+.space-robotics-page .projects-section--robotics .projects-stat + .projects-stat {
+  border-left-color: rgba(29, 59, 138, 0.28) !important;
+}
+
+/* =========================================================
+   PROJECT IMPACT — light theme.
+========================================================= */
+.space-robotics-page .impact-section--robotics {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.82) 0%,
+      rgba(255, 255, 255, 0.72) 100%
+    ),
+    url("../../assets/programs/space-robotics/project-impact-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #f3f6fc !important;
+  padding: clamp(3rem, 7vh, 5rem) 0 clamp(4rem, 9vh, 6rem) !important;
+}
+
+.space-robotics-page .impact-section--robotics .impact-subtitle {
+  color: #0d1b3a !important;
+  font-weight: 700;
+}
+
+.space-robotics-page .impact-section--robotics .impact-desc {
+  color: #3a4252 !important;
+  text-shadow: none !important;
+}
+
+.space-robotics-page .impact-section--robotics .impact-card {
+  background: rgba(255, 255, 255, 0.78) !important;
+  border: 1.5px solid rgba(29, 59, 138, 0.25) !important;
+  box-shadow:
+    0 12px 28px rgba(29, 59, 138, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.space-robotics-page .impact-section--robotics .impact-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(29, 59, 138, 0.55) !important;
+  box-shadow:
+    0 18px 36px rgba(29, 59, 138, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+.space-robotics-page .impact-section--robotics .impact-card-title {
+  color: #1d3b8a !important;
+  -webkit-text-fill-color: #1d3b8a !important;
+}
+
+.space-robotics-page .impact-section--robotics .impact-card-desc {
+  color: #3a4252 !important;
+}
+
+/* Icon box — solid blue plate with white icon, padded + rounded. */
+.space-robotics-page .impact-section--robotics .impact-card-icon {
+  background: #1d3b8a !important;
+  border: 1px solid rgba(29, 59, 138, 0.3) !important;
+  border-radius: 16px !important;
+  padding: 0.9rem !important;
+  box-shadow:
+    0 8px 18px rgba(29, 59, 138, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Force the SVG/PNG icon to render WHITE on the blue plate.
+   brightness(0) drops the colour to black, invert(1) flips it
+   to white — works for any single-colour or dark icon artwork. */
+.space-robotics-page .impact-section--robotics .impact-card-icon img {
+  filter: brightness(0) invert(1) !important;
+}
+
+/* =========================================================
+   FAQ — two-column accordion on a light background, with empty
+   centre space reserved for the robot model.
+========================================================= */
+.space-robotics-page .faq-robotics-section {
+  position: relative;
+  background:
+    url("../../assets/programs/space-robotics/faq-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #f3f6fc;
+  padding: 100px 0px;
+  color: #0d1b3a;
+  overflow: hidden;
+}
+
+.space-robotics-page .faq-robotics-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.space-robotics-page .faq-robotics-section::before {
+    top: 0 !important;
+    background: linear-gradient(to bottom, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.6) 55%, rgba(255, 255, 255, 0) 100%) !important;
+}
+.space-robotics-page .faq-robotics-section::after {
+    bottom: 0 !important;
+    background: linear-gradient(to top, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.6) 55%, rgba(255, 255, 255, 0) 100%) !important;
+}
+
+.space-robotics-page .faq-robotics-section .faq-robotics-q {
+    background: rgba(0, 0, 0, 0.06) !important;
+    border: 1.5px solid rgba(0, 0, 0, 0.25) !important;
+    color: #000000 !important;
+}
+.space-robotics-page .faq-robotics-q-text{
+  color:#000 !important;
+}
+.space-robotics-page .faq-robotics-q-arrow{
+  color:#000 !important;
+}
+.space-robotics-page .faq-robotics-item.is-open .faq-robotics-a-body{
+    color:#000 !important;
+}
+.space-robotics-page .faq-robotics-section > * {
+  position: relative;
+  z-index: 1;
+}
+.space-robotics-page .faq-robotics-title{
+  color:#000 !important;
+      -webkit-text-fill-color: #000000 !important;
+}
+
+.space-robotics-page .faq-robotics-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+  color: #1d3b8a;
+  margin-bottom: 100px;
+}
+
+/* Two columns with a wide centre gap to leave room for the robot.
+   On smaller screens the gap collapses and rows stack. */
+.space-robotics-page .faq-robotics-grid {
+  display: grid;
+  grid-template-columns: 1fr clamp(140px, 16vw, 280px) 1fr;
+  gap: 1.2rem clamp(1rem, 3vw, 2rem);
+  align-items: start;
+}
+
+.space-robotics-page .faq-robotics-grid > .faq-robotics-col:first-child {
+  grid-column: 1;
+}
+.space-robotics-page .faq-robotics-grid > .faq-robotics-col:last-child {
+  grid-column: 3;
+}
+
+.space-robotics-page .faq-robotics-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.space-robotics-page .faq-robotics-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.space-robotics-page .faq-robotics-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.9rem 1.2rem;
+  background: rgba(218, 228, 248, 0.55);
+  border: 1.5px solid rgba(29, 59, 138, 0.32);
+  border-radius: 20px 0px 20px 0px;
+  color: #1d3b8a;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  text-align: left;
+  cursor: pointer;
+  transition: filter 0.18s ease, transform 0.18s ease,
+    background 0.18s ease;
+}
+
+.space-robotics-page .faq-robotics-q:hover {
+  background: rgba(218, 228, 248, 0.75);
+  filter: drop-shadow(0 6px 14px rgba(29, 59, 138, 0.18));
+  transform: translateY(-1px);
+}
+
+.space-robotics-page .faq-robotics-q-arrow {
+  display: inline-flex;
+  font-size: 0.7rem;
+  color: #1d3b8a;
+  transition: transform 0.32s ease;
+  flex-shrink: 0;
+}
+
+.space-robotics-page .faq-robotics-item.is-open .faq-robotics-q-arrow {
+  transform: rotate(180deg);
+}
+
+/* Smooth grid-row accordion */
+.space-robotics-page .faq-robotics-a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.36s ease;
+  /* min-height: 0 is required for the grid-row 0fr → 1fr trick to
+     actually collapse on some browsers; without it the row keeps
+     its content's intrinsic height and the panel never closes. */
+  min-height: 0;
+}
+.space-robotics-page .faq-robotics-item.is-open .faq-robotics-a {
+  grid-template-rows: 1fr;
+}
+
+.space-robotics-page .faq-robotics-a-body {
+  overflow: hidden;
+  min-height: 0;
+  padding: 0 1.2rem;
+  font-family: var(--font-sans);
+  font-size: clamp(0.82rem, 1vw, 0.94rem);
+  line-height: 1.6;
+  color: #3a4252;
+}
+
+.space-robotics-page .faq-robotics-item.is-open .faq-robotics-a-body {
+  padding: 0.6rem 1.2rem 0.9rem;
+}
+
+/* Collapse the centre robot-gap on small screens */
+@media (max-width: 900px) {
+  .space-robotics-page .faq-robotics-grid {
+    grid-template-columns: 1fr;
+  }
+  .space-robotics-page .faq-robotics-grid > .faq-robotics-col:first-child,
+  .space-robotics-page .faq-robotics-grid > .faq-robotics-col:last-child {
+    grid-column: 1;
+  }
+}
+
+/* =========================================================
+   CTA — "The future won't be taught, it will be built"
+   Two-column layout: empty stage on the left (for the robot),
+   title + copy + buttons on the right.
+========================================================= */
+.space-robotics-page .cta-robotics-section {
+  position: relative;
+  background:
+    radial-gradient(
+      ellipse 60% 50% at 18% 50%,
+      rgba(150, 180, 235, 0.16) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 50% 45% at 88% 50%,
+      rgba(150, 180, 235, 0.12) 0%,
+      transparent 65%
+    ),
+    #eef2fa;
+  padding: clamp(3rem, 8vh, 6rem) 0;
+  overflow: hidden;
+}
+
+.space-robotics-page .cta-robotics-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: center;
+}
+
+.cta-robotics-section img{
+  object-fit: contain;
+}
+/* LEFT — small-robot canvas stage. Explicit height so R3F's 100%
+   resolves to a real pixel value instead of collapsing to zero. */
+.space-robotics-page .cta-robotics-stage {
+  position: relative;
+  height: clamp(280px, 40vh, 420px);
+}
+
+/* R3F renders a wrapper div around the canvas — both must fill the stage. */
+.space-robotics-page .cta-robotics-stage > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.space-robotics-page .cta-robotics-stage canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  touch-action: none;
+}
+
+.space-robotics-page .cta-robotics-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  max-width: 38rem;
+}
+
+.space-robotics-page .cta-robotics-title {
+  margin: 0;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+  font-size: clamp(1.5rem, 2.6vw, 2.4rem);
+  color: #1d3b8a;
+  text-transform: uppercase;
+}
+
+.space-robotics-page .cta-robotics-desc {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+  line-height: 1.65;
+  color: #3a4252;
+}
+
+.space-robotics-page .cta-robotics-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 0.4rem;
+  flex-wrap: wrap;
+}
+
+/* CTA buttons use the SAME SVG-pill chrome as the WHY-section
+   buttons — 200×80 px, light-btn.svg / dark-btn.svg artwork, white
+   text, soft blue drop-shadow on hover. */
+.space-robotics-page .cta-robotics-btn {
+  width: 200px;
+  height: 80px;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 120% 100%;
+  backdrop-filter: none;
+  box-shadow: none;
+  color: #ffffff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.16s ease, filter 0.16s ease;
+}
+
+/* Both CTA buttons now use the DARK pill artwork. */
+.space-robotics-page .cta-robotics-btn--primary,
+.space-robotics-page .cta-robotics-btn--secondary {
+  background-image: url("../../assets/dark-btn.svg");
+}
+
+.space-robotics-page .cta-robotics-btn:hover,
+.space-robotics-page .cta-robotics-btn:focus-visible {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 6px 18px rgba(86, 138, 255, 0.45));
+}
+
+@media (max-width: 900px) {
+  .space-robotics-page .cta-robotics-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .space-robotics-page .cta-robotics-text {
+    margin: 0 auto;
+  }
+  .space-robotics-page .cta-robotics-actions {
+    justify-content: center;
+  }
+  .space-robotics-page .cta-robotics-stage {
+    min-height: 220px;
+  }
+}
+
+/* =========================================================
+   EXPLORE OUR OTHER PROGRAMS — light theme + box-frame cards.
+========================================================= */
+.space-robotics-page .explore-section--robotics {
+  position: relative !important;
+  background-color: #f3f6fc !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='2' cy='2' r='1' fill='%2386a8e7' opacity='0.18'/></svg>") !important;
+  background-repeat: repeat !important;
+  background-size: 30px 30px !important;
+  color: #0d1b3a !important;
+  padding: clamp(3rem, 7vh, 5rem) 0 clamp(4rem, 9vh, 6rem) !important;
+  overflow: hidden !important;
+}
+
+/* Title — reset SpaceScience white/glow, swap to navy + badge */
+.space-robotics-page .explore-section--robotics .explore-title {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #0d1b3a !important;
+  -webkit-text-fill-color: #0d1b3a !important;
+  text-shadow: none !important;
+  filter: none !important;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem) !important;
+  font-weight: 900 !important;
+  text-align: center;
+  margin-bottom: clamp(2rem, 4vh, 3rem) !important;
+}
+
+.space-robotics-page .explore-section--robotics .explore-title-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  margin-right: 0.18em;
+  background: #1d3b8a;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Cards use the box-frame artwork — same chrome family used by
+   the modes-to-join section.  No border / shadow / blur (the frame
+   itself carries the chrome). */
+.space-robotics-page .explore-section--robotics .explore-card {
+  background:
+    url("../../assets/programs/space-robotics/what-students-learn/what-students-learn-box-frame.png")
+    center / 100% 100% no-repeat !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  color: #0d1b3a !important;
+  padding: 20px !important;
+}
+
+.space-robotics-page .explore-section--robotics .explore-card img{
+  object-fit: contain;
+}
+
+.space-robotics-page .explore-section--robotics .explore-card:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.03)
+    drop-shadow(0 10px 22px rgba(29, 59, 138, 0.22)) !important;
+}
+
+.space-robotics-page .explore-section--robotics .explore-card-label {
+  color: #1d3b8a !important;
+  -webkit-text-fill-color: #1d3b8a !important;
+  font-weight: 900 !important;
+}
+
+/* Other-programs slide image — use contain instead of cover so the
+   whole tile artwork shows without being cropped. */
+.space-robotics-page .explore-section--robotics .explore-card-img,
+.space-robotics-page .explore-section--robotics .explore-card-imgwrap img {
+  object-fit: contain !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* =========================================================
+   FOOTER newsletter input — strip the inset shadow that the
+   home.css rule paints on the box.
+========================================================= */
+.space-robotics-page .site-footer-form input,
+.space-robotics-page .site-footer-form input:focus {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+/* =========================================================
+   Bump font-weight on every "box title" across the page — the
+   small headings that sit inside cards / tiles / pills. */
+.space-robotics-page .why-section--robotics .why-title,
+.space-robotics-page .why-section--robotics .why-title-bold,
+.space-robotics-page .careers-section--robotics .careers-skill-label,
+.space-robotics-page .competitions-section--robotics .comp-card-title,
+.space-robotics-page .career-pathways-section--robotics .faq-q-text,
+.space-robotics-page .choose-path-section--robotics .choose-card-title,
+.space-robotics-page .modes-section--robotics .modes-card-label,
+.space-robotics-page .projects-section--robotics .projects-card-title,
+.space-robotics-page .impact-section--robotics .impact-card-title,
+.space-robotics-page .vetted-section--robotics .vetted-name,
+.space-robotics-page .cert-section--robotics .cert-robotics-list strong,
+.space-robotics-page .faq-robotics-q-text,
+.space-robotics-page .explore-section--robotics .explore-card-label {
+  font-weight: 900 !important;
+}
+
+/* =========================================================
+   SITE FOOTER — light robotics theme, scoped to .space-robotics-page
+   only.  The SpaceScience footer keeps the dark blue/space backdrop.
+========================================================= */
+
+/* Section background — student-projects.webp with white veil */
+.space-robotics-page .site-footer {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.962) 0%,
+      rgba(255, 255, 255, 0.763) 100%
+    ),
+    url("../../assets/programs/space-robotics/student-projects.webp")
+      bottom / cover no-repeat !important;
+  background-color: #eef2fa !important;
+  color: #2a3142 !important;
+  padding: clamp(3rem, 7vh, 5rem) 0 !important;
+}
+
+/* No astronaut reserved column on this page — let the footer breathe
+   edge-to-edge. */
+.space-robotics-page .site-footer-inner {
+  padding-right: 0 !important;
+}
+
+/* Brand logo — drop the bright blue glow (the dark logo doesn't need
+   it on a light background). */
+.space-robotics-page .site-footer-logo {
+  filter: none !important;
+}
+
+/* Column titles — navy weight 800 instead of white */
+.space-robotics-page .site-footer-col-title {
+  color: #0d1b3a !important;
+}
+
+/* Body link colour + hover */
+.space-robotics-page .site-footer-list a,
+.space-robotics-page .site-footer-contact a {
+  color: #3a4252 !important;
+}
+.space-robotics-page .site-footer-list a:hover,
+.space-robotics-page .site-footer-contact a:hover {
+  color: #1d3b8a !important;
+}
+
+.space-robotics-page .site-footer-contact li {
+  color: #3a4252 !important;
+}
+
+/* Contact + social icons — navy with no glow */
+.space-robotics-page .site-footer-icon {
+  color: #1d3b8a !important;
+}
+
+.space-robotics-page .site-footer-socials a {
+  color: #1d3b8a !important;
+  filter: none !important;
+}
+.space-robotics-page .site-footer-socials a:hover {
+  color: #2f63c8 !important;
+  filter: drop-shadow(0 0 8px rgba(47, 99, 200, 0.45)) !important;
+}
+
+/* Stay-Connected description copy */
+.space-robotics-page .site-footer-stay-desc {
+  color: #3a4252 !important;
+}
+
+/* Form input + button — light field with navy border, navy submit */
+.space-robotics-page .site-footer-form input {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border: none !important;
+  color: #0d1b3a !important;
+  -webkit-text-fill-color: #0d1b3a !important;
+}
+.space-robotics-page .site-footer-form input::placeholder {
+  color: rgba(58, 66, 82, 0.65) !important;
+}
+
+.space-robotics-page .site-footer-form button {
+  background: #1d3b8a !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(29, 59, 138, 0.5) !important;
+}
+.space-robotics-page .site-footer-form button:hover {
+  background: #2f63c8 !important;
+  box-shadow: 0 6px 16px rgba(47, 99, 200, 0.35) !important;
+}
+
+/* Bottom strip — copyright + policy links */
+.space-robotics-page .site-footer-bottom {
+  border-top: 1px solid rgba(29, 59, 138, 0.18) !important;
+}
+.space-robotics-page .site-footer-copy,
+.space-robotics-page .site-footer-policy {
+  color: #3a4252 !important;
+}
+.space-robotics-page .site-footer-policy a {
+  color: #1d3b8a !important;
+}
+.space-robotics-page .site-footer-policy a:hover {
+  color: #2f63c8 !important;
+}
+
+/* =========================================================
+   WHAT WILL STUDENTS LEARN — background image + dedicated
+   top/bottom white gradient overlays.
+========================================================= */
+.space-robotics-page .learn-section {
+  position: relative !important;
+  overflow: hidden !important;
+  /* what-students-learn-bg.webp as the backdrop, with a soft white veil
+     so the title + skill cards stay readable on any pixel. */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.78) 0%,
+      rgba(255, 255, 255, 0.6) 100%
+    ),
+    url("../../assets/programs/space-robotics/what-students-learn-bg.webp")
+      center / cover no-repeat !important;
+}
+
+.space-robotics-page .learn-section::before,
+.space-robotics-page .learn-section::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 22% !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+}
+
+.space-robotics-page .learn-section::before {
+  top: 0 !important;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0) 100%
+  ) !important;
+}
+
+.space-robotics-page .learn-section::after {
+  bottom: 0 !important;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0) 100%
+  ) !important;
+}
+
+/* Section content stays above the fades. */
+.space-robotics-page .learn-section > * {
+  position: relative;
+  z-index: 3;
+}
+
+/* =========================================================
+   HANDS REVEAL SECTION — background image + top/bottom white
+   gradient overlays so it blends into the adjacent sections.
+========================================================= */
+.space-robotics-page .hands-reveal-section {
+  position: relative;
+  background: url("../../assets/programs/space-robotics/hands-section-bg.webp")
+    center / cover no-repeat;
+  overflow: hidden;
+}
+
+.space-robotics-page .hands-reveal-section::before,
+.space-robotics-page .hands-reveal-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 22%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.space-robotics-page .hands-reveal-section::before {
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.space-robotics-page .hands-reveal-section::after {
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* Section content sits above the fades. */
+.space-robotics-page .hands-reveal-section .hands-content,
+.space-robotics-page .hands-reveal-section .hands-reveal-inner {
+  position: relative;
+  z-index: 3;
+}
+
+/* =========================================================
+   GLOBAL WHITE TOP/BOTTOM FADES — applied to every other
+   major section on the Space Robotics page so consecutive
+   sections always bloom into white at their seams.
+========================================================= */
+
+.space-robotics-page .age-section,
+.space-robotics-page .learn-section,
+.space-robotics-page .cert-section,
+.space-robotics-page .careers-section,
+.space-robotics-page .competitions-section,
+.space-robotics-page .career-pathways-section,
+.space-robotics-page .choose-path-section,
+.space-robotics-page .assoc-section,
+.space-robotics-page .modes-section,
+.space-robotics-page .projects-section,
+.space-robotics-page .impact-section,
+.space-robotics-page .tracking-section,
+.space-robotics-page .explore-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.space-robotics-page .age-section::before,
+.space-robotics-page .learn-section::before,
+.space-robotics-page .cert-section::before,
+.space-robotics-page .careers-section::before,
+.space-robotics-page .competitions-section::before,
+.space-robotics-page .career-pathways-section::before,
+.space-robotics-page .choose-path-section::before,
+.space-robotics-page .assoc-section::before,
+.space-robotics-page .modes-section::before,
+.space-robotics-page .projects-section::before,
+.space-robotics-page .impact-section::before,
+.space-robotics-page .tracking-section::before,
+.space-robotics-page .explore-section::before,
+.space-robotics-page .age-section::after,
+.space-robotics-page .learn-section::after,
+.space-robotics-page .cert-section::after,
+.space-robotics-page .careers-section::after,
+.space-robotics-page .competitions-section::after,
+.space-robotics-page .career-pathways-section::after,
+.space-robotics-page .choose-path-section::after,
+.space-robotics-page .assoc-section::after,
+.space-robotics-page .modes-section::after,
+.space-robotics-page .projects-section::after,
+.space-robotics-page .impact-section::after,
+.space-robotics-page .tracking-section::after,
+.space-robotics-page .explore-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 18%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.space-robotics-page .age-section::before,
+.space-robotics-page .learn-section::before,
+.space-robotics-page .cert-section::before,
+.space-robotics-page .careers-section::before,
+.space-robotics-page .competitions-section::before,
+.space-robotics-page .career-pathways-section::before,
+.space-robotics-page .choose-path-section::before,
+.space-robotics-page .assoc-section::before,
+.space-robotics-page .modes-section::before,
+.space-robotics-page .projects-section::before,
+.space-robotics-page .impact-section::before,
+.space-robotics-page .tracking-section::before,
+.space-robotics-page .explore-section::before {
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.6) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.space-robotics-page .age-section::after,
+.space-robotics-page .learn-section::after,
+.space-robotics-page .cert-section::after,
+.space-robotics-page .careers-section::after,
+.space-robotics-page .competitions-section::after,
+.space-robotics-page .career-pathways-section::after,
+.space-robotics-page .choose-path-section::after,
+.space-robotics-page .assoc-section::after,
+.space-robotics-page .modes-section::after,
+.space-robotics-page .projects-section::after,
+.space-robotics-page .impact-section::after,
+.space-robotics-page .tracking-section::after,
+.space-robotics-page .explore-section::after {
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.6) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* Lift immediate children above the fades for each section. */
+.space-robotics-page .age-section > *,
+.space-robotics-page .learn-section > *,
+.space-robotics-page .cert-section > *,
+.space-robotics-page .careers-section > *,
+.space-robotics-page .competitions-section > *,
+.space-robotics-page .career-pathways-section > *,
+.space-robotics-page .choose-path-section > *,
+.space-robotics-page .assoc-section > *,
+.space-robotics-page .modes-section > *,
+.space-robotics-page .projects-section > *,
+.space-robotics-page .impact-section > *,
+.space-robotics-page .tracking-section > *,
+.space-robotics-page .explore-section > * {
+  position: relative;
+  z-index: 3;
+}
+
+.space-robotics-page .why-section--robotics .why-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.space-robotics-page .why-section--robotics .why-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  font-size: clamp(1.9rem, 3.4vw, 2.85rem);
+  color: #0d1b3a;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #0d1b3a;
+  filter: none;
+}
+
+/* Blue badge wrapping just the word WHY */
+.space-robotics-page .why-section--robotics .why-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  background: #1d3b8a;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.space-robotics-page .why-section--robotics .why-title-bold {
+  color: #1d3b8a;
+  -webkit-text-fill-color: #1d3b8a;
+}
+
+.space-robotics-page .why-section--robotics .why-desc {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+  line-height: 1.65;
+  color: #3a4252;
+  max-width: 55ch;
+}
+
+/* CTA row */
+.space-robotics-page .why-section--robotics .why-cta-row {
+  display: flex;
+  gap: 0.85rem;
+  margin-top: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* Both Why-section buttons match the header "Enroll Now" pill exactly:
+   200×80 px, light-btn.svg artwork, white text. No variant differences. */
+.space-robotics-page .why-section--robotics .why-btn {
+  width: 240px;
+  height: 80px;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: url("../../assets/dark-btn.svg") no-repeat center / 120% 100%;
+  backdrop-filter: none;
+  box-shadow: none;
+  color: #ffffff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.16s ease, filter 0.16s ease;
+}
+
+/* Both why-section buttons now use the DARK pill artwork. */
+.space-robotics-page .why-section--robotics .why-btn--primary,
+.space-robotics-page .why-section--robotics .why-btn--secondary {
+  background-image: url("../../assets/dark-btn.svg");
+}
+
+.space-robotics-page .why-section--robotics .why-btn:hover,
+.space-robotics-page .why-section--robotics .why-btn:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: none;
+  filter: drop-shadow(0 6px 18px rgba(86, 138, 255, 0.45));
+}
+
+/* Right column — Zeb canvas blends straight into the white section
+   (no rounded box, no background, no overflow clip). */
+.space-robotics-page .why-section--robotics .why-right {
+  position: relative;
+  min-height: clamp(420px, 60vh, 640px);
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.space-robotics-page .why-section--robotics .why-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  inset: 0;
+  background: transparent !important;
+}
+
+/* Responsive — stack columns on small screens */
+@media (max-width: 900px) {
+  .space-robotics-page .why-section--robotics .why-container {
+    grid-template-columns: 1fr;
+  }
+  .space-robotics-page .why-section--robotics .why-right {
+    min-height: 380px;
+  }
+}
+
+/* ---- Section headings — robotics warm gradient ---- */
+
+
+/* ---- Eyebrows / labels / accent text ---- */
+.space-robotics-page .eyebrow,
+.space-robotics-page .section-eyebrow,
+.space-robotics-page [class*="eyebrow"] {
+  color: var(--sr-accent);
+  letter-spacing: 0.3em;
+}
+
+/* ---- Tiles / cards — warm border + orange glow on hover ---- */
+
+
+.space-robotics-page .card:hover,
+.space-robotics-page .tile:hover,
+.space-robotics-page [class*="-card"]:hover {
+  border-color: rgba(255, 170, 90, 0.7);
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.55),
+    0 0 28px var(--sr-glow),
+    inset 0 1px 1px rgba(255, 220, 180, 0.18);
+}
+
+/* ---- Primary buttons / CTA — gradient orange ---- */
+
+/* ---- Secondary / links — cyber-cyan accent ---- */
+.space-robotics-page a:not([class*="btn"]):not([class*="cta"]),
+.space-robotics-page .link-accent {
+  color: var(--sr-secondary);
+  transition: color 0.18s ease, text-shadow 0.18s ease;
+}
+
+.space-robotics-page a:not([class*="btn"]):not([class*="cta"]):hover {
+  color: #6ff2ff;
+  text-shadow: 0 0 12px var(--sr-glow-cyan);
+}
+
+/* ---- Subtle backgrounds / overlays ---- */
+.space-robotics-page .space-careers-overlay,
+.space-robotics-page [class*="-overlay"] {
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 40%,
+    rgba(255, 106, 0, 0.18) 0%,
+    rgba(10, 6, 18, 0) 60%
+  );
+}
+
+.space-robotics-page .faq-bg-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 6, 18, 0.4) 0%,
+    rgba(10, 6, 18, 0.85) 50%,
+    rgba(10, 6, 18, 0.95) 100%
+  );
+}
+
+/* ---- Page-wide body background tint (sits behind sections that
+   reveal their parent) ---- */
+.space-robotics-page {
+  background-color: var(--sr-deep);
+}
+
+/* ---- Robotics accent strips / dividers ---- */
+.space-robotics-page hr,
+.space-robotics-page .divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--sr-primary) 50%,
+    transparent 100%
+  );
+}
+
+/* ---- Selection colour (small touch but consistent) ---- */
+.space-robotics-page ::selection {
+  background: var(--sr-primary);
+  color: #fff;
+}
+
+/* =========================================================
+   HANDS REVEAL SECTION
+   Robot arm slides in from LEFT, human hand from RIGHT,
+   Zeb robot rises between them in the centre.
+   Mouse-parallax layers add a genuine 3-D depth feel.
+========================================================= */
+
+/* Section is flex-column: text block on top, hands area fills below */
+.space-robotics-page .hands-reveal-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Bottom fade only — the top edge has text content, no fade needed */
+.space-robotics-page .hands-reveal-section::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 14%;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ---- Text content — two equal columns ---- */
+.space-robotics-page .hands-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding-top: clamp(2.8rem, 5.5vh, 5rem);
+  padding-bottom: clamp(0.5rem, 1vh, 1rem);
+  position: relative;
+  z-index: 5;
+  flex-shrink: 0;
+}
+
+.space-robotics-page .hands-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Heading — matches the WhySpaceRobotics heading style */
+.space-robotics-page .hands-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  font-size: clamp(1.45rem, 2.2vw, 2.1rem);
+  line-height: 1.05;
+  color: #1d3b8a;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #0d1b3a;
+  filter: none;
+}
+
+/* Blue badge — same style as .why-badge */
+.space-robotics-page .hands-badge {
+  display: inline-block;
+  padding: 0.16em 0.5em;
+  background: #1d3b8a;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* Body text */
+.space-robotics-page .hands-desc {
+  margin: 0;
+  font-size: clamp(0.88rem, 0.98vw, 1rem);
+  line-height: 1.65;
+  color: #3a4252;
+  max-width: 46ch;
+}
+
+.space-robotics-page .hands-desc strong {
+  font-weight: 700;
+  color: #1d3b8a;
+}
+
+/* ---- Hands visual — flex-grows to fill the remaining height ---- */
+.space-robotics-page .hands-reveal-inner {
+  flex: 1;
+  position: relative;
+  min-height: clamp(440px, 62vh, 660px);
+  perspective: 1100px;
+  perspective-origin: 50% 75%;
+  overflow: hidden;
+}
+
+/* ---- Both hand wrappers ---- */
+.space-robotics-page .hands-robot,
+.space-robotics-page .hands-human {
+  position: absolute;
+  bottom: 0;
+  width: 56%;
+  will-change: transform;
+  transform-style: preserve-3d;
+  z-index: 1;
+}
+
+/* Initial off-screen positions (overridden each rAF frame) */
+.space-robotics-page .hands-robot {
+  left: 0;
+  transform-origin: left bottom;
+  transform: translateX(-112%) rotateY(-14deg) scale(0.87);
+}
+
+.space-robotics-page .hands-human {
+  right: 0;
+  transform-origin: right bottom;
+  transform: translateX(112%) rotateY(14deg) scale(0.90);
+}
+
+.space-robotics-page .hands-robot img,
+.space-robotics-page .hands-human img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ---- Zeb position sentinel ---- */
+.space-robotics-page .hands-zeb {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(160px, 18vw, 240px);
+  height: clamp(240px, 34vh, 380px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 900px) {
+  .space-robotics-page .hands-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+  .space-robotics-page .hands-title {
+    font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .space-robotics-page .hands-content {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+    padding-top: clamp(1.8rem, 4vh, 3rem);
+  }
+  .space-robotics-page .hands-reveal-inner {
+    min-height: clamp(220px, 40vw, 340px);
+  }
+  .space-robotics-page .hands-robot,
+  .space-robotics-page .hands-human {
+    width: 62%;
+  }
+  .space-robotics-page .hands-zeb {
+    width: clamp(100px, 24vw, 180px);
+    height: clamp(160px, 26vh, 260px);
+  }
+}
+
+/* =========================================================
+   AGE PROGRAMS SECTION — space-robotics overrides
+   Replaces the dark space theme with the light/white
+   design from the reference. Uses age-box-frame.png for
+   all cards (single reusable frame).
+========================================================= */
+
+.space-robotics-page .age-section {
+  background: #eef0f5;
+  padding: clamp(3rem, 6vh, 5rem) 0;
+}
+
+/* All 5 cards share the same frame image */
+.space-robotics-page .age-card,
+.space-robotics-page .age-card:nth-child(1),
+.space-robotics-page .age-card:nth-child(2),
+.space-robotics-page .age-card:nth-child(3),
+.space-robotics-page .age-card:nth-child(4),
+.space-robotics-page .age-card:nth-child(5) {
+  background-image: url('../../assets/programs/space-robotics/age-box-frame.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  aspect-ratio: 265 / 250;
+  padding:40px 50px 0px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Label badge — centered at the top of each card */
+.space-robotics-page .age-card-label {
+  width: 100%;
+  position:absolute;
+  top: 2%;
+  left: 25%;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+  letter-spacing: 0.06em;
+  padding: 0.38em 0.6em;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* Bullet list — dark text on white frame */
+.space-robotics-page .age-card-list {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  gap: 0.55rem;
+  padding-top: 30px;
+}
+
+.space-robotics-page .age-card-list li {
+  color: #2a3248;
+  font-size: clamp(0.90rem, 0.75vw, 0.82rem);
+  line-height: 1.45;
+  margin-bottom: 0;
+}
+
+.space-robotics-page .age-card-list li::before {
+  background: #1d3b8a;
+}
+
+@media (max-width: 992px) {
+  .space-robotics-page .age-card,
+  .space-robotics-page .age-card:nth-child(1),
+  .space-robotics-page .age-card:nth-child(2),
+  .space-robotics-page .age-card:nth-child(3),
+  .space-robotics-page .age-card:nth-child(4),
+  .space-robotics-page .age-card:nth-child(5) {
+    aspect-ratio: auto;
+    min-height: 260px;
+  }
+}
+
+/* =========================================================
+   WHAT WILL STUDENTS LEARN — space-robotics overrides
+   Light gray background, box-frame cards with real photos,
+   4-up top row + 3-up centered bottom row.
+========================================================= */
+
+.space-robotics-page .learn-section {
+  background: #eef0f5;
+  padding: clamp(3rem, 6vh, 5rem) 0;
+}
+
+/* Remove the dark top/bottom gradient overlays */
+.space-robotics-page .learn-section::before,
+.space-robotics-page .learn-section::after {
+  display: none;
+}
+
+/* Title — dark navy, badge wraps "LEARN?" */
+.space-robotics-page .learn-title {
+  color: #0d1b3a;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #0d1b3a;
+  filter: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-bottom: 0.6rem;
+}
+
+.space-robotics-page .learn-badge {
+  display: inline-block;
+  padding: 0.12em 0.45em;
+  background: #1d3b8a;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  border-radius: 4px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+}
+
+.space-robotics-page .learn-sub {
+  color: #3a4252;
+  margin-bottom: clamp(1.8rem, 3.5vh, 3rem);
+}
+
+/* Grid: fixed card width, 4 per row; row 2 (3 cards) auto-centers */
+.space-robotics-page .learn-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1rem, 2vw, 1.8rem);
+  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+/* Card — box frame image, white background under it */
+.space-robotics-page .learn-card {
+  width: clamp(190px, 21vw, 265px);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 30px 20px 20px 20px;
+  background:
+    url('../../assets/programs/space-robotics/what-students-learn/what-students-learn-box-frame.png')
+    center / 100% 100% no-repeat;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Photo fills the frame's image area */
+.space-robotics-page .learn-card-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  display: block;
+  margin-bottom: 0.75rem;
+    object-fit: contain;
+}
+
+/* Label — blue, centered */
+.space-robotics-page .learn-card-label {
+  color: #1d3b8a;
+  -webkit-text-fill-color: #1d3b8a;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 800;
+  font-size: 17px;
+  text-align: center;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+/* Footer line */
+.space-robotics-page .learn-foot {
+  color: #3a4252;
+  font-size: clamp(0.85rem, 1vw, 1rem);
+}
+
+@media (max-width: 900px) {
+  .space-robotics-page .learn-card {
+    width: clamp(160px, 44vw, 240px);
+  }
+}
+
+@media (max-width: 560px) {
+  .space-robotics-page .learn-card {
+    width: clamp(150px, 80vw, 300px);
+  }
+}
+
+
+.projects-card {
+  background: url('../../assets/programs/space-robotics/project-box-frame.svg') center / 100%
+    100% no-repeat;
+}
+
+
+/* ============================================================
+   MINIMAL TARGETED FIXES — these rules are SCOPED and SAFE.
+   No pointer-events tricks, no aggressive global selectors.
+   ============================================================ */
+
+/* #2 Hero robot drag — give the canvas pointer events so
+   OrbitControls receives mouse + touch input. */
+.space-robotics-page .hero-canvas {
+  pointer-events: auto !important;
+}
+.space-robotics-page .hero-canvas canvas {
+  touch-action: none;
+  cursor: grab;
+}
+.space-robotics-page .hero-canvas canvas:active {
+  cursor: grabbing;
+}
+
+/* #4a FAQ-robotics accordion — max-height transition (the grid
+   trick was failing silently). */
+.space-robotics-page .faq-robotics-a {
+  display: block !important;
+  grid-template-rows: unset !important;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.space-robotics-page .faq-robotics-item.is-open .faq-robotics-a {
+  max-height: 800px;
+}
+.space-robotics-page .faq-robotics-a-body {
+  padding: 0.5rem 1.2rem 1rem;
+}
+
+/* #4b Career-pathways accordion — same max-height fix. */
+.space-robotics-page .career-pathways-section--robotics .faq-answer {
+  display: block !important;
+  grid-template-rows: unset !important;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.space-robotics-page .career-pathways-section--robotics .faq-item.is-open .faq-answer {
+  max-height: 800px;
+}
+
+/* #5 Vetted-by — uniform photo, 100%-wide plate. */
+.space-robotics-page .vetted-section--robotics .vetted-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.space-robotics-page .vetted-section--robotics .vetted-stage {
+  width: 180px !important;
+  max-width: 180px !important;
+  min-width: 180px !important;
+  height: 180px !important;
+  aspect-ratio: 1 / 1 !important;
+  margin: 0 auto;
+}
+.space-robotics-page .vetted-section--robotics .vetted-plate {
+  width: 100% !important;
+  max-width: none !important;
+  margin-top: 1rem;
+}
+
+/* #6 Other-programs image — contain (not cover). */
+.space-robotics-page .explore-section--robotics .explore-card-img {
+  object-fit: contain !important;
+}
+
+/* #7 Footer newsletter input — no shadow. */
+.space-robotics-page .site-footer-form input,
+.space-robotics-page .site-footer-form input:focus,
+.space-robotics-page .site-footer-form input:hover {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+/* #8 Box-title font-weights → 900. */
+.space-robotics-page .why-title,
+.space-robotics-page .why-title-bold,
+.space-robotics-page .cert-robotics-title,
+.space-robotics-page .careers-title,
+.space-robotics-page .careers-skill-label,
+.space-robotics-page .competitions-label-text,
+.space-robotics-page .comp-card-title,
+.space-robotics-page .career-pathways-title,
+.space-robotics-page .faq-q-text,
+.space-robotics-page .choose-path-title,
+.space-robotics-page .choose-card-title,
+.space-robotics-page .assoc-title,
+.space-robotics-page .vetted-title,
+.space-robotics-page .vetted-name,
+.space-robotics-page .modes-title,
+.space-robotics-page .modes-card-label,
+.space-robotics-page .projects-title,
+.space-robotics-page .projects-card-title,
+.space-robotics-page .impact-title,
+.space-robotics-page .impact-card-title,
+.space-robotics-page .faq-robotics-title,
+.space-robotics-page .faq-robotics-q-text,
+.space-robotics-page .cta-robotics-title,
+.space-robotics-page .explore-title,
+.space-robotics-page .explore-card-label {
+  font-weight: 900 !important;
+}
+
+
+/* ============================================================
+   REMOVE ALL HOVER DROP-SHADOW EFFECTS ACROSS THE ROBOTICS PAGE.
+   Strips both `filter: drop-shadow()` and any blurred box-shadow
+   that appears only on hover. Loaded last → wins every override.
+   ============================================================ */
+.space-robotics-page *:hover,
+.space-robotics-page *:focus-visible,
+.space-robotics-page *:focus,
+.space-robotics-page *:active {
+  filter: none !important;
+  -webkit-filter: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+/* Re-enable transform / translate / color hover (those don't paint
+   a shadow). Only the drop-shadow / glow filters are killed above. */
+
+   .space-robotics-page .career-pathways-section--robotics .faq-q-text {
+  color: #1d3b8a !important;
+  font-weight: 600 !important;
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem) !important;
+}
+.space-robotics-page .choose-path-section--robotics .choose-card-title{
+  font-weight: 700 !important;
+  font-size:20px
+}
+.choose-card-list li{
+  font-size:17px
+}
+.choose-card-consider{
+  font-size:17px
+}
+.space-robotics-page .vetted-section--robotics .vetted-role{
+  font-size:17px
+}
+.space-robotics-page .modes-section--robotics .modes-card-label{
+  font-size:17px
+}
+.space-robotics-page .faq-robotics-q-text{
+  font-weight: 600 !important;
+}
+.space-robotics-page .explore-section--robotics .explore-card-label{
+  font-size:17px
+}
+.site-footer-copy, .site-footer-policy{
+  font-size: 17px !important;
+  font-weight: 600 !important
+}
+.site-footer-form{
+  background: transparent  !important;
+
+}
+
+.header-btn {
+    background: url(/src/assets/programs/space-robotics/dark-btn.svg) no-repeat center / 120% 100% !important;
+}

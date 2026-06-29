@@ -1,0 +1,653 @@
+/* =========================================================
+   CHOOSE-YOUR-PATH home page.
+   Full-screen home-bg.jpeg backdrop, top welcome block, a row
+   of 5 portal-doors, a 3D AI robot in front of them, and a
+   black-hole portal transition on door select.
+========================================================= */
+
+.path-home {
+  position: relative;
+  height: 100vh;
+  height: 100dvh; /* respects dynamic UI bars on mobile when available */
+  width: 100%;
+  background-color: #03050f;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* the top-bg shows planets/space; reserve top padding for the
+     welcome block, bottom padding so doors don't crowd the floor */
+  padding: clamp(1.4rem, 4vh, 3rem) clamp(1rem, 3vw, 3rem)
+    clamp(1.4rem, 3vh, 3rem);
+}
+
+/* soft dark wash so white text and door glows stay legible against
+   the busy backdrop without flattening it */
+.path-home-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 60% 45% at 50% 0%,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.18) 60%,
+      rgba(0, 0, 0, 0.45) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0) 40%,
+      rgba(0, 0, 0, 0.35) 100%
+    );
+  pointer-events: none;
+}
+
+/* ---- top welcome block ---- */
+.path-home-head {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  margin-top: clamp(0.5rem, 3vh, 2rem);
+  margin-bottom: clamp(1.5rem, 4vh, 3rem);
+}
+
+.path-home-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: clamp(0.7rem, 0.9vw, 0.9rem);
+  font-weight: 700;
+  letter-spacing: 0.5em;
+  color: rgba(220, 235, 255, 0.85);
+  text-shadow: 0 0 14px rgba(80, 150, 255, 0.45);
+  margin-bottom: 0.85rem;
+  text-transform: uppercase;
+}
+
+.eyebrow-bar {
+  width: clamp(36px, 6vw, 80px);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(150, 200, 255, 0.85),
+    transparent
+  );
+}
+
+/* brand logo sitting between the WELCOME eyebrow and the CHOOSE YOUR
+   PATH title — wrapped in a frosted-glass plate so it reads as a
+   crisp identity stamp against the busy space backdrop */
+.path-home-logo-wrap {
+  position: relative;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  margin: 0.85rem auto 1.1rem;
+  padding: 0.7rem 1.6rem;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(18px) saturate(1.5);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 18px;
+  box-shadow:
+    0 10px 36px rgba(0, 0, 0, 0.4),
+    0 0 24px rgba(120, 180, 255, 0.22),
+    inset 0 1px 1px rgba(255, 255, 255, 0.32),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+/* faint CRT-style scanlines over the plate to sell the "display" feel */
+.path-home-logo-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(255, 255, 255, 0.05) 2px,
+    rgba(255, 255, 255, 0.05) 3px
+  );
+  mix-blend-mode: overlay;
+  border-radius: inherit;
+}
+
+.path-home-logo {
+  display: block;
+  height: clamp(38px, 6vh, 68px);
+  width: auto;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+  /* sci-fi display flicker — irregular brightness + opacity dips give
+     the impression of a hologram / HUD trying to stabilise */
+  animation: logoSciFiFlicker 5.2s steps(1, end) infinite;
+  animation-delay: 0.4s;
+}
+
+@keyframes logoSciFiFlicker {
+  0%, 4%, 9%, 12%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35))
+      drop-shadow(0 0 6px rgba(110, 170, 255, 0.4));
+  }
+  5%, 11% {
+    opacity: 0.55;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35)) brightness(0.6);
+  }
+  10% {
+    opacity: 0.9;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35))
+      drop-shadow(0 0 18px rgba(140, 200, 255, 0.85)) brightness(1.35);
+  }
+  35% {
+    opacity: 0.95;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35))
+      drop-shadow(0 0 14px rgba(140, 200, 255, 0.7)) brightness(1.2);
+  }
+  72% {
+    opacity: 0.5;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35)) brightness(0.7);
+  }
+  73% {
+    opacity: 1;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35))
+      drop-shadow(0 0 22px rgba(140, 200, 255, 0.95)) brightness(1.5);
+  }
+  85% {
+    opacity: 0.65;
+  }
+  86%, 88% {
+    opacity: 1;
+  }
+  87% {
+    opacity: 0.3;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35)) brightness(0.4);
+  }
+}
+
+/* ---- typewriter caret ----
+   Bright accent vertical bar that blinks while the title is typing
+   and disappears as soon as the last character lands. */
+.typewriter-caret {
+  display: inline-block;
+  margin-left: 0.08em;
+  color: #5fa9ff;
+  font-weight: 400;
+  text-shadow: 0 0 12px rgba(80, 150, 255, 0.85),
+    0 0 24px rgba(60, 130, 240, 0.5);
+  animation: caretBlink 0.8s steps(2, end) infinite;
+}
+
+.typewriter-caret--done {
+  animation: none;
+  opacity: 0;
+}
+
+@keyframes caretBlink {
+  0%, 49.99% { opacity: 1; }
+  50%, 100%  { opacity: 0; }
+}
+
+.path-home-title {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  font-size: clamp(2.4rem, 6vw, 3.5rem);
+  line-height: 0.95;
+  margin: 0 0 0.85rem;
+  color: #fff;
+  margin-top:20px;
+  text-shadow:
+    0 0 24px rgba(60, 130, 240, 0.45),
+    0 0 56px rgba(40, 90, 220, 0.32),
+    0 2px 8px rgba(0, 0, 0, 0.6);
+  margin-top: 50px;
+}
+
+.path-home-title-accent {
+  background-image: linear-gradient(
+    180deg,
+    #5fa9ff 0%,
+    #2862e0 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 18px rgba(60, 130, 240, 0.55));
+}
+
+.path-home-sub {
+  font-family: var(--font-sans);
+  font-size: clamp(0.9rem, 1.15vw, 1.05rem);
+  letter-spacing: 0.06em;
+  color: rgba(220, 230, 255, 0.78);
+  margin: 0;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55);
+}
+
+/* ---- row of 5 portal-doors ---- */
+.doors-row {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(0.5rem, 1.4vw, 1.4rem);
+  width: 100%;
+  max-width: 1700px;
+  margin-top: 30px; /* push doors toward the bottom of the deck */
+  margin-bottom: clamp(0rem, 3vh, 2rem);
+}
+
+.door-tile {
+  --door-accent: #5fa9ff;
+  position: relative;
+  flex: 1 1 0;
+  /* bumped wider so the doors read large in the deck — capped by
+     a viewport-height rule below so they never overflow on shorter
+     screens */
+  max-width: clamp(180px, 22vw, 340px);
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  /* IMPORTANT: do NOT transition `transform` here. framer-motion drives
+     the transform via inline styles for entry + hover; a CSS transition
+     on transform would interpolate against motion's own animation engine
+     and produce the laggy / jittery hover. Filter + opacity transitions
+     are fine because nothing else animates them. */
+  transition: filter 0.35s ease, opacity 0.35s ease;
+  will-change: transform, filter;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.door-tile:disabled {
+  cursor: default;
+}
+
+/* the door image itself — drop-shadow uses each tile's accent so
+   green/blue/purple/orange/cyan doors each glow in their own colour.
+   max-height caps the image so the no-scroll 100vh layout still fits
+   on shorter screens (laptops, small monitors). */
+/* Float wrapper — applies the gentle bob so it doesn't fight with the
+   button's framer-motion transform. Each door has its own duration +
+   delay variation so the row reads as alive but not synchronised. */
+.door-img-float {
+  display: block;
+  width: 100%;
+  animation: doorFloat var(--float-duration, 4.5s) ease-in-out infinite;
+  /* float starts AFTER the per-door power-up finishes (seq + 1.1s) */
+  animation-delay: calc(var(--seq-delay, 0s) + 1.1s + var(--float-offset, 0s));
+  /* Hold at the first keyframe until .doors-row--anim flips us to
+     running. Without this, the float would tick away behind the
+     preloader on first load and the user would never see it. */
+  animation-play-state: paused;
+  will-change: transform;
+}
+
+.doors-row--anim .door-img-float {
+  animation-play-state: running;
+}
+
+@keyframes doorFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-7px); }
+}
+
+.door-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 62vh;
+  object-fit: contain;
+  /* Reduced default glow — soft accent halo + the standard ground
+     drop shadow. Hover takes over with the punchier glow. */
+  filter:
+    drop-shadow(0 0 6px color-mix(in srgb, var(--door-accent) 30%, transparent))
+    drop-shadow(0 16px 28px rgba(0, 0, 0, 0.5));
+  transition: filter 0.28s ease;
+  /* sequential power-up: each door runs this once when the parent row
+     receives the .doors-row--anim modifier (i.e. once the preloader
+     has been removed from the DOM). animation-play-state: paused holds
+     the 0% keyframe (dim) until then. */
+  animation: doorImgPowerUp 1.1s ease-out both;
+  animation-delay: var(--seq-delay, 0s);
+  animation-play-state: paused;
+}
+
+.doors-row--anim .door-img {
+  animation-play-state: running;
+}
+
+@keyframes doorImgPowerUp {
+  0% {
+    filter:
+      drop-shadow(0 16px 28px rgba(0, 0, 0, 0.5))
+      brightness(0.35);
+  }
+  45% {
+    filter:
+      drop-shadow(0 0 22px color-mix(in srgb, var(--door-accent) 70%, transparent))
+      drop-shadow(0 16px 28px rgba(0, 0, 0, 0.5))
+      brightness(1.3);
+  }
+  100% {
+    filter:
+      drop-shadow(0 0 6px color-mix(in srgb, var(--door-accent) 30%, transparent))
+      drop-shadow(0 16px 28px rgba(0, 0, 0, 0.5))
+      brightness(1);
+  }
+}
+
+/* extra accent bloom — soft baseline, brightens noticeably on hover */
+.door-glow {
+  position: absolute;
+  inset: 18% 6% 4% 6%;
+  border-radius: 32px;
+  background: radial-gradient(
+    ellipse at 50% 60%,
+    color-mix(in srgb, var(--door-accent) 45%, transparent) 0%,
+    color-mix(in srgb, var(--door-accent) 18%, transparent) 30%,
+    transparent 70%
+  );
+  filter: blur(32px);
+  opacity: 0.22;
+  pointer-events: none;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+  /* matching power-up on the bloom so the whole tile lights up in
+     sync. After the animation finishes the bloom returns to the
+     default opacity/blur, allowing :hover transitions to take over.
+     Paused until .doors-row--anim triggers it (see .door-img above). */
+  animation: doorGlowPowerUp 1.1s ease-out both;
+  animation-delay: var(--seq-delay, 0s);
+  animation-play-state: paused;
+}
+
+.doors-row--anim .door-glow {
+  animation-play-state: running;
+}
+
+@keyframes doorGlowPowerUp {
+  0%   { opacity: 0;    filter: blur(60px); transform: scale(0.85); }
+  45%  { opacity: 0.85; filter: blur(20px); transform: scale(1.08); }
+  100% { opacity: 0.22; filter: blur(32px); transform: scale(1);    }
+}
+
+/* Hover: clean accent-coloured glow + slightly brighter bloom. Tuned
+   to be noticeable (so the user feels the door respond) without the
+   over-saturated halo from before. */
+.door-tile:not(:disabled):hover .door-glow {
+  opacity: 0.85;
+  filter: blur(28px);
+}
+.door-tile:not(:disabled):hover .door-img {
+  filter:
+    drop-shadow(0 0 16px color-mix(in srgb, var(--door-accent) 70%, transparent))
+    drop-shadow(0 0 30px color-mix(in srgb, var(--door-accent) 40%, transparent))
+    drop-shadow(0 24px 36px rgba(0, 0, 0, 0.55));
+}
+
+.door-tile--selected .door-glow {
+  opacity: 1;
+  filter: blur(46px);
+}
+.door-tile--selected .door-img {
+  filter:
+    drop-shadow(0 0 34px color-mix(in srgb, var(--door-accent) 90%, transparent))
+    drop-shadow(0 0 70px color-mix(in srgb, var(--door-accent) 55%, transparent))
+    drop-shadow(0 28px 50px rgba(0, 0, 0, 0.6));
+}
+
+.door-tile--dimmed {
+  filter: saturate(0.4) brightness(0.45);
+  transform: scale(0.95);
+}
+
+/* ---- mobile swipe hint ----
+   Hidden on desktop; shown only on phones (see media query below) where
+   the doors become a horizontal swipe row. Cyan glowing label + arrow. */
+.swipe-hint {
+  display: none; /* enabled in the phone breakpoint */
+  position: relative;
+  z-index: 3;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin: 0.4rem auto 0.2rem;
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #67e8f9; /* cyan */
+  text-shadow: 0 0 10px rgba(34, 211, 238, 0.65),
+    0 0 22px rgba(34, 211, 238, 0.35);
+  animation: swipeHintPulse 2.2s ease-in-out infinite;
+}
+
+.swipe-hint-arrow {
+  display: inline-flex;
+  color: #22d3ee;
+  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.85))
+    drop-shadow(0 0 16px rgba(34, 211, 238, 0.5));
+  animation: swipeHintArrow 1.5s ease-in-out infinite;
+}
+
+@keyframes swipeHintPulse {
+  0%, 100% { opacity: 0.7; }
+  50%      { opacity: 1; }
+}
+
+@keyframes swipeHintArrow {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(7px); }
+}
+
+/* ---- 3D AI robot layer ---- */
+/* full-viewport, sits above the doors visually but never absorbs
+   clicks (Canvas has pointerEvents:none inline). The robot Canvas
+   needs to span the same horizontal space as the doors so the X
+   mapping (xRatio → world X) lines the robot up under each door. */
+.robot-layer {
+  position: fixed;
+  inset: 0;
+  /* Bumped above the black-hole overlay (z 50) so the falling robot
+     reads as being INSIDE the swirl, not behind it. */
+  z-index: 60;
+  pointer-events: none;
+}
+
+/* Invisible click blocker over the robot — stops the (visually
+   hidden) centre door from being selectable through the robot's body.
+   Generously sized so even clicks at the edges of the centre door's
+   footprint are intercepted. */
+.robot-click-blocker {
+  position: fixed;
+  /* Cover ONLY the centre column — the side doors (Students, Schools,
+     Professionals, Industries) live outside this range and stay
+     clickable. */
+  left: 38%;
+  top: 18%;
+  width: 24%;
+  height: 78%;
+  z-index: 75; /* above the robot canvas AND above the doors */
+  background: transparent;
+  cursor: default;
+  pointer-events: auto !important;
+}
+
+/* ---- BLACK-ZOOM TRANSITION ----
+   A pure-black overlay clipped to a growing circle. The circle starts
+   as a single point at viewport centre and rapidly expands past the
+   screen corners, sweeping the page into solid black just before the
+   next route mounts. */
+.black-zoom-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100; /* above robot canvas — final swallow */
+  pointer-events: none;
+  background: #000;
+  /* clip-path is animated from circle(0%) → circle(150%) by motion. */
+}
+
+/* (legacy portal keyframes left intentionally empty — kept as comment so
+   the diff stays small if we ever want the wormhole back) */
+@keyframes _portalLegacyPlaceholder {
+  0%   {
+    background: radial-gradient(
+      circle at 50% 50%,
+      #000 0%, #000 2%, transparent 5%
+    );
+  }
+  55%  {
+    background: radial-gradient(
+      circle at 50% 50%,
+      #000 0%, #000 35%, transparent 65%
+    );
+  }
+  100% {
+    background: #000;
+  }
+}
+
+/* ---- responsive ---- */
+
+/* Tablets / small laptops — keep the single deck row, tighten the gaps
+   and let each door claim a touch more width. */
+@media (max-width: 900px) {
+  .doors-row {
+    gap: 0.5rem;
+  }
+  .door-tile {
+    max-width: 24vw;
+  }
+  .robot-layer {
+    transform: scale(0.85);
+    transform-origin: center 60%;
+  }
+}
+
+/* Phones — the deck becomes a horizontal swipe row. All five doors stay
+   tall and full-size; the user flicks left/right and each one snaps to
+   centre. The 3D robot is scaled down + lowered so it greets in front of
+   the doors instead of covering them. */
+@media (max-width: 640px) {
+  .path-home-logo{
+        height: clamp(38px, 5vh, 68px);
+  }
+  .path-home {
+    padding-top: clamp(1rem, 3vh, 2rem);
+    padding-right:0px;
+    padding-left:0px;
+    padding-bottom: 0px;
+  }
+
+  .path-home-title {
+    margin-top: 20px;
+  }
+
+  .doors-row {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0.9rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    /* lead-in/out space so the first & last door can snap to centre, plus
+       vertical room so the glow + float bob aren't hard-clipped */
+    padding: 1.4rem 12vw 1rem;
+    margin-top: 1rem;
+    scrollbar-width: none; /* Firefox */
+  }
+  .doors-row::-webkit-scrollbar {
+    display: none; /* Chrome / Safari */
+  }
+
+  /* While a door is selected it flies to the viewport centre — open the
+     row's overflow so that transform isn't clipped by the scroll box. */
+  .doors-row:has(.door-tile--selected) {
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  .door-tile {
+    flex: 0 0 auto;
+    width: clamp(150px, 52vw, 230px);
+    max-width: none;
+    scroll-snap-align: center;
+  }
+  .door-img {
+    max-height: 48vh;
+  }
+
+  /* reveal the swipe hint below the doors */
+  .swipe-hint {
+    display: flex;
+    font-size: 0.7rem;
+    color: #67e8f9; /* cyan */
+    text-shadow: none;
+  }
+
+  /* anchor the robot to the bottom-centre of the screen so it stands on
+     the deck floor instead of floating mid-door */
+  .robot-layer {
+    transform: translateY(12vh) scale(0.6);
+    transform-origin: center bottom;
+    transition: transform 0.6s ease;
+  }
+  /* when a door is selected the robot rises a little + scales up a bit so
+     he reaches toward the enlarged, centred door before walking in */
+  .robot-layer--active {
+    transform: translateY(4vh) scale(0.7);
+  }
+}
+
+/* Small phones — slightly smaller doors + robot. */
+
+@media (max-width: 400px) {
+  .door-tile {
+    width: clamp(140px, 68vw, 250px);
+  }
+  .robot-layer {
+    transform: translateX(6vw) translateY(12vh) scale(0.72);
+    transform-origin: center bottom;
+  }
+  /* once the user swipes the door row or selects a door, drop the start
+     offset so the robot sits at the horizontal centre of the viewport */
+  .robot-layer--swiped {
+    transform: translateX(10vw) translateY(12vh) scale(0.72);
+  }
+  .robot-layer--active {
+    transform: translateX(0) translateY(4vh) scale(0.82);
+  }
+}
+
+/* Short / landscape phones — cap door height so the row never pushes the
+   no-scroll layout off-screen, and keep the robot proportionate. */
+   
+@media (max-height: 520px) {
+  .door-img {
+    max-height: 60vh;
+  }
+  .robot-layer {
+    transform: scale(0.7);
+    transform-origin: center 80%;
+  }
+}
+
+@media (max-width: 640px){
+  .path-home-title{
+    font-size:35px;
+    padding:0px 20px
+  }
+}

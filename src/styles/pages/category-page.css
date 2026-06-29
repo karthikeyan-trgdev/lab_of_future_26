@@ -1,0 +1,260 @@
+/* =========================================================
+   CATEGORY PAGE (/students, /schools, etc.) — programs list
+   Shared by the populated category page (Students) and the
+   "coming soon" placeholder pages.
+========================================================= */
+
+.cat-page {
+  position: relative;
+  min-height: 100vh;
+  background: radial-gradient(
+      ellipse 80% 60% at 50% 0%,
+      rgba(20, 50, 130, 0.32) 0%,
+      rgba(5, 8, 28, 0) 70%
+    ),
+    #03050f;
+  overflow: hidden;
+  /* Top padding includes header-height (~6.5rem) so content isn't
+     hidden under the now-fixed glass header. */
+  padding: calc(6.5rem + clamp(1rem, 3vh, 2.5rem)) 0 clamp(3rem, 8vh, 6rem);
+}
+
+.cat-page-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 14% 18%, rgba(200, 220, 255, 0.6), transparent 60%),
+    radial-gradient(1px 1px at 41% 73%, rgba(200, 220, 255, 0.5), transparent 60%),
+    radial-gradient(1.2px 1.2px at 63% 12%, rgba(200, 220, 255, 0.65), transparent 60%),
+    radial-gradient(1px 1px at 85% 49%, rgba(200, 220, 255, 0.55), transparent 60%),
+    radial-gradient(0.8px 0.8px at 25% 91%, rgba(200, 220, 255, 0.45), transparent 60%),
+    radial-gradient(1px 1px at 93% 80%, rgba(200, 220, 255, 0.5), transparent 60%),
+    radial-gradient(0.8px 0.8px at 9% 58%, rgba(200, 220, 255, 0.4), transparent 60%);
+  opacity: 0.65;
+}
+
+.cat-page-glow {
+  position: absolute;
+  top: -12vh;
+  left: 50%;
+  width: 80vw;
+  height: 55vh;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(60, 130, 240, 0.3) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+.cat-page-inner {
+  position: relative;
+  z-index: 2;
+}
+
+.cat-page-back {
+  display: inline-block;
+  margin-bottom: clamp(1.4rem, 3vh, 2.4rem);
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(170, 200, 255, 0.75);
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.cat-page-back:hover {
+  color: #fff;
+  transform: translateX(-3px);
+}
+
+.cat-page-head {
+  text-align: left;
+  margin-bottom: clamp(2rem, 5vh, 3.5rem);
+}
+
+.cat-page-head--centered {
+  text-align: center;
+  margin-top: clamp(2rem, 8vh, 6rem);
+}
+
+.cat-page-eyebrow {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: clamp(0.7rem, 0.9vw, 0.85rem);
+  letter-spacing: 0.3em;
+  color: rgba(160, 200, 255, 0.75);
+  margin: 0 0 0.85rem;
+}
+
+.cat-page-title {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  font-size: clamp(1.9rem, 4.6vw, 3.8rem);
+  line-height: 1;
+  margin: 0 0 1rem;
+  background-image: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    #f1f6ff 38%,
+    #a8c8ff 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 12px rgba(90, 150, 255, 0.4));
+}
+
+.cat-page-sub {
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  line-height: 1.65;
+  color: rgba(220, 230, 255, 0.72);
+  max-width: 60ch;
+  margin: 0;
+}
+
+.cat-page-head--centered .cat-page-sub {
+  margin: 0 auto;
+}
+
+.cat-page-cta {
+  display: inline-block;
+  margin-top: 1.8rem;
+  padding: 0.85rem 2rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #2a5dff 0%, #1f4ad6 100%);
+  color: #fff;
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 6px 28px rgba(60, 120, 240, 0.45);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.cat-page-cta:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* ---- program tile grid ---- */
+.cat-page-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.1rem, 2vw, 1.8rem);
+}
+
+.prog-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  padding: 1.7rem 1.5rem;
+  min-height: 230px;
+  border-radius: 18px;
+  background: rgba(18, 32, 82, 0.28);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(147, 172, 255, 0.32);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.32),
+    inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.28s ease, box-shadow 0.28s ease,
+    border-color 0.28s ease;
+}
+
+.prog-tile--live {
+  cursor: pointer;
+}
+
+.prog-tile--live:hover {
+  transform: translateY(-6px);
+  border-color: rgba(120, 180, 255, 0.7);
+  box-shadow:
+    0 14px 44px rgba(0, 0, 0, 0.42),
+    0 0 24px rgba(90, 150, 255, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.18);
+}
+
+.prog-tile--soon {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.prog-tile-badge {
+  align-self: flex-start;
+  padding: 0.32rem 0.8rem;
+  border-radius: 999px;
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.prog-tile-badge--live {
+  background: rgba(80, 200, 130, 0.18);
+  color: #7ee0a4;
+  border: 1px solid rgba(80, 200, 130, 0.4);
+}
+
+.prog-tile-badge--soon {
+  background: rgba(180, 180, 200, 0.12);
+  color: rgba(220, 220, 240, 0.7);
+  border: 1px solid rgba(180, 180, 200, 0.25);
+}
+
+.prog-tile-label {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  line-height: 1.05;
+  margin: 0;
+  color: #fff;
+}
+
+.prog-tile-tag {
+  font-family: var(--font-sans);
+  font-size: clamp(0.9rem, 1vw, 0.98rem);
+  line-height: 1.55;
+  color: rgba(220, 230, 255, 0.72);
+  margin: 0;
+  flex: 1;
+}
+
+.prog-tile-cta {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #7eb2ff;
+  margin-top: 0.4rem;
+  transition: transform 0.25s ease;
+}
+
+.prog-tile--live:hover .prog-tile-cta {
+  transform: translateX(4px);
+}
+
+@media (max-width: 720px) {
+  .cat-page {
+    padding: 1.8rem 0 3rem;
+  }
+  .cat-page-grid {
+    grid-template-columns: 1fr;
+  }
+  .prog-tile {
+    min-height: auto;
+  }
+}

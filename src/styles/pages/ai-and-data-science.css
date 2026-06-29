@@ -1,0 +1,3958 @@
+/* =========================================================
+   SPACE ROBOTICS — theme overrides.
+   Scoped under .ai-data-science-page so the file only adjusts
+   colours / gradients / glows; layout, fonts, sizes are all
+   inherited from home.css.
+   Palette:
+     primary   #ff6a00  (vivid orange — robotic / industrial)
+     secondary #00e6ff  (electric cyan — circuitry)
+     accent    #ffb347  (warm amber highlight)
+     deep bg   #0a0612  (very dark warm-violet)
+========================================================= */
+
+.ai-data-science-page {
+  /* Theme palette — navy/blue throughout. The previous orange/amber
+     accents (--sr-primary: #ff6a00, --sr-accent: #ffb347) have been
+     replaced with navy blues so no rule that reads these tokens can
+     paint orange anywhere on the page. */
+  --sr-primary: #1d3b8a;       /* was #ff6a00 — vivid orange */
+  --sr-secondary: #2f63c8;     /* was #00e6ff — cyan */
+  --sr-accent: #4a7fc4;        /* was #ffb347 — warm amber */
+  --sr-deep: #f3f6fc;          /* was #0a0612 — dark warm-violet */
+  --sr-glow: rgba(29, 59, 138, 0.45);     /* was rgba(255,106,0,0.55) */
+  --sr-glow-cyan: rgba(47, 99, 200, 0.35); /* was rgba(0,230,255,0.45) */
+}
+
+/* ---- Hero ---- */
+.ai-data-science-page .hero {
+  background: var(--sr-deep);
+}
+
+/* Backdrop image — corridor / robotics studio photo. Fills the
+   whole hero behind the robot canvas. */
+.ai-data-science-page .hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url("../../assets/programs/space-robotics/robotics-hero-bg.webp")
+    center / cover no-repeat;
+  z-index: 1;
+}
+
+/* The robot canvas sits ABOVE the bg image. */
+.ai-data-science-page .hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: auto !important; /* required for OrbitControls drag input */
+}
+
+/* Belt-and-braces — every <canvas> inside the hero must receive
+   pointer events for OrbitControls drag to work. */
+.ai-data-science-page .hero-canvas canvas {
+  pointer-events: auto !important;
+  touch-action: none !important; /* let OrbitControls handle touch */
+}
+
+/* Hero title — absolutely centred over the hero, above the robot
+   canvas. Pointer-events off so the robot drag interaction still
+   works through the text area. */
+.ai-data-science-page .hero-text-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 6;        /* above the white bottom gradient (z-index 5) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+  padding: 0 1.5rem;
+}
+
+.ai-data-science-page .hero-heading {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  font-size: clamp(2.6rem, 8vw, 6.5rem);
+  line-height: 1;
+  /* Override SpaceScience's gradient — solid white with subtle
+     glow so the title pops over the corridor backdrop. */
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #ffffff;
+  color: #ffffff;
+  /* Black glow — multiple stacked shadows give a soft halo that
+     hugs the letters and deepens the centre, replacing the previous
+     blue/white tint. */
+  text-shadow:
+    0 0 12px rgba(0, 0, 0, 0.85),
+    0 0 28px rgba(0, 0, 0, 0.75),
+    0 0 48px rgba(0, 0, 0, 0.6),
+    0 4px 22px rgba(0, 0, 0, 0.55);
+  filter: none;
+}
+
+.ai-data-science-page .hero-word {
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+}
+
+/* WHITE fade — sits ABOVE the robot canvas so it fades the robot's
+   feet into white, blending the hero into the next section. */
+.ai-data-science-page .hero::after {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.98) 0%,
+    rgba(0, 0, 0, 0.78) 25%,
+    rgba(0, 0, 0, 0.35) 55%,
+    transparent 100%
+  );
+  z-index: 5;        /* above .hero-canvas (z-index 3) */
+  pointer-events: none;
+}
+
+/* Vignette over the bg image so the centred robot reads clearly. */
+.ai-data-science-page .hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 55%,
+    transparent 0%,
+    rgba(10, 6, 18, 0.35) 70%,
+    rgba(10, 6, 18, 0.65) 100%
+  );
+}
+
+/* Flare disabled on the robotics hero — the bg image already
+   provides the lighting atmosphere. */
+.ai-data-science-page .hero-flare {
+  display: none;
+}
+
+/* Hero title — navy/blue gradient (was warm orange/amber) */
+.ai-data-science-page .hero-title,
+.ai-data-science-page .hero h1 {
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #ffffff 35%,
+    #9cc3ff 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 14px var(--sr-glow));
+}
+
+.ai-data-science-page .hero-sub,
+.ai-data-science-page .hero p {
+  color: rgba(200, 215, 240, 0.78);
+}
+
+/* =========================================================
+   WHY SPACE ROBOTICS (unused on this page — the AI page's
+   why-section uses .ai-why-section instead). Left as-is.
+========================================================= */
+
+.ai-data-science-page .why-section--robotics {
+  position: relative;
+  background:
+    /* soft white veil so text/buttons stay readable on any pixel */
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    url("../../assets/programs/space-robotics/about-bg.webp") center / cover
+      no-repeat;
+  color: #0d1117;
+  padding: clamp(3rem, 8vh, 6rem) 0;
+  overflow: hidden;
+}
+
+/* Repurpose the section's ::before / ::after as WHITE fades — top and
+   bottom of the section bloom into white so the bg image blends
+   smoothly into whatever sits above/below. */
+.ai-data-science-page .why-section--robotics::before,
+.ai-data-science-page .why-section--robotics::after {
+  display: block !important;
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 22% !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+}
+
+.ai-data-science-page .why-section--robotics::before {
+  top: 0 !important;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0) 100%
+  ) !important;
+}
+
+.ai-data-science-page .why-section--robotics::after {
+  bottom: 0 !important;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0) 100%
+  ) !important;
+}
+
+/* Make sure the actual content sits above the two fades. */
+.ai-data-science-page .why-section--robotics .why-container {
+  position: relative;
+  z-index: 3;
+}
+
+.ai-data-science-page .why-section--robotics .why-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+/* =========================================================
+   CERTIFICATES — AI design.
+   Layout: title + bullet list on the LEFT, a static fanned
+   stack of 3 certificates on the RIGHT, floating above a
+   glowing data-hand baked into the full-bleed dark background.
+========================================================= */
+.ai-data-science-page .cert-section--robotics {
+  position: relative !important;
+  overflow: hidden !important;
+  background:
+    url("../../assets/programs/ai-and-data-science/certificate-bg.webp")
+    center / cover no-repeat !important;
+  background-color: #050a14 !important;
+  /* home.css forces min-height: 92vh + display: flex + align-items: center
+     on .cert-section, which was making this section ~92% of viewport tall
+     and centring the content — that's where the huge blank space came
+     from. Reset all three. */
+  min-height: clamp(440px, 56vh, 560px) !important;
+  display: block !important;
+  align-items: initial !important;
+  padding: clamp(2rem, 5vh, 4rem) 0 clamp(3rem, 6vh, 5rem) !important;
+}
+
+/* Section content grid — text LEFT, certificate stack RIGHT */
+.ai-data-science-page .cert-section--robotics .cert-robotics-inner {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: start;
+  /* Explicit width / centring — `.container` only sets max-width, so
+     without these the inner could collapse to its content width and
+     leave the grid columns invisible. */
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 3rem);
+}
+
+/* ── LEFT: title + bullet list (white on the dark hand backdrop) ── */
+.ai-data-science-page .cert-section--robotics .cert-robotics-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 32rem;
+}
+
+.ai-data-science-page .cert-section--robotics .cert-robotics-title {
+  margin: 0 0 0.3rem;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  font-size: clamp(2rem, 3.4vw, 2.85rem);
+  line-height: 1.05;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  filter: none;
+}
+
+.ai-data-science-page .cert-section--robotics .cert-robotics-text > p {
+  color: #b6c5e2;
+}
+
+.ai-data-science-page .cert-section--robotics .cert-robotics-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.ai-data-science-page .cert-section--robotics .cert-robotics-list li {
+  position: relative;
+  padding-left: 1.3rem;
+  font-size: clamp(0.96rem, 1.1vw, 1.05rem);
+  line-height: 1.55;
+  color: #d6deef;
+}
+
+/* Bullet marker — glowing blue dot */
+.ai-data-science-page .cert-section--robotics .cert-robotics-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #5ec8ff;
+  box-shadow: 0 0 8px rgba(94, 200, 255, 0.7);
+}
+
+/* Highlighted phrases inside the bullets */
+.ai-data-science-page .cert-section--robotics .cert-robotics-list strong {
+  color: #5ec8ff;
+  font-weight: 700;
+}
+
+/* ── RIGHT: fanned stack of 3 certificates ───────────────── */
+.ai-data-science-page .cert-section--robotics .cert-ai-stage {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ai-data-science-page .cert-ai-stack {
+  position: relative;
+  width: clamp(150px, 17vw, 330px);
+  aspect-ratio: 3 / 4;
+  margin: clamp(1.5rem, 6vh, 3.5rem) 0;
+}
+
+.ai-data-science-page .cert-ai-card {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+  filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.45));
+  transition: transform 0.25s ease;
+}
+
+.ai-data-science-page .cert-ai-card--1 {
+  transform: translateX(-32%) rotate(-9deg);
+  z-index: 1;
+}
+
+.ai-data-science-page .cert-ai-card--2 {
+  transform: translateX(32%) rotate(9deg);
+  z-index: 2;
+}
+
+.ai-data-science-page .cert-ai-card--3 {
+  transform: none;
+  z-index: 3;
+}
+
+.ai-data-science-page .cert-ai-stage:hover .cert-ai-card--1 {
+  transform: translateX(-38%) rotate(-11deg);
+}
+
+.ai-data-science-page .cert-ai-stage:hover .cert-ai-card--2 {
+  transform: translateX(38%) rotate(11deg);
+}
+
+/* The cert section opts out of the global fade group's top fade so
+   the dark backdrop reads cleanly, while keeping a bottom fade that
+   the global rules can paint. */
+.ai-data-science-page .cert-section--robotics::before {
+  display: none !important;
+}
+
+/* Responsive — stack columns on small screens */
+@media (max-width: 900px) {
+  .ai-data-science-page .cert-section--robotics .cert-robotics-inner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .ai-data-science-page .cert-section--robotics {
+    padding-bottom: 2rem;
+    min-height: auto;
+  }
+}
+
+/* =========================================================
+   WHY AI FOR FUTURE CAREERS — dark HUD-frame theme.
+   Layout/grid structure stays the same as home.css; only the
+   colors, frame artwork, and background change here.
+========================================================= */
+.ai-data-science-page .careers-section--robotics {
+  position: relative !important;
+  background:
+    url("../../assets/programs/ai-and-data-science/future-career-bg.webp")
+    center / cover no-repeat !important;
+  background-color: #050a14 !important;
+  color: #ffffff !important;
+  padding: clamp(3rem, 8vh, 6rem) 0 clamp(2rem, 5vh, 4rem) !important;
+  overflow: hidden !important;
+}
+
+/* Title — white + a blue badge wrapping "FUTURE CAREERS?" */
+.ai-data-science-page .careers-section--robotics .careers-title {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  text-shadow: none !important;
+  filter: none !important;
+  font-size: clamp(1.6rem, 3vw, 2.6rem) !important;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.6rem !important;
+}
+
+/* Blue badge wrapping the FUTURE CAREERS? phrase */
+.ai-data-science-page .careers-section--robotics .careers-title-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  background: #ffffff;
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+.careers-skill-img{
+  width: 92%;
+  left: 4%;
+  top: -1%;
+}
+
+/* Subtitle and footer — light blue-grey text on the dark backdrop */
+.ai-data-science-page .careers-section--robotics .careers-sub,
+.ai-data-science-page .careers-section--robotics .careers-footer {
+  color: #b6c5e2 !important;
+  text-shadow: none !important;
+}
+
+/* Skill cards — use the AI-specific future-careers-box-frame artwork. */
+.ai-data-science-page .careers-section--robotics .careers-skill-card {
+  background:
+    url("../../assets/programs/ai-and-data-science/future-careers-box-frame.png")
+    center / 100% 100% no-repeat !important;
+  backdrop-filter: none !important;
+}
+
+.ai-data-science-page .careers-section--robotics .careers-skill-card:hover {
+  transform: translateY(-5px);
+  filter: brightness(1.08)
+    drop-shadow(0 10px 24px rgba(94, 200, 255, 0.35));
+}
+
+/* Skill label — white text on the dark frame */
+.ai-data-science-page .careers-section--robotics .careers-skill-label {
+  color: #ffffff !important;
+  font-weight: 800;
+  text-shadow: none !important;
+  font-size: 17px;
+}
+
+/* =========================================================
+   SPACE-CAREERS WRAPPER — robotics override.
+   home.css paints a dark space-themed photo backdrop and black
+   top/bottom gradients on the wrapper.  Reset all three so the
+   Careers + Competitions sections each show their own light
+   backgrounds underneath.
+========================================================= */
+.ai-data-science-page .space-careers-wrapper--robotics {
+  background: #ffffff !important;
+}
+.ai-data-science-page .space-careers-wrapper--robotics::before,
+.ai-data-science-page .space-careers-wrapper--robotics::after {
+  display: none !important;
+  background: none !important;
+  content: none !important;
+}
+
+/* =========================================================
+   COMPETITIONS — black & white dark theme.
+   Layout + grid inherited from home.css; only colours, title
+   style and card chrome change here.
+========================================================= */
+.ai-data-science-page .competitions-section--robotics {
+  position: relative !important;
+  /* AI competition-bg.webp as the backdrop, with a soft black veil so
+     the title + competition cards stay readable on any pixel. */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.6) 100%
+    ),
+    url("../../assets/programs/ai-and-data-science/competition-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #050608 !important;
+  color: #ffffff !important;
+  padding: clamp(3rem, 8vh, 6rem) 0 !important;
+  overflow: hidden !important;
+}
+
+/* Title — white text, wrapped heading in a white badge with black text. */
+.ai-data-science-page .competitions-section--robotics
+  .competitions-label-text {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-shadow: none !important;
+  filter: none !important;
+  margin-bottom: 0.8rem !important;
+}
+
+.ai-data-science-page .competitions-section--robotics
+  .competitions-label-badge {
+  display: inline-block;
+  padding: 0.18em 0.6em;
+  background: #ffffff;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+/* Subtitle — soft white body text */
+.ai-data-science-page .competitions-section--robotics .competitions-subtitle {
+  color: rgba(255, 255, 255, 0.78) !important;
+  text-shadow: none !important;
+  max-width: 100%;
+  margin:0;
+  text-align: left;
+}
+
+/* Card chrome — dark glass card with a subtle white border */
+.ai-data-science-page .competitions-section--robotics .comp-card-outer {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+
+.ai-data-science-page .competitions-section--robotics .comp-card-outer:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  box-shadow:
+    0 22px 48px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+}
+
+/* If the home.css rule paints a ::after corner accent, kill it so we
+   get a clean card. */
+.ai-data-science-page .competitions-section--robotics .comp-card-outer::after {
+  display: none !important;
+  background: none !important;
+  content: none !important;
+}
+
+.ai-data-science-page .competitions-section--robotics .comp-card-title {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+}
+
+.ai-data-science-page .competitions-section--robotics .comp-card-desc {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+.ai-data-science-page .competitions-section--robotics .comp-card-icon {
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.ai-data-science-page .competitions-section--robotics .comp-card-icon img {
+  /* Icons already ship as white-fill SVGs — perfect as-is on dark. */
+  filter: none !important;
+}
+
+/* =========================================================
+   CAREER PATHWAYS — black & white dark theme.
+   home.css wraps the section in a dark faq-bg.webp backdrop
+   with heavy black gradients — keep the dark spirit but swap
+   in the AI pathway-bg.webp art and a clean white-on-black
+   accordion, matches the supplied design.
+========================================================= */
+
+/* Wrapper — kill the original dark backdrop image/gradient so the
+   inner section's own background (set below) shows through cleanly. */
+.ai-data-science-page .faq-section-wrapper {
+  background: #05070d;
+}
+
+.ai-data-science-page .faq-section-wrapper .faq-bg-anim {
+  background: none !important;
+  display: none !important;
+}
+
+.ai-data-science-page .faq-section-wrapper .faq-bg-overlay {
+  background: none !important;
+  display: none !important;
+}
+
+/* Section — AI pathway-bg.webp backdrop with a soft black veil */
+.ai-data-science-page .career-pathways-section--robotics {
+  position: relative !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.68) 100%
+    ),
+    url("../../assets/programs/ai-and-data-science/pathway-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #05070d !important;
+  color: #ffffff !important;
+  padding: clamp(3rem, 8vh, 6rem) 0 !important;
+  text-align: center;
+}
+
+/* Title — white text + wrap the word CAREER in a white badge with
+   black text. */
+.ai-data-science-page .career-pathways-section--robotics
+  .career-pathways-title {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-shadow: none !important;
+  filter: none !important;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.04em;
+}
+
+.ai-data-science-page .career-pathways-section--robotics
+  .career-pathways-badge {
+  display: inline-block;
+  padding: 0.18em 0.5em;
+  margin-right: 0.4em;
+  background: #ffffff;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Accordion list */
+.ai-data-science-page .career-pathways-section--robotics .faq-list {
+  text-align: left;
+  max-width: 880px;
+}
+
+/* Question button — dark glass card with a subtle white outline.
+   Kill the gradient border + clip-path chrome and replace with a
+   simple rounded pill so each row reads as a flat dark capsule. */
+.ai-data-science-page .career-pathways-section--robotics .faq-q-outer {
+  background: transparent !important;
+  padding: 0 !important;
+  clip-path: none !important;
+  border-radius: 14px;
+  filter: none !important;
+}
+
+.ai-data-science-page .career-pathways-section--robotics .faq-q-outer:hover {
+  filter: brightness(1.1)
+    drop-shadow(0 6px 16px rgba(255, 255, 255, 0.18)) !important;
+}
+
+.ai-data-science-page .career-pathways-section--robotics .faq-q-inner {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.32);
+  border-radius: 14px;
+  clip-path: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 1rem 1.6rem;
+}
+
+/* Question text — white */
+.ai-data-science-page .career-pathways-section--robotics .faq-q-text {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem) !important;
+}
+
+/* Arrow — white chevron */
+.ai-data-science-page .career-pathways-section--robotics .faq-q-arrow {
+  color: #ffffff !important;
+  font-size: 0.8rem !important;
+}
+
+/* Answer body — soft white text */
+.ai-data-science-page .career-pathways-section--robotics .faq-answer-body p {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+/* Grid-rows 0fr → 1fr accordion trick needs min-height: 0 on the
+   grid + body so the panel can actually collapse to 0 and expand. */
+.ai-data-science-page .career-pathways-section--robotics .faq-answer {
+  min-height: 0 !important;
+}
+.ai-data-science-page .career-pathways-section--robotics .faq-answer-body {
+  min-height: 0 !important;
+}
+
+/* =========================================================
+   WHO ARE WE ASSOCIATED WITH — black & white dark theme.
+   Swaps in the AI-specific network background, glass box-frame
+   and lighting artwork. Since the new backdrop is dark (unlike
+   the old white-veiled robotics version), title/connector colors
+   flip to white/light-blue and the blinking stars are re-enabled.
+========================================================= */
+.ai-data-science-page .assoc-section--robotics {
+  position: relative !important;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.55) 100%),
+    url("../../assets/programs/ai-and-data-science/associated-with-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #070b16 !important;
+  padding: 150px 0px !important;
+  overflow: hidden;
+}
+
+/* Kill the home.css top + bottom black gradient overlays — the new
+   bg image already reads dark, no extra vignette needed. */
+.ai-data-science-page .assoc-section--robotics::before,
+.ai-data-science-page .assoc-section--robotics::after {
+  display: none !important;
+  background: none !important;
+  content: none !important;
+}
+
+/* Blinking stars read well on this dark backdrop — keep them on. */
+.ai-data-science-page .assoc-section--robotics .assoc-blink-stars {
+  display: block !important;
+}
+
+/* Title — white, with the blue badge wrapping the word ASSOCIATED. */
+.ai-data-science-page .assoc-section--robotics .assoc-title {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-shadow: none !important;
+  filter: none !important;
+  font-size: clamp(1.3rem, 2.6vw, 2.2rem) !important;
+  letter-spacing: 0.05em !important;
+  font-weight: 900 !important;
+}
+
+.ai-data-science-page .assoc-section--robotics .assoc-title-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  margin: 0 0.18em;
+  background: #ffffff;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Box frame — AI glass-card asset, lit with a soft blue glow that
+   suits the dark backdrop (replaces the navy drop-shadow used on
+   the old light theme). */
+.ai-data-science-page .assoc-section--robotics .assoc-box-frame {
+  background:
+    url("../../assets/programs/ai-and-data-science/associated-client-frame.svg")
+    center / 100% 100% no-repeat !important;
+  filter: drop-shadow(0 0 14px rgba(108, 167, 255, 0.35)) !important;
+}
+
+/* Lighting glow — sits BELOW the box frame (was overlapping at
+   top:76%).  Anchor to the bottom of the box so the glow reads as
+   light spilling DOWN from under the frame instead of bleeding
+   across the logo. */
+.ai-data-science-page .assoc-section--robotics .assoc-box-light {
+  top: auto !important;
+  bottom: -50% !important;
+  width: 100% !important;
+  transform: translateX(-50%) !important;
+  z-index: 0 !important;
+}
+
+/* Connector lines — light blue on the dark backdrop, matching the
+   new frame artwork's accent color. */
+.ai-data-science-page .assoc-section--robotics .assoc-lines path {
+  stroke: #6ca7ff !important;
+  filter: drop-shadow(0 0 3px rgba(108, 167, 255, 0.5)) !important;
+}
+
+.ai-data-science-page .assoc-section--robotics .assoc-lines path {
+  animation: assocDraw 1.8s ease forwards,
+    assocLinePulseRobotics 4s ease-in-out 1.8s infinite !important;
+}
+
+@keyframes assocLinePulseRobotics {
+  0%, 100% {
+    stroke: #6ca7ff;
+    filter: drop-shadow(0 0 3px rgba(108, 167, 255, 0.5));
+  }
+  50% {
+    stroke: #9cc4ff;
+    filter: drop-shadow(0 0 6px rgba(156, 196, 255, 0.7));
+  }
+}
+
+/* =========================================================
+   Shared light-theme background for the next four sections.
+   Same pale blue + dotted pattern used by the vetted / modes /
+   projects / impact blocks so the whole lower half of the page
+   reads as one continuous light zone.
+========================================================= */
+.ai-data-science-page .vetted-section--robotics,
+.ai-data-science-page .modes-section--robotics,
+.ai-data-science-page .projects-section--robotics,
+.ai-data-science-page .impact-section--robotics {
+  position: relative !important;
+  background-color: #f3f6fc !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='2' cy='2' r='1' fill='%2386a8e7' opacity='0.18'/></svg>") !important;
+  background-repeat: repeat !important;
+  background-size: 30px 30px !important;
+  color: #0d1b3a !important;
+  overflow: hidden !important;
+}
+
+/* Shared title-badge style (matches the WHY / CAREER / ASSOCIATED
+   pattern). Applied to every robotics section title. */
+.ai-data-science-page .vetted-section--robotics .vetted-title-badge,
+.ai-data-science-page .modes-section--robotics .modes-title-badge,
+.ai-data-science-page .projects-section--robotics .projects-title-badge,
+.ai-data-science-page .impact-section--robotics .impact-title-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  margin-right: 0.2em;
+  background: #1d3b8a;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Shared title reset — kills SpaceScience gradient / glow */
+.ai-data-science-page .vetted-section--robotics .vetted-title,
+.ai-data-science-page .modes-section--robotics .modes-title,
+.ai-data-science-page .projects-section--robotics .projects-title,
+.ai-data-science-page .impact-section--robotics .impact-title {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+/* =========================================================
+   VETTED BY — black & white dark theme, circular HUD ring bg.
+   home.css's BASE .vetted-inner (2-col grid: team-grid LEFT,
+   title + open art space RIGHT) is *already* the screenshot's
+   exact layout, so we only swap assets + colors here instead
+   of fighting it with a custom layout.
+========================================================= */
+.ai-data-science-page .vetted-section--robotics {
+  position: relative !important;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.45) 100%),
+    url("../../assets/programs/ai-and-data-science/vetted-by-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #03050c !important;
+  color: #ffffff !important;
+  padding: 150px 0px !important;
+}
+
+/* Kill the base white top/bottom gradient — the .ai-section-fade-top/
+   -bot divs (added in JSX) provide the black gradient instead. */
+.ai-data-science-page .vetted-section--robotics::before,
+.ai-data-science-page .vetted-section--robotics::after {
+  display: none !important;
+  background: none !important;
+  content: none !important;
+}
+
+/* Title — white text + a white badge (black text) wrapping VETTED,
+   matching the Associated/Competitions/Career-Pathways theme.
+   ROTATED: title now sits along the LEFT edge of the section,
+   text running vertically (bottom-to-top via writing-mode +
+   180° rotation), so the team cards take the centre and the
+   particle disc sits on the right inside the bg ring. */
+.ai-data-science-page .vetted-section--robotics .vetted-title {
+  color: #ffffff !important;
+  font-weight: 900 !important;
+  position: absolute !important;
+  left: 3.5% !important;
+  top: 50% !important;
+  transform: translateY(-50%) rotate(180deg) !important;
+  writing-mode: vertical-rl !important;
+  text-orientation: mixed !important;
+  margin: 0 !important;
+  z-index: 12 !important;
+  white-space: nowrap !important;
+  letter-spacing: 0.18em !important;
+}
+.vetted-right{
+  position: absolute !important;
+  left: 3.5% !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+.ai-data-science-page .vetted-section--robotics .vetted-title-badge {
+  display: inline-block;
+  padding: 0.12em 0.4em;
+  margin-right: 0.2em;
+  background: #ffffff;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Name plate — AI team-name-frame asset, dark glass fill behind the
+   frame's outline (the PNG itself is a transparent stroke shape). */
+.ai-data-science-page .vetted-section--robotics .vetted-plate {
+  width: 100% !important;
+  max-width: 300px !important;
+  aspect-ratio: 3 / 1 !important;
+  background:
+    url("../../assets/programs/ai-and-data-science/team-name-frame.png")
+      center / 100% 100% no-repeat,
+    rgba(8, 14, 28, 0.78) !important;
+  filter: none !important;
+}
+.ai-data-science-page .projects-card-student{
+  text-align: right;
+}
+.ai-data-science-page .vetted-section--robotics .vetted-name {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.ai-data-science-page .vetted-section--robotics .vetted-role {
+  color: rgba(190, 215, 255, 0.72) !important;
+}
+
+.ai-data-science-page .vetted-section--robotics .vetted-li {
+  color: #ffffff !important;
+}
+
+/* Constrain the photo stage so tall portrait PNGs don't overflow
+   their grid cell and overlap the row below. The image fills the
+   fixed box via object-fit:cover, cropped to show the face/bust. */
+.ai-data-science-page .vetted-section--robotics .vetted-stage {
+  width: 100% !important;
+  max-width: none !important;
+  height: clamp(160px, 22vw, 240px) !important;
+  overflow: hidden !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+}
+
+.ai-data-science-page .vetted-section--robotics .vetted-photo {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Photo — team-N.png ships pre-toned (duotone blue); drop the
+   flicker animation + holographic wash/scanline FX from the base
+   theme for a clean, static portrait with just a soft blue glow. */
+.ai-data-science-page .vetted-section--robotics .vetted-photo img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: top center !important;
+  animation: none !important;
+  filter: drop-shadow(0 0 16px rgba(90, 160, 255, 0.4)) !important;
+}
+
+.ai-data-science-page .vetted-section--robotics .vetted-photo::before,
+.ai-data-science-page .vetted-section--robotics .vetted-photo::after {
+  display: none !important;
+  background: none !important;
+  content: none !important;
+}
+
+/* =========================================================
+   MODES TO JOIN — light theme + lighter frame.
+========================================================= */
+.ai-data-science-page .modes-section--robotics {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.432) 0%,
+      rgba(255, 255, 255, 0.956) 100%
+    ),
+    url("../../assets/programs/space-robotics/modes-to-join-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #f3f6fc !important;
+  padding: clamp(3rem, 7vh, 5rem) 0 clamp(4rem, 8vh, 6rem) !important;
+}
+
+.ai-data-science-page .modes-section--robotics .modes-subtitle,
+.ai-data-science-page .modes-section--robotics .modes-desc {
+  color: #3a4252 !important;
+  text-shadow: none !important;
+}
+
+.ai-data-science-page .modes-section--robotics .modes-subtitle {
+  color: #0d1b3a !important;
+  font-weight: 700;
+}
+
+/* Mode cards — use the supplied box-frame artwork, same look as the
+   learn-section cards. No border / shadow / blur (the frame artwork
+   already carries the chrome). */
+.ai-data-science-page .modes-section--robotics .modes-card {
+  background:
+    url("../../assets/programs/space-robotics/what-students-learn/what-students-learn-box-frame.png")
+    center / 100% 100% no-repeat !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.ai-data-science-page .modes-section--robotics .modes-card:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.03)
+    drop-shadow(0 10px 22px rgba(29, 59, 138, 0.22)) !important;
+}
+
+.ai-data-science-page .modes-section--robotics .modes-card-label {
+  color: #1d3b8a !important;
+  -webkit-text-fill-color: #1d3b8a !important;
+  font-weight: 800;
+}
+
+/* =========================================================
+   STUDENT PROJECTS — light theme.
+========================================================= */
+.ai-data-science-page .projects-section--robotics {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.919) 0%,
+      rgba(255, 255, 255, 0.83) 100%
+    ),
+    url("../../assets/programs/space-robotics/student-projects.webp")
+      center / cover no-repeat !important;
+  background-color: #f3f6fc !important;
+  padding: clamp(3rem, 7vh, 5rem) 0 clamp(3rem, 7vh, 5rem) !important;
+}
+
+.ai-data-science-page .projects-section--robotics .projects-subtitle {
+  color: #0d1b3a !important;
+  font-weight: 700;
+}
+
+.ai-data-science-page .projects-section--robotics .projects-desc {
+  color: #3a4252 !important;
+  text-shadow: none !important;
+}
+
+/* Project card chrome — keep the original home.css frame artwork
+   (it was working). Only text colours need swapping for the light
+   section background. */
+.ai-data-science-page .projects-section--robotics .projects-card {
+  color: #0d1b3a !important;
+  padding:30px
+}
+
+.ai-data-science-page .projects-section--robotics .projects-card-title {
+  color: #1d3b8a !important;
+  -webkit-text-fill-color: #1d3b8a !important;
+}
+
+.ai-data-science-page .projects-section--robotics .projects-card-desc {
+  color: #3a4252 !important;
+}
+
+.ai-data-science-page .projects-section--robotics .projects-card-name {
+  color: #0d1b3a !important;
+  font-weight: 700;
+}
+
+.ai-data-science-page .projects-section--robotics .projects-card-meta {
+  color: #3a4252 !important;
+}
+
+/* Stats row — navy numbers, slate labels, blue divider */
+.ai-data-science-page .projects-section--robotics .projects-stat-num {
+  color: #1d3b8a !important;
+  -webkit-text-fill-color: #1d3b8a !important;
+  background: none !important;
+}
+
+.ai-data-science-page .projects-section--robotics .projects-stat-lbl {
+  color: #3a4252 !important;
+}
+
+.ai-data-science-page .projects-section--robotics .projects-stat + .projects-stat {
+  border-left-color: rgba(29, 59, 138, 0.28) !important;
+}
+
+/* =========================================================
+   PROJECT IMPACT — light theme.
+========================================================= */
+.ai-data-science-page .impact-section--robotics {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.82) 0%,
+      rgba(255, 255, 255, 0.72) 100%
+    ),
+    url("../../assets/programs/space-robotics/project-impact-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #f3f6fc !important;
+  padding: clamp(3rem, 7vh, 5rem) 0 clamp(4rem, 9vh, 6rem) !important;
+}
+
+.ai-data-science-page .impact-section--robotics .impact-subtitle {
+  color: #0d1b3a !important;
+  font-weight: 700;
+}
+
+.ai-data-science-page .impact-section--robotics .impact-desc {
+  color: #3a4252 !important;
+  text-shadow: none !important;
+}
+
+.ai-data-science-page .impact-section--robotics .impact-card {
+  background: rgba(255, 255, 255, 0.78) !important;
+  border: 1.5px solid rgba(29, 59, 138, 0.25) !important;
+  box-shadow:
+    0 12px 28px rgba(29, 59, 138, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.ai-data-science-page .impact-section--robotics .impact-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(29, 59, 138, 0.55) !important;
+  box-shadow:
+    0 18px 36px rgba(29, 59, 138, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+.ai-data-science-page .impact-section--robotics .impact-card-title {
+  color: #1d3b8a !important;
+  -webkit-text-fill-color: #1d3b8a !important;
+}
+
+.ai-data-science-page .impact-section--robotics .impact-card-desc {
+  color: #3a4252 !important;
+}
+
+/* Icon box — solid blue plate with white icon, padded + rounded. */
+.ai-data-science-page .impact-section--robotics .impact-card-icon {
+  background: #1d3b8a !important;
+  border: 1px solid rgba(29, 59, 138, 0.3) !important;
+  border-radius: 16px !important;
+  padding: 0.9rem !important;
+  box-shadow:
+    0 8px 18px rgba(29, 59, 138, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Force the SVG/PNG icon to render WHITE on the blue plate.
+   brightness(0) drops the colour to black, invert(1) flips it
+   to white — works for any single-colour or dark icon artwork. */
+.ai-data-science-page .impact-section--robotics .impact-card-icon img {
+  filter: brightness(0) invert(1) !important;
+}
+
+/* =========================================================
+   FAQ — two-column accordion on a light background, with empty
+   centre space reserved for the robot model.
+========================================================= */
+.ai-data-science-page .faq-robotics-section {
+  position: relative;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    url("../../assets/programs/space-robotics/faq-bg.webp")
+      center / cover no-repeat;
+  background-color: #f3f6fc;
+  padding: 100px 0px;
+  color: #0d1b3a;
+  overflow: hidden;
+}
+
+.ai-data-science-page .faq-robotics-title {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+  color: #1d3b8a;
+  margin-bottom: 100px;
+}
+
+/* Two columns with a wide centre gap to leave room for the robot.
+   On smaller screens the gap collapses and rows stack. */
+.ai-data-science-page .faq-robotics-grid {
+  display: grid;
+  grid-template-columns: 1fr clamp(160px, 24vw, 150px) 1fr;
+  gap: 1.2rem clamp(1rem, 3vw, 2rem);
+  align-items: start;
+}
+
+.ai-data-science-page .faq-robotics-grid > .faq-robotics-col:first-child {
+  grid-column: 1;
+}
+.ai-data-science-page .faq-robotics-grid > .faq-robotics-col:last-child {
+  grid-column: 3;
+}
+
+.ai-data-science-page .faq-robotics-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.ai-data-science-page .faq-robotics-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-data-science-page .faq-robotics-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.9rem 1.2rem;
+  background: rgba(218, 228, 248, 0.55);
+  border: 1.5px solid rgba(29, 59, 138, 0.32);
+  border-radius: 20px 0px 20px 0px;
+  color: #1d3b8a;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  text-align: left;
+  cursor: pointer;
+  transition: filter 0.18s ease, transform 0.18s ease,
+    background 0.18s ease;
+}
+
+.ai-data-science-page .faq-robotics-q:hover {
+  background: rgba(218, 228, 248, 0.75);
+  filter: drop-shadow(0 6px 14px rgba(29, 59, 138, 0.18));
+  transform: translateY(-1px);
+}
+
+.ai-data-science-page .faq-robotics-q-arrow {
+  display: inline-flex;
+  font-size: 0.7rem;
+  color: #1d3b8a;
+  transition: transform 0.32s ease;
+  flex-shrink: 0;
+}
+
+.ai-data-science-page .faq-robotics-item.is-open .faq-robotics-q-arrow {
+  transform: rotate(180deg);
+}
+
+/* Smooth grid-row accordion */
+.ai-data-science-page .faq-robotics-a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.36s ease;
+  /* min-height: 0 is required for the grid-row 0fr → 1fr trick to
+     actually collapse on some browsers; without it the row keeps
+     its content's intrinsic height and the panel never closes. */
+  min-height: 0;
+}
+.ai-data-science-page .faq-robotics-item.is-open .faq-robotics-a {
+  grid-template-rows: 1fr;
+}
+
+.ai-data-science-page .faq-robotics-a-body {
+  overflow: hidden;
+  min-height: 0;
+  padding: 0 1.2rem;
+  font-family: var(--font-sans);
+  font-size: clamp(0.82rem, 1vw, 0.94rem);
+  line-height: 1.6;
+  color: #3a4252;
+}
+
+.ai-data-science-page .faq-robotics-item.is-open .faq-robotics-a-body {
+  padding: 0.6rem 1.2rem 0.9rem;
+}
+
+/* Collapse the centre robot-gap on small screens */
+@media (max-width: 900px) {
+  .ai-data-science-page .faq-robotics-grid {
+    grid-template-columns: 1fr;
+  }
+  .ai-data-science-page .faq-robotics-grid > .faq-robotics-col:first-child,
+  .ai-data-science-page .faq-robotics-grid > .faq-robotics-col:last-child {
+    grid-column: 1;
+  }
+}
+
+/* =========================================================
+   CTA — "The future won't be taught, it will be built"
+   Two-column layout: empty stage on the left (for the robot),
+   title + copy + buttons on the right.
+========================================================= */
+.ai-data-science-page .cta-robotics-section {
+  position: relative;
+  background:
+    radial-gradient(
+      ellipse 60% 50% at 18% 50%,
+      rgba(150, 180, 235, 0.16) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 50% 45% at 88% 50%,
+      rgba(150, 180, 235, 0.12) 0%,
+      transparent 65%
+    ),
+    #eef2fa;
+  padding: clamp(3rem, 8vh, 6rem) 0;
+  overflow: hidden;
+}
+
+.ai-data-science-page .cta-robotics-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: center;
+}
+
+.cta-robotics-section img{
+  object-fit: contain;
+}
+/* LEFT — small-robot canvas stage. Explicit height so R3F's 100%
+   resolves to a real pixel value instead of collapsing to zero. */
+.ai-data-science-page .cta-robotics-stage {
+  position: relative;
+  height: clamp(280px, 40vh, 420px);
+}
+
+/* R3F renders a wrapper div around the canvas — both must fill the stage. */
+.ai-data-science-page .cta-robotics-stage > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.ai-data-science-page .cta-robotics-stage canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  touch-action: none;
+}
+
+.ai-data-science-page .cta-robotics-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  max-width: 38rem;
+}
+
+.ai-data-science-page .cta-robotics-title {
+  margin: 0;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+  font-size: clamp(1.5rem, 2.6vw, 2.4rem);
+  color: #1d3b8a;
+  text-transform: uppercase;
+}
+
+.ai-data-science-page .cta-robotics-desc {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+  line-height: 1.65;
+  color: #3a4252;
+}
+
+.ai-data-science-page .cta-robotics-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 0.4rem;
+  flex-wrap: wrap;
+}
+
+/* CTA buttons use the SAME SVG-pill chrome as the WHY-section
+   buttons — 200×80 px, light-btn.svg / dark-btn.svg artwork, white
+   text, soft blue drop-shadow on hover. */
+.ai-data-science-page .cta-robotics-btn {
+  width: 200px;
+  height: 80px;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 120% 100%;
+  backdrop-filter: none;
+  box-shadow: none;
+  color: #ffffff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.16s ease, filter 0.16s ease;
+}
+
+/* Both CTA buttons now use the DARK pill artwork. */
+.ai-data-science-page .cta-robotics-btn--primary,
+.ai-data-science-page .cta-robotics-btn--secondary {
+  background-image: url("../../assets/dark-btn.svg");
+}
+
+.ai-data-science-page .cta-robotics-btn:hover,
+.ai-data-science-page .cta-robotics-btn:focus-visible {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 6px 18px rgba(86, 138, 255, 0.45));
+}
+
+@media (max-width: 900px) {
+  .ai-data-science-page .cta-robotics-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .ai-data-science-page .cta-robotics-text {
+    margin: 0 auto;
+  }
+  .ai-data-science-page .cta-robotics-actions {
+    justify-content: center;
+  }
+  .ai-data-science-page .cta-robotics-stage {
+    min-height: 220px;
+  }
+}
+
+/* =========================================================
+   EXPLORE OUR OTHER PROGRAMS — light theme + box-frame cards.
+========================================================= */
+.ai-data-science-page .explore-section--robotics {
+  position: relative !important;
+  background-color: #f3f6fc !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='2' cy='2' r='1' fill='%2386a8e7' opacity='0.18'/></svg>") !important;
+  background-repeat: repeat !important;
+  background-size: 30px 30px !important;
+  color: #0d1b3a !important;
+  padding: clamp(3rem, 7vh, 5rem) 0 clamp(4rem, 9vh, 6rem) !important;
+  overflow: hidden !important;
+}
+
+/* Title — reset SpaceScience white/glow, swap to navy + badge */
+.ai-data-science-page .explore-section--robotics .explore-title {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #0d1b3a !important;
+  -webkit-text-fill-color: #0d1b3a !important;
+  text-shadow: none !important;
+  filter: none !important;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem) !important;
+  font-weight: 900 !important;
+  text-align: center;
+  margin-bottom: clamp(2rem, 4vh, 3rem) !important;
+}
+
+.ai-data-science-page .explore-section--robotics .explore-title-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  margin-right: 0.18em;
+  background: #1d3b8a;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 4px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+/* Cards use the box-frame artwork — same chrome family used by
+   the modes-to-join section.  No border / shadow / blur (the frame
+   itself carries the chrome). */
+.ai-data-science-page .explore-section--robotics .explore-card {
+  background:
+    url("../../assets/programs/space-robotics/what-students-learn/what-students-learn-box-frame.png")
+    center / 100% 100% no-repeat !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  color: #0d1b3a !important;
+  padding: 14% 10% 12% !important;
+}
+
+.ai-data-science-page .explore-section--robotics .explore-card img{
+  object-fit: contain;
+}
+
+.ai-data-science-page .explore-section--robotics .explore-card:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.03)
+    drop-shadow(0 10px 22px rgba(29, 59, 138, 0.22)) !important;
+}
+
+.ai-data-science-page .explore-section--robotics .explore-card-label {
+  color: #1d3b8a !important;
+  -webkit-text-fill-color: #1d3b8a !important;
+  font-weight: 900 !important;
+}
+
+/* Other-programs slide image — use contain instead of cover so the
+   whole tile artwork shows without being cropped. */
+.ai-data-science-page .explore-section--robotics .explore-card-img,
+.ai-data-science-page .explore-section--robotics .explore-card-imgwrap img {
+  object-fit: contain !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+.explore-card-imgwrap{
+      aspect-ratio: 3 / 3;
+      background: transparent;
+
+}
+/* =========================================================
+   FOOTER newsletter input — strip the inset shadow that the
+   home.css rule paints on the box.
+========================================================= */
+.ai-data-science-page .site-footer-form input,
+.ai-data-science-page .site-footer-form input:focus {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+/* =========================================================
+   Bump font-weight on every "box title" across the page — the
+   small headings that sit inside cards / tiles / pills. */
+.ai-data-science-page .why-section--robotics .why-title,
+.ai-data-science-page .why-section--robotics .why-title-bold,
+.ai-data-science-page .careers-section--robotics .careers-skill-label,
+.ai-data-science-page .competitions-section--robotics .comp-card-title,
+.ai-data-science-page .career-pathways-section--robotics .faq-q-text,
+.ai-data-science-page .modes-section--robotics .modes-card-label,
+.ai-data-science-page .projects-section--robotics .projects-card-title,
+.ai-data-science-page .impact-section--robotics .impact-card-title,
+.ai-data-science-page .vetted-section--robotics .vetted-name,
+.ai-data-science-page .cert-section--robotics .cert-robotics-list strong,
+.ai-data-science-page .faq-robotics-q-text,
+.ai-data-science-page .explore-section--robotics .explore-card-label {
+  font-weight: 900 !important;
+}
+
+/* =========================================================
+   SITE FOOTER — light robotics theme, scoped to .ai-data-science-page
+   only.  The SpaceScience footer keeps the dark blue/space backdrop.
+========================================================= */
+
+/* Section background — student-projects.webp with white veil */
+.ai-data-science-page .site-footer {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.962) 0%,
+      rgba(255, 255, 255, 0.763) 100%
+    ),
+    url("../../assets/programs/space-robotics/student-projects.webp")
+      bottom / cover no-repeat !important;
+  background-color: #eef2fa !important;
+  color: #2a3142 !important;
+  padding: clamp(3rem, 7vh, 5rem) 0 !important;
+}
+
+/* No astronaut reserved column on this page — let the footer breathe
+   edge-to-edge. */
+.ai-data-science-page .site-footer-inner {
+  padding-right: 0 !important;
+}
+
+/* Brand logo — drop the bright blue glow (the dark logo doesn't need
+   it on a light background). */
+.ai-data-science-page .site-footer-logo {
+  filter: none !important;
+}
+
+/* Column titles — navy weight 800 instead of white */
+.ai-data-science-page .site-footer-col-title {
+  color: #0d1b3a !important;
+}
+
+/* Body link colour + hover */
+.ai-data-science-page .site-footer-list a,
+.ai-data-science-page .site-footer-contact a {
+  color: #3a4252 !important;
+}
+.ai-data-science-page .site-footer-list a:hover,
+.ai-data-science-page .site-footer-contact a:hover {
+  color: #1d3b8a !important;
+}
+
+.ai-data-science-page .site-footer-contact li {
+  color: #3a4252 !important;
+}
+
+/* Contact + social icons — navy with no glow */
+.ai-data-science-page .site-footer-icon {
+  color: #1d3b8a !important;
+}
+
+.ai-data-science-page .site-footer-socials a {
+  color: #1d3b8a !important;
+  filter: none !important;
+}
+.ai-data-science-page .site-footer-socials a:hover {
+  color: #2f63c8 !important;
+  filter: drop-shadow(0 0 8px rgba(47, 99, 200, 0.45)) !important;
+}
+
+/* Stay-Connected description copy */
+.ai-data-science-page .site-footer-stay-desc {
+  color: #3a4252 !important;
+}
+
+/* Form input + button — light field with navy border, navy submit */
+.ai-data-science-page .site-footer-form input {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border: none !important;
+  color: #0d1b3a !important;
+  -webkit-text-fill-color: #0d1b3a !important;
+}
+.ai-data-science-page .site-footer-form input::placeholder {
+  color: rgba(58, 66, 82, 0.65) !important;
+}
+
+.ai-data-science-page .site-footer-form button {
+  background: #1d3b8a !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(29, 59, 138, 0.5) !important;
+}
+.ai-data-science-page .site-footer-form button:hover {
+  background: #2f63c8 !important;
+  box-shadow: 0 6px 16px rgba(47, 99, 200, 0.35) !important;
+}
+
+/* Bottom strip — copyright + policy links */
+.ai-data-science-page .site-footer-bottom {
+  border-top: 1px solid rgba(29, 59, 138, 0.18) !important;
+}
+.ai-data-science-page .site-footer-copy,
+.ai-data-science-page .site-footer-policy {
+  color: #3a4252 !important;
+}
+.ai-data-science-page .site-footer-policy a {
+  color: #1d3b8a !important;
+}
+.ai-data-science-page .site-footer-policy a:hover {
+  color: #2f63c8 !important;
+}
+
+/* =========================================================
+   WHAT WILL STUDENTS LEARN — background image + dedicated
+   top/bottom white gradient overlays.
+========================================================= */
+.ai-data-science-page .learn-section {
+  position: relative !important;
+  overflow: hidden !important;
+  /* what-students-learn-bg.webp as the backdrop, with a soft white veil
+     so the title + skill cards stay readable on any pixel. */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.78) 0%,
+      rgba(255, 255, 255, 0.6) 100%
+    ),
+    url("../../assets/programs/space-robotics/what-students-learn-bg.webp")
+      center / cover no-repeat !important;
+}
+
+.ai-data-science-page .learn-section::before,
+.ai-data-science-page .learn-section::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 22% !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+}
+
+.ai-data-science-page .learn-section::before {
+  top: 0 !important;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0) 100%
+  ) !important;
+}
+
+.ai-data-science-page .learn-section::after {
+  bottom: 0 !important;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0) 100%
+  ) !important;
+}
+
+/* Section content stays above the fades. */
+.ai-data-science-page .learn-section > * {
+  position: relative;
+  z-index: 3;
+}
+
+/* =========================================================
+   HANDS REVEAL SECTION — background image + top/bottom white
+   gradient overlays so it blends into the adjacent sections.
+========================================================= */
+.ai-data-science-page .hands-reveal-section {
+  position: relative;
+  background: url("../../assets/programs/ai-and-data-science/why-start-young-bg.webp")
+    center / cover no-repeat;
+  overflow: hidden;
+}
+
+.ai-data-science-page .hands-reveal-section::before,
+.ai-data-science-page .hands-reveal-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 22%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ai-data-science-page .hands-reveal-section::before {
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    rgb(0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.65) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.ai-data-science-page .hands-reveal-section::after {
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgb(0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.65) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* Section content sits above the fades. */
+.ai-data-science-page .hands-reveal-section .hands-content,
+.ai-data-science-page .hands-reveal-section .hands-reveal-inner {
+  position: relative;
+  z-index: 3;
+}
+
+/* =========================================================
+   GLOBAL WHITE TOP/BOTTOM FADES — applied to every other
+   major section on the Space Robotics page so consecutive
+   sections always bloom into white at their seams.
+========================================================= */
+
+.ai-data-science-page .age-section,
+.ai-data-science-page .learn-section,
+.ai-data-science-page .cert-section,
+.ai-data-science-page .careers-section,
+.ai-data-science-page .competitions-section,
+.ai-data-science-page .career-pathways-section,
+.ai-data-science-page .assoc-section,
+.ai-data-science-page .modes-section,
+.ai-data-science-page .projects-section,
+.ai-data-science-page .impact-section,
+.ai-data-science-page .tracking-section,
+.ai-data-science-page .explore-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-data-science-page .age-section::before,
+.ai-data-science-page .learn-section::before,
+.ai-data-science-page .cert-section::before,
+.ai-data-science-page .careers-section::before,
+.ai-data-science-page .competitions-section::before,
+.ai-data-science-page .career-pathways-section::before,
+.ai-data-science-page .assoc-section::before,
+.ai-data-science-page .modes-section::before,
+.ai-data-science-page .projects-section::before,
+.ai-data-science-page .impact-section::before,
+.ai-data-science-page .tracking-section::before,
+.ai-data-science-page .explore-section::before,
+.ai-data-science-page .age-section::after,
+.ai-data-science-page .learn-section::after,
+.ai-data-science-page .cert-section::after,
+.ai-data-science-page .careers-section::after,
+.ai-data-science-page .competitions-section::after,
+.ai-data-science-page .career-pathways-section::after,
+.ai-data-science-page .assoc-section::after,
+.ai-data-science-page .modes-section::after,
+.ai-data-science-page .projects-section::after,
+.ai-data-science-page .impact-section::after,
+.ai-data-science-page .tracking-section::after,
+.ai-data-science-page .explore-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 18%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ai-data-science-page .age-section::before,
+.ai-data-science-page .learn-section::before,
+.ai-data-science-page .cert-section::before,
+.ai-data-science-page .careers-section::before,
+.ai-data-science-page .competitions-section::before,
+.ai-data-science-page .career-pathways-section::before,
+.ai-data-science-page .assoc-section::before,
+.ai-data-science-page .modes-section::before,
+.ai-data-science-page .projects-section::before,
+.ai-data-science-page .impact-section::before,
+.ai-data-science-page .tracking-section::before,
+.ai-data-science-page .explore-section::before {
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    rgb(0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.6) 55%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.ai-data-science-page .age-section::after,
+.ai-data-science-page .learn-section::after,
+.ai-data-science-page .cert-section::after,
+.ai-data-science-page .careers-section::after,
+.ai-data-science-page .competitions-section::after,
+.ai-data-science-page .career-pathways-section::after,
+.ai-data-science-page .assoc-section::after,
+.ai-data-science-page .modes-section::after,
+.ai-data-science-page .projects-section::after,
+.ai-data-science-page .impact-section::after,
+.ai-data-science-page .tracking-section::after,
+.ai-data-science-page .explore-section::after {
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgb(0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.6) 55%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* Lift immediate children above the fades for each section. */
+.ai-data-science-page .age-section > *,
+.ai-data-science-page .learn-section > *,
+.ai-data-science-page .cert-section > *,
+.ai-data-science-page .careers-section > *,
+.ai-data-science-page .competitions-section > *,
+.ai-data-science-page .career-pathways-section > *,
+.ai-data-science-page .assoc-section > *,
+.ai-data-science-page .modes-section > *,
+.ai-data-science-page .projects-section > *,
+.ai-data-science-page .impact-section > *,
+.ai-data-science-page .tracking-section > *,
+.ai-data-science-page .explore-section > * {
+  position: relative;
+  z-index: 3;
+}
+
+.ai-data-science-page .why-section--robotics .why-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.ai-data-science-page .why-section--robotics .why-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  font-size: clamp(1.9rem, 3.4vw, 2.85rem);
+  color: #0d1b3a;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #0d1b3a;
+  filter: none;
+}
+
+/* Blue badge wrapping just the word WHY */
+.ai-data-science-page .why-section--robotics .why-badge {
+  display: inline-block;
+  padding: 0.18em 0.55em;
+  background: #1d3b8a;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.ai-data-science-page .why-section--robotics .why-title-bold {
+  color: #1d3b8a;
+  -webkit-text-fill-color: #1d3b8a;
+}
+
+.ai-data-science-page .why-section--robotics .why-desc {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+  line-height: 1.65;
+  color: #3a4252;
+  max-width: 55ch;
+}
+
+/* CTA row */
+.ai-data-science-page .why-section--robotics .why-cta-row {
+  display: flex;
+  gap: 0.85rem;
+  margin-top: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* Both Why-section buttons match the header "Enroll Now" pill exactly:
+   200×80 px, light-btn.svg artwork, white text. No variant differences. */
+.ai-data-science-page .why-section--robotics .why-btn {
+  width: 240px;
+  height: 80px;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: url("../../assets/dark-btn.svg") no-repeat center / 120% 100%;
+  backdrop-filter: none;
+  box-shadow: none;
+  color: #ffffff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.16s ease, filter 0.16s ease;
+}
+
+/* Both why-section buttons now use the DARK pill artwork. */
+.ai-data-science-page .why-section--robotics .why-btn--primary,
+.ai-data-science-page .why-section--robotics .why-btn--secondary {
+  background-image: url("../../assets/dark-btn.svg");
+}
+
+.ai-data-science-page .why-section--robotics .why-btn:hover,
+.ai-data-science-page .why-section--robotics .why-btn:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: none;
+  filter: drop-shadow(0 6px 18px rgba(86, 138, 255, 0.45));
+}
+
+/* Right column — canvas blends straight into the white section
+   (no rounded box, no background, no overflow clip). */
+.ai-data-science-page .why-section--robotics .why-right {
+  position: relative;
+  min-height: clamp(420px, 60vh, 640px);
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.ai-data-science-page .why-section--robotics .why-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  inset: 0;
+  background: transparent !important;
+}
+
+/* Responsive — stack columns on small screens */
+@media (max-width: 900px) {
+  .ai-data-science-page .why-section--robotics .why-container {
+    grid-template-columns: 1fr;
+  }
+  .ai-data-science-page .why-section--robotics .why-right {
+    min-height: 380px;
+  }
+}
+
+/* ---- Section headings — robotics warm gradient ---- */
+
+
+/* ---- Eyebrows / labels / accent text ---- */
+.ai-data-science-page .eyebrow,
+.ai-data-science-page .section-eyebrow,
+.ai-data-science-page [class*="eyebrow"] {
+  color: var(--sr-accent);
+  letter-spacing: 0.3em;
+}
+
+/* ---- Tiles / cards — warm border + orange glow on hover ---- */
+
+
+.ai-data-science-page .card:hover,
+.ai-data-science-page .tile:hover,
+.ai-data-science-page [class*="-card"]:hover {
+  border-color: rgba(255, 170, 90, 0.7);
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.55),
+    0 0 28px var(--sr-glow),
+    inset 0 1px 1px rgba(255, 220, 180, 0.18);
+}
+
+/* ---- Primary buttons / CTA — gradient orange ---- */
+
+/* ---- Secondary / links — cyber-cyan accent ---- */
+.ai-data-science-page a:not([class*="btn"]):not([class*="cta"]),
+.ai-data-science-page .link-accent {
+  color: var(--sr-secondary);
+  transition: color 0.18s ease, text-shadow 0.18s ease;
+}
+
+.ai-data-science-page a:not([class*="btn"]):not([class*="cta"]):hover {
+  color: #6ff2ff;
+  text-shadow: 0 0 12px var(--sr-glow-cyan);
+}
+
+/* ---- Subtle backgrounds / overlays ---- */
+.ai-data-science-page .space-careers-overlay,
+.ai-data-science-page [class*="-overlay"] {
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 40%,
+    rgba(255, 106, 0, 0.18) 0%,
+    rgba(10, 6, 18, 0) 60%
+  );
+}
+
+.ai-data-science-page .faq-bg-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 6, 18, 0.4) 0%,
+    rgba(10, 6, 18, 0.85) 50%,
+    rgba(10, 6, 18, 0.95) 100%
+  );
+}
+
+/* ---- Page-wide body background tint (sits behind sections that
+   reveal their parent) ---- */
+.ai-data-science-page {
+  background-color: var(--sr-deep);
+}
+
+/* ---- Robotics accent strips / dividers ---- */
+.ai-data-science-page hr,
+.ai-data-science-page .divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--sr-primary) 50%,
+    transparent 100%
+  );
+}
+
+/* ---- Selection colour (small touch but consistent) ---- */
+.ai-data-science-page ::selection {
+  background: var(--sr-primary);
+  color: #fff;
+}
+
+/* =========================================================
+   HANDS REVEAL SECTION
+   Robot arm slides in from LEFT, human hand from RIGHT.
+   Mouse-parallax layers add a genuine 3-D depth feel.
+========================================================= */
+
+/* Section is flex-column: text block on top, hands area fills below */
+.ai-data-science-page .hands-reveal-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Bottom fade only — the top edge has text content, no fade needed */
+.ai-data-science-page .hands-reveal-section::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 14%;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ---- Text content — two equal columns ---- */
+.ai-data-science-page .hands-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding-top: clamp(2.8rem, 5.5vh, 5rem);
+  padding-bottom: clamp(0.5rem, 1vh, 1rem);
+  position: relative;
+  z-index: 5;
+  flex-shrink: 0;
+}
+
+.ai-data-science-page .hands-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Heading — matches the WhySpaceRobotics heading style */
+.ai-data-science-page .hands-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  font-size: clamp(1.45rem, 2.2vw, 2.1rem);
+  line-height: 1.05;
+  color: #1d3b8a;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #0d1b3a;
+  filter: none;
+}
+
+/* Blue badge — same style as .why-badge */
+.ai-data-science-page .hands-badge {
+  display: inline-block;
+  padding: 0.16em 0.5em;
+  background: #1d3b8a;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* Body text */
+.ai-data-science-page .hands-desc {
+  margin: 0;
+  font-size: clamp(0.88rem, 0.98vw, 1rem);
+  line-height: 1.65;
+  color: #3a4252;
+  max-width: 46ch;
+}
+
+.ai-data-science-page .hands-desc strong {
+  font-weight: 700;
+  color: #1d3b8a;
+}
+
+/* ---- Hands visual — flex-grows to fill the remaining height ---- */
+.ai-data-science-page .hands-reveal-inner {
+  flex: 1;
+  position: relative;
+  min-height: clamp(440px, 62vh, 660px);
+  perspective: 1100px;
+  perspective-origin: 50% 75%;
+  overflow: hidden;
+}
+
+/* ---- Both hand wrappers ---- */
+.ai-data-science-page .hands-robot,
+.ai-data-science-page .hands-human {
+  position: absolute;
+  bottom: 0;
+  width: 56%;
+  will-change: transform;
+  transform-style: preserve-3d;
+  z-index: 1;
+}
+
+/* Initial off-screen positions (overridden each rAF frame) */
+.ai-data-science-page .hands-robot {
+  left: 0;
+  transform-origin: left bottom;
+  transform: translateX(-112%) rotateY(-14deg) scale(0.87);
+}
+
+.ai-data-science-page .hands-human {
+  right: 0;
+  transform-origin: right bottom;
+  transform: translateX(112%) rotateY(14deg) scale(0.90);
+}
+
+.ai-data-science-page .hands-robot img,
+.ai-data-science-page .hands-human img {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 900px) {
+  .ai-data-science-page .hands-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+  .ai-data-science-page .hands-title {
+    font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .ai-data-science-page .hands-content {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+    padding-top: clamp(1.8rem, 4vh, 3rem);
+  }
+  .ai-data-science-page .hands-reveal-inner {
+    min-height: clamp(220px, 40vw, 340px);
+  }
+  .ai-data-science-page .hands-robot,
+  .ai-data-science-page .hands-human {
+    width: 62%;
+  }
+}
+
+/* =========================================================
+   AGE PROGRAMS SECTION — space-robotics overrides
+   Replaces the dark space theme with the light/white
+   design from the reference. Uses age-box-frame.png for
+   all cards (single reusable frame).
+========================================================= */
+
+.ai-data-science-page .age-section {
+  background: #eef0f5;
+  padding: clamp(3rem, 6vh, 5rem) 0;
+}
+
+/* All 5 cards share the same frame image */
+.ai-data-science-page .age-card,
+.ai-data-science-page .age-card:nth-child(1),
+.ai-data-science-page .age-card:nth-child(2),
+.ai-data-science-page .age-card:nth-child(3),
+.ai-data-science-page .age-card:nth-child(4),
+.ai-data-science-page .age-card:nth-child(5) {
+  background-image: url('../../assets/programs/space-robotics/age-box-frame.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  aspect-ratio: 265 / 250;
+  padding:40px 50px 0px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Label badge — centered at the top of each card */
+.ai-data-science-page .age-card-label {
+  width: 100%;
+  position:absolute;
+  top: 2%;
+  left: 25%;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+  letter-spacing: 0.06em;
+  padding: 0.38em 0.6em;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* Bullet list — dark text on white frame */
+.ai-data-science-page .age-card-list {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  gap: 0.55rem;
+  padding-top: 30px;
+}
+
+.ai-data-science-page .age-card-list li {
+  color: #2a3248;
+  font-size: clamp(0.90rem, 0.75vw, 0.82rem);
+  line-height: 1.45;
+  margin-bottom: 0;
+}
+
+.ai-data-science-page .age-card-list li::before {
+  background: #1d3b8a;
+}
+
+@media (max-width: 992px) {
+  .ai-data-science-page .age-card,
+  .ai-data-science-page .age-card:nth-child(1),
+  .ai-data-science-page .age-card:nth-child(2),
+  .ai-data-science-page .age-card:nth-child(3),
+  .ai-data-science-page .age-card:nth-child(4),
+  .ai-data-science-page .age-card:nth-child(5) {
+    aspect-ratio: auto;
+    min-height: 260px;
+  }
+}
+
+/* =========================================================
+   WHAT WILL STUDENTS LEARN — space-robotics overrides
+   Light gray background, box-frame cards with real photos,
+   4-up top row + 3-up centered bottom row.
+========================================================= */
+
+.ai-data-science-page .learn-section {
+  background: #eef0f5;
+  padding: clamp(3rem, 6vh, 5rem) 0;
+}
+
+/* Remove the dark top/bottom gradient overlays */
+.ai-data-science-page .learn-section::before,
+.ai-data-science-page .learn-section::after {
+  display: none;
+}
+
+/* Title — dark navy, badge wraps "LEARN?" */
+.ai-data-science-page .learn-title {
+  color: #0d1b3a;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #0d1b3a;
+  filter: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-bottom: 0.6rem;
+}
+
+.ai-data-science-page .learn-badge {
+  display: inline-block;
+  padding: 0.12em 0.45em;
+  background: #1d3b8a;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  border-radius: 4px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+}
+
+.ai-data-science-page .learn-sub {
+  color: #3a4252;
+  margin-bottom: clamp(1.8rem, 3.5vh, 3rem);
+}
+
+/* Grid: fixed card width, 4 per row; row 2 (3 cards) auto-centers */
+.ai-data-science-page .learn-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1rem, 2vw, 1.8rem);
+  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+/* Card — box frame image, white background under it */
+.ai-data-science-page .learn-card {
+  width: clamp(190px, 21vw, 265px);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 25px;
+  background:
+    url('../../assets/programs/space-robotics/what-students-learn/what-students-learn-box-frame.png')
+    center / 100% 100% no-repeat;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Photo fills the frame's image area */
+.ai-data-science-page .learn-card-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  display: block;
+  margin-bottom: 0.75rem;
+    object-fit: contain;
+}
+
+/* Label — blue, centered */
+.ai-data-science-page .learn-card-label {
+  color: #1d3b8a;
+  -webkit-text-fill-color: #1d3b8a;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 800;
+  font-size: 17px;
+  text-align: center;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+/* Footer line */
+.ai-data-science-page .learn-foot {
+  color: #3a4252;
+  font-size: clamp(0.85rem, 1vw, 1rem);
+}
+
+@media (max-width: 900px) {
+  .ai-data-science-page .learn-card {
+    width: clamp(160px, 44vw, 240px);
+  }
+}
+
+@media (max-width: 560px) {
+  .ai-data-science-page .learn-card {
+    width: clamp(150px, 80vw, 300px);
+  }
+}
+
+
+.projects-card {
+  background: url('../../assets/programs/space-robotics/project-box-frame.svg') center / 100%
+    100% no-repeat;
+}
+
+
+/* ============================================================
+   MINIMAL TARGETED FIXES — these rules are SCOPED and SAFE.
+   No pointer-events tricks, no aggressive global selectors.
+   ============================================================ */
+
+/* #2 Hero robot drag — give the canvas pointer events so
+   OrbitControls receives mouse + touch input. */
+.ai-data-science-page .hero-canvas {
+  pointer-events: auto !important;
+}
+.ai-data-science-page .hero-canvas canvas {
+  touch-action: none;
+  cursor: grab;
+}
+.ai-data-science-page .hero-canvas canvas:active {
+  cursor: grabbing;
+}
+
+/* #4a FAQ-robotics accordion — max-height transition (the grid
+   trick was failing silently). */
+.ai-data-science-page .faq-robotics-a {
+  display: block !important;
+  grid-template-rows: unset !important;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.ai-data-science-page .faq-robotics-item.is-open .faq-robotics-a {
+  max-height: 800px;
+}
+.ai-data-science-page .faq-robotics-a-body {
+  padding: 0.5rem 1.2rem 1rem;
+}
+
+/* #4b Career-pathways accordion — same max-height fix. */
+.ai-data-science-page .career-pathways-section--robotics .faq-answer {
+  display: block !important;
+  grid-template-rows: unset !important;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.ai-data-science-page .career-pathways-section--robotics .faq-item.is-open .faq-answer {
+  max-height: 800px;
+}
+
+/* #5 Vetted-by — uniform photo, 100%-wide plate. */
+.ai-data-science-page .vetted-section--robotics .vetted-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.ai-data-science-page .vetted-section--robotics .vetted-stage {
+  width: 180px !important;
+  max-width: 180px !important;
+  min-width: 180px !important;
+  height: 180px !important;
+  aspect-ratio: 1 / 1 !important;
+  margin: 0 auto;
+}
+.ai-data-science-page .vetted-section--robotics .vetted-plate {
+  width: 100% !important;
+  max-width: none !important;
+  margin-top: 1rem;
+}
+
+/* #6 Other-programs image — contain (not cover). */
+.ai-data-science-page .explore-section--robotics .explore-card-img {
+  object-fit: contain !important;
+}
+
+/* #7 Footer newsletter input — no shadow. */
+.ai-data-science-page .site-footer-form input,
+.ai-data-science-page .site-footer-form input:focus,
+.ai-data-science-page .site-footer-form input:hover {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+/* #8 Box-title font-weights → 900. */
+.ai-data-science-page .why-title,
+.ai-data-science-page .why-title-bold,
+.ai-data-science-page .cert-robotics-title,
+.ai-data-science-page .careers-title,
+.ai-data-science-page .careers-skill-label,
+.ai-data-science-page .competitions-label-text,
+.ai-data-science-page .comp-card-title,
+.ai-data-science-page .career-pathways-title,
+.ai-data-science-page .faq-q-text,
+.ai-data-science-page .assoc-title,
+.ai-data-science-page .vetted-title,
+.ai-data-science-page .vetted-name,
+.ai-data-science-page .modes-title,
+.ai-data-science-page .modes-card-label,
+.ai-data-science-page .projects-title,
+.ai-data-science-page .projects-card-title,
+.ai-data-science-page .impact-title,
+.ai-data-science-page .impact-card-title,
+.ai-data-science-page .faq-robotics-title,
+.ai-data-science-page .faq-robotics-q-text,
+.ai-data-science-page .cta-robotics-title,
+.ai-data-science-page .explore-title,
+.ai-data-science-page .explore-card-label {
+  font-weight: 900 !important;
+}
+
+
+/* ============================================================
+   REMOVE ALL HOVER DROP-SHADOW EFFECTS ACROSS THE ROBOTICS PAGE.
+   Strips both `filter: drop-shadow()` and any blurred box-shadow
+   that appears only on hover. Loaded last → wins every override.
+   ============================================================ */
+.ai-data-science-page *:hover,
+.ai-data-science-page *:focus-visible,
+.ai-data-science-page *:focus,
+.ai-data-science-page *:active {
+  filter: none !important;
+  -webkit-filter: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+/* Re-enable transform / translate / color hover (those don't paint
+   a shadow). Only the drop-shadow / glow filters are killed above. */
+
+   .ai-data-science-page .career-pathways-section--robotics .faq-q-text {
+  color: #fff !important;
+  font-weight: 600 !important;
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem) !important;
+}
+.ai-data-science-page .vetted-section--robotics .vetted-role{
+  font-size:17px
+}
+.ai-data-science-page .modes-section--robotics .modes-card-label{
+  font-size:17px
+}
+.ai-data-science-page .faq-robotics-q-text{
+  font-weight: 600 !important;
+}
+.ai-data-science-page .explore-section--robotics .explore-card-label{
+  font-size:17px
+}
+.site-footer-copy, .site-footer-policy{
+  font-size: 17px !important;
+  font-weight: 600 !important
+}
+.site-footer-form{
+  background: transparent  !important;
+}
+/* =============================================================
+   AI & DATA SCIENCE HERO — same design pattern as the Drones
+   page hero (dark backdrop + soft vignette + two-column grid
+   with text left + 3D centrepiece right + dark-btn CTA pill).
+   Different background image and CTA SVG sourced from the
+   ai-and-data-science asset folder.  Scoped under the page's
+   wrapper class so it doesn't bleed into other pages.
+   ============================================================= */
+.ai-data-science-page .hero.ai-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 640px;
+  background: #050608;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  border-bottom-left-radius: clamp(28px, 4vw, 64px);
+  border-bottom-right-radius: clamp(28px, 4vw, 64px);
+}
+
+/* Hero backdrop image. */
+.ai-data-science-page .ai-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-color: #050608;
+  background-image: url("../../assets/programs/ai-and-data-science/hero-bg-2.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* Soft vignette to deepen the corners and frame the centre. */
+.ai-data-science-page .ai-hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 80% 70% at 50% 50%,
+      transparent 0%,
+      rgba(0, 0, 0, 0.35) 75%,
+      rgba(0, 0, 0, 0.6) 100%
+    );
+  border-bottom-left-radius: clamp(28px, 4vw, 64px);
+  border-bottom-right-radius: clamp(28px, 4vw, 64px);
+  overflow: hidden;
+}
+
+/* Two-column grid — copy left, orb right. */
+.ai-data-science-page .ai-hero-grid {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  padding: clamp(60px, 7vh, 80px) clamp(1rem, 4vw, 3rem) 0;
+}
+
+/* RIGHT — orb canvas target. */
+.ai-data-science-page .ai-hero-stage {
+  position: relative;
+  width: 100%;
+  /* Bigger stage so the falling-particle column has room — was
+     clamp(380px, 50vh, 540px).  Bumped both ends + the mid-vh
+     so the column fills more vertical space at every viewport. */
+  height: clamp(480px, 90vh, 760px);
+  align-self: center;
+}
+.ai-data-science-page .ai-hero-stage canvas {
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
+  cursor: grab;
+  touch-action: none;
+}
+.ai-data-science-page .ai-hero-stage canvas:active {
+  cursor: grabbing;
+}
+
+/* LEFT — copy column. */
+.ai-data-science-page .ai-hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  color: #e6e6e6;
+  max-width: none;
+  min-width: 0;
+  overflow: visible;
+}
+
+/* Hero title — black-to-grey gradient, single line. */
+.ai-data-science-page .ai-hero-title {
+  margin: 0;
+  padding: 0.05em 0.45em 0.05em 0;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  font-size: clamp(2.2rem, 6vw, 5.8rem);
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: visible;
+  width: max-content;
+  max-width: 100%;
+  background-image: linear-gradient(
+    180deg,
+    #a8a8a8 0%,
+    #6a6a6a 45%,
+    #2a2a2a 75%,
+    #0a0a0a 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: none;
+  text-shadow: none;
+}
+
+/* Tagline — wide-tracked white caps. */
+.ai-data-science-page .ai-hero-tagline {
+  margin: 0;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: #d5dbe6;
+  text-transform: uppercase;
+}
+
+/* Description copy — muted grey. */
+.ai-data-science-page .ai-hero-desc {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  line-height: 1.6;
+  color: #9aa3b3;
+  max-width: 46ch;
+}
+
+/* CTA pill — dark-btn.svg artwork, 210 x 80 px. */
+.ai-data-science-page .ai-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 210px;
+  height: 80px;
+  min-width: 0;
+  margin-top: 0.6rem;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background:
+    url("../../assets/programs/ai-and-data-science/dark-btn.svg")
+    no-repeat center / 120% 100%;
+  backdrop-filter: none;
+  box-shadow: none;
+  color: #ffffff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+.ai-data-science-page .ai-hero-cta-arrow {
+  color: #ff3344;
+  font-weight: 900;
+}
+.ai-data-science-page .ai-hero-cta:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+/* Responsive — stack the columns on smaller screens. */
+@media (max-width: 900px) {
+  .ai-data-science-page .ai-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding-top: clamp(5rem, 12vh, 8rem);
+  }
+  .ai-data-science-page .ai-hero-stage {
+    order: -1;
+    /* Mobile / small-screen — keep the stage tall so the
+       falling stream still reads as a vertical pillar. */
+    height: clamp(380px, 50vh, 520px);
+  }
+}
+
+/* =============================================================
+   AI & DATA SCIENCE — "WHY AI?" section.
+   Sci-fi HUD layout: dark backdrop with the why-ai-bg.webp
+   artwork covering the whole section, two-column inner grid
+   (text left, hologram right), and a tech bracket frame
+   (corner brackets via ::before/::after) around the right-side
+   hologram stage.
+   ============================================================= */
+.ai-data-science-page .ai-why-section {
+  position: relative;
+  width: 100%;
+  padding:150px 0px;
+  background: #04060e;
+  overflow: hidden;
+  color: #d9e3f6;
+}
+
+
+.ai-data-science-page .ai-why-section::before,
+.ai-data-science-page .ai-why-section::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Full-bleed background art — the HUD frame, scan-lines and
+   small dots are baked into why-ai-bg.webp. */
+.ai-data-science-page .ai-why-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("../../assets/programs/ai-and-data-science/why-ai-bg.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Two-column grid — copy left, hologram-in-frame right. */
+.ai-data-science-page .ai-why-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  padding: 0 clamp(1rem, 4vw, 3rem);
+}
+
+/* LEFT — copy column. */
+.ai-data-science-page .ai-why-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 38rem;
+}
+
+.ai-data-science-page .ai-why-title {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  font-size:50px;
+  line-height: 1;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  text-transform: uppercase;
+}
+
+.ai-data-science-page .ai-why-title-accent {
+  font-weight: 900;
+  color: #000;
+  -webkit-text-fill-color: #000;
+  background: #fff;
+  line-height: 60px;
+}
+
+.ai-data-science-page .ai-why-desc {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+  line-height: 1.7;
+  color: #d9e3f6;
+  -webkit-text-fill-color: #d9e3f6;
+}
+
+.ai-data-science-page .ai-why-list {
+  margin: 0 0 0 1.1rem;
+  padding: 0;
+  list-style: disc;
+  color: #d9e3f6;
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+  line-height: 1.9;
+}
+
+.ai-data-science-page .ai-why-list li::marker {
+  color: #88c4ff;
+}
+
+/* RIGHT — hologram stage inside the tech bracket frame. */
+.ai-data-science-page .ai-why-stage {
+  position: relative;
+  width: 100%;
+  height: clamp(360px, 50vh, 560px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Bracket frame — drawn purely with pseudo-elements so it stays
+   crisp at any zoom level.  Subtle cyan outline + corner brackets
+   sized as a percentage of the frame edge. */
+.ai-data-science-page .ai-why-frame {
+  position: relative;
+  width: 90%;
+  height: 90%;
+  border: 1px solid rgba(110, 200, 255, 0.18);
+}
+
+/* The two pseudo-elements paint the FOUR corner brackets as one
+   element each, using crisp solid colour with clip-path. */
+.ai-data-science-page .ai-why-frame::before,
+.ai-data-science-page .ai-why-frame::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  pointer-events: none;
+  background:
+    linear-gradient(#6ec8ff, #6ec8ff) top left / 36px 2px no-repeat,
+    linear-gradient(#6ec8ff, #6ec8ff) top left / 2px 36px no-repeat,
+    linear-gradient(#6ec8ff, #6ec8ff) top right / 36px 2px no-repeat,
+    linear-gradient(#6ec8ff, #6ec8ff) top right / 2px 36px no-repeat,
+    linear-gradient(#6ec8ff, #6ec8ff) bottom left / 36px 2px no-repeat,
+    linear-gradient(#6ec8ff, #6ec8ff) bottom left / 2px 36px no-repeat,
+    linear-gradient(#6ec8ff, #6ec8ff) bottom right / 36px 2px no-repeat,
+    linear-gradient(#6ec8ff, #6ec8ff) bottom right / 2px 36px no-repeat;
+  filter: drop-shadow(0 0 6px rgba(110, 200, 255, 0.35));
+}
+.ai-data-science-page .ai-why-frame::after {
+  /* Just an extra soft glow layer so the brackets read luminous. */
+  inset: -1px;
+  background: none;
+  border: 1px solid rgba(110, 200, 255, 0.10);
+  box-shadow:
+    inset 0 0 30px rgba(110, 200, 255, 0.08),
+    0 0 40px rgba(60, 110, 200, 0.18);
+}
+
+/* Canvas inside the frame fills the available space. */
+.ai-data-science-page .ai-why-frame canvas {
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
+}
+
+/* Responsive — stack the columns on smaller screens, frame
+   shrinks but keeps its tech look. */
+@media (max-width: 900px) {
+  .ai-data-science-page .ai-why-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .ai-data-science-page .ai-why-stage {
+    height: clamp(320px, 42vh, 480px);
+  }
+}
+
+/* =============================================================
+   GLOBAL SECTION GRADIENT OVERLAYS — every section inside
+   .ai-data-science-page gets a soft black-to-transparent fade
+   at its top AND bottom edges via shadow:inset.  Using inset
+   box-shadow rather than ::before/::after means it never
+   conflicts with sections that already use those pseudo-
+   elements for other effects (backgrounds, brackets, etc.).
+   pointer-events stay on the section content underneath.
+   ============================================================= */
+.ai-data-science-page section {
+  position: relative;
+}
+.ai-data-science-page section > .ai-section-fade-top,
+.ai-data-science-page section > .ai-section-fade-bot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 160px;
+  pointer-events: none;
+  z-index: 9;
+}
+.ai-data-science-page section > .ai-section-fade-top {
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    #000 0%,
+    rgba(0, 0, 0, 0.78) 45%,
+    transparent 100%
+  );
+}
+.ai-data-science-page section > .ai-section-fade-bot {
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    #000 0%,
+    rgba(0, 0, 0, 0.78) 45%,
+    transparent 100%
+  );
+}
+
+/* =============================================================
+   AI START-YOUNG + AGE GROUPS — combined section.
+   Single background image covers the whole section (no per-
+   block boxing), 2-row layout: TOP row has hologram landing
+   pad + dual-title text column; BOTTOM row has 5 age cards
+   framed with age-shape.svg.
+   ============================================================= */
+.ai-data-science-page .ai-start-section {
+  position: relative;
+  width: 100%;
+  padding: 150px 0px;
+  background: #04060e;
+  overflow: hidden;
+  color: #d9e3f6;
+}
+
+/* Suppress any inherited overlay pseudo-elements. */
+.ai-data-science-page .ai-start-section::before,
+.ai-data-science-page .ai-start-section::after {
+  display: none !important;
+  content: none !important;
+}
+
+.ai-data-science-page .ai-start-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("../../assets/programs/ai-and-data-science/why-start-young-bg.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.ai-data-science-page .ai-start-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 6vh, 5rem);
+  padding: 0 clamp(1rem, 4vw, 3rem);
+}
+
+/* TOP — two columns: hologram pad left, copy right. */
+.ai-data-science-page .ai-start-top {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+
+.ai-data-science-page .ai-start-stage {
+  position: relative;
+  width: 100%;
+  height: clamp(360px, 56vh, 560px);
+}
+
+.ai-data-science-page .ai-start-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  max-width: 38rem;
+}
+
+.ai-data-science-page .ai-start-title {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  font-size: clamp(1.8rem, 3.6vw, 2.5rem);
+  line-height: 1;
+  color: #000;
+  -webkit-text-fill-color: #fff;
+  text-transform: uppercase;
+}
+
+.ai-data-science-page .ai-start-title--secondary {
+  margin-top: clamp(1rem, 3vh, 2rem);
+}
+
+/* Boxed accent on the SECOND word — same chip look as the
+   reference image. */
+.ai-data-science-page .ai-start-title-accent {
+  display: inline-block;
+  padding: 0.05em 0.32em;
+  background: #fff;
+  color: #000;
+  -webkit-text-fill-color: #000;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  margin-left: 0.18em;
+}
+
+.ai-data-science-page .ai-start-desc {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+  line-height: 1.7;
+  color: #cfd7e8;
+  -webkit-text-fill-color: #cfd7e8;
+}
+
+/* BOTTOM — 5 age cards in a row, each framed with the
+   age-shape.svg artwork (stretched as background). */
+.ai-data-science-page .ai-start-ages {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  padding:100px 30px 0px 30px;
+}
+
+.ai-data-science-page .ai-age-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 0px 20px 20px 30px;
+  background:
+    url("../../assets/programs/ai-and-data-science/age-shape.svg")
+    center / 100% 100% no-repeat;
+  background-color: transparent;
+  min-height: clamp(220px, 40vh, 320px);
+  color: #d9e3f6;
+}
+
+/* Age label pill — sits at the top of the card. */
+.ai-data-science-page .ai-age-card-label {
+  position: absolute;
+  top: 3%;
+  left: 38%;
+  transform: translateX(-50%);
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #000;
+  background: none;
+}
+
+.ai-data-science-page .ai-age-card-list {
+  margin: 0;
+  padding: 60px 30px 0 20px;
+  list-style: none;
+  font-family: var(--font-sans);
+  font-size: clamp(0.78rem, 0.85vw, 0.92rem);
+  line-height: 1.55;
+  color: #c4cde3;
+}
+.ai-data-science-page .ai-age-card-list li {
+  margin-bottom: 0.45rem;
+}
+.ai-data-science-page .ai-age-card-list li::marker {
+  color: #88c4ff;
+}
+
+/* Responsive — collapse the top grid + age row on small screens. */
+@media (max-width: 1100px) {
+  .ai-data-science-page .ai-start-ages {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .ai-data-science-page .ai-start-top {
+    grid-template-columns: 1fr;
+  }
+  .ai-data-science-page .ai-start-stage {
+    height: clamp(280px, 38vh, 380px);
+  }
+  .ai-data-science-page .ai-start-ages {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .ai-data-science-page .ai-start-ages {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =============================================================
+   AI STUDENTS LEARN — full-bleed section with the
+   students-learn-bg.webp backdrop and box-frame cards painted
+   with students-learn-box-frame.png.  Colour theme leans on
+   the AI hero palette (deep navy bg + cyan/violet accents +
+   bright white headers).
+   ============================================================= */
+.ai-data-science-page .ai-learn-section {
+  position: relative;
+  width: 100%;
+  padding: 150px 0px;
+  background: #04060e;
+  overflow: hidden;
+  color: #e3ebff;
+}
+
+/* Suppress any inherited pseudo-element overlays. */
+.ai-data-science-page .ai-learn-section::before,
+.ai-data-science-page .ai-learn-section::after {
+  display: none !important;
+  content: none !important;
+}
+
+.ai-data-science-page .ai-learn-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("../../assets/programs/ai-and-data-science/students-learn-bg.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.ai-data-science-page .ai-learn-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.25rem, 3vh, 2rem);
+  padding: 0 clamp(1rem, 4vw, 3rem);
+  text-align: center;
+}
+
+.ai-data-science-page .ai-learn-title {
+  margin: 0;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  font-size: clamp(2rem, 4.4vw, 3.4rem);
+  line-height: 1;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  text-transform: uppercase;
+}
+
+/* Boxed accent chip — same bracket-pill look as the other AI
+   section titles, painted with the white outline. */
+.ai-data-science-page .ai-learn-title-accent {
+  display: inline-block;
+  margin-left: 0.18em;
+  padding: 0.05em 0.32em;
+  background-color: #fff;
+  color: #000;
+  -webkit-text-fill-color: #000;
+}
+
+.ai-data-science-page .ai-learn-sub {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+  line-height: 1.65;
+  color: #b6c5e2;
+  max-width: 80%;
+}
+
+/* Flex-wrap (not grid) so the trailing 3-card row centres itself
+   instead of sticking to the left — matches the reference design. */
+.ai-data-science-page .ai-learn-grid {
+  margin-top: clamp(1rem, 3vh, 2rem);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1rem, 2vw, 1.8rem);
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Card — notched white box-frame PNG as background, photo inside,
+   dark navy caption below. */
+.ai-data-science-page .ai-learn-card {
+  width: clamp(190px, 21vw, 265px);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 15px 0px;
+  background:
+    url("../../assets/programs/ai-and-data-science/students-learn-box-frame.png")
+    center / 100% 100% no-repeat;
+  background-color: transparent;
+  text-align: center;
+  transition: transform 0.18s ease;
+}
+
+.ai-data-science-page .ai-learn-card:hover {
+  transform: translateY(-3px);
+}
+
+.ai-data-science-page .ai-learn-card-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  display: block;
+  margin-bottom: 0.75rem;
+  object-fit: contain;
+}
+
+.ai-data-science-page .ai-learn-card-label {
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 800;
+  font-size: clamp(0.85rem, 1.05vw, 1rem);
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  color: #000;
+  -webkit-text-fill-color: #000;
+  text-transform: none;
+  padding: 20px 30px;
+}
+
+.ai-data-science-page .ai-learn-foot {
+  margin-top: clamp(1rem, 2.5vh, 1.8rem);
+  font-family: var(--font-sans);
+  font-style: italic;
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  color: #88c4ff;
+  text-shadow: 0 0 14px rgba(100, 180, 255, 0.25);
+}
+
+/* Responsive — shrink the card width breakpoints instead of
+   changing column counts (flex-wrap handles reflow naturally). */
+@media (max-width: 900px) {
+  .ai-data-science-page .ai-learn-card {
+    width: clamp(160px, 44vw, 240px);
+  }
+}
+@media (max-width: 560px) {
+  .ai-data-science-page .ai-learn-card {
+    width: clamp(150px, 80vw, 300px);
+  }
+}
+
+/* =============================================================
+   AI MORPH SECTION — pure-black full-bleed canvas section.
+   The 123.fbx instanced cloud fills the section; the only DOM
+   chrome is the global section fade overlays.
+   ============================================================= */
+.ai-data-science-page .ai-morph-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  background: #000000;
+  overflow: hidden;
+}
+
+.ai-data-science-page .ai-morph-section::before,
+.ai-data-science-page .ai-morph-section::after {
+  display: none !important;
+  content: none !important;
+}
+
+.ai-data-science-page .ai-morph-section canvas {
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
+  display: block;
+}
+
+@media (max-width: 760px) {
+  .ai-data-science-page .ai-morph-section {
+    height: clamp(420px, 75vh, 700px);
+    min-height: 420px;
+  }
+}
+
+/* =============================================================
+   UNIFORM SECTION TITLE SIZE — every section heading on this
+   page reads at the same 50px, EXCEPT the hero banner title
+   (.ai-hero-title), which keeps its own large responsive clamp.
+   Placed last so it beats each section's own font-size rule.
+   ============================================================= */
+.ai-data-science-page .ai-why-title,
+.ai-data-science-page .ai-start-title,
+.ai-data-science-page .ai-learn-title,
+.ai-data-science-page .cert-robotics-title,
+.ai-data-science-page .careers-title,
+.ai-data-science-page .career-pathways-title,
+.ai-data-science-page .assoc-title,
+.ai-data-science-page .vetted-title,
+.ai-data-science-page .modes-title,
+.ai-data-science-page .projects-title,
+.ai-data-science-page .impact-title,
+.ai-data-science-page .faq-robotics-title,
+.ai-data-science-page .cta-robotics-title,
+.ai-data-science-page .explore-title {
+  font-size: 40px !important;
+}
+
+/* =============================================================
+   UNIFORM TOP-OF-PAGE SECTION SPACING — every section from
+   "Why AI?" through "Why AI For Future Careers?" gets the same
+   150px top/bottom padding (the hero banner is excluded — it's
+   a fixed 100vh flex-centred layout, not a content-flow section).
+   .ai-why-section / .ai-start-section / .ai-learn-section already
+   use 150px 0px; only the cert + careers sections needed the
+   override since their own rules set a smaller clamp(...) value.
+   ============================================================= */
+.ai-data-science-page .cert-section--robotics,
+.ai-data-science-page .careers-section--robotics {
+  padding-top: 150px !important;
+  padding-bottom: 150px !important;
+}
+
+/* =============================================================
+   PARTICLE WAYPOINT ANCHORS — invisible 1×1 dots positioned
+   at the desired landing spot inside each section.  Sections
+   are already position:relative (global rule above) so these
+   absolute children land relative to the section box.
+   ============================================================= */
+.ai-data-science-page .ai-learn-stage,
+.ai-data-science-page .ai-cert-stage,
+.ai-data-science-page .ai-careers-stage,
+.ai-data-science-page .ai-comp-stage,
+.ai-data-science-page .ai-pathway-stage,
+.ai-data-science-page .ai-assoc-stage,
+.ai-data-science-page .ai-vetted-stage,
+.ai-data-science-page .ai-modes-stage,
+.ai-data-science-page .ai-projects-stage,
+.ai-data-science-page .ai-impact-stage,
+.ai-data-science-page .ai-faq-stage,
+.ai-data-science-page .ai-cta-stage,
+.ai-data-science-page .ai-explore-stage {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 3 — bottom-LEFT of Students Learn — the star formation
+   arrives here after detouring off-screen left during the
+   Start Young → Students Learn transition (see the tick fn). */
+.ai-data-science-page .ai-learn-stage    {
+  left:  14%;
+  right: auto;
+  bottom: 20%;
+}
+
+/* 4 — CENTRE of Certificates — the asteroid float field uses
+   this as its origin so the radial splash bursts outward from
+   the section's centre and the debris scatters everywhere. */
+.ai-data-science-page .ai-cert-stage     {
+  left:  50%;
+  top:   50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+}
+
+/* 5 — bottom-right of Future Careers — shifted slightly more
+   to the right (less right %) and lower (less bottom %). */
+.ai-data-science-page .ai-careers-stage  { right: 10%;  bottom: 14%; }
+
+/* 6 — Competitions — shifted a bit further RIGHT and DOWN so
+   the trophy doesn't crowd the heading on the left. */
+.ai-data-science-page .ai-comp-stage     { left:  30%;  top:    70%; }
+
+/* 7 — Career Pathway — shifted further right (was 28% from
+   the right edge, now 12% so the bars+flag sit toward the
+   right side of the section). */
+.ai-data-science-page .ai-pathway-stage  { right: 20%;  top:    50%; }
+
+/* 8 — RIGHT side of Associated — particles travel as a loose
+   vertical drift line along the right edge of the section. */
+.ai-data-science-page .ai-assoc-stage    {
+  right: 14%;
+  top: 50%;
+  left: auto;
+  bottom: auto;
+  transform: translateY(-50%);
+}
+
+/* 9 — right-center of Vetted By — brain. */
+.ai-data-science-page .ai-vetted-stage   { right: 28%;  top:    70%; }
+
+/* 10 — TOP-RIGHT of Modes to Join — spiky star tucks here. */
+.ai-data-science-page .ai-modes-stage    {
+  right: 10%; top: 22%; left: auto; bottom: auto;
+  transform: none;
+}
+
+/* 11 — TOP-LEFT of Student Projects — hourglass tucks here. */
+.ai-data-science-page .ai-projects-stage {
+  left: 10%; top: 22%; right: auto; bottom: auto;
+  transform: none;
+}
+
+/* 12 — TOP-RIGHT of Project Impact — hourglass tucks here. */
+.ai-data-science-page .ai-impact-stage   {
+  right: 12%; top: 26%; left: auto; bottom: auto;
+}
+
+/* 13 — CENTRE of FAQ — question mark assembles at section centre. */
+.ai-data-science-page .ai-faq-stage      {
+  left: 50%; top: 50%; right: auto; bottom: auto;
+  transform: translate(-50%, -50%);
+}
+
+/* 14 — CENTRE of CTA (hidden). */
+.ai-data-science-page .ai-cta-stage      {
+  left: 50%; top: 50%; right: auto; bottom: auto;
+  transform: translate(-50%, -50%);
+}
+
+/* 15 — CENTRE of Other Programs (hidden). */
+.ai-data-science-page .ai-explore-stage  {
+  left: 50%; top: 50%; right: auto; bottom: auto;
+  transform: translate(-50%, -50%);
+}
+
+/* =============================================================
+   AI DARK THEME — BOTTOM 6 SECTIONS
+   Re-themes Modes-to-Join · Student-Projects · Project-Impact ·
+   Full-FAQ · CTA · Other-Programs from the inherited light theme
+   to the page-wide AI dark look:
+
+   - new background image per section + 42→68% black overlay
+   - top + bottom black gradient fade overlays (the four sections
+     with global ::before/::after already inherit them; FAQ + CTA
+     get their own pseudo-elements below)
+   - 150px top + bottom padding (uniform with the rest of the AI
+     page; beats the existing clamp(...) padding via !important)
+   - white text + white-badge / black-text title chrome
+   - per-section frame PNG behind the cards on the four sections
+     that the user named one (modes / projects / impact / explore)
+   ============================================================= */
+
+/* 1 ────────────────────────────  MODES TO JOIN  ──────────── */
+.ai-data-science-page .modes-section--robotics {
+  background:
+    linear-gradient(180deg,
+      rgba(0, 0, 0, 0.42) 0%,
+      rgba(0, 0, 0, 0.68) 100%),
+    url("../../assets/programs/ai-and-data-science/modes-to-join-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #03050c !important;
+  color: #ffffff !important;
+  padding: 150px 0 !important;
+}
+.ai-data-science-page .modes-section--robotics .modes-title,
+.ai-data-science-page .modes-section--robotics .modes-subtitle,
+.ai-data-science-page .modes-section--robotics .modes-desc,
+.ai-data-science-page .modes-section--robotics .modes-card-label {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+  text-shadow: none !important;
+}
+.ai-data-science-page .modes-section--robotics .modes-title-badge {
+  background: #ffffff !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+.ai-data-science-page .modes-section--robotics .modes-card,
+.ai-data-science-page .modes-section--robotics .modes-card:hover {
+  background:
+    url("../../assets/programs/ai-and-data-science/modes-to-join-frame.png")
+      center / 100% 100% no-repeat,
+    rgba(5, 8, 18, 0.55) !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: clamp(1.4rem, 2vw, 2rem) !important;
+}
+
+/* 2 ────────────────────────────  STUDENT PROJECTS  ───────── */
+.ai-data-science-page .projects-section--robotics {
+  background:
+    linear-gradient(180deg,
+      rgba(0, 0, 0, 0.42) 0%,
+      rgba(0, 0, 0, 0.68) 100%),
+    url("../../assets/programs/ai-and-data-science/projects-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #03050c !important;
+  color: #ffffff !important;
+  padding: 150px 0 !important;
+}
+.ai-data-science-page .projects-section--robotics .projects-title,
+.ai-data-science-page .projects-section--robotics .projects-subtitle,
+.ai-data-science-page .projects-section--robotics .projects-desc,
+.ai-data-science-page .projects-section--robotics .projects-card,
+.ai-data-science-page .projects-section--robotics .projects-card-title,
+.ai-data-science-page .projects-section--robotics .projects-card-desc,
+.ai-data-science-page .projects-section--robotics .projects-card-name,
+.ai-data-science-page .projects-section--robotics .projects-card-meta,
+.ai-data-science-page .projects-section--robotics .projects-stat-num,
+.ai-data-science-page .projects-section--robotics .projects-stat-lbl {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background-clip: initial !important;
+  -webkit-background-clip: initial !important;
+  text-shadow: none !important;
+}
+.ai-data-science-page .projects-section--robotics .projects-title-badge {
+  background: #ffffff !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+.ai-data-science-page .projects-section--robotics .projects-card {
+  background:
+    url("../../assets/programs/ai-and-data-science/project-box-frame.png")
+      center / 100% 100% no-repeat,
+    rgba(5, 8, 18, 0.55) !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: clamp(1.2rem, 2vw, 1.8rem) !important;
+}
+.ai-data-science-page .projects-section--robotics .projects-stat + .projects-stat {
+  border-left-color: rgba(255, 255, 255, 0.28) !important;
+}
+
+/* 3 ────────────────────────────  PROJECT IMPACT  ─────────── */
+.ai-data-science-page .impact-section--robotics {
+  background:
+    linear-gradient(180deg,
+      rgba(0, 0, 0, 0.42) 0%,
+      rgba(0, 0, 0, 0.68) 100%),
+    url("../../assets/programs/ai-and-data-science/project-impact-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #03050c !important;
+  color: #ffffff !important;
+  padding: 150px 0 !important;
+}
+.ai-data-science-page .impact-section--robotics .impact-title,
+.ai-data-science-page .impact-section--robotics .impact-subtitle,
+.ai-data-science-page .impact-section--robotics .impact-desc,
+.ai-data-science-page .impact-section--robotics .impact-card-title,
+.ai-data-science-page .impact-section--robotics .impact-card-desc {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+  text-shadow: none !important;
+}
+.ai-data-science-page .impact-section--robotics .impact-title-badge {
+  background: #ffffff !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+.ai-data-science-page .impact-section--robotics .impact-card,
+.ai-data-science-page .impact-section--robotics .impact-card:hover {
+  background:
+    url("../../assets/programs/ai-and-data-science/project-impact-frame.png")
+      center / 100% 100% no-repeat,
+    rgba(5, 8, 18, 0.55) !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: clamp(1.6rem, 2.5vw, 2.4rem) !important;
+}
+/* Icon plate — keep readable on the dark backdrop. */
+.ai-data-science-page .impact-section--robotics .impact-card-icon {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: none !important;
+}
+
+/* 4 ────────────────────────────  FULL FAQ  ──────────────── */
+.ai-data-science-page .faq-robotics-section {
+  position: relative !important;
+  overflow: hidden !important;
+  background:
+    linear-gradient(180deg,
+      rgba(0, 0, 0, 0.42) 0%,
+      rgba(0, 0, 0, 0.68) 100%),
+    url("../../assets/programs/ai-and-data-science/full-faq-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #03050c !important;
+  color: #ffffff !important;
+  padding: 150px 0 !important;
+}
+.ai-data-science-page .faq-robotics-section::before,
+.ai-data-science-page .faq-robotics-section::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 18% !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+}
+.ai-data-science-page .faq-robotics-section::before {
+  top: 0 !important;
+  background: linear-gradient(
+    to bottom,
+    rgb(0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.6) 55%,
+    rgba(0, 0, 0, 0) 100%
+  ) !important;
+}
+.ai-data-science-page .faq-robotics-section::after {
+  bottom: 0 !important;
+  background: linear-gradient(
+    to top,
+    rgb(0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.6) 55%,
+    rgba(0, 0, 0, 0) 100%
+  ) !important;
+}
+.ai-data-science-page .faq-robotics-section > * {
+  position: relative;
+  z-index: 3;
+}
+.ai-data-science-page .faq-robotics-section .faq-robotics-title {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+  text-shadow: none !important;
+}
+.ai-data-science-page .faq-robotics-section .faq-robotics-q {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+}
+.ai-data-science-page .faq-robotics-section .faq-robotics-q:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+.ai-data-science-page .faq-robotics-section .faq-robotics-q-text,
+.ai-data-science-page .faq-robotics-section .faq-robotics-q-arrow {
+  color: #ffffff !important;
+}
+.ai-data-science-page .faq-robotics-section .faq-robotics-a-body {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+/* 5 ────────────────────────────  CTA  ───────────────────── */
+.ai-data-science-page .cta-robotics-section {
+  position: relative !important;
+  overflow: hidden !important;
+  background:
+    linear-gradient(180deg,
+      rgba(0, 0, 0, 0.42) 0%,
+      rgba(0, 0, 0, 0.68) 100%),
+    url("../../assets/programs/ai-and-data-science/cta-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #03050c !important;
+  color: #ffffff !important;
+  padding: 150px 0 !important;
+}
+.ai-data-science-page .cta-robotics-section::before,
+.ai-data-science-page .cta-robotics-section::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 18% !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+}
+.ai-data-science-page .cta-robotics-section::before {
+  top: 0 !important;
+  background: linear-gradient(
+    to bottom,
+    rgb(0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.6) 55%,
+    rgba(0, 0, 0, 0) 100%
+  ) !important;
+}
+.ai-data-science-page .cta-robotics-section::after {
+  bottom: 0 !important;
+  background: linear-gradient(
+    to top,
+    rgb(0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.6) 55%,
+    rgba(0, 0, 0, 0) 100%
+  ) !important;
+}
+.ai-data-science-page .cta-robotics-section > * {
+  position: relative;
+  z-index: 3;
+}
+.ai-data-science-page .cta-robotics-section .cta-robotics-title,
+.ai-data-science-page .cta-robotics-section .cta-robotics-desc {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+  text-shadow: none !important;
+}
+
+/* 6 ─────────────────────  OTHER PROGRAMS / EXPLORE  ──────── */
+.ai-data-science-page .explore-section--robotics {
+  background:
+    linear-gradient(180deg,
+      rgba(0, 0, 0, 0.42) 0%,
+      rgba(0, 0, 0, 0.68) 100%),
+    url("../../assets/programs/ai-and-data-science/other-programs-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #03050c !important;
+  color: #ffffff !important;
+  padding: 150px 0 !important;
+}
+.ai-data-science-page .explore-section--robotics .explore-title,
+.ai-data-science-page .explore-section--robotics .explore-card-label {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+  text-shadow: none !important;
+}
+.ai-data-science-page .explore-section--robotics .explore-title-badge {
+  background: #ffffff !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+.ai-data-science-page .explore-section--robotics .explore-card,
+.ai-data-science-page .explore-section--robotics .explore-card:hover {
+  background:
+    url("../../assets/programs/ai-and-data-science/other-programs-frame.png")
+      center / 100% 100% no-repeat,
+    rgba(5, 8, 18, 0.55) !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: clamp(1rem, 1.6vw, 1.4rem) !important;
+}
+
+/* =============================================================
+   SITE FOOTER — AI DARK THEME
+   Re-skins the inherited light footer (lines ~1573-1671) to the
+   page-wide dark look: footer-bg.webp behind a 55→78% black
+   overlay, white text on dark, ghost-on-dark form inputs.
+   Loaded after the light-theme footer rules so it wins.
+   ============================================================= */
+.ai-data-science-page .site-footer {
+  background:
+    linear-gradient(180deg,
+      rgba(0, 0, 0, 0.55) 0%,
+      rgba(0, 0, 0, 0.78) 100%),
+    url("../../assets/programs/ai-and-data-science/footer-bg.webp")
+      center / cover no-repeat !important;
+  background-color: #03050c !important;
+  color: #ffffff !important;
+  padding: 100px 0 !important;
+}
+
+/* Brand logo — re-add a soft blue glow so the dark-on-dark logo
+   still reads against the dark backdrop. */
+.ai-data-science-page .site-footer-logo {
+  filter: drop-shadow(0 0 18px rgba(90, 160, 255, 0.35)) !important;
+}
+
+/* Column titles — white, big enough to anchor each column. */
+.ai-data-science-page .site-footer-col-title {
+  color: #ffffff !important;
+}
+
+/* Body links — soft white, hovers to the AI cyan accent. */
+.ai-data-science-page .site-footer-list a,
+.ai-data-science-page .site-footer-contact a,
+.ai-data-science-page .site-footer-contact li,
+.ai-data-science-page .site-footer-stay-desc {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+.ai-data-science-page .site-footer-list a:hover,
+.ai-data-science-page .site-footer-contact a:hover {
+  color: #5EC8FF !important;
+}
+
+/* Contact + social icons — AI cyan, glow on hover. */
+.ai-data-science-page .site-footer-icon,
+.ai-data-science-page .site-footer-socials a {
+  color: #5EC8FF !important;
+  filter: none !important;
+}
+.ai-data-science-page .site-footer-socials a:hover {
+  color: #A66BFF !important;
+  filter: drop-shadow(0 0 8px rgba(166, 107, 255, 0.55)) !important;
+}
+
+/* Stay-Connected form — ghost input + cyan-violet submit. */
+.ai-data-science-page .site-footer-form input,
+.ai-data-science-page .site-footer-form input:focus,
+.ai-data-science-page .site-footer-form input:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+.ai-data-science-page .site-footer-form input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+.ai-data-science-page .site-footer-form button {
+  background: linear-gradient(135deg, #5EC8FF 0%, #A66BFF 100%) !important;
+  color: #03050c !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+.ai-data-science-page .site-footer-form button:hover {
+  background: linear-gradient(135deg, #7BD5FF 0%, #B987FF 100%) !important;
+  box-shadow: 0 6px 18px rgba(94, 200, 255, 0.45) !important;
+}
+
+/* Bottom strip — copyright + policy. */
+.ai-data-science-page .site-footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.18) !important;
+}
+.ai-data-science-page .site-footer-copy,
+.ai-data-science-page .site-footer-policy {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+.ai-data-science-page .site-footer-policy a {
+  color: #5EC8FF !important;
+}
+.ai-data-science-page .site-footer-policy a:hover {
+  color: #A66BFF !important;
+}

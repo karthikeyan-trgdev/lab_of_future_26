@@ -1,0 +1,14 @@
+node_modules
+dist
+.git
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.bak
+*.log
+.env.local
+.vscode
+.idea
+.DS_Store
+Thumbs.db

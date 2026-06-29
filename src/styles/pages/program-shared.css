@@ -1,0 +1,290 @@
+/* ================================================================
+   PROGRAM PAGES — SHARED TYPOGRAPHY SCALE
+   Normalises font sizes across all 5 program pages:
+   Space Science · Space Robotics · Drones · AI & Data Science · Aeromodelling
+   ================================================================ */
+
+/* ── SCALE TOKENS ──────────────────────────────────────────────── */
+:root {
+  --prog-fs-hero:       clamp(2.6rem,  8vw,   6.5rem);  /* hero banner title     */
+  --prog-fs-section:    clamp(1.8rem,  3.4vw, 2.5rem);    /* major section h2      */
+  --prog-fs-eyebrow:    clamp(0.85rem, 1.1vw, 1rem); /* small label / eyebrow */
+  --prog-fs-body:       clamp(0.85rem, 1vw,   0.95rem); /* section desc / body   */
+  --prog-fs-card-title: clamp(0.9rem,  1.1vw, 1.05rem); /* card / box title h3   */
+  --prog-fs-card-body:  clamp(0.8rem,  0.95vw,0.9rem);  /* card body text        */
+}
+
+
+/* ── 1. HERO TITLES ─────────────────────────────────────────────── */
+.space-science-page  .hero-title,
+.space-robotics-page .drones-hero-title,
+.drones-page         .drones-hero-title,
+.ai-data-science-page .ai-hero-title,
+.aerospace-page      .aero-hero-title {
+  font-size: var(--prog-fs-hero) !important;
+}
+
+
+/* ── 2. MAJOR SECTION TITLES (h2) ──────────────────────────────── */
+/* — Space Science (body-scoped, no page-div wrapper) — */
+.space-science-page .why-title,
+.space-science-page .lof-title,
+.space-science-page .learn-title,
+.space-science-page .cert-title,
+.space-science-page .careers-title,
+.space-science-page .career-pathways-title,
+.space-science-page .choose-path-title,
+.space-science-page .assoc-title,
+.space-science-page .vetted-title,
+.space-science-page .modes-title,
+.space-science-page .projects-title,
+.space-science-page .impact-title,
+.space-science-page .explore-title,
+/* — Space Robotics — */
+.space-robotics-page .why-section--robotics .why-title,
+.space-robotics-page .cert-section--robotics .cert-robotics-title,
+.space-robotics-page .careers-section--robotics .careers-title,
+.space-robotics-page .career-pathways-section--robotics .career-pathways-title,
+.space-robotics-page .choose-path-section--robotics .choose-path-title,
+.space-robotics-page .assoc-section--robotics .assoc-title,
+.space-robotics-page .vetted-section--robotics .vetted-title,
+.space-robotics-page .impact-section--robotics .impact-title,
+.space-robotics-page .modes-section--robotics .modes-title,
+.space-robotics-page .projects-section--robotics .projects-title,
+.space-robotics-page .faq-robotics-title,
+.space-robotics-page .cta-robotics-title,
+.space-robotics-page .explore-section--robotics .explore-title,
+.space-robotics-page .learn-title,
+.space-robotics-page .hands-title,
+/* — Drones — */
+.drones-page .why-section--robotics .why-title,
+.drones-page .drones-cert-title,
+.drones-page .drones-why-title,
+.drones-page .drones-start-title,
+.drones-page .careers-section--robotics .careers-title,
+.drones-page .career-pathways-section--robotics .career-pathways-title,
+.drones-page .choose-path-section--robotics .choose-path-title,
+.drones-page .assoc-section--robotics .assoc-title,
+.drones-page .vetted-section--robotics .vetted-title,
+.drones-page .impact-section--robotics .impact-title,
+.drones-page .modes-section--robotics .modes-title,
+.drones-page .projects-section--robotics .projects-title,
+.drones-page .faq-robotics-title,
+.drones-page .cta-robotics-title,
+.drones-page .explore-section--robotics .explore-title,
+.drones-page .learn-title,
+/* — AI & Data Science — */
+.ai-data-science-page .why-section--robotics .why-title,
+.ai-data-science-page .ai-why-title,
+.ai-data-science-page .cert-section--robotics .cert-robotics-title,
+.ai-data-science-page .careers-section--robotics .careers-title,
+.ai-data-science-page .assoc-section--robotics .assoc-title,
+.ai-data-science-page .vetted-section--robotics .vetted-title,
+.ai-data-science-page .impact-section--robotics .impact-title,
+.ai-data-science-page .projects-section--robotics .projects-title,
+.ai-data-science-page .faq-robotics-title,
+.ai-data-science-page .cta-robotics-title,
+.ai-data-science-page .explore-section--robotics .explore-title,
+.ai-data-science-page .explore-title,
+.ai-data-science-page .learn-title,
+.ai-data-science-page .ai-learn-title,
+.ai-data-science-page .ai-start-title,
+.ai-data-science-page .hands-title,
+/* — Aeromodelling — */
+.aerospace-page .aero-why-title,
+.aerospace-page .aero-young-title,
+.aerospace-page .aero-learn-title,
+.aerospace-page .aero-cert-title,
+.aerospace-page .aero-career-title,
+.aerospace-page .aero-pathway-title,
+.aerospace-page .aero-right-path-title,
+.aerospace-page .aero-assoc-title,
+.aerospace-page .aero-vetted-title,
+.aerospace-page .aero-modes-title,
+.aerospace-page .aero-projects-title,
+.aerospace-page .aero-impact-title,
+.aerospace-page .why-section--robotics .why-title,
+.aerospace-page .drones-cert-title,
+.aerospace-page .drones-why-title,
+.aerospace-page .drones-start-title,
+.aerospace-page .careers-section--robotics .careers-title,
+.aerospace-page .career-pathways-section--robotics .career-pathways-title,
+.aerospace-page .choose-path-section--robotics .choose-path-title,
+.aerospace-page .assoc-section--robotics .assoc-title,
+.aerospace-page .vetted-section--robotics .vetted-title,
+.aerospace-page .impact-section--robotics .impact-title,
+.aerospace-page .modes-section--robotics .modes-title,
+.aerospace-page .projects-section--robotics .projects-title,
+.aerospace-page .faq-robotics-title,
+.aerospace-page .cta-robotics-title,
+.aerospace-page .explore-section--robotics .explore-title,
+.aerospace-page .learn-title {
+  font-size: var(--prog-fs-section) !important;
+  line-height: normal !important;
+}
+
+
+/* ── 3. CARD / BOX TITLES (h3) ─────────────────────────────────── */
+/* — Space Science — */
+.space-science-page .comp-card-title,
+.space-science-page .impact-card-title,
+.space-science-page .projects-card-title,
+/* — Space Robotics — */
+.space-robotics-page .competitions-section--robotics .comp-card-title,
+.space-robotics-page .choose-path-section--robotics .choose-card-title,
+.space-robotics-page .impact-section--robotics .impact-card-title,
+.space-robotics-page .projects-section--robotics .projects-card-title,
+/* — Drones — */
+.drones-page .competitions-section--robotics .comp-card-title,
+.drones-page .choose-path-section--robotics .choose-card-title,
+.drones-page .impact-section--robotics .impact-card-title,
+.drones-page .projects-section--robotics .projects-card-title,
+.drones-page .drones-project-card .projects-card-title,
+/* — AI & Data Science — */
+.ai-data-science-page .competitions-section--robotics .comp-card-title,
+.ai-data-science-page .choose-path-section--robotics .choose-card-title,
+.ai-data-science-page .impact-section--robotics .impact-card-title,
+.ai-data-science-page .projects-section--robotics .projects-card-title,
+/* — Aeromodelling — */
+.aerospace-page .competitions-section--robotics .comp-card-title,
+.aerospace-page .choose-path-section--robotics .choose-card-title,
+.aerospace-page .impact-section--robotics .impact-card-title,
+.aerospace-page .projects-section--robotics .projects-card-title,
+.aerospace-page .drones-project-card .projects-card-title,
+.aerospace-page .aero-comp-card-title,
+.aerospace-page .aero-right-path-card-title,
+.aerospace-page .aero-project-card-title,
+.aerospace-page .aero-impact-card-title {
+  font-size: var(--prog-fs-card-title) !important;
+}
+
+
+/* ── 4. SECTION EYEBROW / SUBTITLE ─────────────────────────────── */
+/* — Space Science — */
+.space-science-page .competitions-subtitle,
+.space-science-page .impact-subtitle,
+.space-science-page .modes-subtitle,
+.space-science-page .projects-subtitle,
+/* — Space Robotics — */
+.space-robotics-page .competitions-subtitle,
+.space-robotics-page .impact-subtitle,
+.space-robotics-page .modes-subtitle,
+.space-robotics-page .projects-subtitle,
+/* — Drones — */
+.drones-page .competitions-subtitle,
+.drones-page .impact-subtitle,
+.drones-page .modes-subtitle,
+.drones-page .projects-subtitle,
+/* — AI & Data Science — */
+.ai-data-science-page .competitions-subtitle,
+.ai-data-science-page .impact-subtitle,
+.ai-data-science-page .modes-subtitle,
+.ai-data-science-page .projects-subtitle,
+/* — Aeromodelling — */
+.aerospace-page .competitions-subtitle,
+.aerospace-page .aero-comp-subtitle,
+.aerospace-page .impact-subtitle,
+.aerospace-page .aero-impact-subtitle,
+.aerospace-page .modes-subtitle,
+.aerospace-page .aero-modes-subtitle,
+.aerospace-page .projects-subtitle,
+.aerospace-page .aero-projects-subtitle {
+  font-size: var(--prog-fs-eyebrow) !important;
+}
+
+
+/* ── 5. SECTION DESCRIPTION / BODY PARAGRAPHS ──────────────────── */
+/* — Space Science — */
+.space-science-page .why-desc,
+.space-science-page .cta-robotics-desc,
+.space-science-page .impact-desc,
+.space-science-page .modes-desc,
+.space-science-page .projects-desc,
+/* — Space Robotics — */
+.space-robotics-page .why-section--robotics .why-desc,
+.space-robotics-page .cta-robotics-desc,
+.space-robotics-page .impact-section--robotics .impact-desc,
+.space-robotics-page .modes-section--robotics .modes-desc,
+.space-robotics-page .projects-section--robotics .projects-desc,
+/* — Drones — */
+.drones-page .why-section--robotics .why-desc,
+.drones-page .cta-robotics-desc,
+.drones-page .impact-section--robotics .impact-desc,
+.drones-page .modes-section--robotics .modes-desc,
+.drones-page .projects-section--robotics .projects-desc,
+/* — AI & Data Science — */
+.ai-data-science-page .why-section--robotics .why-desc,
+.ai-data-science-page .cta-robotics-desc,
+.ai-data-science-page .impact-section--robotics .impact-desc,
+.ai-data-science-page .modes-section--robotics .modes-desc,
+.ai-data-science-page .projects-section--robotics .projects-desc,
+/* — Aeromodelling — */
+.aerospace-page .why-section--robotics .why-desc,
+.aerospace-page .cta-robotics-desc,
+.aerospace-page .impact-section--robotics .impact-desc,
+.aerospace-page .modes-section--robotics .modes-desc,
+.aerospace-page .projects-section--robotics .projects-desc,
+.aerospace-page .aero-hero-desc,
+.aerospace-page .aero-young-desc,
+.aerospace-page .aero-learn-sub,
+.aerospace-page .aero-career-sub,
+.aerospace-page .aero-modes-desc,
+.aerospace-page .aero-projects-desc,
+.aerospace-page .aero-impact-desc {
+  font-size: var(--prog-fs-body) !important;
+}
+
+
+/* ── COMMON SECTION TITLE & SUBTITLE CLASSES ───────────────────── */
+/* Add .prog-section-title to every section-level h2 across all      */
+/* program pages; add .prog-section-subtitle to every eyebrow / tagline p. */
+.prog-section-title {
+  font-size: var(--prog-fs-section);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  margin-bottom: clamp(0.6rem, 1.2vw, 1rem);
+}
+
+.prog-section-subtitle {
+  font-size: var(--prog-fs-eyebrow);
+  font-weight: 500;
+  text-transform: capitalize;
+  text-align: center;
+  opacity: 0.9;
+  margin: 0 auto 50px auto;
+  width: 75%;
+  color:#fff
+}
+
+
+/* ── 6. CARD / BOX BODY TEXT ────────────────────────────────────── */
+/* — Space Science — */
+.space-science-page .comp-card-desc,
+.space-science-page .impact-card-desc,
+.space-science-page .projects-card-desc,
+.space-science-page .choose-card-desc,
+/* — Space Robotics — */
+.space-robotics-page .competitions-section--robotics .comp-card-desc,
+.space-robotics-page .impact-section--robotics .impact-card-desc,
+.space-robotics-page .projects-section--robotics .projects-card-desc,
+/* — Drones — */
+.drones-page .competitions-section--robotics .comp-card-desc,
+.drones-page .impact-section--robotics .impact-card-desc,
+.drones-page .projects-section--robotics .projects-card-desc,
+.drones-page .drones-project-card .projects-card-desc,
+/* — AI & Data Science — */
+.ai-data-science-page .competitions-section--robotics .comp-card-desc,
+.ai-data-science-page .impact-section--robotics .impact-card-desc,
+.ai-data-science-page .projects-section--robotics .projects-card-desc,
+/* — Aeromodelling — */
+.aerospace-page .competitions-section--robotics .comp-card-desc,
+.aerospace-page .impact-section--robotics .impact-card-desc,
+.aerospace-page .projects-section--robotics .projects-card-desc,
+.aerospace-page .drones-project-card .projects-card-desc,
+.aerospace-page .aero-comp-card-desc,
+.aerospace-page .aero-impact-card-desc,
+.aerospace-page .aero-project-card-desc {
+  font-size: var(--prog-fs-card-body) !important;
+}
