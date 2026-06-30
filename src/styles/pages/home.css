@@ -656,7 +656,9 @@
 
 .learn-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* minmax(0,1fr) — without the 0 minimum the Swiper's intrinsic width
+     blows the tracks out and the cards stack full-width */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 50px;
   margin-bottom: var(--space-l);
 }
@@ -675,6 +677,7 @@
     flex-direction: column;
     gap: 1.7rem;
     padding: 15px;
+    min-width: 0;
 
     /* Glassmorphism */
     background: rgba(18, 32, 82, 0.25);
@@ -696,6 +699,28 @@
   object-fit: cover ;
   border-radius: 10px;
   display: block;
+}
+
+/* per-card autoplay image slider — occupies the same box as the old
+   static image so the card layout is unchanged */
+.learn-card-slider {
+  width: 100%;
+  min-width: 0;
+  height: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+/* the Swiper root inside the card must not exceed the card width */
+.learn-card-slider.swiper {
+  max-width: 100%;
+}
+.learn-card-slider .swiper-wrapper,
+.learn-card-slider .swiper-slide {
+  height: 100%;
+}
+.learn-card-slider .learn-card-img {
+  height: 100%;
+  border-radius: 0;
 }
 
 .learn-card-img-placeholder {
@@ -724,13 +749,13 @@
 
 @media (max-width: 992px) {
   .learn-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 560px) {
   .learn-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     max-width: 340px;
     margin-inline: auto;
   }
@@ -4367,6 +4392,12 @@ body.space-science-page .prog-section-title {
   .learn-card-img{
     height: 150px !important;
   }
+  .learn-card-slider{
+    height: 150px;
+  }
+  .learn-card-slider .learn-card-img{
+    height: 100% !important;
+  }
   .learn-grid{
     gap:20px
   }
@@ -4496,5 +4527,263 @@ body.space-science-page .prog-section-title {
   }
   .vetted-role{
     font-size:10px
+  }
+}
+
+/* =============================================================
+   PARTNER DETAIL MODAL — opens when an "associated with" card is
+   clicked. Layout mirrors the reference: identity + meta + CTA on
+   the left, hero image + three stat cards on the right.
+   ============================================================= */
+
+/* the assoc card is now a <button> — strip native chrome (the absolute
+   layout still comes from the existing .assoc-box rule above) */
+.assoc-box {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.assoc-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 2.5rem);
+  background: rgba(2, 6, 18, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: assocModalFade 0.25s ease;
+}
+@keyframes assocModalFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.assoc-modal {
+  position: relative;
+  width: min(960px, 100%);
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: clamp(1.5rem, 3vw, 2.75rem);
+  border-radius: 22px;
+  background:
+    radial-gradient(120% 100% at 80% 0%, rgba(40, 80, 180, 0.18), transparent 60%),
+    rgba(8, 14, 30, 0.94);
+  border: 1px solid rgba(94, 160, 255, 0.5);
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(60, 130, 240, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  animation: assocModalPop 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@keyframes assocModalPop {
+  from { transform: translateY(16px) scale(0.97); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+.assoc-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.18s ease;
+  z-index: 2;
+}
+.assoc-modal-close:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: scale(1.05);
+}
+
+.assoc-modal-grid {
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: start;
+}
+
+/* LEFT — identity + meta + CTA */
+.assoc-modal-logo {
+  width: clamp(84px, 9vw, 120px);
+  height: clamp(84px, 9vw, 120px);
+  object-fit: contain;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+}
+.assoc-modal-name {
+  margin: 1.1rem 0 0.4rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  color: #fff;
+  line-height: 1.05;
+}
+.assoc-modal-fullname {
+  margin: 0;
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  font-weight: 600;
+  color: #5aa0ff;
+  line-height: 1.35;
+}
+.assoc-modal-divider {
+  display: block;
+  height: 1px;
+  width: 55%;
+  margin: 1.3rem 0;
+  background: linear-gradient(90deg, rgba(94, 160, 255, 0.6), transparent);
+}
+.assoc-modal-meta {
+  list-style: none;
+  margin: 0 0 1.2rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.assoc-modal-meta li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.95rem;
+}
+.assoc-modal-meta svg {
+  color: #5aa0ff;
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+.assoc-modal-meta a {
+  color: #5aa0ff;
+  text-decoration: none;
+}
+.assoc-modal-meta a:hover {
+  text-decoration: underline;
+}
+.assoc-modal-desc {
+  margin: 0 0 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 42ch;
+}
+.assoc-modal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: 12px;
+  border: 1px solid rgba(94, 160, 255, 0.55);
+  background: rgba(30, 70, 150, 0.25);
+  color: #cfe2ff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.assoc-modal-btn:hover {
+  background: rgba(40, 90, 180, 0.45);
+  transform: translateY(-2px);
+}
+.assoc-modal-btn svg {
+  color: #5aa0ff;
+}
+
+/* RIGHT — hero image + stat cards */
+.assoc-modal-right {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+.assoc-modal-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
+  overflow: hidden;
+  background: radial-gradient(
+    120% 120% at 70% 30%,
+    rgba(40, 90, 180, 0.35),
+    rgba(3, 8, 22, 0.95)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.assoc-modal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.assoc-modal-image .assoc-modal-image-logo {
+  width: 55%;
+  height: 55%;
+  object-fit: contain;
+  opacity: 0.9;
+}
+.assoc-modal-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.6rem, 1.5vw, 1rem);
+}
+.assoc-modal-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem 0.9rem;
+  border-radius: 14px;
+  border: 1px solid rgba(94, 160, 255, 0.28);
+  background: rgba(12, 22, 46, 0.6);
+}
+.assoc-modal-stat-head {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+.assoc-modal-stat-head svg {
+  color: #5aa0ff;
+}
+.assoc-modal-stat-value {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  color: #5aa0ff;
+  line-height: 1;
+}
+.assoc-modal-stat-sub {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 760px) {
+  .assoc-modal-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 460px) {
+  .assoc-modal-stats {
+    grid-template-columns: 1fr;
   }
 }

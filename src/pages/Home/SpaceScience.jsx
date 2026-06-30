@@ -19,6 +19,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 
 import { NavLink } from "react-router-dom";
 
@@ -45,6 +46,22 @@ import learnUseTools from "../../assets/students/students-learn/use-tools-and-te
 import learnCommunicate from "../../assets/students/students-learn/communicate-ideas-clearly.png";
 import learnWorkTeams from "../../assets/students/students-learn/work-in-teams.png";
 import learnSolveProblems from "../../assets/students/students-learn/solve-unfamilliere-problems.png";
+
+// Gallery images for the learn-card sliders (2 per card; #15 unused).
+import learnGallery1 from "../../assets/students/students-learn/space-astronomy-learning-gallery-1.webp";
+import learnGallery2 from "../../assets/students/students-learn/space-astronomy-learning-gallery-2.webp";
+import learnGallery3 from "../../assets/students/students-learn/space-astronomy-learning-gallery-3.webp";
+import learnGallery4 from "../../assets/students/students-learn/space-astronomy-learning-gallery-4.webp";
+import learnGallery5 from "../../assets/students/students-learn/space-astronomy-learning-gallery-5.webp";
+import learnGallery6 from "../../assets/students/students-learn/space-astronomy-learning-gallery-6.webp";
+import learnGallery7 from "../../assets/students/students-learn/space-astronomy-learning-gallery-7.webp";
+import learnGallery8 from "../../assets/students/students-learn/space-astronomy-learning-gallery-8.webp";
+import learnGallery9 from "../../assets/students/students-learn/space-astronomy-learning-gallery-9.webp";
+import learnGallery10 from "../../assets/students/students-learn/space-astronomy-learning-gallery-10.webp";
+import learnGallery11 from "../../assets/students/students-learn/space-astronomy-learning-gallery-11.webp";
+import learnGallery12 from "../../assets/students/students-learn/space-astronomy-learning-gallery-12.webp";
+import learnGallery13 from "../../assets/students/students-learn/space-astronomy-learning-gallery-13.webp";
+import learnGallery14 from "../../assets/students/students-learn/space-astronomy-learning-gallery-14.webp";
 
 import astronautUrl from "./models/astronaut.glb?url";
 import earthUrl from "./models/neptune.glb?url";
@@ -99,6 +116,12 @@ import {
   FaPaperPlane,
   FaXTwitter,
   FaYoutube,
+  FaRocket,
+  FaUsers,
+  FaGlobe,
+  FaXmark,
+  FaLocationDot,
+  FaCalendarDays,
 } from "react-icons/fa6";
 import { MdEmail, MdPhone } from "react-icons/md";
 import vettedGeorge from "../../assets/vetted-team/george.png";
@@ -807,8 +830,8 @@ const FloatingAstronaut = ({ isMobile = false }) => {
         }
         tx = tx + (toWorldX(cx) - tx) * pVetted;
         ty = ty + (toWorldY(cy) - ty) * pVetted;
-        // big zoom — only head + chest visible
-        targetScale = targetScale + (2.7 - targetScale) * pVetted;
+        // moderate zoom — head + upper body (smaller than before)
+        targetScale = targetScale + (1.8 - targetScale) * pVetted;
         // spin a FULL turn as the section scrolls in, ending facing straight
         // (2π ≡ 0, so the last frame is front-on)
         const spin = 2 * Math.PI * pVetted;
@@ -1553,14 +1576,27 @@ const AgePrograms = () => (
 
 // add an `img` URL to any item to use a real photo; otherwise a
 // placeholder gradient is shown
+// Shared image pool used to seed each card's slider. To give a card its
+// own dedicated gallery, add an `imgs: [imgA, imgB, ...]` array to that
+// item below — it overrides the auto-generated set.
+const LEARN_IMAGE_POOL = [
+  learnThinkCritically,
+  learnUnderstandWorld,
+  learnBuildModels,
+  learnUseTools,
+  learnCommunicate,
+  learnWorkTeams,
+  learnSolveProblems,
+];
+
 const LEARN_ITEMS = [
-  { label: "Think critically", img: learnThinkCritically },
-  { label: "Understand how the world works", img: learnUnderstandWorld },
-  { label: "Build scientific models", img: learnBuildModels },
-  { label: "Use tools and technology", img: learnUseTools },
-  { label: "Communicate ideas clearly", img: learnCommunicate },
-  { label: "Work in teams", img: learnWorkTeams },
-  { label: "Solve unfamiliar problems", img: learnSolveProblems },
+  { label: "Think critically", img: learnThinkCritically, imgs: [learnGallery1, learnGallery2] },
+  { label: "Understand how the world works", img: learnUnderstandWorld, imgs: [learnGallery3, learnGallery4] },
+  { label: "Build scientific models", img: learnBuildModels, imgs: [learnGallery5, learnGallery6] },
+  { label: "Use tools and technology", img: learnUseTools, imgs: [learnGallery7, learnGallery8] },
+  { label: "Communicate ideas clearly", img: learnCommunicate, imgs: [learnGallery9, learnGallery10] },
+  { label: "Work in teams", img: learnWorkTeams, imgs: [learnGallery11, learnGallery12] },
+  { label: "Solve unfamiliar problems", img: learnSolveProblems, imgs: [learnGallery13, learnGallery14] },
 ];
 
 const StudentsLearn = () => (
@@ -1573,16 +1609,46 @@ astronomy, coding, robotics, engineering, experimentation, communication, and re
 space challenges.</p>
 
       <div className="learn-grid">
-        {LEARN_ITEMS.map((it) => (
-          <article className="learn-card" key={it.label}>
-            {it.img ? (
-              <img className="learn-card-img" src={it.img} alt={it.label} />
-            ) : (
-              <div className="learn-card-img-placeholder" />
-            )}
-            <span className="learn-card-label">{it.label}</span>
-          </article>
-        ))}
+        {LEARN_ITEMS.map((it, i) => {
+          // each card gets its own image first, then two others from the
+          // pool so the autoplay slider has something to cycle through
+          const imgs =
+            it.imgs && it.imgs.length
+              ? it.imgs
+              : [
+                  it.img,
+                  LEARN_IMAGE_POOL[(i + 2) % LEARN_IMAGE_POOL.length],
+                  LEARN_IMAGE_POOL[(i + 4) % LEARN_IMAGE_POOL.length],
+                ];
+          return (
+            <article className="learn-card" key={it.label}>
+              <Swiper
+                className="learn-card-slider"
+                modules={[Autoplay]}
+                loop
+                slidesPerView={1}
+                speed={700}
+                grabCursor
+                autoplay={{
+                  delay: 2200,
+                  disableOnInteraction: false,
+                }}
+              >
+                {imgs.map((src, j) => (
+                  <SwiperSlide key={j}>
+                    <img
+                      className="learn-card-img"
+                      src={src}
+                      alt={it.label}
+                      loading="lazy"
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <span className="learn-card-label">{it.label}</span>
+            </article>
+          );
+        })}
       </div>
     </div>
   </section>
@@ -1930,25 +1996,146 @@ children.</p>
 // expressed as % so boxes and connector lines line up exactly
 const ASSOC_TOP_Y = 13.3; // % (frame centre)
 const ASSOC_BOTTOM_Y = 84.3;
+// Partner detail data — drives the click-to-open modal. Edit each entry's
+// name / details / stats (and add an optional `image`) to match its logo.
+// `x` is the box's horizontal position in the tree (unchanged).
 const ASSOC_TOP = [
-  { logo: assocLogo1, x: 15.8 },
-  { logo: assocLogo2, x: 39.3 },
-  { logo: assocLogo3, x: 60.9 },
-  { logo: assocLogo4, x: 84.3 },
+  {
+    logo: assocLogo1,
+    x: 15.8,
+    name: "ISRO",
+    fullName: "Indian Space Research Organisation",
+    location: "Bengaluru, India",
+    website: "https://www.isro.gov.in",
+    websiteLabel: "www.isro.gov.in",
+    established: "1969",
+    description:
+      "India's national space agency, building satellites, launch vehicles, and landmark planetary missions like Chandrayaan and Mangalyaan to advance science and national development.",
+    stats: [
+      { icon: FaRocket, label: "Missions", value: "120+", sub: "Spacecraft Missions" },
+      { icon: FaUsers, label: "Team", value: "16K+", sub: "Scientists & Engineers" },
+      { icon: FaGlobe, label: "Focus Areas", value: "5+", sub: "Launch, Satellites, Planetary & More" },
+    ],
+  },
+  {
+    logo: assocLogo2,
+    x: 39.3,
+    name: "Azercosmos",
+    fullName: "Azerbaijan's National Space Agency",
+    location: "Baku, Azerbaijan",
+    website: "https://azercosmos.az",
+    websiteLabel: "azercosmos.az",
+    established: "2010",
+    description:
+      "The first satellite operator in the South Caucasus, delivering telecommunications and Earth-observation services through its Azerspace and Azersky satellites.",
+    stats: [
+      { icon: FaRocket, label: "Satellites", value: "3+", sub: "In-orbit Satellites" },
+      { icon: FaUsers, label: "Coverage", value: "Global", sub: "Telecom & Imagery" },
+      { icon: FaGlobe, label: "Focus Areas", value: "2+", sub: "Telecom & Earth Observation" },
+    ],
+  },
+  {
+    logo: assocLogo3,
+    x: 60.9,
+    name: "AIAA",
+    fullName: "American Institute of Aeronautics and Astronautics",
+    location: "Reston, Virginia, USA",
+    website: "https://www.aiaa.org",
+    websiteLabel: "www.aiaa.org",
+    established: "1963",
+    description:
+      "The world's largest aerospace technical society — \"The World's Forum for Aerospace Leadership\" — advancing the profession through events, publications, and standards.",
+    stats: [
+      { icon: FaUsers, label: "Members", value: "30K+", sub: "Aerospace Professionals" },
+      { icon: FaGlobe, label: "Countries", value: "90+", sub: "Members Worldwide" },
+      { icon: FaRocket, label: "Focus Areas", value: "8+", sub: "Aeronautics, Astronautics & More" },
+    ],
+  },
+  {
+    logo: assocLogo4,
+    x: 84.3,
+    name: "Roscosmos",
+    fullName: "State Space Corporation Roscosmos",
+    location: "Moscow, Russia",
+    website: "https://www.roscosmos.ru",
+    websiteLabel: "www.roscosmos.ru",
+    established: "1992",
+    description:
+      "Russia's state space corporation — leading human spaceflight, launch services, and deep-space exploration, and a key partner on the International Space Station.",
+    stats: [
+      { icon: FaRocket, label: "Launches", value: "150+", sub: "Orbital Launches" },
+      { icon: FaUsers, label: "Team", value: "12K+", sub: "Engineers & Cosmonauts" },
+      { icon: FaGlobe, label: "Focus Areas", value: "4+", sub: "Launch, ISS, Research & More" },
+    ],
+  },
 ];
 const ASSOC_BOTTOM = [
-  { logo: assocLogo5, x: 27.8 },
-  { logo: assocLogo6, x: 50 },
-  { logo: assocLogo7, x: 72.3 },
+  {
+    logo: assocLogo5,
+    x: 27.8,
+    name: "NASA",
+    fullName: "National Aeronautics and Space Administration",
+    location: "Washington, D.C., USA",
+    website: "https://www.nasa.gov",
+    websiteLabel: "www.nasa.gov",
+    established: "1958",
+    description:
+      "NASA explores the unknown in air and space, innovates for the benefit of humanity, and inspires the world through discovery.",
+    stats: [
+      { icon: FaRocket, label: "Missions", value: "300+", sub: "Successful Missions" },
+      { icon: FaUsers, label: "Team", value: "18K+", sub: "Scientists & Engineers" },
+      { icon: FaGlobe, label: "Focus Areas", value: "5+", sub: "Space, Earth, Science, Tech & More" },
+    ],
+  },
+  {
+    logo: assocLogo6,
+    x: 50,
+    name: "Aero Club of India",
+    fullName: "The Aero Club of India",
+    location: "New Delhi, India",
+    website: "https://aeroclubofindia.in",
+    websiteLabel: "aeroclubofindia.in",
+    established: "1927",
+    description:
+      "The apex body for sport aviation and flying clubs across India, promoting aviation, pilot training, and aeromodelling since 1927.",
+    stats: [
+      { icon: FaUsers, label: "Flying Clubs", value: "30+", sub: "Across India" },
+      { icon: FaRocket, label: "Since", value: "1927", sub: "Apex Aviation Body" },
+      { icon: FaGlobe, label: "Focus Areas", value: "3+", sub: "Aviation, Training & Sport Flying" },
+    ],
+  },
+  {
+    logo: assocLogo7,
+    x: 72.3,
+    name: "ALTEC",
+    fullName: "Aerospace Logistics Technology Engineering Company",
+    location: "Turin, Italy",
+    website: "https://www.altecspace.it",
+    websiteLabel: "www.altecspace.it",
+    established: "2001",
+    description:
+      "Provides engineering and logistics services supporting International Space Station operations and planetary exploration, including Mars rover mission support.",
+    stats: [
+      { icon: FaRocket, label: "Programs", value: "20+", sub: "Space Programs" },
+      { icon: FaUsers, label: "Team", value: "150+", sub: "Engineers & Specialists" },
+      { icon: FaGlobe, label: "Focus Areas", value: "3+", sub: "ISS, Mars & Operations" },
+    ],
+  },
 ];
 
-const AssocBox = ({ logo, x, y }) => (
-  <div className="assoc-box" style={{ left: `${x}%`, top: `${y}%` }}>
+const AssocBox = ({ partner, y, onSelect }) => (
+  <button
+    type="button"
+    className="assoc-box"
+    style={{ left: `${partner.x}%`, top: `${y}%` }}
+    onClick={() => onSelect(partner)}
+    aria-label={`View details for ${partner.name}`}
+  >
     <div className="assoc-box-frame">
       <img
         className="assoc-box-logo"
-        src={logo}
-        alt="Associated organisation"
+        src={partner.logo}
+        alt={partner.name || "Associated organisation"}
       />
     </div>
     <img
@@ -1957,10 +2144,127 @@ const AssocBox = ({ logo, x, y }) => (
       alt=""
       aria-hidden="true"
     />
-  </div>
+  </button>
 );
 
-const Associated = () => (
+/* Partner detail modal — opens on card click. Layout mirrors the
+   reference: logo + identity + meta + CTA on the left, hero image and
+   three stat cards on the right. */
+const AssocPartnerModal = ({ partner, onClose }) => {
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [onClose]);
+
+  if (!partner) return null;
+
+  // Portal to <body> so no section's stacking context can sit over it.
+  return createPortal(
+    <div className="assoc-modal-overlay" onClick={onClose}>
+      <div
+        className="assoc-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label={partner.name}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          type="button"
+          className="assoc-modal-close"
+          onClick={onClose}
+          aria-label="Close"
+        >
+          <FaXmark />
+        </button>
+
+        <div className="assoc-modal-grid">
+          {/* LEFT — identity + meta + CTA */}
+          <div className="assoc-modal-left">
+            <h3 className="assoc-modal-name">{partner.name}</h3>
+            <p className="assoc-modal-fullname">{partner.fullName}</p>
+
+            <span className="assoc-modal-divider" aria-hidden="true" />
+
+            <ul className="assoc-modal-meta">
+              <li>
+                <FaLocationDot aria-hidden="true" />
+                <span>{partner.location}</span>
+              </li>
+              <li>
+                <FaGlobe aria-hidden="true" />
+                <a href={partner.website} target="_blank" rel="noreferrer">
+                  {partner.websiteLabel}
+                </a>
+              </li>
+              <li>
+                <FaCalendarDays aria-hidden="true" />
+                <span>Established: {partner.established}</span>
+              </li>
+            </ul>
+
+            <p className="assoc-modal-desc">{partner.description}</p>
+
+            <a
+              className="assoc-modal-btn"
+              href={partner.website}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FaRocket aria-hidden="true" />
+              Visit Website
+            </a>
+          </div>
+
+          {/* RIGHT — hero image + stat cards */}
+          <div className="assoc-modal-right">
+            <div className="assoc-modal-image">
+              {partner.image ? (
+                <img src={partner.image} alt={partner.name} />
+              ) : (
+                <img
+                  className="assoc-modal-image-logo"
+                  src={partner.logo}
+                  alt=""
+                  aria-hidden="true"
+                />
+              )}
+            </div>
+
+            <div className="assoc-modal-stats">
+              {partner.stats?.map((s) => {
+                const Icon = s.icon;
+                return (
+                  <div className="assoc-modal-stat" key={s.label}>
+                    <span className="assoc-modal-stat-head">
+                      <Icon aria-hidden="true" />
+                      {s.label}
+                    </span>
+                    <span className="assoc-modal-stat-value">{s.value}</span>
+                    <span className="assoc-modal-stat-sub">{s.sub}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>,
+    document.body,
+  );
+};
+
+const Associated = () => {
+  const [active, setActive] = useState(null);
+
+  return (
   <section className="assoc-section">
     {/* scattered blinking star dots in the backdrop */}
     <div className="assoc-blink-stars" aria-hidden="true">
@@ -1997,7 +2301,7 @@ designed to bring students closer to the future of space.</p>
       </svg>
 
       {ASSOC_TOP.map((b, i) => (
-        <AssocBox key={`t${i}`} logo={b.logo} x={b.x} y={ASSOC_TOP_Y} />
+        <AssocBox key={`t${i}`} partner={b} y={ASSOC_TOP_Y} onSelect={setActive} />
       ))}
 
       <div className="assoc-center-box" style={{ left: "50%", top: "51.8%" }}>
@@ -2005,11 +2309,16 @@ designed to bring students closer to the future of space.</p>
       </div>
 
       {ASSOC_BOTTOM.map((b, i) => (
-        <AssocBox key={`b${i}`} logo={b.logo} x={b.x} y={ASSOC_BOTTOM_Y} />
+        <AssocBox key={`b${i}`} partner={b} y={ASSOC_BOTTOM_Y} onSelect={setActive} />
       ))}
     </div>
+
+    {active && (
+      <AssocPartnerModal partner={active} onClose={() => setActive(null)} />
+    )}
   </section>
-);
+  );
+};
 
 /* =========================================================
    VETTED BY
