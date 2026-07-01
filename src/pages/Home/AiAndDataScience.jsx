@@ -1221,7 +1221,7 @@ const Certificates = () => (
       {/* LEFT — title + bulleted points (white on the dark hand backdrop) */}
       <div className="cert-robotics-text">
         <h2 className="cert-robotics-title prog-section-title">CERTIFICATES</h2>
-        <p>Students receive an Artificial Intelligence certificate that recognizes their successful completion of the program, hands-on project experience, practical AI skills, and continuous learning progress. This certification validates their understanding of key AI concepts and their ability to apply them in real-world scenarios.</p>
+        <p>Students receive an artificial intelligence certificate recognising hands-on skills, learning progress, and AI course completion.</p>
       </div>
 
       {/* RIGHT — static fanned stack of 3 certificates floating above
@@ -1259,13 +1259,11 @@ const WhySpaceForCareers = () => (
     <div className="ai-section-fade-bot" aria-hidden="true" />
     <div className="container">
       <h2 className="careers-title prog-section-title">
-        WHY ROBOTICS FOR{" "}
+        WHY AI FOR{" "}
         <span className="careers-title-badge">FUTURE CAREERS?</span>
       </h2>
-      <p className="careers-sub">Healthcare. Finance. Robotics. Defence. Education. These are the industries where AI skills
-for future jobs are not optional — they are essential. Across the UAE, demand for AI
-professionals is growing faster than any other technology sector. Strong AI education
-today is direct career preparation for the world that already exists.</p>
+      <p className="careers-sub">Healthcare. Finance. Robotics. Defence. Education. These are the industries where AI skills for future jobs are not optional — they are essential. Across the UAE, demand for AI professionals is growing faster than any other technology sector. Strong AI education today is direct career preparation for the world that already exists.</p>
+      <p className="projects-desc">AI education builds the skills powering the next generation of technology careers.</p>
 
       <div className="careers-skills-grid">
         {/* Row 1 — 4 cards */}
@@ -1337,7 +1335,7 @@ const Competitions = () => (
             <span className="competitions-label-badge">COMPETITIONS</span>
           </h2>
           <p className="competitions-subtitle prog-section-subtitle">
-            Showcase your robotics skills by designing, building, and programming innovative solutions to real-world challenges. Apply your knowledge through hands-on projects, develop critical problem-solving abilities, and gain recognition for the creativity, technical expertise, and achievements demonstrated in every project you complete.
+            Showcase Your AI & Data Science Skills By Building Intelligent Models, Analyzing Real-World Data, And Solving Meaningful Challenges. Apply Your Knowledge Through Hands-On Projects, Develop Critical Analytical And Problem-Solving Abilities, And Gain Recognition For Your Innovation, Technical Expertise, And Data-Driven Solutions Demonstrated In Every Project You Complete.
           </p>
           <NavLink
           to="/programs"
@@ -1377,6 +1375,7 @@ const Competitions = () => (
    CAREER PATHWAYS — FAQ ACCORDION (section 9)
 ========================================================= */
 
+
 const FAQ_ITEMS = [
   {
     q: "AI Engineer",
@@ -1400,6 +1399,8 @@ const FAQ_ITEMS = [
   },
 ];
 
+
+
 const CareerPathways = () => {
   const [openIdx, setOpenIdx] = useState(null);
 
@@ -1412,6 +1413,7 @@ const CareerPathways = () => {
         <h2 className="career-pathways-title">
           <span className="career-pathways-badge">CAREER</span> PATHWAYS
         </h2>
+                  <p>AI learning opens pathways into engineering, data science, research, product development, robotics, and the AI careers defining the next decade.</p>
         <div className="faq-list">
           {FAQ_ITEMS.map((item, i) => (
             <div
@@ -1700,13 +1702,7 @@ const PROJECTS = [
     student: "Arsh",
     meta: "AI Research & Machine Learning Track",
   },
-  {
-    title: "Credit Card Fraud Detection System",
-    desc: "Building a Random Forest AI model that analyses thousands of transactions in real time to instantly detect fraudulent activity — protecting consumers from cybercrime using intelligent pattern recognition.",
-    student: "Arsh",
-    meta: "AI Research & Machine Learning Track",
-  },
-    {
+      {
     title: "Real-Time Sign Language Translator",
     desc: "Developing a computer vision system using MediaPipe that tracks hand landmarks in real time and translates sign language gestures into digital text — breaking communication barriers through AI.",
     student: "Hrishikesh & Aayan",
@@ -1721,12 +1717,11 @@ const StudentProjects = () => (
       <h2 className="projects-title prog-section-title">
         <span className="projects-title-badge">STUDENT</span> PROJECTS
       </h2>
-      <p className="projects-subtitle prog-section-subtitle">They don&apos;t just learn. They build.</p>
-      <p className="projects-desc">They do not just learn AI. They build it. Every student at Lab of Future follows a structured
-project path built around real AI projects for kids — not passive observation or theory.
-From training machine learning models to building intelligent systems directly inspired by
-actual industry applications, every single challenge is carefully and intentionally designed to
-develop genuine technical capability that extends well beyond any classroom.</p>
+      <p className="projects-subtitle prog-section-subtitle">Real Projects. Real AI. Real Pride.</p>
+      <p className="projects-desc">These aren't school assignments. These are real AI projects built by real students using actual datasets, real machine learning tools, and genuine scientific methods. Every project solves a problem that exists in the real world.
+</p>
+ <p className="projects-desc">Every AI project at Lab of Future is a real challenge — not a demo, not a template. Students plan, train, test, and improve until their model works. That process builds the kind of thinking that lasts.
+</p>
 
       <div className="projects-slider">
         <Swiper
@@ -1771,16 +1766,16 @@ develop genuine technical capability that extends well beyond any classroom.</p>
 
       <div className="projects-stats">
         <div className="projects-stat">
-          <span className="projects-stat-num">150+</span>
-          <span className="projects-stat-lbl">Projects Completed</span>
+          <span className="projects-stat-num">100+</span>
+          <span className="projects-stat-lbl">AI Models Trained</span>
         </div>
         <div className="projects-stat">
           <span className="projects-stat-num">50+</span>
-          <span className="projects-stat-lbl">Prototypes Built</span>
+          <span className="projects-stat-lbl">Student AI Projects</span>
         </div>
         <div className="projects-stat">
           <span className="projects-stat-num">100%</span>
-          <span className="projects-stat-lbl">Curiosity Powered</span>
+          <span className="projects-stat-lbl">Hands-On Learning</span>
         </div>
       </div>
     </div>
@@ -1818,10 +1813,11 @@ const ProjectImpact = () => (
           <span className="impact-title-badge">PROJECT</span> IMPACT
         </h2>
         <p className="impact-subtitle prog-section-subtitle">From Curiosity to Capability</p>
-        <p className="impact-desc">What They Build Here, They Carry Forever. AI learning is about more than technology —
-it is about developing thinking patterns that solve real problems.<br />THE FUTURE WON'T JUST BE PREDICTED. IT WILL BE BUILT. Every great innovator
-starts with curiosity. We provide the models, tools, and guidance to help students think at the
-frontier.</p>
+        <p className="impact-desc">What They Build Here, They Carry Forever. AI learning is about more than technology —<br />
+it is about developing thinking patterns that solve real problems.<br />
+<br />
+THE FUTURE WON'T JUST BE PREDICTED. IT WILL BE BUILT. Every great innovator
+starts with curiosity. <br />We provide the models, tools, and guidance to help students think at the frontier.</p>
       </div>
 
       <div className="impact-grid">
@@ -1912,7 +1908,7 @@ a: "Yes. Beginner AI classes focus on logical thinking, pattern recognition, and
 },
 {
 q: "What makes Lab of Future a credible AI education provider in Dubai?",
-a: "Lab of Future offers a structured AI curriculum, trained mentors, hands-on projects, progress tracking, verifiable certification, and documented student outcomes across multiple technology programs.",
+a: "Structured AI curriculum, trained mentors, hands-on real projects, progress tracking, verifiable AI certification, and documented student project outcomes across multiple programs.",
 },
 {
 q: "How do I enrol in the Lab of Future AI program?",
@@ -2063,9 +2059,7 @@ const CtaRobotics = () => (
           IT WILL BE BUILT
         </h2>
         <p className="cta-robotics-desc">
-          Give your child more than knowledge. Give them direction, confidence,
-          and capability &mdash; and the tools to shape the world beyond our
-          planet.
+          Every great innovator starts with curiosity. We provide the models, tools, and guidance to help students think at the frontier.
         </p>
         <div className="cta-robotics-actions">
           <NavLink to="/student-portal" className="cta-robotics-btn cta-robotics-btn--primary">
@@ -2346,6 +2340,7 @@ const AiAndDataScience = () => {
         <div className="faq-bg-overlay" />
         <div className="faq-section-content">
           <CareerPathways />
+
         </div>
       </div>
 
