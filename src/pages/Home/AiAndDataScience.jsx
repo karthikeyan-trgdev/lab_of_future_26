@@ -17,6 +17,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 
 import { NavLink } from "react-router-dom";
 
@@ -39,13 +40,13 @@ import aiCertificateImg from "../../assets/programs/ai-and-data-science/certific
 // PNGs are referenced via CSS (background-image url(...)) only, so
 // no JS imports needed for them.  Below: the assets the JSX itself
 // renders via <img src={...}>.
-import aiLearnImg1 from "../../assets/programs/ai-and-data-science/students-learn-image-1.webp";
-import aiLearnImg2 from "../../assets/programs/ai-and-data-science/students-learn-image-2.webp";
-import aiLearnImg3 from "../../assets/programs/ai-and-data-science/students-learn-image-3.webp";
-import aiLearnImg4 from "../../assets/programs/ai-and-data-science/students-learn-image-4.webp";
-import aiLearnImg5 from "../../assets/programs/ai-and-data-science/students-learn-image-5.webp";
-import aiLearnImg6 from "../../assets/programs/ai-and-data-science/students-learn-image-6.webp";
-import aiLearnImg7 from "../../assets/programs/ai-and-data-science/students-learn-image-7.webp";
+import aiLearnImg1 from "../../assets/programs/ai-and-data-science/students-learn-1.webp";
+import aiLearnImg2 from "../../assets/programs/ai-and-data-science/students-learn-2.webp";
+import aiLearnImg3 from "../../assets/programs/ai-and-data-science/students-learn-3.webp";
+import aiLearnImg4 from "../../assets/programs/ai-and-data-science/students-learn-4.webp";
+import aiLearnImg5 from "../../assets/programs/ai-and-data-science/students-learn-5.webp";
+import aiLearnImg6 from "../../assets/programs/ai-and-data-science/students-learn-6.webp";
+import aiLearnImg7 from "../../assets/programs/ai-and-data-science/students-learn-7.webp";
 import ai123FbxUrl from "../../assets/programs/ai-and-data-science/123.fbx?url";
 
 import abstractGlbUrl from "../../assets/programs/ai-and-data-science/abstract.glb?url";
@@ -61,17 +62,21 @@ import modeOnsiteImg from "../../assets/modes-to-join/onsite.png";
 import modeOnlineImg from "../../assets/modes-to-join/online.png";
 import modeDiyImg from "../../assets/modes-to-join/diy.png";
 import projectImg from "../../assets/projects/project-1.png";
+import aiProject1 from "../../assets/programs/ai-and-data-science/projects/projects-2.webp";
+import aiProject2 from "../../assets/programs/ai-and-data-science/projects/students-learn-2.webp";
+import aiProject3 from "../../assets/programs/ai-and-data-science/projects/students-learn-3.webp";
 import impactIcon1 from "../../assets/icons/project-impact-icon-1.png";
 import impactIcon2 from "../../assets/icons/project-impact-icon-2.png";
 import impactIcon3 from "../../assets/icons/project-impact-icon-3.png";
 
-import codingImg from "../../assets/future-career/coding.png";
-import aiImg from "../../assets/future-career/ai.png";
-import electronicsImg from "../../assets/future-career/electronics.png";
-import engineeringImg from "../../assets/future-career/engineering-design.png";
-import dataImg from "../../assets/future-career/data-analysis.png";
-import designingImg from "../../assets/future-career/3d-designing.png";
-import researchImg from "../../assets/future-career/research-mindset.png";
+import codingImg from "../../assets/programs/ai-and-data-science/future-careers/future-career-1.webp";
+import aiImg from "../../assets/programs/ai-and-data-science/future-careers/future-career-2.webp";
+import electronicsImg from "../../assets/programs/ai-and-data-science/future-careers/future-career-3.webp";
+import engineeringImg from "../../assets/programs/ai-and-data-science/future-careers/future-career-4.webp";
+import dataImg from "../../assets/programs/ai-and-data-science/future-careers/future-career-5.webp";
+import designingImg from "../../assets/programs/ai-and-data-science/future-careers/future-career-6.webp";
+import researchImg from "../../assets/programs/ai-and-data-science/future-careers/future-career-7.webp";
+import futureWayImg from "../../assets/programs/ai-and-data-science/future-way.webp";
 
 import calenderIcon from "../../assets/future-career/calender.svg";
 import olympiadIcon from "../../assets/future-career/olympiad.svg";
@@ -96,6 +101,12 @@ import {
   FaPaperPlane,
   FaXTwitter,
   FaYoutube,
+  FaRocket,
+  FaUsers,
+  FaGlobe,
+  FaXmark,
+  FaLocationDot,
+  FaCalendarDays,
 } from "react-icons/fa6";
 import { MdEmail, MdPhone } from "react-icons/md";
 import vettedGeorge from "../../assets/programs/ai-and-data-science/team-1.png";
@@ -126,7 +137,6 @@ every single day. The people building those systems did not start with a degree.
 with curiosity. At Lab of Future, students train real AI models, build intelligent projects, and
 develop the problem-solving instincts that every future career will demand.</p>
       </div>
-
       {/* RIGHT — landing zone for the traveling particle swarm.
           The actual canvas is rendered once by <AiParticleTraveler/>
           (mounted at the page level) and repositions itself here as
@@ -150,33 +160,43 @@ develop the problem-solving instincts that every future career will demand.</p>
 ========================================================= */
 const AI_START_AGE_GROUPS = [
   {
-    label: "Ages 6-7",
+    label: "Foundation",
     points: [
-      "First contact with intelligent systems. Students explore how machines learn, recognise patterns, and make decisions through play-based AI activities that build curiosity and early awareness in technology.",
+      "Discover what artificial intelligence is through fun, play-based activities.",
+      "Explore how machines recognize patterns and make simple decisions.",
+      "Build curiosity and confidence with age-appropriate AI experiences.",
     ],
   },
   {
-    label: "Ages 8-10",
+    label: "Explorer",
     points: [
-      "Students discover machine learning concepts, data patterns, and beginner AI tools. Activities introduce logical thinking, classification challenges, and guided experiments that develop real AI understanding every session.",
+      "Learn the basics of machine learning and data patterns.",
+      "Experiment with beginner AI tools through guided activities.",
+      "Strengthen logical thinking with classification and prediction challenges.",
     ],
   },
   {
-    label: "Ages 11-14",
+    label: "Innovator",
     points: [
-      "Model training, neural networks, and real AI applications take center stage. Students begin understanding how artificial intelligence processes data, identifies patterns, and solves meaningful real-world problems.",
+      "Understand neural networks and AI model training fundamentals.",
+      "Explore how AI analyzes data to identify meaningful patterns.",
+      "Apply AI concepts to solve practical real-world challenges.",
     ],
   },
   {
-    label: "Ages 15-18",
+    label: "Engineer",
     points: [
-      "Advanced AI development, generative AI concepts, and project-based challenges. Students build working AI models, explore ethics, and apply skills to solve innovation-driven real-world applications.",
+      "Build advanced AI projects using modern development tools.",
+      "Learn generative AI concepts along with responsible AI ethics.",
+      "Create innovation-driven solutions for real-world applications.",
     ],
   },
   {
-    label: "Ages 18+",
+    label: "Researcher",
     points: [
-      "Professional AI training covering automation, deep learning foundations, and applied projects. Students build portfolio-ready skills for higher education, research, and emerging artificial intelligence careers in the UAE.",
+      "Develop portfolio-ready AI projects for higher education and careers.",
+      "Explore automation, deep learning foundations, and applied AI.",
+      "Gain industry-focused skills for emerging AI opportunities in the UAE.",
     ],
   },
 ];
@@ -191,7 +211,11 @@ const AiStartYoungAgeSection = () => (
       {/* Top half — hologram landing pad on the left, dual-title
           copy column on the right. */}
       <div className="ai-start-top">
-        <div className="ai-start-stage" aria-hidden="true" />
+        <div className="ai-start-visual">
+          <img className="ai-start-img" src={futureWayImg} alt="" />
+          {/* particle landing zone — now small in the top-left corner */}
+          <div className="ai-start-stage" aria-hidden="true" />
+        </div>
 
         <div className="ai-start-text">
           <h2 className="ai-start-title prog-section-title">
@@ -721,7 +745,7 @@ const TRAVEL_INSTANCE_FRAG = `
 const WP_SHAPES = [
   { id: 0,  size: 2.6 }, //  0 Hero               column
   { id: 1,  size: 2.4 }, //  1 Why AI              disc
-  { id: 15, size: 1.8 }, //  2 Start Young         3D cube
+  { id: 15, size: 0.9 }, //  2 Start Young         3D cube (small, top-left)
   { id: 22, size: 2.2 }, //  3 Students Learn      4-petal flower
   { id: 1, size: 0.5, hidden: true }, //  4 Certificates  (hidden — just travels through)
   { id: 5,  size: 1.5 }, //  5 Future Careers      starburst (smaller still)
@@ -1450,25 +1474,144 @@ const CareerPathways = () => {
 // expressed as % so boxes and connector lines line up exactly
 const ASSOC_TOP_Y = 13.3; // % (frame centre)
 const ASSOC_BOTTOM_Y = 84.3;
+// Partner detail data — drives the click-to-open modal.
 const ASSOC_TOP = [
-  { logo: assocLogo1, x: 15.8 },
-  { logo: assocLogo2, x: 39.3 },
-  { logo: assocLogo3, x: 60.9 },
-  { logo: assocLogo4, x: 84.3 },
+  {
+    logo: assocLogo1,
+    x: 15.8,
+    name: "ISRO",
+    fullName: "Indian Space Research Organisation",
+    location: "Bengaluru, India",
+    website: "https://www.isro.gov.in",
+    websiteLabel: "www.isro.gov.in",
+    established: "1969",
+    description:
+      "India's national space agency, building satellites, launch vehicles, and landmark planetary missions like Chandrayaan and Mangalyaan.",
+    stats: [
+      { icon: FaRocket, label: "Missions", value: "120+", sub: "Spacecraft Missions" },
+      { icon: FaUsers, label: "Team", value: "16K+", sub: "Scientists & Engineers" },
+      { icon: FaGlobe, label: "Focus Areas", value: "5+", sub: "Launch, Satellites, Planetary & More" },
+    ],
+  },
+  {
+    logo: assocLogo2,
+    x: 39.3,
+    name: "Azercosmos",
+    fullName: "Azerbaijan's National Space Agency",
+    location: "Baku, Azerbaijan",
+    website: "https://azercosmos.az",
+    websiteLabel: "azercosmos.az",
+    established: "2010",
+    description:
+      "The first satellite operator in the South Caucasus, delivering telecommunications and Earth-observation services through its Azerspace and Azersky satellites.",
+    stats: [
+      { icon: FaRocket, label: "Satellites", value: "3+", sub: "In-orbit Satellites" },
+      { icon: FaUsers, label: "Coverage", value: "Global", sub: "Telecom & Imagery" },
+      { icon: FaGlobe, label: "Focus Areas", value: "2+", sub: "Telecom & Earth Observation" },
+    ],
+  },
+  {
+    logo: assocLogo3,
+    x: 60.9,
+    name: "AIAA",
+    fullName: "American Institute of Aeronautics and Astronautics",
+    location: "Reston, Virginia, USA",
+    website: "https://www.aiaa.org",
+    websiteLabel: "www.aiaa.org",
+    established: "1963",
+    description:
+      "The world's largest aerospace technical society — \"The World's Forum for Aerospace Leadership\" — advancing the profession through events, publications, and standards.",
+    stats: [
+      { icon: FaUsers, label: "Members", value: "30K+", sub: "Aerospace Professionals" },
+      { icon: FaGlobe, label: "Countries", value: "90+", sub: "Members Worldwide" },
+      { icon: FaRocket, label: "Focus Areas", value: "8+", sub: "Aeronautics, Astronautics & More" },
+    ],
+  },
+  {
+    logo: assocLogo4,
+    x: 84.3,
+    name: "Roscosmos",
+    fullName: "State Space Corporation Roscosmos",
+    location: "Moscow, Russia",
+    website: "https://www.roscosmos.ru",
+    websiteLabel: "www.roscosmos.ru",
+    established: "1992",
+    description:
+      "Russia's state space corporation — leading human spaceflight, launch services, and deep-space exploration, and a key partner on the International Space Station.",
+    stats: [
+      { icon: FaRocket, label: "Launches", value: "150+", sub: "Orbital Launches" },
+      { icon: FaUsers, label: "Team", value: "12K+", sub: "Engineers & Cosmonauts" },
+      { icon: FaGlobe, label: "Focus Areas", value: "4+", sub: "Launch, ISS, Research & More" },
+    ],
+  },
 ];
 const ASSOC_BOTTOM = [
-  { logo: assocLogo5, x: 27.8 },
-  { logo: assocLogo6, x: 50 },
-  { logo: assocLogo7, x: 72.3 },
+  {
+    logo: assocLogo5,
+    x: 27.8,
+    name: "NASA",
+    fullName: "National Aeronautics and Space Administration",
+    location: "Washington, D.C., USA",
+    website: "https://www.nasa.gov",
+    websiteLabel: "www.nasa.gov",
+    established: "1958",
+    description:
+      "NASA explores the unknown in air and space, innovates for the benefit of humanity, and inspires the world through discovery.",
+    stats: [
+      { icon: FaRocket, label: "Missions", value: "300+", sub: "Successful Missions" },
+      { icon: FaUsers, label: "Team", value: "18K+", sub: "Scientists & Engineers" },
+      { icon: FaGlobe, label: "Focus Areas", value: "5+", sub: "Space, Earth, Science, Tech & More" },
+    ],
+  },
+  {
+    logo: assocLogo6,
+    x: 50,
+    name: "Aero Club of India",
+    fullName: "The Aero Club of India",
+    location: "New Delhi, India",
+    website: "https://aeroclubofindia.in",
+    websiteLabel: "aeroclubofindia.in",
+    established: "1927",
+    description:
+      "The apex body for sport aviation and flying clubs across India, promoting aviation, pilot training, and aeromodelling since 1927.",
+    stats: [
+      { icon: FaUsers, label: "Flying Clubs", value: "30+", sub: "Across India" },
+      { icon: FaRocket, label: "Since", value: "1927", sub: "Apex Aviation Body" },
+      { icon: FaGlobe, label: "Focus Areas", value: "3+", sub: "Aviation, Training & Sport Flying" },
+    ],
+  },
+  {
+    logo: assocLogo7,
+    x: 72.3,
+    name: "ALTEC",
+    fullName: "Aerospace Logistics Technology Engineering Company",
+    location: "Turin, Italy",
+    website: "https://www.altecspace.it",
+    websiteLabel: "www.altecspace.it",
+    established: "2001",
+    description:
+      "Provides engineering and logistics services supporting International Space Station operations and planetary exploration, including Mars rover mission support.",
+    stats: [
+      { icon: FaRocket, label: "Programs", value: "20+", sub: "Space Programs" },
+      { icon: FaUsers, label: "Team", value: "150+", sub: "Engineers & Specialists" },
+      { icon: FaGlobe, label: "Focus Areas", value: "3+", sub: "ISS, Mars & Operations" },
+    ],
+  },
 ];
 
-const AssocBox = ({ logo, x, y }) => (
-  <div className="assoc-box" style={{ left: `${x}%`, top: `${y}%` }}>
+const AssocBox = ({ partner, y, onSelect }) => (
+  <button
+    type="button"
+    className="assoc-box"
+    style={{ left: `${partner.x}%`, top: `${y}%` }}
+    onClick={() => onSelect(partner)}
+    aria-label={`View details for ${partner.name}`}
+  >
     <div className="assoc-box-frame">
       <img
         className="assoc-box-logo"
-        src={logo}
-        alt="Associated organisation"
+        src={partner.logo}
+        alt={partner.name || "Associated organisation"}
       />
     </div>
     <img
@@ -1477,10 +1620,123 @@ const AssocBox = ({ logo, x, y }) => (
       alt=""
       aria-hidden="true"
     />
-  </div>
+  </button>
 );
 
-const Associated = () => (
+/* Partner detail modal — same layout as the other program pages, AI-themed
+   via the .assoc-modal--ai modifier (it's portaled to <body>). */
+const AssocPartnerModal = ({ partner, onClose }) => {
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [onClose]);
+
+  if (!partner) return null;
+
+  return createPortal(
+    <div className="assoc-modal-overlay" onClick={onClose}>
+      <div
+        className="assoc-modal assoc-modal--ai"
+        role="dialog"
+        aria-modal="true"
+        aria-label={partner.name}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          type="button"
+          className="assoc-modal-close"
+          onClick={onClose}
+          aria-label="Close"
+        >
+          <FaXmark />
+        </button>
+
+        <div className="assoc-modal-grid">
+          <div className="assoc-modal-left">
+            <h3 className="assoc-modal-name">{partner.name}</h3>
+            <p className="assoc-modal-fullname">{partner.fullName}</p>
+
+            <span className="assoc-modal-divider" aria-hidden="true" />
+
+            <ul className="assoc-modal-meta">
+              <li>
+                <FaLocationDot aria-hidden="true" />
+                <span>{partner.location}</span>
+              </li>
+              <li>
+                <FaGlobe aria-hidden="true" />
+                <a href={partner.website} target="_blank" rel="noreferrer">
+                  {partner.websiteLabel}
+                </a>
+              </li>
+              <li>
+                <FaCalendarDays aria-hidden="true" />
+                <span>Established: {partner.established}</span>
+              </li>
+            </ul>
+
+            <p className="assoc-modal-desc">{partner.description}</p>
+
+            <a
+              className="assoc-modal-btn"
+              href={partner.website}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FaRocket aria-hidden="true" />
+              Visit Website
+            </a>
+          </div>
+
+          <div className="assoc-modal-right">
+            <div className="assoc-modal-image">
+              {partner.image ? (
+                <img src={partner.image} alt={partner.name} />
+              ) : (
+                <img
+                  className="assoc-modal-image-logo"
+                  src={partner.logo}
+                  alt=""
+                  aria-hidden="true"
+                />
+              )}
+            </div>
+
+            <div className="assoc-modal-stats">
+              {partner.stats?.map((s) => {
+                const Icon = s.icon;
+                return (
+                  <div className="assoc-modal-stat" key={s.label}>
+                    <span className="assoc-modal-stat-head">
+                      <Icon aria-hidden="true" />
+                      {s.label}
+                    </span>
+                    <span className="assoc-modal-stat-value">{s.value}</span>
+                    <span className="assoc-modal-stat-sub">{s.sub}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>,
+    document.body,
+  );
+};
+
+const Associated = () => {
+  const [active, setActive] = useState(null);
+
+  return (
   <section className="assoc-section assoc-section--robotics">
     <div className="ai-assoc-stage" aria-hidden="true" />
     <div className="ai-section-fade-top" aria-hidden="true" />
@@ -1522,7 +1778,7 @@ const Associated = () => (
       </svg>
 
       {ASSOC_TOP.map((b, i) => (
-        <AssocBox key={`t${i}`} logo={b.logo} x={b.x} y={ASSOC_TOP_Y} />
+        <AssocBox key={`t${i}`} partner={b} y={ASSOC_TOP_Y} onSelect={setActive} />
       ))}
 
       <div className="assoc-center-box" style={{ left: "50%", top: "51.8%" }}>
@@ -1530,11 +1786,16 @@ const Associated = () => (
       </div>
 
       {ASSOC_BOTTOM.map((b, i) => (
-        <AssocBox key={`b${i}`} logo={b.logo} x={b.x} y={ASSOC_BOTTOM_Y} />
+        <AssocBox key={`b${i}`} partner={b} y={ASSOC_BOTTOM_Y} onSelect={setActive} />
       ))}
     </div>
+
+    {active && (
+      <AssocPartnerModal partner={active} onClose={() => setActive(null)} />
+    )}
   </section>
-);
+  );
+};
 
 /* =========================================================
    VETTED BY
@@ -1693,24 +1954,21 @@ const PROJECTS = [
     desc: "Using machine learning to calibrate low-cost chemical sensors and accurately predict real-world air pollutant concentrations — the same challenge faced by environmental scientists globally.",
     student: "Arsh",
     meta: "AI Research & Machine Learning Track",
+    img: aiProject1,
   },
   {
     title: "Credit Card Fraud Detection System",
     desc: "Building a Random Forest AI model that analyses thousands of transactions in real time to instantly detect fraudulent activity — protecting consumers from cybercrime using intelligent pattern recognition.",
     student: "Arsh",
     meta: "AI Research & Machine Learning Track",
-  },
-  {
-    title: "Credit Card Fraud Detection System",
-    desc: "Building a Random Forest AI model that analyses thousands of transactions in real time to instantly detect fraudulent activity — protecting consumers from cybercrime using intelligent pattern recognition.",
-    student: "Arsh",
-    meta: "AI Research & Machine Learning Track",
+    img: aiProject2,
   },
     {
     title: "Real-Time Sign Language Translator",
     desc: "Developing a computer vision system using MediaPipe that tracks hand landmarks in real time and translates sign language gestures into digital text — breaking communication barriers through AI.",
     student: "Hrishikesh & Aayan",
     meta: "AI & Computer Vision Track",
+    img: aiProject3,
   },
 ];
 
@@ -1750,7 +2008,7 @@ develop genuine technical capability that extends well beyond any classroom.</p>
                 <div className="projects-card-imgwrap">
                   <img
                     className="projects-card-img"
-                    src={projectImg}
+                    src={p.img || projectImg}
                     alt={p.title}
                     loading="lazy"
                   />

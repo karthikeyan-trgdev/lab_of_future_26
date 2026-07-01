@@ -446,10 +446,12 @@
   line-height: 1;
   font-weight: 900;
 }
-.careers-skill-img{
-  width: 92%;
-  left: 4%;
-  top: -1%;
+.careers-skill-img {
+  object-fit: cover;
+  position: static;
+  width:100%;
+  border-radius: 10px;
+  height:160px;
 }
 
 /* Subtitle and footer — light blue-grey text on the dark backdrop */
@@ -465,6 +467,7 @@
     url("../../assets/programs/ai-and-data-science/future-careers-box-frame.png")
     center / 100% 100% no-repeat !important;
   backdrop-filter: none !important;
+  padding:20px
 }
 
 .ai-data-science-page .careers-section--robotics .careers-skill-card:hover {
@@ -961,7 +964,7 @@
   filter: none !important;
 }
 .ai-data-science-page .projects-card-student{
-  text-align: right;
+  text-align: left;
 }
 .ai-data-science-page .vetted-section--robotics .vetted-name {
   color: #ffffff !important;
@@ -3097,10 +3100,32 @@
   align-items: center;
 }
 
-.ai-data-science-page .ai-start-stage {
+/* Left column — future-way image with the (now small) particle
+   landing zone tucked into its top-left corner. */
+.ai-data-science-page .ai-start-visual {
   position: relative;
   width: 100%;
-  height: clamp(360px, 56vh, 560px);
+}
+
+.ai-data-science-page .ai-start-img {
+  display: block;
+  width: 100%;
+  height: clamp(300px, 46vh, 480px);
+  object-fit: cover;
+  border-radius: 18px;
+  border: 1px solid rgba(110, 200, 255, 0.28);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+/* particle landing zone — small, top-left corner (the traveler
+   centres on this element, so this both moves and frames it small) */
+.ai-data-science-page .ai-start-stage {
+  position: absolute;
+  top: 6%;
+  left: 4%;
+  width: clamp(90px, 12vw, 150px);
+  height: clamp(120px, 16vw, 190px);
+  pointer-events: none;
 }
 
 .ai-data-science-page .ai-start-text {
@@ -3161,20 +3186,21 @@
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  padding: 0px 20px 20px 30px;
+  padding: 40px 50px 0px 50px;
   background:
     url("../../assets/programs/ai-and-data-science/age-shape.svg")
     center / 100% 100% no-repeat;
   background-color: transparent;
   min-height: clamp(220px, 40vh, 320px);
   color: #d9e3f6;
+  aspect-ratio: 265 / 280;
 }
 
 /* Age label pill — sits at the top of the card. */
 .ai-data-science-page .ai-age-card-label {
   position: absolute;
-  top: 3%;
-  left: 38%;
+  top: 4%;
+  left: 41%;
   transform: translateX(-50%);
   font-family: var(--font-display, "Conthrax", sans-serif);
   font-weight: 800;
@@ -3187,12 +3213,13 @@
 
 .ai-data-science-page .ai-age-card-list {
   margin: 0;
-  padding: 60px 30px 0 20px;
-  list-style: none;
+  list-style: disc;
   font-family: var(--font-sans);
   font-size: clamp(0.78rem, 0.85vw, 0.92rem);
   line-height: 1.55;
   color: #c4cde3;
+  padding-top:30px;
+  padding-left: 0px;
 }
 .ai-data-science-page .ai-age-card-list li {
   margin-bottom: 0.45rem;
@@ -3211,8 +3238,10 @@
   .ai-data-science-page .ai-start-top {
     grid-template-columns: 1fr;
   }
+  /* keep the particle zone a small top-left overlay on the image */
   .ai-data-science-page .ai-start-stage {
-    height: clamp(280px, 38vh, 380px);
+    width: clamp(80px, 22vw, 130px);
+    height: clamp(110px, 28vw, 170px);
   }
   .ai-data-science-page .ai-start-ages {
     grid-template-columns: repeat(2, 1fr);
@@ -3335,7 +3364,7 @@
 
 .ai-data-science-page .ai-learn-card-img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 2.9;
   border-radius: 6px;
   display: block;
   margin-bottom: 0.75rem;
@@ -3955,4 +3984,63 @@
 }
 .ai-data-science-page .site-footer-policy a:hover {
   color: #A66BFF !important;
+}
+
+.projects-card-img{
+  height:300px;
+}
+
+/* =============================================================
+   AI & DATA SCIENCE PARTNER MODAL — dark navy card with AI
+   sky-blue (#6ec8ff) accents, matching the page's dark theme.
+   Portaled to <body>, so it uses the .assoc-modal--ai modifier
+   (only the accents are recoloured; the dark base comes from
+   home.css's .assoc-modal).
+   ============================================================= */
+.assoc-modal--ai {
+  background:
+    radial-gradient(120% 100% at 80% 0%, rgba(110, 200, 255, 0.16), transparent 60%),
+    rgba(8, 14, 30, 0.95);
+  border: 1px solid rgba(110, 200, 255, 0.5);
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.6),
+    0 0 44px rgba(110, 200, 255, 0.28),
+    inset 0 1px 1px rgba(255, 255, 255, 0.06);
+}
+.assoc-modal--ai .assoc-modal-fullname {
+  color: #6ec8ff;
+}
+.assoc-modal--ai .assoc-modal-divider {
+  background: linear-gradient(90deg, rgba(110, 200, 255, 0.7), transparent);
+}
+.assoc-modal--ai .assoc-modal-meta svg,
+.assoc-modal--ai .assoc-modal-meta a {
+  color: #6ec8ff;
+}
+.assoc-modal--ai .assoc-modal-btn {
+  background: rgba(30, 90, 150, 0.3);
+  border-color: rgba(110, 200, 255, 0.55);
+  color: #dff0ff;
+}
+.assoc-modal--ai .assoc-modal-btn svg {
+  color: #6ec8ff;
+}
+.assoc-modal--ai .assoc-modal-btn:hover {
+  background: rgba(40, 110, 180, 0.45);
+}
+.assoc-modal--ai .assoc-modal-image {
+  background: radial-gradient(
+    120% 120% at 70% 30%,
+    rgba(110, 200, 255, 0.35),
+    rgba(3, 8, 22, 0.95)
+  );
+}
+.assoc-modal--ai .assoc-modal-stat {
+  border-color: rgba(110, 200, 255, 0.3);
+}
+.assoc-modal--ai .assoc-modal-stat-head svg {
+  color: #6ec8ff;
+}
+.assoc-modal--ai .assoc-modal-stat-value {
+  color: #6ec8ff;
 }
