@@ -187,7 +187,7 @@ const AeroStudentsLearn = () => (
         ))}
       </div>
       <p className="aero-learn-foot">
-        In aeromodelling, every answer creates new questions. Students learn how to think, not just what to remember.
+         Every flight reveals what the design needs next.
       </p>
     </div>
   </section>
@@ -201,7 +201,7 @@ const AeroCertificates = () => (
         {/* LEFT — title + bullets + aircraft at bottom */}
         <div className="aero-cert-text">
           <h2 className="aero-cert-title prog-section-title">CERTIFICATES</h2>
-          <p>Students receive a certificate recognizing their achievements in aviation learning, flight simulation experiences, and hands-on STEM education. The certification reflects their understanding of fundamental aviation concepts, aircraft operations, aerodynamics, and industry-relevant skills gained through practical activities, interactive learning, and project-based experiences. It serves as a valuable credential that showcases their dedication, knowledge, and readiness to explore future opportunities in aviation, aerospace, and technology-related fields. </p>
+          <p>Students receive a certificate recognizing aviation Dubai learning, flight school Dubai exposure, and hands-on STEM education UAE skills.  </p>
         </div>
 
         {/* RIGHT — fanned certificates */}
@@ -335,7 +335,8 @@ const AeroCompetitions = () => (
             <span className="aero-comp-badge">COMPETITIONS</span>
           </h2>
           <p className="aero-comp-subtitle prog-section-subtitle">
-            Showcase your aeromodelling skills. Solve real-world challenges.
+            Showcase your aeromodelling skills. 
+            Solve real-world challenges.
             Get recognised for what you build.
           </p>
           <NavLink to="/programs" className="aero-comp-btn">
@@ -468,6 +469,8 @@ const AeroCareerPathways = () => {
       <div className="container">
         <h2 className="aero-pathway-title prog-section-title">CAREER PATHWAYS</h2>
         <div className="aero-faq-list">
+          <p>Aero modelling is often the first step into the world of flight. By building, testing, and improving model aircraft, students develop practical skills that connect directly to real aviation and aerospace careers.
+</p>
           {FAQ_ITEMS.map((item, i) => (
             <div key={i} className={`aero-faq-item${openIdx === i ? " is-open" : ""}`}>
               <button
@@ -613,7 +616,8 @@ const AeroVettedBy = () => {
       <div className="vetted-inner container">
         <div className="vetted-left-col">
           <h2 className="aero-vetted-title prog-section-title">VETTED BY</h2>
-          <div className="aero-vetted-aircraft" aria-hidden="true">
+          <div className="aero-vetted-aircraft" aria-hidden="true"><p>Our aero modelling program is reviewed by STEM educators, aviation mentors, and industry advisors for safety, relevance, and real learning impact. 
+</p>
             <img src={aeroVettedAircraft} alt="" loading="lazy" />
           </div>
         </div>
@@ -726,7 +730,7 @@ const AeroStudentProjects = () => (
         </Swiper>
       </div>
       <p>(These project examples are based on aero modelling and aviation prototypes 
-developed by the Lab of Future R&D team.) 
+developed by the Lab of Future R&D team.) <br/>
 Every aero modelling project at Lab of Future is a real flight challenge — not a demo. 
 Students build, test, tune, launch, and improve aircraft that make aviation, 
 aerodynamics, and engineering come alive. </p>
@@ -861,75 +865,75 @@ Every great aircraft begins with an idea. We provide the runway, tools, and guid
 const FAQ_ROBOTICS = [
   {
     q: "What is aero modelling and why does it matter?",
-    a: "Aero modelling is the hands-on practice of designing, building, testing, and flying model aircraft. It helps students understand aerodynamics, balance, lift, drag, thrust, and real aircraft design through practical experience.",
+    a: "Aero modelling is the hands-on practice of designing, building, testing, and flying model aircraft. It helps students understand aerodynamics, balance, lift, drag, thrust, and real aircraft design.",
   },
   {
     q: "What is the Lab of Future Aero Modelling program?",
-    a: "It is a hands-on aviation program where students build gliders, RC planes, and flight models while learning engineering, aerodynamics, testing methodologies, and design improvement techniques.",
+    a: "It is a hands-on aviation program where students build gliders, RC planes, and flight models while learning engineering, aerodynamics, testing, and design improvement.",
   },
   {
     q: "What is the right age to start aero modelling?",
-    a: "Children can begin aero modelling from a young age through safe glider builds and guided launch activities. At Lab of Future, each learning level is designed to match the student's age and developmental stage.",
+    a: "Children can begin aero modelling from a young age through safe glider builds and guided launch activities. At Lab of Future, each level is designed age-wise.",
   },
   {
     q: "Is there a progression from gliders to RC aircraft?",
-    a: "Yes. Students begin with simple gliders and balance testing, then gradually progress to powered models, RC aircraft, control surfaces, propulsion systems, and advanced flight challenges.",
+    a: "Yes. Students begin with simple gliders and balance testing, then progress to powered models, RC planes, control surfaces, propulsion, and advanced flight challenges.",
   },
   {
     q: "Will students learn aerodynamics?",
-    a: "Yes. Students explore lift, drag, thrust, gravity, stability, wing design, balance, and flight control through hands-on aircraft construction and real flight testing activities.",
+    a: "Yes. Students explore lift, drag, thrust, gravity, stability, wing design, balance, and control through real model aircraft builds and flight testing.",
   },
   {
     q: "Do students receive a certificate?",
-    a: "Yes. Students receive a Lab of Future certificate recognizing their aviation learning journey, project completion, flight testing experience, and STEM skill development.",
+    a: "Yes. Students receive a Lab of Future certificate recognizing their hands-on aviation learning, project work, flight testing, and STEM skill development.",
   },
   {
     q: "Can aero modelling lead to aerospace careers?",
-    a: "Yes. Aero modelling builds strong foundations for careers in aerospace engineering, aviation, aircraft design, UAV systems, flight testing, and future aviation pathways.",
+    a: "Yes. Aero modelling builds early foundations for aerospace engineering, aviation, aircraft design, UAV engineering, flight testing, and future flight school pathways.",
   },
   {
     q: "Are there aero modelling competitions for students?",
-    a: "Yes. Students can participate in RC aircraft challenges, flight-distance competitions, stability testing events, model aircraft showcases, aviation exhibitions, and aerospace competitions.",
+    a: "Yes. Students can prepare for RC plane challenges, flight-distance contests, stability tests, model aircraft showcases, aviation events, and aerospace competitions.",
   },
   {
     q: "Can aero modelling skills lead to a pilot career?",
-    a: "Aero modelling does not replace pilot training, but it provides valuable early exposure to flight control, aircraft behaviour, aviation safety, and the fundamentals of flight operations.",
+    a: "Aero modelling does not replace pilot training, but it builds useful early understanding of flight control, aircraft behavior, safety, and aviation thinking.",
   },
   {
     q: "What is the difference between aero modelling and drone flying?",
-    a: "Aero modelling focuses on aircraft design, wing structures, balance, glide performance, and flight mechanics. Drone flying focuses more on multi-rotor systems, sensors, navigation, and autonomous flight technologies.",
+    a: "Aero modelling focuses on aircraft design, wings, balance, glide, and flight mechanics. Drone flying focuses more on multi-rotor control, sensors, and navigation.",
   },
   {
     q: "How do I know if aero modelling is right for my child?",
-    a: "If your child enjoys building, flying, experimenting, problem-solving, or is curious about how aircraft stay in the air, aero modelling provides an ideal platform to explore those interests.",
+    a: "If your child enjoys building, flying, experimenting, fixing, or asking why aircraft stay in the air, aero modelling is a strong fit.",
   },
   {
     q: "What makes Lab of Future credible?",
-    a: "Lab of Future offers a structured curriculum, trained mentors, safe learning environments, real aircraft projects, guided testing processes, certifications, and measurable learning outcomes.",
+    a: "Lab of Future offers structured curriculum, trained mentors, safe tools, real aircraft projects, guided testing, certificates, and measurable learning outcomes.",
   },
   {
     q: "How can my child join the program?",
-    a: "Parents can contact Lab of Future, share their child's age group, choose the most suitable learning pathway, check batch availability, and complete the enrolment process.",
+    a: "Parents can contact Lab of Future, share the child’s age group, choose the suitable learning mode, confirm batch availability, and enrol.",
   },
   {
     q: "What projects will students build?",
-    a: "Students build a variety of aviation projects including catapult gliders, auto-stabilised gliders, RC aircraft, seaplanes, and other flight models based on their age, level, and skill progression.",
+    a: "Students build catapult gliders, auto-stabilised gliders, RC planes, seaplane aircraft, and other flight models based on age and skill level.",
   },
   {
     q: "How do aero modelling projects create impact?",
-    a: "These projects help students think like engineers by testing ideas, solving flight-related challenges, improving designs through iteration, and applying scientific concepts to real-world aviation scenarios.",
+    a: "They help students think like engineers by testing ideas, solving flight problems, improving designs, and connecting science with real-world aviation.",
   },
   {
     q: "Is aero modelling safe for children?",
-    a: "Yes. Students work under guided supervision using age-appropriate materials, safe tools, structured launch zones, and clearly defined safety procedures throughout every session.",
+    a: "Yes. Students work with guided supervision, safe tools, age-appropriate materials, structured launch areas, and clear safety rules during every session.",
   },
   {
     q: "How is progress tracked?",
-    a: "Progress is evaluated through project quality, flight performance, testing records, mentor observations, teamwork, confidence levels, and the student's ability to explain design decisions and improvements.",
+    a: "Progress is tracked through build quality, flight performance, testing records, mentor feedback, teamwork, confidence, and the ability to explain design improvements.",
   },
   {
     q: "What do parents say about the program?",
-    a: "Parents appreciate the hands-on learning approach, noticeable confidence growth, real aircraft-building experiences, mentor support, and the way students begin thinking like young engineers.",
+    a: "Parents value hands-on learning, visible confidence growth, real aircraft builds, mentor support, and the way students start thinking like young engineers.",
   },
 ];
 
@@ -998,14 +1002,12 @@ const CtaRobotics = () => (
       {/* RIGHT — title + copy + buttons */}
       <div className="cta-robotics-text">
         <h2 className="cta-robotics-title prog-section-title">
-          THE FUTURE WON&apos;T BE TAUGHT
+          THE FUTURE WON'T JUST BE IMAGINED.
           <br />
-          IT WILL BE BUILT
+          IT WILL TAKE FLIGHT.
         </h2>
         <p className="cta-robotics-desc">
-          Give your child more than knowledge. Give them direction, confidence,
-          and capability &mdash; and the tools to shape the world beyond our
-          planet.
+          Every great aircraft begins with an idea. We provide the runway, tools, and guidance.
         </p>
         <div className="cta-robotics-actions">
           <NavLink to="/student-portal" className="cta-robotics-btn cta-robotics-btn--primary">
@@ -1037,7 +1039,7 @@ const ExplorePrograms = () => (
       <h2 className="explore-title prog-section-title">
         <span className="explore-title-badge">EXPLORE</span> our other programs
       </h2>
-
+      <p>Aero modelling is just one launch. There’s more.</p>
       <div className="explore-slider">
         <Swiper
           modules={[Autoplay]}
