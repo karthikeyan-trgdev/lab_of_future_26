@@ -3861,6 +3861,7 @@
 .modes-title::after, .projects-title::after, .impact-title::after, .community-title::after, .tracking-title::after, .explore-title::after{
   background: linear-gradient(90deg, transparent 0%, rgba(80, 160, 255, 0) 8%, rgb(0 0 0 / 95%) 50%, rgba(80, 160, 255, 0) 92%, transparent 100%);
 }
+
 .header-btn {
     background: url(/src/assets/programs/drones/light-btn.svg) no-repeat center / 120% 100% !important;
 }

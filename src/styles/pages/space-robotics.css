@@ -419,7 +419,7 @@ background: #ffffff !important;
 /* ── BOTTOM: robot arm spanning the section width ──────── */
 .space-robotics-page .cert-section--robotics .cert-robot-hand {
   position: absolute;
-  right: -25%;
+  right: -15%;
   bottom: -35%;
   z-index: 2;
   pointer-events: none;
@@ -612,6 +612,7 @@ background: #ffffff !important;
   max-width: 100%;
   width:100%;
   text-align: left;
+  margin-bottom: 0px !important;
 }
 
 /* Card chrome — light card with a subtle blue border + soft shadow */
@@ -1806,9 +1807,10 @@ background: #ffffff !important;
    whole tile artwork shows without being cropped. */
 .space-robotics-page .explore-section--robotics .explore-card-img,
 .space-robotics-page .explore-section--robotics .explore-card-imgwrap img {
-  object-fit: contain !important;
+  object-fit: cover !important;
   width: 100% !important;
-  height: 100% !important;
+  height: 200px !important;
+  padding:0px !important
 }
 
 /* =========================================================
@@ -2234,7 +2236,7 @@ background: #ffffff !important;
 /* Both Why-section buttons match the header "Enroll Now" pill exactly:
    200×80 px, light-btn.svg artwork, white text. No variant differences. */
 .space-robotics-page .why-section--robotics .why-btn {
-  width: 240px;
+  width: fit-content;
   height: 80px;
   min-width: 0;
   padding: 0;
@@ -2272,12 +2274,18 @@ background: #ffffff !important;
    (no rounded box, no background, no overflow clip). */
 .space-robotics-page .why-section--robotics .why-right {
   position: relative;
-  min-height: clamp(420px, 60vh, 640px);
   background: transparent;
   border-radius: 0;
   overflow: visible;
+  display: flex;
+  align-items: center;
 }
-
+.space-robotics-page .why-section--robotics .why-right img{
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 30px;
+}
 .space-robotics-page .why-section--robotics .why-canvas {
   width: 100% !important;
   height: 100% !important;
@@ -2622,7 +2630,9 @@ background: #ffffff !important;
   line-height: 1.45;
   margin-bottom: 0;
 }
-
+.age-card-list{
+  list-style: disc;
+}
 .space-robotics-page .age-card-list li::before {
   background: #1d3b8a;
 }
@@ -2705,7 +2715,7 @@ background: #ffffff !important;
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding: 30px 20px 20px 20px;
+  padding: 20px 20px 20px 20px;
   background:
     url('../../assets/programs/space-robotics/what-students-learn/what-students-learn-box-frame.png')
     center / 100% 100% no-repeat;
@@ -2727,13 +2737,34 @@ background: #ffffff !important;
     object-fit: contain;
 }
 
+/* autoplay image slider — sits in the same 4/3 image box as the static
+   photo did (overrides the fixed-height slider rule from home.css) */
+.space-robotics-page .learn-card-slider {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  height: auto;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.space-robotics-page .learn-card-slider .learn-card-img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  margin-bottom: 0;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
 /* Label — blue, centered */
 .space-robotics-page .learn-card-label {
   color: #1d3b8a;
   -webkit-text-fill-color: #1d3b8a;
   font-family: var(--font-display, "Conthrax", sans-serif);
   font-weight: 800;
-  font-size: 17px;
+  font-size: 15px;
+  padding:0px 20px;
   text-align: center;
   line-height: 1.3;
   letter-spacing: 0.02em;
@@ -2917,7 +2948,7 @@ background: #ffffff !important;
   font-weight: 600 !important;
 }
 .space-robotics-page .explore-section--robotics .explore-card-label{
-  font-size:17px
+  font-size:15px
 }
 .site-footer-copy, .site-footer-policy{
   font-size: 17px !important;
@@ -2928,6 +2959,109 @@ background: #ffffff !important;
 
 }
 
-.header-btn {
+
+
+/* =============================================================
+   ROBOTICS PARTNER MODAL — light theme (navy-on-white) to match the
+   robotics "Associated With" section. The modal is portaled to <body>,
+   so it carries the .assoc-modal--robotics modifier instead of being
+   scoped under .space-robotics-page.
+   ============================================================= */
+.assoc-modal--robotics {
+  background:
+    radial-gradient(120% 100% at 80% 0%, rgba(47, 99, 200, 0.1), transparent 60%),
+    #f4f7fd;
+  border: 1px solid rgba(29, 59, 138, 0.3);
+  box-shadow:
+    0 30px 90px rgba(13, 27, 58, 0.35),
+    0 0 40px rgba(47, 99, 200, 0.16),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  color: #0d1b3a;
+}
+
+.assoc-modal--robotics .assoc-modal-close {
+  border-color: rgba(13, 27, 58, 0.2);
+  background: rgba(13, 27, 58, 0.06);
+  color: #0d1b3a;
+}
+.assoc-modal--robotics .assoc-modal-close:hover {
+  background: rgba(13, 27, 58, 0.14);
+}
+
+.assoc-modal--robotics .assoc-modal-logo {
+  background: rgba(13, 27, 58, 0.05);
+}
+.assoc-modal--robotics .assoc-modal-name {
+  color: #0d1b3a;
+}
+.assoc-modal--robotics .assoc-modal-fullname {
+  color: #2f63c8;
+}
+.assoc-modal--robotics .assoc-modal-divider {
+  background: linear-gradient(90deg, rgba(29, 59, 138, 0.55), transparent);
+}
+.assoc-modal--robotics .assoc-modal-meta li {
+  color: #3a4252;
+}
+.assoc-modal--robotics .assoc-modal-meta svg,
+.assoc-modal--robotics .assoc-modal-meta a {
+  color: #2f63c8;
+}
+.assoc-modal--robotics .assoc-modal-desc {
+  color: rgba(13, 27, 58, 0.72);
+}
+
+/* CTA — solid navy pill (mirrors the robotics badges) */
+.assoc-modal--robotics .assoc-modal-btn {
+  background: #1d3b8a;
+  border-color: #1d3b8a;
+  color: #ffffff;
+}
+.assoc-modal--robotics .assoc-modal-btn svg {
+  color: #ffffff;
+}
+.assoc-modal--robotics .assoc-modal-btn:hover {
+  background: #16306f;
+}
+
+/* hero image panel — light blue */
+.assoc-modal--robotics .assoc-modal-image {
+  background: radial-gradient(
+    120% 120% at 70% 30%,
+    rgba(47, 99, 200, 0.2),
+    #dbe6f7
+  );
+}
+
+/* stat cards — white with navy accents */
+.assoc-modal--robotics .assoc-modal-stat {
+  background: #ffffff;
+  border-color: rgba(29, 59, 138, 0.22);
+}
+.assoc-modal--robotics .assoc-modal-stat-head {
+  color: #3a4252;
+}
+.assoc-modal--robotics .assoc-modal-stat-head svg {
+  color: #2f63c8;
+}
+.assoc-modal--robotics .assoc-modal-stat-value {
+  color: #1d3b8a;
+}
+.assoc-modal--robotics .assoc-modal-stat-sub {
+  color: rgba(13, 27, 58, 0.6);
+}
+
+/* Scoped to the robotics page only — the unscoped .header-btn rule in
+   other program-page CSS (e.g. drones.css) loads later and would
+   otherwise win on every page. body.space-robotics + !important beats it. */
+body.space-robotics .header-btn {
     background: url(/src/assets/programs/space-robotics/dark-btn.svg) no-repeat center / 120% 100% !important;
+}
+.projects-card-img{
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+  margin-left: 0px !important;
 }

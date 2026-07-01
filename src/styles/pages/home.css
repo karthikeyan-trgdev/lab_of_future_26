@@ -2896,7 +2896,7 @@ position: absolute;
 .projects-card-student {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   font-size: clamp(0.78rem, 0.92vw, 0.88rem);
   color: rgba(255, 255, 255, 0.75);
   margin-top: auto;
@@ -3178,8 +3178,8 @@ position: absolute;
 
 .community-grid {
   display: grid;
-  /* widen the centre column so the slider gets more horizontal space */
-  grid-template-columns: 1.2fr 2.05fr 0.9fr;
+  /* category-filter (tabs) column removed — slider + info only */
+  grid-template-columns: 1fr 1fr;
   gap: clamp(1rem, 2vw, 2rem);
   align-items: center;
   width: 100%;
@@ -3310,8 +3310,20 @@ position: absolute;
   margin: 0;
 }
 
+/* small designation under the name */
+.community-card-role {
+  display: block;
+  margin-top: -0.25rem;
+  font-size: 0.70rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #00eeff;
+  text-transform: capitalize;
+  margin-bottom:10px
+}
+
 .community-card-desc {
-  font-size: clamp(0.78rem, 0.92vw, 0.88rem);
+  font-size: clamp(0.78rem, 0.92vw, 0.70rem);
   color: rgba(255, 255, 255, 0.78);
   margin: 0;
   line-height: 1.5;
@@ -3355,7 +3367,7 @@ position: absolute;
   color: rgba(255, 255, 255, 0.72);
   line-height: 1.6;
   margin: 0;
-  max-width: 36ch;
+  max-width: 50ch;
 }
 
 @media (max-width: 980px) {
@@ -3828,38 +3840,37 @@ position: absolute;
   gap: 0.9rem;
   /* inner padding leaves a safe area inside the box-frame SVG */
   padding:10px;
-  min-height: 350px;
+  min-height: 250px;
   background: rgba(18, 32, 82, 0.18);
   backdrop-filter: blur(18px);
   border: 1px solid rgba(147, 172, 255, 0.623);
   border-radius: 20px;
   filter: drop-shadow(0 4px 20px rgba(40, 100, 255, 0.2));
   transition: transform 0.3s ease, filter 0.3s ease;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
+
 /* .explore-card:hover {
   filter: drop-shadow(0 0 26px rgba(80, 150, 240, 0.5)) brightness(1.08);
 } */
 
 .explore-card-imgwrap {
   width: 100%;
-  /* photo's natural aspect rather than filling whatever remains in the
-     column — avoids the squashed look */
-  aspect-ratio: 4 / 3;
-  border-radius: 12px;
   overflow: hidden;
   background: #0a1230;
   display: flex;
   align-items: center;
   justify-content: center;
+  aspect-ratio: auto !important;
 }
 
 .explore-card-img {
   width: 100%;
-  height: 100%;
+  height: 200px;
   object-fit: cover;
   object-position: center;
   display: block;
+  border-radius: 10px;
 }
 
 .explore-section .prog-section-subtitle{
@@ -3871,7 +3882,7 @@ position: absolute;
   color: #fff;
   font-weight: 800;
   letter-spacing: 0.15em;
-  font-size: clamp(0.85rem, 1.05vw, 1rem);
+  font-size: clamp(0.85rem, 1.05vw, 0.6rem);
   text-align: center;
   padding: 0.25rem 0 0.15rem;
   line-height: 1.2;
