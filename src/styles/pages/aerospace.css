@@ -3871,12 +3871,9 @@
   height: 100vh;
   min-height: 600px;
   overflow: hidden;
-  display: flex;
-  align-items: center;
   background: #001830;
 }
 
-/* Sky / mountain photo fills the full hero */
 .aerospace-page .aero-hero-bg {
   position: absolute;
   inset: 0;
@@ -3885,19 +3882,71 @@
   z-index: 1;
 }
 
-/* Aircraft — large static rc_plane.fbx <Canvas>, centred in the hero and
-   sitting BEHIND the title text (z-index below .aero-hero-content).  Needs
-   an explicit height since a canvas has no intrinsic size. */
+/* 2-column grid — explicit 100vh so canvas inherits real height */
+.aerospace-page .aero-hero-inner {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  width: 100%;
+  height: 100vh;
+  padding: 0 60px;
+}
+
+/* LEFT — flex column so content centres itself vertically */
+.aerospace-page .aero-hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 5;
+  text-align: left;
+  padding-right: 40px;
+  overflow: hidden;
+}
+
+.aerospace-page .aero-hero-title {
+  text-align: left;
+  margin: 0 0 0.4em;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 900;
+  font-size: clamp(2rem, 3.6vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  text-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.24),
+    0 6px 28px rgba(0, 0, 0, 0.22);
+}
+
+.aerospace-page .aero-hero-desc {
+  margin: 0 0 2em;
+  text-align: left;
+  max-width: 440px;
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.aerospace-page .aero-hero-tagline {
+  margin: 0 0 0.9em;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-size: clamp(0.78rem, 1.1vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* RIGHT — full height, canvas fills every pixel */
 .aerospace-page .aero-hero-aircraft {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: clamp(560px, 88vw, 1200px);
-  aspect-ratio: 16 / 10;
-  z-index: 2;
+  position: relative;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  filter: drop-shadow(0 28px 52px rgba(0, 0, 0, 0.32));
 }
 
 .aerospace-page .aero-hero-aircraft canvas {
@@ -3906,7 +3955,7 @@
   display: block;
 }
 
-/* White gradient at the bottom — blends hero into the white why-section */
+/* Bottom fade */
 .aerospace-page .aero-hero-fade {
   position: absolute;
   bottom: 0;
@@ -3924,63 +3973,35 @@
   pointer-events: none;
 }
 
-/* Text content — anchored to the bottom-left of the hero */
-.aerospace-page .aero-hero-content {
-  position: relative;
-  z-index: 5;
-  width: 100%;
-  padding: 0px;
-  text-align: center;
-  margin-top: 50px;
-}
+/* Mobile — stack, plane below text */
+@media (max-width: 768px) {
+  .aerospace-page .aero-hero-inner {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    padding: 0 24px;
+    height: 100vh;
+  }
 
-.aerospace-page .aero-hero-title {
-  text-align: center;
-  margin: 0 0 0.12em;
-  font-family: var(--font-display, "Conthrax", sans-serif);
-  font-weight: 900;
-  font-size: clamp(3.2rem, 9.5vw, 6rem);
-  line-height: 0.92;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  color: #ffffff;
-  -webkit-text-fill-color: #ffffff;
-  text-shadow:
-    0 2px 10px rgba(0, 0, 0, 0.242),
-    0 6px 28px rgba(0, 0, 0, 0.219);
-}
-
-.aerospace-page .aero-hero-tagline {
-  margin: 0 0 0.9em;
-  font-family: var(--font-display, "Conthrax", sans-serif);
-  font-size: clamp(0.78rem, 1.1vw, 1rem);
-  font-weight: 700;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.78);
-}
-
-.aerospace-page .aero-hero-desc {
-  margin: 0 0 1.8em;
-  text-align: center;
-  max-width: 100%;
-  font-size: clamp(0.88rem, 1.05vw, 1rem);
-  line-height: 1.65;
-  color: rgba(255, 255, 255, 0.68);
-}
-
-
-/* Mobile — keep the plane centred behind the title */
-@media (max-width: 640px) {
-  .aerospace-page .aero-hero-aircraft {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 118vw;
+  .aerospace-page .aero-hero-content {
+    text-align: center;
+    padding-right: 0;
+    justify-content: flex-end;
+    padding-bottom: 24px;
   }
 
   .aerospace-page .aero-hero-title {
-    font-size: clamp(2.6rem, 11vw, 4rem);
+    text-align: center;
+    font-size: clamp(2.2rem, 9vw, 3.4rem);
+  }
+
+  .aerospace-page .aero-hero-desc {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .aerospace-page .aero-hero-aircraft {
+    height: 50vw;
+    min-height: 240px;
   }
 }
 

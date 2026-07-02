@@ -6,8 +6,8 @@ import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 
 import { NavLink } from "react-router-dom";
 
-import { Canvas } from "@react-three/fiber";
-import { useFBX, useTexture, Environment } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -51,24 +51,8 @@ import recognitionIcon from "../../assets/future-career/recognition.svg";
 // Aeromodelling-specific assets
 import aeroWhyRight      from "../../assets/programs/aeromodelling/why-aeromodelling-right.png";
 
-// Hero 3D model — RC plane FBX + its PBR texture set.  Two materials:
-//   "Plane_1"     → 123_Plane_* maps (fuselage / wings)
-//   "Parts_Motor" → 123_Parts_* maps (motor / small parts)
-import rcPlaneFbxUrl from "../../assets/programs/aeromodelling/3d-models/rc_plane.fbx?url";
-
-import planeBaseColorTex from "../../assets/programs/aeromodelling/3d-models/Texture/123_Plane_BaseColor.png";
-import planeNormalTex    from "../../assets/programs/aeromodelling/3d-models/Texture/123_Plane_Normal.png";
-import planeRoughTex     from "../../assets/programs/aeromodelling/3d-models/Texture/123_Plane_Roughness.png";
-import planeMetalTex     from "../../assets/programs/aeromodelling/3d-models/Texture/123_Plane_Metalness.png";
-import planeAoTex        from "../../assets/programs/aeromodelling/3d-models/Texture/123_Plane_AO.png";
-import planeEmissiveTex  from "../../assets/programs/aeromodelling/3d-models/Texture/123_Plane_Emissive.png";
-
-import partsBaseColorTex from "../../assets/programs/aeromodelling/3d-models/Texture/123_Parts_BaseColor.png";
-import partsNormalTex    from "../../assets/programs/aeromodelling/3d-models/Texture/123_Parts_Normal.png";
-import partsRoughTex     from "../../assets/programs/aeromodelling/3d-models/Texture/123_Parts_Roughness.png";
-import partsMetalTex     from "../../assets/programs/aeromodelling/3d-models/Texture/123_Parts_Metalness.png";
-import partsAoTex        from "../../assets/programs/aeromodelling/3d-models/Texture/123_Parts_AO.png";
-import partsEmissiveTex  from "../../assets/programs/aeromodelling/3d-models/Texture/123_Parts_Emissive.png";
+// Hero 3D model
+import planeGlbUrl from "../../assets/programs/aeromodelling/3d-models/plane.glb?url";
 
 
 import aeroCareerCoding  from "../../assets/programs/aeromodelling/future-careers/future-career-1.webp";
@@ -1209,92 +1193,41 @@ const SiteFooter = () => (
 
 /* =========================================================
    AEROMODELLING — HERO 3D MODEL
-   Loads rc_plane.fbx and applies its baked PBR texture set.
-   The FBX ships two materials — "Plane_1" (fuselage/wings) and
-   "Parts_Motor" (motor/small parts) — each mapped to its own
-   123_Plane_* / 123_Parts_* texture group.  Rendered static (no
-   animation) as a backdrop behind the hero title.
+   Adjust these to reposition / reorient the plane:
+     PLANE_POSITION — [left/right,  up/down,  forward/back]
+     PLANE_ROTATION — [tilt fwd/bk, spin L/R, roll] in radians
 ========================================================= */
 
-const AeroPlaneModel = () => {
-  const fbx = useFBX(rcPlaneFbxUrl);
+const PLANE_POSITION = [0, 0, 0];      // x=right, y=up, z=forward
+const PLANE_ROTATION = [0.15, -0.5, 0.1]; // gentle bank-right pose
 
-  // Load every PBR map for both material groups in one call.
-  const tex = useTexture({
-    planeBase: planeBaseColorTex,
-    planeNormal: planeNormalTex,
-    planeRough: planeRoughTex,
-    planeMetal: planeMetalTex,
-    planeAo: planeAoTex,
-    planeEmissive: planeEmissiveTex,
-    partsBase: partsBaseColorTex,
-    partsNormal: partsNormalTex,
-    partsRough: partsRoughTex,
-    partsMetal: partsMetalTex,
-    partsAo: partsAoTex,
-    partsEmissive: partsEmissiveTex,
-  });
+const AeroPlaneModel = () => {
+  const { scene } = useGLTF(planeGlbUrl);
+  const groupRef = useRef(null);
 
   const { model, fitScale } = useMemo(() => {
-    // Colour maps are sRGB; data maps (normal/rough/metal/ao) stay linear.
-    tex.planeBase.colorSpace = THREE.SRGBColorSpace;
-    tex.planeEmissive.colorSpace = THREE.SRGBColorSpace;
-    tex.partsBase.colorSpace = THREE.SRGBColorSpace;
-    tex.partsEmissive.colorSpace = THREE.SRGBColorSpace;
-
-    const makeMaterial = (set) =>
-      new THREE.MeshStandardMaterial({
-        map: set.base,
-        normalMap: set.normal,
-        roughnessMap: set.rough,
-        metalnessMap: set.metal,
-        aoMap: set.ao,
-        emissiveMap: set.emissive,
-        emissive: new THREE.Color(0xffffff),
-        emissiveIntensity: 0.6,
-        metalness: 1,
-        roughness: 1,
-      });
-
-    const planeSet = {
-      base: tex.planeBase, normal: tex.planeNormal, rough: tex.planeRough,
-      metal: tex.planeMetal, ao: tex.planeAo, emissive: tex.planeEmissive,
-    };
-    const partsSet = {
-      base: tex.partsBase, normal: tex.partsNormal, rough: tex.partsRough,
-      metal: tex.partsMetal, ao: tex.partsAo, emissive: tex.partsEmissive,
-    };
-
-    const root = fbx.clone(true);
-    const pickSet = (name = "") =>
-      /part|motor/i.test(name) ? partsSet : planeSet;
-
-    root.traverse((obj) => {
-      if (!obj.isMesh) return;
-      // aoMap samples the 2nd UV set — reuse uv0 if there isn't one.
-      const geo = obj.geometry;
-      if (geo?.attributes.uv && !geo.attributes.uv2) {
-        geo.setAttribute("uv2", geo.attributes.uv);
-      }
-      if (Array.isArray(obj.material)) {
-        obj.material = obj.material.map((m) => makeMaterial(pickSet(m?.name)));
-      } else {
-        obj.material = makeMaterial(pickSet(obj.material?.name || obj.name));
-      }
-    });
-
-    // Centre the model on the origin (in its own space) — the scale is
-    // applied on the wrapping <group> so this offset scales with it.
+    const root = scene.clone(true);
     const box = new THREE.Box3().setFromObject(root);
     const size = box.getSize(new THREE.Vector3());
     const center = box.getCenter(new THREE.Vector3());
     root.position.sub(center);
     const maxDim = Math.max(size.x, size.y, size.z) || 1;
-    return { model: root, fitScale: 4.6 / maxDim };
-  }, [fbx, tex]);
+    return { model: root, fitScale: 5.2 / maxDim };
+  }, [scene]);
+
+  useFrame(({ clock }) => {
+    if (!groupRef.current) return;
+    const t = clock.getElapsedTime();
+    groupRef.current.position.y = PLANE_POSITION[1] + Math.sin(t * 0.8) * 0.15;
+  });
 
   return (
-    <group scale={fitScale} rotation={[0, 650, -50]}>
+    <group
+      ref={groupRef}
+      scale={fitScale}
+      position={PLANE_POSITION}
+      rotation={PLANE_ROTATION}
+    >
       <primitive object={model} />
     </group>
   );
@@ -1302,9 +1235,11 @@ const AeroPlaneModel = () => {
 
 const AeroHeroCanvas = () => (
   <Canvas
-    gl={{ alpha: true, antialias: true }}
+    frameloop="always"
+    dpr={[1, 1.5]}
+    gl={{ alpha: true, antialias: false, powerPreference: "high-performance" }}
     style={{ width: "100%", height: "100%" }}
-    camera={{ position: [0, 0.4, 6], fov: 42, near: 0.1, far: 100 }}
+    camera={{ position: [0, 0, 7], fov: 50, near: 0.1, far: 100 }}
     onCreated={({ gl }) => {
       gl.setClearColor(0x000000, 0);
       gl.toneMappingExposure = 1.25;
@@ -1316,7 +1251,6 @@ const AeroHeroCanvas = () => (
       <directionalLight position={[4, 5, 3]} intensity={2.2} color="#ffffff" />
       <directionalLight position={[-4, 2, 2]} intensity={1.2} color="#bcd8ff" />
       <directionalLight position={[0, -4, 3]} intensity={0.7} color="#cfe6ff" />
-      <Environment preset="city" background={false} environmentIntensity={1.0} />
       <AeroPlaneModel />
     </Suspense>
   </Canvas>
@@ -1344,37 +1278,44 @@ const Aerospace = () => {
 
       {/* ── HERO ─────────────────────────────────────────── */}
       <section className="aero-hero">
-        {/* Sky/mountain background */}
         <div className="aero-hero-bg" aria-hidden="true" />
-
-        {/* Aircraft 3D model — RC plane FBX with PBR textures,
-            static backdrop sitting behind the hero title */}
-        <div className="aero-hero-aircraft" aria-hidden="true">
-          <AeroHeroCanvas />
-        </div>
-
-        {/* Bottom fade — blends into the dark sections below */}
         <div className="aero-hero-fade" aria-hidden="true" />
+        <div className="container">
+        <div className="aero-hero-inner">
+          {/* LEFT — title, description, CTA */}
+          <div className="aero-hero-content">
+            <motion.h1
+              className="aero-hero-title"
+              initial={{ opacity: 0, y: 36 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, ease: "easeOut" }}
+            >
+              AEROMODELLING
+            </motion.h1>
+            <motion.p
+              className="aero-hero-desc"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+            >
+              Build real aircraft. Understand aerodynamics. Think like an engineer.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.5, ease: "easeOut" }}
+            >
+              <NavLink to="/programs" className="glass-btn glass-btn--dark header-btn">
+                ENROLL NOW
+              </NavLink>
+            </motion.div>
+          </div>
 
-        {/* Text + CTA — bottom-left area */}
-        <div className="aero-hero-content">
-          <motion.h1
-            className="aero-hero-title"
-            initial={{ opacity: 0, y: 36 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
-          >
-            AEROMODELLING
-          </motion.h1>
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.46, ease: "easeOut" }}
-          >
-            <NavLink to="/programs" className="glass-btn glass-btn--dark header-btn">
-              ENROLL NOW
-            </NavLink>
-          </motion.div>
+          {/* RIGHT — 3D plane */}
+          <div className="aero-hero-aircraft">
+            <AeroHeroCanvas />
+          </div>
+        </div>
         </div>
       </section>
 
