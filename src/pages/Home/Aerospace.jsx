@@ -2,9 +2,13 @@
 
 import { motion } from "framer-motion";
 
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 
 import { NavLink } from "react-router-dom";
+
+import { Canvas } from "@react-three/fiber";
+import { useFBX, useTexture, Environment } from "@react-three/drei";
+import * as THREE from "three";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
@@ -17,22 +21,23 @@ import { siteConfig } from "../../data/siteConfig";
 
 import droneCertImg from "../../assets/programs/aeromodelling/certificate.png";
 
-import learnThinkCritically from "../../assets/programs/aeromodelling/students-learn-1.webp";
-import learnUnderstandWorld from "../../assets/programs/aeromodelling/students-learn-2.webp";
-import learnBuildModels from "../../assets/programs/aeromodelling/students-learn-3.webp";
-import learnUseTools from "../../assets/programs/aeromodelling/students-learn-4.webp";
-import learnCommunicate from "../../assets/programs/aeromodelling/students-learn-5.webp";
-import learnWorkTeams from "../../assets/programs/aeromodelling/students-learn-6.webp";
-import learnSolveProblems from "../../assets/programs/aeromodelling/students-learn-7.webp";
+import learnThinkCritically from "../../assets/programs/aeromodelling/students-learn/students-learn (2).webp";
+import learnUnderstandWorld from "../../assets/programs/aeromodelling/students-learn/students-learn (6).webp";
+import learnBuildModels from "../../assets/programs/aeromodelling/students-learn/students-learn (3).webp";
+import learnUseTools from "../../assets/programs/aeromodelling/students-learn/students-learn (1).webp";
+import learnCommunicate from "../../assets/programs/aeromodelling/students-learn/students-learn (5).webp";
+import learnWorkTeams from "../../assets/programs/aeromodelling/students-learn/students-learn (8).webp";
+import learnSolveProblems from "../../assets/programs/aeromodelling/students-learn/students-learn (9).webp";
 
 import programImg1 from "../../assets/programs/space-robotics/program-1.png";
 import programImg2 from "../../assets/programs/space-robotics/program-2.png";
 import programImg3 from "../../assets/programs/space-robotics/program-3.png";
 import programImg7 from "../../assets/programs/space-robotics/program-7.png";
 
-import modeOnsiteImg from "../../assets/modes-to-join/onsite.png";
+import modeOnsiteImg from "../../assets/programs/aeromodelling/onsite.png";
 import modeOnlineImg from "../../assets/modes-to-join/online.png";
-import modeDiyImg from "../../assets/modes-to-join/diy.png";
+import modeDiyImg from "../../assets/programs/aeromodelling/hybrid.png";
+import modeInPersonImg from "../../assets/programs/aeromodelling/in-person.png";
 import droneProjectImg from "../../assets/programs/drones/project-image-1.png";
 import impactIcon1 from "../../assets/icons/project-impact-icon-1.png";
 import impactIcon2 from "../../assets/icons/project-impact-icon-2.png";
@@ -44,13 +49,35 @@ import portfolioIcon from "../../assets/future-career/portfolio.svg";
 import recognitionIcon from "../../assets/future-career/recognition.svg";
 
 // Aeromodelling-specific assets
-import aeroAircraftImg   from "../../assets/programs/aeromodelling/aircraft-1.png";
 import aeroWhyRight      from "../../assets/programs/aeromodelling/why-aeromodelling-right.png";
-import aeroCareerCoding  from "../../assets/programs/aeromodelling/coding.png";
-import aeroCareerAI      from "../../assets/programs/aeromodelling/ai.png";
-import aeroCareerElec    from "../../assets/programs/aeromodelling/electronics.png";
-import aeroCareerEngD    from "../../assets/programs/aeromodelling/engineering-design.png";
-import aeroCareerData    from "../../assets/programs/aeromodelling/data-analysis.png";
+
+// Hero 3D model — RC plane FBX + its PBR texture set.  Two materials:
+//   "Plane_1"     → 123_Plane_* maps (fuselage / wings)
+//   "Parts_Motor" → 123_Parts_* maps (motor / small parts)
+import rcPlaneFbxUrl from "../../assets/programs/aeromodelling/3d-models/rc_plane.fbx?url";
+
+import planeBaseColorTex from "../../assets/programs/aeromodelling/3d-models/Texture/123_Plane_BaseColor.png";
+import planeNormalTex    from "../../assets/programs/aeromodelling/3d-models/Texture/123_Plane_Normal.png";
+import planeRoughTex     from "../../assets/programs/aeromodelling/3d-models/Texture/123_Plane_Roughness.png";
+import planeMetalTex     from "../../assets/programs/aeromodelling/3d-models/Texture/123_Plane_Metalness.png";
+import planeAoTex        from "../../assets/programs/aeromodelling/3d-models/Texture/123_Plane_AO.png";
+import planeEmissiveTex  from "../../assets/programs/aeromodelling/3d-models/Texture/123_Plane_Emissive.png";
+
+import partsBaseColorTex from "../../assets/programs/aeromodelling/3d-models/Texture/123_Parts_BaseColor.png";
+import partsNormalTex    from "../../assets/programs/aeromodelling/3d-models/Texture/123_Parts_Normal.png";
+import partsRoughTex     from "../../assets/programs/aeromodelling/3d-models/Texture/123_Parts_Roughness.png";
+import partsMetalTex     from "../../assets/programs/aeromodelling/3d-models/Texture/123_Parts_Metalness.png";
+import partsAoTex        from "../../assets/programs/aeromodelling/3d-models/Texture/123_Parts_AO.png";
+import partsEmissiveTex  from "../../assets/programs/aeromodelling/3d-models/Texture/123_Parts_Emissive.png";
+
+
+import aeroCareerCoding  from "../../assets/programs/aeromodelling/future-careers/future-career-1.webp";
+import aeroCareerAI      from "../../assets/programs/aeromodelling/future-careers/future-career-2.webp";
+import aeroCareerElec    from "../../assets/programs/aeromodelling/future-careers/future-career-3.webp";
+import aeroCareerEngD    from "../../assets/programs/aeromodelling/future-careers/future-career-4.webp";
+import aeroCareerData    from "../../assets/programs/aeromodelling/future-careers/future-career-5.webp";
+
+
 import aeroAssocBoxLight    from "../../assets/programs/aeromodelling/associated-box-light.svg";
 import aeroLogo1  from "../../assets/programs/aeromodelling/logo-1.png";
 import aeroLogo2  from "../../assets/programs/aeromodelling/logo-2.png";
@@ -228,7 +255,7 @@ const AeroCertificates = () => (
 
 const AGE_GROUPS = [
   {
-    label: "Ages 6–7",
+    label: "Foundation",
     points: [
   "Introduction to the fundamentals of flight.",
   "Explore paper gliders and simple wing designs.",
@@ -236,7 +263,7 @@ const AGE_GROUPS = [
 ],
   },
   {
-    label: "Ages 8–10",
+    label: "Explorer",
     points: [
         "Build and test model aircraft.",
   "Experiment with different wing shapes.",
@@ -245,7 +272,7 @@ const AGE_GROUPS = [
     ],
   },
   {
-    label: "Ages 11–14",
+    label: "Innovator",
     points: [
    "Learn the fundamentals of RC aircraft.",
   "Understand flight controls and aerodynamics.",
@@ -254,7 +281,7 @@ const AGE_GROUPS = [
     ],
   },
   {
-    label: "Ages 15–18",
+    label: "Engineer",
     points: [
       "Build advanced RC aircraft.",
   "Explore model rocket concepts.",
@@ -263,7 +290,7 @@ const AGE_GROUPS = [
     ],
   },
   {
-    label: "Ages 18+",
+    label: "Researcher",
     points: [
        "Develop industry-level aircraft models.",
   "Master advanced design and testing methods.",
@@ -279,6 +306,7 @@ const AGE_GROUPS = [
 
 // add an `img` URL to any item to use a real photo; otherwise a
 // placeholder gradient is shown
+
 const LEARN_ITEMS = [
   { label: "Discover Aerodynamics", img: learnThinkCritically },
   { label: "Build Real Models", img: learnUnderstandWorld },
@@ -655,7 +683,7 @@ const MODE_CARDS = [
   { label: "Aeromodelling Classes Dubai", img: modeOnsiteImg },
   { label: "Online Aeromodelling for Kids", img: modeOnlineImg },
   { label: "Hybrid Aeromodelling Dubai", img: modeDiyImg },
-  { label: "In-Person Aeromodelling Classes Dubai", img: modeDiyImg }
+  { label: "In-Person Aeromodelling Classes Dubai", img: modeInPersonImg }
 ];
 
 /* =========================================================
@@ -1179,6 +1207,121 @@ const SiteFooter = () => (
   </footer>
 );
 
+/* =========================================================
+   AEROMODELLING — HERO 3D MODEL
+   Loads rc_plane.fbx and applies its baked PBR texture set.
+   The FBX ships two materials — "Plane_1" (fuselage/wings) and
+   "Parts_Motor" (motor/small parts) — each mapped to its own
+   123_Plane_* / 123_Parts_* texture group.  Rendered static (no
+   animation) as a backdrop behind the hero title.
+========================================================= */
+
+const AeroPlaneModel = () => {
+  const fbx = useFBX(rcPlaneFbxUrl);
+
+  // Load every PBR map for both material groups in one call.
+  const tex = useTexture({
+    planeBase: planeBaseColorTex,
+    planeNormal: planeNormalTex,
+    planeRough: planeRoughTex,
+    planeMetal: planeMetalTex,
+    planeAo: planeAoTex,
+    planeEmissive: planeEmissiveTex,
+    partsBase: partsBaseColorTex,
+    partsNormal: partsNormalTex,
+    partsRough: partsRoughTex,
+    partsMetal: partsMetalTex,
+    partsAo: partsAoTex,
+    partsEmissive: partsEmissiveTex,
+  });
+
+  const { model, fitScale } = useMemo(() => {
+    // Colour maps are sRGB; data maps (normal/rough/metal/ao) stay linear.
+    tex.planeBase.colorSpace = THREE.SRGBColorSpace;
+    tex.planeEmissive.colorSpace = THREE.SRGBColorSpace;
+    tex.partsBase.colorSpace = THREE.SRGBColorSpace;
+    tex.partsEmissive.colorSpace = THREE.SRGBColorSpace;
+
+    const makeMaterial = (set) =>
+      new THREE.MeshStandardMaterial({
+        map: set.base,
+        normalMap: set.normal,
+        roughnessMap: set.rough,
+        metalnessMap: set.metal,
+        aoMap: set.ao,
+        emissiveMap: set.emissive,
+        emissive: new THREE.Color(0xffffff),
+        emissiveIntensity: 0.6,
+        metalness: 1,
+        roughness: 1,
+      });
+
+    const planeSet = {
+      base: tex.planeBase, normal: tex.planeNormal, rough: tex.planeRough,
+      metal: tex.planeMetal, ao: tex.planeAo, emissive: tex.planeEmissive,
+    };
+    const partsSet = {
+      base: tex.partsBase, normal: tex.partsNormal, rough: tex.partsRough,
+      metal: tex.partsMetal, ao: tex.partsAo, emissive: tex.partsEmissive,
+    };
+
+    const root = fbx.clone(true);
+    const pickSet = (name = "") =>
+      /part|motor/i.test(name) ? partsSet : planeSet;
+
+    root.traverse((obj) => {
+      if (!obj.isMesh) return;
+      // aoMap samples the 2nd UV set — reuse uv0 if there isn't one.
+      const geo = obj.geometry;
+      if (geo?.attributes.uv && !geo.attributes.uv2) {
+        geo.setAttribute("uv2", geo.attributes.uv);
+      }
+      if (Array.isArray(obj.material)) {
+        obj.material = obj.material.map((m) => makeMaterial(pickSet(m?.name)));
+      } else {
+        obj.material = makeMaterial(pickSet(obj.material?.name || obj.name));
+      }
+    });
+
+    // Centre the model on the origin (in its own space) — the scale is
+    // applied on the wrapping <group> so this offset scales with it.
+    const box = new THREE.Box3().setFromObject(root);
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+    root.position.sub(center);
+    const maxDim = Math.max(size.x, size.y, size.z) || 1;
+    return { model: root, fitScale: 4.6 / maxDim };
+  }, [fbx, tex]);
+
+  return (
+    <group scale={fitScale} rotation={[0, 650, -50]}>
+      <primitive object={model} />
+    </group>
+  );
+};
+
+const AeroHeroCanvas = () => (
+  <Canvas
+    gl={{ alpha: true, antialias: true }}
+    style={{ width: "100%", height: "100%" }}
+    camera={{ position: [0, 0.4, 6], fov: 42, near: 0.1, far: 100 }}
+    onCreated={({ gl }) => {
+      gl.setClearColor(0x000000, 0);
+      gl.toneMappingExposure = 1.25;
+    }}
+  >
+    <Suspense fallback={null}>
+      <ambientLight intensity={0.9} color="#eaf3ff" />
+      <hemisphereLight args={["#cfe6ff", "#20344a", 0.8]} />
+      <directionalLight position={[4, 5, 3]} intensity={2.2} color="#ffffff" />
+      <directionalLight position={[-4, 2, 2]} intensity={1.2} color="#bcd8ff" />
+      <directionalLight position={[0, -4, 3]} intensity={0.7} color="#cfe6ff" />
+      <Environment preset="city" background={false} environmentIntensity={1.0} />
+      <AeroPlaneModel />
+    </Suspense>
+  </Canvas>
+);
+
 const Aerospace = () => {
   // Tag <body> so this page's header CTA can opt into the aeromodelling
   // light-btn.svg frame without affecting the global header on other pages.
@@ -1204,16 +1347,11 @@ const Aerospace = () => {
         {/* Sky/mountain background */}
         <div className="aero-hero-bg" aria-hidden="true" />
 
-        {/* Aircraft image — floats above the background */}
-        <motion.div
-          className="aero-hero-aircraft"
-          aria-hidden="true"
-          initial={{ opacity: 0, x: 60, y: -20 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{ duration: 1.1, ease: "easeOut" }}
-        >
-          <img src={aeroAircraftImg} alt="" loading="eager" />
-        </motion.div>
+        {/* Aircraft 3D model — RC plane FBX with PBR textures,
+            static backdrop sitting behind the hero title */}
+        <div className="aero-hero-aircraft" aria-hidden="true">
+          <AeroHeroCanvas />
+        </div>
 
         {/* Bottom fade — blends into the dark sections below */}
         <div className="aero-hero-fade" aria-hidden="true" />

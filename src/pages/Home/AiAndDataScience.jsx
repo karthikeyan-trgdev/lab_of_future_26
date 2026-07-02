@@ -257,13 +257,48 @@ for young learners in Dubai.</p>
    AI-relevant copy.
 ========================================================= */
 const AI_LEARN_ITEMS = [
-  { label: "AI Foundations", img: aiLearnImg1 },
-  { label: "Machine Learning", img: aiLearnImg2 },
-  { label: "Creative AI", img: aiLearnImg3 },
-  { label: "Data Science", img: aiLearnImg4 },
-  { label: "AI Development", img: aiLearnImg5 },
-  { label: "AI Innovation", img: aiLearnImg6 },
-  { label: "Responsible AI", img: aiLearnImg7 },
+  {
+    label: "AI Foundations",
+    img: aiLearnImg1,
+    title: "Understand How AI Works",
+    desc: "Explore how machines learn, recognise patterns, and make intelligent decisions.",
+  },
+  {
+    label: "Machine Learning",
+    img: aiLearnImg2,
+    title: "Train Real AI Models",
+    desc: "Build, train, and test machine learning models using real data and tools.",
+  },
+  {
+    label: "Creative AI",
+    img: aiLearnImg3,
+    title: "Explore Generative AI",
+    desc: "Discover generative AI for kids — create, prompt, and work with intelligent systems.",
+  },
+  {
+    label: "Data Science",
+    img: aiLearnImg4,
+    title: "Work With Data",
+    desc: "Learn how data is collected, cleaned, and used to teach machines to think.",
+  },
+  {
+    label: "AI Development",
+    img: aiLearnImg5,
+    title: "Learn AI Coding",
+    desc: "Write real code to build AI logic, automate tasks, and control intelligent systems.",
+  },
+  {
+    label: "AI Innovation",
+    img: aiLearnImg6,
+    title: "Complete AI Missions",
+    desc: "Plan, build, and present AI projects that solve genuine real-world challenges.",
+  },
+  {
+    label: "Responsible AI",
+    img: aiLearnImg7,
+    title: "Explore AI Ethics",
+    desc: "Understand responsibility, bias, and what it means to build AI that is fair.",
+  },
 ];
 
 const AiStudentsLearn = () => (
@@ -293,7 +328,13 @@ what AI is — but exactly how to use it to solve problems that matter.
       <div className="ai-learn-grid">
         {AI_LEARN_ITEMS.map((it) => (
           <article className="ai-learn-card" key={it.label}>
-            <img className="ai-learn-card-img" src={it.img} alt={it.label} loading="lazy" />
+            <div className="ai-learn-card-imgwrap">
+              <img className="ai-learn-card-img" src={it.img} alt={it.label} loading="lazy" />
+              <div className="ai-learn-card-overlay">
+                <h3 className="ai-learn-card-overlay-title">{it.title}</h3>
+                <p className="ai-learn-card-overlay-desc">{it.desc}</p>
+              </div>
+            </div>
             <span className="ai-learn-card-label">{it.label}</span>
           </article>
         ))}
@@ -745,7 +786,7 @@ const TRAVEL_INSTANCE_FRAG = `
 const WP_SHAPES = [
   { id: 0,  size: 2.6 }, //  0 Hero               column
   { id: 1,  size: 2.4 }, //  1 Why AI              disc
-  { id: 15, size: 0.9 }, //  2 Start Young         3D cube (small, top-left)
+  { id: 15, size: 0.7 }, //  2 Start Young         3D cube (small, top-left)
   { id: 22, size: 2.2 }, //  3 Students Learn      4-petal flower
   { id: 1, size: 0.5, hidden: true }, //  4 Certificates  (hidden — just travels through)
   { id: 5,  size: 1.5 }, //  5 Future Careers      starburst (smaller still)
@@ -1921,7 +1962,7 @@ const ModesToJoin = () => (
       <h2 className="modes-title prog-section-title">
         <span className="modes-title-badge">MODES</span> TO JOIN
       </h2>
-      <p className="modes-subtitle prog-section-subtitle">More Than Just Robotics</p>
+      <p className="modes-subtitle prog-section-subtitle">Learn AI Your Way</p>
       <p className="modes-desc">
         Whether you're learning from home, joining a local hub, or diving in
         remotely, we&apos;ve got a mission path that works for you.

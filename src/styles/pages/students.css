@@ -995,7 +995,7 @@ background: linear-gradient(90deg, rgba(0, 0, 0, 0.93) 0%, rgba(0, 0, 0, 0.33) 1
   font-size: clamp(0.85rem, 1vw, 0.95rem);
   color: rgba(255, 255, 255, 0.62);
   line-height: 1.65;
-  max-width: 52ch;
+  max-width: 100%;
   margin: 0 auto clamp(2.5rem, 5vh, 4rem);
 }
 

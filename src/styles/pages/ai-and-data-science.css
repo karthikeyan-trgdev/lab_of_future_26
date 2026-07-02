@@ -1565,8 +1565,8 @@
 .explore-card-imgwrap{
       aspect-ratio: 3 / 3;
       background: transparent;
-
 }
+
 /* =========================================================
    FOOTER newsletter input — strip the inset shadow that the
    home.css rule paints on the box.
@@ -3121,10 +3121,10 @@
    centres on this element, so this both moves and frames it small) */
 .ai-data-science-page .ai-start-stage {
   position: absolute;
-  top: 6%;
-  left: 4%;
-  width: clamp(90px, 12vw, 150px);
-  height: clamp(120px, 16vw, 190px);
+  top: 4%;
+  left: -30%;
+  width: clamp(72px, 9vw, 120px);
+  height: clamp(96px, 12vw, 150px);
   pointer-events: none;
 }
 
@@ -3349,7 +3349,7 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding: 15px 0px;
+  padding: 15px 15px;
   background:
     url("../../assets/programs/ai-and-data-science/students-learn-box-frame.png")
     center / 100% 100% no-repeat;
@@ -3362,13 +3362,59 @@
   transform: translateY(-3px);
 }
 
+/* image wrapper — hugs the PNG exactly so the overlay can't spill past
+   it (inline-block shrink-wraps to the image's real rendered box) */
+.ai-data-science-page .ai-learn-card-imgwrap {
+  position: relative;
+  display: block;
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+  font-size: 0;
+}
+
 .ai-data-science-page .ai-learn-card-img {
   width: 100%;
-  aspect-ratio: 4 / 2.9;
+  height: auto;
   border-radius: 6px;
   display: block;
-  margin-bottom: 0.75rem;
-  object-fit: contain;
+}
+
+/* hover overlay — black wash + title & description */
+.ai-data-science-page .ai-learn-card-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 14px 16px;
+  background: rgba(3, 8, 20, 0.86);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+  text-align: center;
+  pointer-events: none;
+}
+.ai-data-science-page .ai-learn-card:hover .ai-learn-card-overlay,
+.ai-data-science-page .ai-learn-card:focus-within .ai-learn-card-overlay {
+  opacity: 1;
+}
+.ai-data-science-page .ai-learn-card-overlay-title {
+  margin: 0;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 800;
+  font-size: clamp(0.85rem, 1vw, 0.98rem);
+  line-height: 1.2;
+  color: #6ec8ff;
+  -webkit-text-fill-color: #6ec8ff;
+}
+.ai-data-science-page .ai-learn-card-overlay-desc {
+  margin: 0;
+  font-size: clamp(0.72rem, 0.85vw, 0.82rem);
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .ai-data-science-page .ai-learn-card-label {
@@ -3380,7 +3426,7 @@
   color: #000;
   -webkit-text-fill-color: #000;
   text-transform: none;
-  padding: 20px 30px;
+  padding: 20px 20px;
 }
 
 .ai-data-science-page .ai-learn-foot {
@@ -3388,8 +3434,7 @@
   font-family: var(--font-sans);
   font-style: italic;
   font-size: clamp(0.85rem, 1vw, 1rem);
-  color: #88c4ff;
-  text-shadow: 0 0 14px rgba(100, 180, 255, 0.25);
+  color: #ffffff;
 }
 
 /* Responsive — shrink the card width breakpoints instead of
@@ -3894,7 +3939,7 @@
   box-shadow: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  padding: clamp(1rem, 1.6vw, 1.4rem) !important;
+  padding: 10px !important;
 }
 
 /* =============================================================
