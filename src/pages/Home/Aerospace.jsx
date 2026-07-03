@@ -6,7 +6,7 @@ import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 
 import { NavLink } from "react-router-dom";
 
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
@@ -49,10 +49,11 @@ import portfolioIcon from "../../assets/future-career/portfolio.svg";
 import recognitionIcon from "../../assets/future-career/recognition.svg";
 
 // Aeromodelling-specific assets
-import aeroWhyRight      from "../../assets/programs/aeromodelling/why-aeromodelling-right.png";
 
 // Hero 3D model
-import planeGlbUrl from "../../assets/programs/aeromodelling/3d-models/plane.glb?url";
+import rcPlaneUrl from "../../assets/programs/aeromodelling/3d-models/rc_plane.glb?url";
+// Lab-of-Future-Way section decoration
+import planeSurfaceUrl from "../../assets/programs/aeromodelling/3d-models/plane_surface.glb?url";
 
 
 import aeroCareerCoding  from "../../assets/programs/aeromodelling/future-careers/future-career-1.webp";
@@ -86,6 +87,12 @@ import {
   FaPaperPlane,
   FaXTwitter,
   FaYoutube,
+  FaPlane,
+  FaLightbulb,
+  FaUsers,
+  FaStar,
+  FaArrowRight,
+  FaPlay,
 } from "react-icons/fa6";
 import { MdEmail, MdPhone } from "react-icons/md";
 
@@ -120,10 +127,8 @@ const WhyAeromodelling = () => (
             </div>
           </div>
 
-          {/* RIGHT — exploded aeromodelling kit image */}
-          <div className="aero-why-image">
-            <img src={aeroWhyRight} alt="Aeromodelling kit components" loading="lazy" />
-          </div>
+          {/* RIGHT — landing zone for the scroll-driven RC plane */}
+          <div className="aero-why-image" id="aero-plane-why-anchor" aria-hidden="true" />
         </div>
       </div>
     </div>
@@ -157,6 +162,11 @@ const AeroWhyStartYoung = () => (
           </p>
         </div>
       </div>
+    </div>
+
+    {/* plane_surface.glb — left-bottom decoration + RC plane landing pad */}
+    <div className="aero-young-surface" id="aero-plane-young-anchor" aria-hidden="true">
+      <SurfacePlaneCanvas />
     </div>
   </section>
 );
@@ -1198,63 +1208,344 @@ const SiteFooter = () => (
      PLANE_ROTATION — [tilt fwd/bk, spin L/R, roll] in radians
 ========================================================= */
 
-const PLANE_POSITION = [0, 0, 0];      // x=right, y=up, z=forward
-const PLANE_ROTATION = [0.15, -0.5, 0.1]; // gentle bank-right pose
+/* The plane flies between two page anchors as you scroll:
+     FLY_*  — pose while in the hero (start)
+     LAND_* — pose once landed in the Why Aeromodelling section (end)
+   Tweak these to change the takeoff / landing orientation. */
+const FLY_POSITION  = [0, 0.3, 0];        // x=right, y=up, z=forward
+const FLY_ROTATION  = [0.5, 2.6, 0];      // hero flying pose
+const LAND_POSITION = [0, 0, 0];
+const LAND_ROTATION = [Math.PI / -2, Math.PI, Math.PI]; // top-down plan view, nose up
+const REST_FRAC = 0.42;                   // viewport fraction where landing completes
+const WHY_SCALE = 1.25;                    // plane size multiplier at the Why landing
+const YOUNG_SCALE = 2.3;                   // plane size multiplier on the plane_surface
+const YOUNG_REST_FRAC = 0.6;               // land earlier (pad higher in the viewport)
+const YOUNG_LAND_ROTATION = [0.18, 2.6 + Math.PI, 0]; // 3/4 side view, flipped horizontally
 
-const AeroPlaneModel = () => {
-  const { scene } = useGLTF(planeGlbUrl);
+const lerp = (a, b, t) => a + (b - a) * t;
+const easeInOut = (t) =>
+  t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+// Soft radial shadow texture (built once) used for the plane's drop shadow.
+let _shadowTex = null;
+const getShadowTexture = () => {
+  if (_shadowTex) return _shadowTex;
+  const c = document.createElement("canvas");
+  c.width = c.height = 128;
+  const ctx = c.getContext("2d");
+  const g = ctx.createRadialGradient(64, 64, 4, 64, 64, 64);
+  g.addColorStop(0, "rgba(0,0,0,0.55)");
+  g.addColorStop(1, "rgba(0,0,0,0)");
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, 128, 128);
+  _shadowTex = new THREE.CanvasTexture(c);
+  return _shadowTex;
+};
+
+const AeroPlaneModel = ({ screenRef }) => {
+  const { scene } = useGLTF(rcPlaneUrl);
   const groupRef = useRef(null);
+  const { camera, size } = useThree();
 
-  const { model, fitScale } = useMemo(() => {
+  const { model, maxDim } = useMemo(() => {
+    // Use the glb's own materials / textures as authored — no overrides.
     const root = scene.clone(true);
     const box = new THREE.Box3().setFromObject(root);
-    const size = box.getSize(new THREE.Vector3());
+    const s = box.getSize(new THREE.Vector3());
     const center = box.getCenter(new THREE.Vector3());
     root.position.sub(center);
-    const maxDim = Math.max(size.x, size.y, size.z) || 1;
-    return { model: root, fitScale: 5.2 / maxDim };
+    return { model: root, maxDim: Math.max(s.x, s.y, s.z) || 1 };
   }, [scene]);
 
-  useFrame(({ clock }) => {
-    if (!groupRef.current) return;
-    const t = clock.getElapsedTime();
-    groupRef.current.position.y = PLANE_POSITION[1] + Math.sin(t * 0.8) * 0.15;
+  // The canvas is full-viewport and never resizes; the tick computes the
+  // whole choreography (viewport-pixel target + rotation + visibility) and
+  // this just applies it, so the flight is continuous — no canvas jumps.
+  useFrame(() => {
+    const g = groupRef.current;
+    const t = screenRef.current;
+    if (!g) return;
+    if (!t || !t.ready || t.visible === false || !t.rot) {
+      g.visible = false;
+      return;
+    }
+    g.visible = true;
+
+    const visH = 2 * Math.tan(((camera.fov * Math.PI) / 180) / 2) * camera.position.z;
+    const visW = visH * (size.width / size.height);
+
+    const ndcX = (t.x / size.width) * 2 - 1;
+    const ndcY = -((t.y / size.height) * 2 - 1);
+    g.position.set((ndcX * visW) / 2, (ndcY * visH) / 2, 0);
+
+    const worldH = (t.pxH / size.height) * visH;
+    g.scale.setScalar(worldH / maxDim);
+
+    g.rotation.set(t.rot[0], t.rot[1], t.rot[2]);
   });
 
   return (
-    <group
-      ref={groupRef}
-      scale={fitScale}
-      position={PLANE_POSITION}
-      rotation={PLANE_ROTATION}
-    >
+    <group ref={groupRef}>
       <primitive object={model} />
     </group>
   );
 };
 
-const AeroHeroCanvas = () => (
+// Flat soft drop-shadow that fades in when the plane lands on the surface.
+const PlaneShadow = ({ screenRef }) => {
+  const meshRef = useRef(null);
+  const { camera, size } = useThree();
+  const tex = useMemo(getShadowTexture, []);
+
+  useFrame(() => {
+    const m = meshRef.current;
+    const t = screenRef.current;
+    if (!m) return;
+    const shadow = t ? t.shadow || 0 : 0;
+    if (!t || !t.ready || t.visible === false || shadow <= 0.02) {
+      m.visible = false;
+      return;
+    }
+    m.visible = true;
+
+    const visH = 2 * Math.tan(((camera.fov * Math.PI) / 180) / 2) * camera.position.z;
+    const visW = visH * (size.width / size.height);
+
+    const yBelow = t.y + t.pxH * 0.34; // sit a little below the plane
+    const ndcX = (t.x / size.width) * 2 - 1;
+    const ndcY = -((yBelow / size.height) * 2 - 1);
+    m.position.set((ndcX * visW) / 2, (ndcY * visH) / 2, -0.2);
+
+    const worldH = (t.pxH / size.height) * visH;
+    m.scale.set(worldH * 1.0, worldH * 0.42, 1);
+    m.material.opacity = shadow * 0.55;
+  });
+
+  return (
+    <mesh ref={meshRef} renderOrder={-1} visible={false}>
+      <planeGeometry args={[1, 1]} />
+      <meshBasicMaterial map={tex} transparent depthWrite={false} opacity={0} />
+    </mesh>
+  );
+};
+
+/* Single full-viewport canvas (never resized).  A rAF loop computes the
+   plane's viewport-pixel target + progress from scroll; the plane is moved
+   and scaled in 3D to follow it, so the flight from hero → Why-section is
+   fully continuous (no canvas resize, no snapping). */
+const PlaneJourney = () => {
+  const progressRef = useRef(0);
+  const prog2Ref = useRef(0);
+  const screenRef = useRef({ ready: false });
+
+  useEffect(() => {
+    let raf = 0;
+    const tick = () => {
+      const heroEl = document.getElementById("aero-plane-hero-anchor");
+      const whyEl = document.getElementById("aero-plane-why-anchor");
+      const youngEl = document.getElementById("aero-plane-young-anchor");
+      if (heroEl && whyEl) {
+        const vh = window.innerHeight;
+        const vw = window.innerWidth;
+        const sy = window.scrollY || window.pageYOffset || 0;
+        const hr = heroEl.getBoundingClientRect();
+        const wr = whyEl.getBoundingClientRect();
+        const yr = youngEl ? youngEl.getBoundingClientRect() : null;
+        const restY = vh * REST_FRAC;
+
+        if (wr.width < 1 || wr.height < 1) {
+          // No landing target (e.g. mobile) — keep the plane hidden.
+          screenRef.current = { ready: true, visible: false };
+        } else {
+          // Hero start (fixed viewport point) + Why landing.
+          const startX = hr.left + hr.width / 2;
+          const startY = hr.top + sy + hr.height / 2;
+          const startH = hr.height;
+
+          const whyX = wr.left + wr.width / 2;
+          const whyLandingY = Math.min(restY, wr.top + wr.height / 2);
+          const whyH = wr.height * WHY_SCALE;
+          const whyLandScroll = Math.max(1, wr.top + sy + wr.height / 2 - restY);
+
+          const hasYoung = yr && yr.width > 1 && yr.height > 1;
+
+          if (!hasYoung || sy <= whyLandScroll) {
+            // SEGMENT 1 — hero → Why landing (top-down).
+            const p = Math.min(1, Math.max(0, sy / whyLandScroll));
+            progressRef.current += (p - progressRef.current) * 0.12;
+            prog2Ref.current += (0 - prog2Ref.current) * 0.12;
+            const e = easeInOut(progressRef.current);
+            screenRef.current = {
+              x: lerp(startX, whyX, e),
+              y: lerp(startY, whyLandingY, e),
+              pxH: lerp(startH, whyH, e),
+              rot: [
+                lerp(FLY_ROTATION[0], LAND_ROTATION[0], e),
+                lerp(FLY_ROTATION[1], LAND_ROTATION[1], e),
+                lerp(FLY_ROTATION[2], LAND_ROTATION[2], e),
+              ],
+              shadow: 0,
+              visible: true,
+              ready: true,
+            };
+          } else {
+            // SEGMENT 2 — Why → fly off right → in from left → land on the
+            // plane_surface in the Lab-of-Future-Way section.
+            const youngRestY = vh * YOUNG_REST_FRAC;
+            const youngX = yr.left + yr.width / 2;
+            const youngLandingY = Math.min(youngRestY, yr.top + yr.height / 2);
+            const youngH = yr.height * YOUNG_SCALE;
+            const youngLandScroll = Math.max(
+              whyLandScroll + 1,
+              yr.top + sy + yr.height / 2 - youngRestY,
+            );
+
+            const p2 = Math.min(
+              1,
+              Math.max(0, (sy - whyLandScroll) / (youngLandScroll - whyLandScroll)),
+            );
+            progressRef.current += (1 - progressRef.current) * 0.12;
+            prog2Ref.current += (p2 - prog2Ref.current) * 0.12;
+            const q = prog2Ref.current;
+
+            const offRight = vw + vw * 0.5;
+            const offLeft = -vw * 0.5;
+
+            if (q < 0.5) {
+              // Take off to the RIGHT, rotating back to a flying pose.
+              const s = q / 0.5;
+              const es = easeInOut(s);
+              screenRef.current = {
+                x: lerp(whyX, offRight, es),
+                y: lerp(whyLandingY, whyLandingY - vh * 0.08, es),
+                pxH: whyH,
+                rot: [
+                  lerp(LAND_ROTATION[0], FLY_ROTATION[0], es),
+                  lerp(LAND_ROTATION[1], FLY_ROTATION[1], es),
+                  lerp(LAND_ROTATION[2], FLY_ROTATION[2], es),
+                ],
+                shadow: 0,
+                visible: true,
+                ready: true,
+              };
+            } else {
+              // Come in from the LEFT and land on the plane_surface.
+              const s = (q - 0.5) / 0.5;
+              const es = easeInOut(s);
+              screenRef.current = {
+                x: lerp(offLeft, youngX, es),
+                y: lerp(youngLandingY - vh * 0.28, youngLandingY, es),
+                pxH: lerp(whyH, youngH, es),
+                rot: [
+                  lerp(FLY_ROTATION[0], YOUNG_LAND_ROTATION[0], es),
+                  lerp(FLY_ROTATION[1], YOUNG_LAND_ROTATION[1], es),
+                  lerp(FLY_ROTATION[2], YOUNG_LAND_ROTATION[2], es),
+                ],
+                shadow: Math.max(0, (s - 0.55) / 0.45), // shadow fades in on touchdown
+                visible: true,
+                ready: true,
+              };
+            }
+          }
+        }
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    tick();
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  return (
+    <div
+      className="aero-plane-traveler"
+      aria-hidden="true"
+      style={{
+        position: "fixed",
+        inset: 0,
+        width: "100vw",
+        height: "100vh",
+        pointerEvents: "none",
+        zIndex: 12,
+      }}
+    >
+      <Canvas
+        frameloop="always"
+        dpr={[1, 1.5]}
+        gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
+        style={{ width: "100%", height: "100%" }}
+        camera={{ position: [0, 0, 7], fov: 50, near: 0.1, far: 100 }}
+        onCreated={({ gl }) => {
+          gl.setClearColor(0x000000, 0);
+          gl.toneMappingExposure = 1.25;
+        }}
+      >
+        <Suspense fallback={null}>
+          <ambientLight intensity={0.9} color="#eaf3ff" />
+          <hemisphereLight args={["#cfe6ff", "#20344a", 0.8]} />
+          <directionalLight position={[4, 5, 3]} intensity={2.2} color="#ffffff" />
+          <directionalLight position={[-4, 2, 2]} intensity={1.2} color="#bcd8ff" />
+          <directionalLight position={[0, -4, 3]} intensity={0.7} color="#cfe6ff" />
+          <PlaneShadow screenRef={screenRef} />
+          <AeroPlaneModel screenRef={screenRef} />
+        </Suspense>
+      </Canvas>
+    </div>
+  );
+};
+
+/* Small static glb decoration for the "Lab of Future Way" section. */
+const SurfacePlaneModel = () => {
+  const { scene } = useGLTF(planeSurfaceUrl);
+  const { model, fitScale } = useMemo(() => {
+    const root = scene.clone(true);
+
+    // Flat, unlit light tone that blends into the section's sky background.
+    const blendMat = new THREE.MeshBasicMaterial({
+      color: new THREE.Color("#e4ebf2"),
+      side: THREE.DoubleSide,
+      toneMapped: false,
+    });
+    root.traverse((obj) => {
+      if (obj.isMesh) obj.material = blendMat;
+    });
+
+    const box = new THREE.Box3().setFromObject(root);
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+    root.position.sub(center);
+    const maxDim = Math.max(size.x, size.y, size.z) || 1;
+    return { model: root, fitScale: 100 / maxDim };
+  }, [scene]);
+
+  return (
+    <group scale={fitScale} rotation={[0.35, 90, 0]}>
+      <primitive object={model} />
+    </group>
+  );
+};
+
+const SurfacePlaneCanvas = () => (
   <Canvas
-    frameloop="always"
     dpr={[1, 1.5]}
-    gl={{ alpha: true, antialias: false, powerPreference: "high-performance" }}
+    gl={{ alpha: true, antialias: true }}
     style={{ width: "100%", height: "100%" }}
-    camera={{ position: [0, 0, 7], fov: 50, near: 0.1, far: 100 }}
-    onCreated={({ gl }) => {
-      gl.setClearColor(0x000000, 0);
-      gl.toneMappingExposure = 1.25;
-    }}
+    camera={{ position: [0, 0, 6], fov: 45, near: 0.1, far: 100 }}
+    onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}
   >
     <Suspense fallback={null}>
-      <ambientLight intensity={0.9} color="#eaf3ff" />
-      <hemisphereLight args={["#cfe6ff", "#20344a", 0.8]} />
-      <directionalLight position={[4, 5, 3]} intensity={2.2} color="#ffffff" />
-      <directionalLight position={[-4, 2, 2]} intensity={1.2} color="#bcd8ff" />
-      <directionalLight position={[0, -4, 3]} intensity={0.7} color="#cfe6ff" />
-      <AeroPlaneModel />
+      <ambientLight intensity={1.0} color="#ffffff" />
+      <directionalLight position={[4, 5, 3]} intensity={2} color="#ffffff" />
+      <directionalLight position={[-4, 2, 2]} intensity={1} color="#bcd8ff" />
+      <SurfacePlaneModel />
     </Suspense>
   </Canvas>
 );
+
+const HERO_FEATURES = [
+  { icon: <FaPlane />,     title: "Hands-on Learning",   sub: "Build. Test. Fly." },
+  { icon: <FaLightbulb />, title: "Innovative Thinking", sub: "Design. Experiment. Improve." },
+  { icon: <FaUsers />,     title: "Expert Guidance",     sub: "Learn from Industry Mentors." },
+  { icon: <FaStar />,      title: "Real-World Impact",   sub: "Skills for Tomorrow." },
+];
 
 const Aerospace = () => {
   // Tag <body> so this page's header CTA can opt into the aeromodelling
@@ -1268,6 +1559,10 @@ const Aerospace = () => {
     <div className="aerospace-page">
       <ScrollProgressBar />
       <BackToTopButton />
+
+      {/* Scroll-driven RC plane — flies from the hero and lands in the
+          Why Aeromodelling section (anchors below). */}
+      <PlaneJourney />
       <SEO
         title={`Aeromodelling | ${siteConfig.title}`}
         description="Lab of Future — Aeromodelling: master aerodynamics, avionics and flight engineering. Build real flying aircraft from gliders to powered models."
@@ -1279,43 +1574,53 @@ const Aerospace = () => {
       {/* ── HERO ─────────────────────────────────────────── */}
       <section className="aero-hero">
         <div className="aero-hero-bg" aria-hidden="true" />
-        <div className="aero-hero-fade" aria-hidden="true" />
-        <div className="container">
-        <div className="aero-hero-inner">
-          {/* LEFT — title, description, CTA */}
-          <div className="aero-hero-content">
-            <motion.h1
-              className="aero-hero-title"
-              initial={{ opacity: 0, y: 36 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: "easeOut" }}
-            >
-              AEROMODELLING
-            </motion.h1>
-            <motion.p
-              className="aero-hero-desc"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
-            >
-              Build real aircraft. Understand aerodynamics. Think like an engineer.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.5, ease: "easeOut" }}
-            >
-              <NavLink to="/programs" className="glass-btn glass-btn--dark header-btn">
-                ENROLL NOW
-              </NavLink>
-            </motion.div>
-          </div>
+        <div className="aero-hero-overlay" aria-hidden="true" />
+        <div className="aero-hero-hex" aria-hidden="true" />
+        <div className="aero-hero-streak" aria-hidden="true" />
 
-          {/* RIGHT — 3D plane */}
-          <div className="aero-hero-aircraft">
-            <AeroHeroCanvas />
-          </div>
+        {/* Hero anchor — the traveling plane parks here (right side) */}
+        <div className="aero-hero-aircraft" id="aero-plane-hero-anchor" aria-hidden="true" />
+
+        <div className="aero-hero-inner container">
+          <motion.div
+            className="aero-hero-content"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <span className="aero-hero-eyebrow">DESIGN. BUILD. FLY.</span>
+            <h1 className="aero-hero-title">
+              <span className="aero-hero-title-accent">AERO</span>SPACE
+            </h1>
+            <span className="aero-hero-rule" aria-hidden="true" />
+            <p className="aero-hero-desc">
+              Explore the science of flight through hands-on design and
+              real-world aeromodelling experiences.
+            </p>
+            <div className="aero-hero-actions">
+              <NavLink to="/programs" className="aero-why-btn aero-why-btn--dark">
+                Explore Programs
+              </NavLink>
+              <NavLink to="/contact" className="aero-why-btn aero-why-btn--light">
+                Watch Video
+              </NavLink>
+            </div>
+          </motion.div>
         </div>
+
+        {/* Bottom feature strip */}
+        <div className="aero-hero-features-wrap">
+          <div className="aero-hero-features container">
+            {HERO_FEATURES.map((f) => (
+              <div className="aero-hero-feature" key={f.title}>
+                <span className="aero-hero-feature-icon">{f.icon}</span>
+                <span className="aero-hero-feature-text">
+                  <span className="aero-hero-feature-title">{f.title}</span>
+                  <span className="aero-hero-feature-sub">{f.sub}</span>
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
