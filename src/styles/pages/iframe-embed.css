@@ -1,0 +1,17 @@
+.iframe-embed-page {
+  width: 100%;
+  /* Header is fixed and overlaps page content, so push the iframe down
+     by roughly the header height instead of letting it hide under it. */
+  height: 100vh;
+  padding-top: 6.5rem;
+  margin: 0;
+  background: #03050f;
+  box-sizing: border-box;
+}
+
+.iframe-embed-page iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}

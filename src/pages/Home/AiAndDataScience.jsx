@@ -33,6 +33,7 @@ import ScrollProgressBar from "../../components/common/ScrollProgressBar";
 import BackToTopButton from "../../components/common/BackToTopButton";
 import { siteConfig } from "../../data/siteConfig";
 import { canvasPerf } from "../../hooks/useDevicePerformance";
+import { useEnquiryModal } from "../../context/EnquiryModalContext";
 
 import aiCertificateImg from "../../assets/programs/ai-and-data-science/certificate.webp";
 
@@ -1390,7 +1391,9 @@ const COMPETITION_ITEMS = [
   },
 ];
 
-const Competitions = () => (
+const Competitions = () => {
+  const { openEnquiry } = useEnquiryModal();
+  return (
   <section className="competitions-section competitions-section--robotics">
     <div className="ai-comp-stage" aria-hidden="true" />
     <div className="competitions-inner container">
@@ -1402,13 +1405,14 @@ const Competitions = () => (
           <p className="competitions-subtitle prog-section-subtitle">
             Showcase Your AI & Data Science Skills By Building Intelligent Models, Analyzing Real-World Data, And Solving Meaningful Challenges. Apply Your Knowledge Through Hands-On Projects, Develop Critical Analytical And Problem-Solving Abilities, And Gain Recognition For Your Innovation, Technical Expertise, And Data-Driven Solutions Demonstrated In Every Project You Complete.
           </p>
-          <NavLink
-          to="/programs"
+          <button
+          type="button"
           className="glass-btn glass-btn--light header-btn"
           style={{ marginTop: "var(--space-s)" }}
+          onClick={openEnquiry}
         >
           ENROLL NOW
-        </NavLink>
+        </button>
         </div>
       </div>
       <div className="competitions-right">
@@ -1434,7 +1438,8 @@ const Competitions = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 /* =========================================================
    CAREER PATHWAYS — FAQ ACCORDION (section 9)
@@ -2347,7 +2352,9 @@ const SmallRobotCanvas = () => (
    CTA — "The future won't be taught, it will be built"
 ========================================================= */
 
-const CtaRobotics = () => (
+const CtaRobotics = () => {
+  const { openEnquiry } = useEnquiryModal();
+  return (
   <section className="cta-robotics-section">
     <div className="ai-cta-stage" aria-hidden="true" />
     <div className="cta-robotics-inner container">
@@ -2367,17 +2374,18 @@ const CtaRobotics = () => (
           Every great innovator starts with curiosity. We provide the models, tools, and guidance to help students think at the frontier.
         </p>
         <div className="cta-robotics-actions">
-          <NavLink to="/student-portal" className="cta-robotics-btn cta-robotics-btn--primary">
+          <button type="button" onClick={openEnquiry} className="cta-robotics-btn cta-robotics-btn--primary">
             Enroll Now
-          </NavLink>
-          <NavLink to="/contact" className="cta-robotics-btn cta-robotics-btn--secondary">
+          </button>
+          <button type="button" onClick={openEnquiry} className="cta-robotics-btn cta-robotics-btn--secondary">
             Book a Demo
-          </NavLink>
+          </button>
         </div>
       </div>
     </div>
   </section>
-);
+  );
+};
 
 /* =========================================================
    EXPLORE PROGRAMS — autoplay card slider
@@ -2542,6 +2550,8 @@ const SiteFooter = () => (
 );
 
 const AiAndDataScience = () => {
+  const { openEnquiry } = useEnquiryModal();
+
   return (
     <div className="ai-data-science-page">
       <ScrollProgressBar />

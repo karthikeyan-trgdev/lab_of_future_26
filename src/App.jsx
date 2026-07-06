@@ -3,6 +3,7 @@ import AppRoutes from './routes/AppRoutes';
 import Preloader from './components/common/Preloader';
 import SoundManager from './components/common/SoundManager';
 import ErrorBoundary from './components/common/ErrorBoundary';
+import { EnquiryModalProvider } from './context/EnquiryModalContext';
 
 const App = () => {
   const [contentVisible, setContentVisible] = useState(false);
@@ -22,7 +23,9 @@ const App = () => {
         }}
       >
         <ErrorBoundary>
-          <AppRoutes />
+          <EnquiryModalProvider>
+            <AppRoutes />
+          </EnquiryModalProvider>
         </ErrorBoundary>
       </div>
     </ErrorBoundary>

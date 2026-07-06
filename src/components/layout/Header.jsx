@@ -3,6 +3,7 @@ import { FiMenu } from "react-icons/fi";
 import { useEffect, useRef, useState } from "react";
 import Logo from "../../assets/light-logo.svg";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { useEnquiryModal } from "../../context/EnquiryModalContext";
 
 const navItems = [
   {
@@ -12,94 +13,91 @@ const navItems = [
   {
     label: "About Us",
     path: "/about",
+  },
+  {
+    label: "School Programs",
     submenu: [
-      { label: "Who We Are", path: "/about/who-we-are" },
-      { label: "Our Team", path: "/about/our-team" },
-      { label: "Awards & Accreditations", path: "/about/awards" },
-      { label: "Partnerships", path: "/about/partnerships" },
-      { label: "Careers", path: "/about/careers" },
-      { label: "Success Stories", path: "/about/success-stories" },
+      {
+        label: "Labs In School",
+        path: "https://laboffuture.odoo.com/lab-verse",
+        external: true,
+      },
+      {
+        label: "Dubai Lab Tour",
+        path: "https://laboffuture.odoo.com/lab-tours-book-a-lab-tour",
+        external: true,
+      },
+      { label: "Zero Gravity", path: "/school-programs/zero-gravity" },
+      {
+        label: "Week Without Walls",
+        path: "https://laboffuture.odoo.com/week-without-walls",
+        external: true,
+      },
+      {
+        label: "ECA",
+        path: "https://laboffuture.odoo.com/eca",
+        external: true,
+      },
+      {
+        label: "Leadership & Advisory Team",
+        path: "https://laboffuture.odoo.com/leadership-advisory-team",
+        external: true,
+      },
     ],
   },
   {
-    label: "Programs",
-    path: "/programs",
+    label: "Events",
     submenu: [
-      { label: "Bootcamp", path: "/programs/bootcamp" },
+      { label: "Orbita 26", path: "/events/orbita-26" },
       {
-        label: "Holiday Camp",
-        path: "/programs/holiday-camp",
-        submenu: [
-          { label: "Spring", path: "/programs/holiday-camp/spring" },
-          { label: "Summer", path: "/programs/holiday-camp/summer" },
-          { label: "Winter", path: "/programs/holiday-camp/winter" },
-        ],
+        label: "Asian Space Settlement Design Competition 2026",
+        path: "/events/asian-space-settlement-design-competition-2026",
       },
-      { label: "Innovation Labs", path: "/programs/innovation-labs" },
-      { label: "Events & Competitions", path: "/programs/events-competitions" },
-      { label: "Live Updates", path: "/programs/live-updates" },
+      { label: "Summer Camp 2026", path: "/events/summer-camp-2026" },
+      {
+        label: "Summer Internship 2026",
+        path: "/events/summer-internship-2026",
+      },
     ],
   },
   {
-    label: "Research & Media",
-    path: "/research-media",
+    label: "Get Involved",
     submenu: [
       {
-        label: "Research & Projects",
-        path: "/research-media/research-projects",
-      },
-      { label: "Media & News", path: "/research-media/media-news" },
-      { label: "Blogs", path: "/research-media/blogs" },
-      { label: "Monthly Newsletters", path: "/research-media/newsletters" },
-      { label: "Streamer", path: "/research-media/streamer" },
-    ],
-  },
-  {
-    label: "Community",
-    path: "/community",
-    submenu: [
-      { label: "Join Our Community", path: "/community/join" },
-      { label: "Schools", path: "/community/schools" },
-      {
-        label: "Colleges / Universities",
-        path: "/community/colleges-universities",
+        label: "Internship",
+        path: "https://laboffuture.odoo.com/internship",
+        external: true,
       },
       {
-        label: "Corporate / Industries",
-        path: "/community/corporate-industries",
+        label: "Jobs",
+        path: "https://laboffuture.odoo.com/jobs",
+        external: true,
       },
       {
-        label: "Adults / Professionals",
-        path: "/community/adults-professionals",
+        label: "Become LOF Ambassador",
+        path: "https://laboffuture.odoo.com/student-ambassador-program",
+        external: true,
       },
-      { label: "Students", path: "/community/students" },
-    ],
-  },
-  {
-    label: "Resources",
-    path: "/resources",
-    submenu: [
-      { label: "Student Portal", path: "/resources/student-portal" },
-      { label: "Language Selector", path: "/resources/language-selector" },
       {
-        label: "Downloads / Materials",
-        path: "/resources/downloads-materials",
+        label: "Join the Curiosity Crew",
+        path: "https://laboffuture.odoo.com/lof-community",
+        external: true,
       },
-      { label: "FAQs", path: "/resources/faqs" },
+      {
+        label: "Ivy League Colleges",
+        path: "https://laboffuture.odoo.com/ivy-league-colleges",
+        external: true,
+      },
     ],
   },
   {
     label: "Contact",
     path: "/contact",
-    submenu: [
-      { label: "Contact Us", path: "/contact/contact-us" },
-      { label: "Enquiry Now", path: "/contact/enquiry" },
-      { label: "Book a Visit", path: "/contact/book-visit" },
-    ],
   },
 ];
 
 const Header = () => {
+  const { openEnquiry } = useEnquiryModal();
   const [open, setOpen] = useState(false);
   const [openSubmenus, setOpenSubmenus] = useState([]);
 
@@ -148,23 +146,44 @@ const Header = () => {
 
   const renderNavItems = (items) =>
     items.map((item) => {
-      const isOpen = openSubmenus.includes(item.path);
+      const itemKey = item.path || item.label;
+      const isOpen = openSubmenus.includes(itemKey);
+
+      let labelEl;
+      if (item.external) {
+        labelEl = (
+          <a
+            href={item.path}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={closeMenu}
+          >
+            {item.label}
+          </a>
+        );
+      } else if (item.path) {
+        labelEl = (
+          <NavLink
+            to={item.path}
+            className={({ isActive }) => (isActive ? "active" : "")}
+            onClick={closeMenu}
+          >
+            {item.label}
+          </NavLink>
+        );
+      } else {
+        labelEl = <span className="nav-label">{item.label}</span>;
+      }
 
       return (
         <li
-          key={item.path}
+          key={itemKey}
           className={
             item.submenu ? `has-submenu ${isOpen ? "is-open" : ""}` : ""
           }
         >
           <div className="nav-item-wrapper">
-            <NavLink
-              to={item.path}
-              className={({ isActive }) => (isActive ? "active" : "")}
-              onClick={closeMenu}
-            >
-              {item.label}
-            </NavLink>
+            {labelEl}
 
             {item.submenu && (
               <button
@@ -173,7 +192,7 @@ const Header = () => {
                 aria-haspopup="true"
                 aria-label={`Toggle submenu for ${item.label}`}
                 aria-expanded={isOpen}
-                onClick={() => toggleSubmenu(item.path)}
+                onClick={() => toggleSubmenu(itemKey)}
               >
                 <IoMdArrowDropdown />
               </button>
@@ -212,20 +231,16 @@ const Header = () => {
           <ul>{renderNavItems(navItems)}</ul>
         </nav>
         <div className="header-actions">
-          <NavLink
-            to="/student-portal"
+          <button
+            type="button"
             className="glass-btn glass-btn--light header-btn"
-            onClick={closeMenu}
+            onClick={() => {
+              closeMenu();
+              openEnquiry();
+            }}
           >
             Enroll Now
-          </NavLink>
-          {/* <NavLink
-            to="/contact"
-            className="glass-btn glass-btn--dark header-btn"
-            onClick={closeMenu}
-          >
-            Book a Demo
-          </NavLink> */}
+          </button>
         </div>
       </div>
     </header>

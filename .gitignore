@@ -29,3 +29,4 @@ Thumbs.db
 # local tooling / cache
 .claude/
 .vite/
+.env*

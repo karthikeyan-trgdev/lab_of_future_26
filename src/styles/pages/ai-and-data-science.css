@@ -4089,3 +4089,67 @@
 .assoc-modal--ai .assoc-modal-stat-value {
   color: #6ec8ff;
 }
+
+
+@media (max-width: 740px){
+  .ai-particle-traveler{
+    display:none !important;
+  }
+  .ai-data-science-page .ai-hero-stage{
+    display:none !important;
+  }
+  .ai-data-science-page .ai-hero-grid{
+    padding-top:20px !important;
+  }
+  .ai-data-science-page section > .ai-section-fade-top{
+    display:none !important;
+  }
+  .ai-data-science-page .hero.ai-hero{
+    height: 65dvh !important;
+  }
+  .ai-data-science-page .ai-why-section{
+    padding:30px 0px !important;
+  }
+  .ai-why-stage{
+    display:none !important;
+  }
+  .ai-data-science-page .ai-start-section{
+        padding:50px 0px !important;
+  }
+  .ai-data-science-page .ai-learn-section{
+        padding:50px 0px !important;
+  }
+  .ai-data-science-page .cert-section--robotics, .ai-data-science-page .careers-section--robotics{
+          padding:50px 0px !important;
+  }
+  .ai-data-science-page .competitions-section--robotics .competitions-label-badge{
+    font-size:25px !important;
+  }
+  .ai-data-science-page .assoc-section--robotics{
+    padding:50px 0px !important;
+  }
+  .ai-data-science-page .vetted-section--robotics{
+    padding:50px 0px !important;
+  }
+  .vetted-right{
+    display:none !important;
+  }
+  .prog-section-title{
+    font-size:25px !important;
+  }
+  .ai-data-science-page .modes-section--robotics{
+        padding:50px 0px !important;
+  }
+  .ai-data-science-page .projects-section--robotics{
+        padding:50px 0px !important;
+  }
+  .ai-data-science-page .faq-robotics-section{
+        padding:50px 0px !important;
+  }
+  .ai-data-science-page .explore-section--robotics{
+        padding:50px 0px !important;
+  }
+  .ai-data-science-page .cta-robotics-section{
+        padding:50px 0px !important;
+  }
+}

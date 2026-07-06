@@ -18,6 +18,7 @@ import SEO from "../../components/common/SEO";
 import ScrollProgressBar from "../../components/common/ScrollProgressBar";
 import BackToTopButton from "../../components/common/BackToTopButton";
 import { siteConfig } from "../../data/siteConfig";
+import { useEnquiryModal } from "../../context/EnquiryModalContext";
 
 import droneCertImg from "../../assets/programs/aeromodelling/certificate.png";
 
@@ -100,7 +101,9 @@ import { MdEmail, MdPhone } from "react-icons/md";
    WHY SPACE SCIENCE SECTION
 ========================================================= */
 
-const WhyAeromodelling = () => (
+const WhyAeromodelling = () => {
+  const { openEnquiry } = useEnquiryModal();
+  return (
   <section className="aero-why-section">
     <div className="aero-why-inner container">
 
@@ -118,12 +121,12 @@ const WhyAeromodelling = () => (
           <div className="aero-why-text">
             <p>The future needs students who can design, test, solve problems, and think like engineers. Aero modelling helps build creativity, critical thinking, and real-world engineering skills through<br/> ands-on learning. Students explore RC planes, model aircraft, aerodynamics, and drones while understanding lift, thrust, balance, and control. The real excitement? Not watching an aircraft fly — but seeing their own design take off.</p>
             <div className="aero-why-cta-row">
-              <NavLink to="/programs" className="aero-why-btn aero-why-btn--dark">
+              <button type="button" onClick={openEnquiry} className="aero-why-btn aero-why-btn--dark">
                 Enroll Now
-              </NavLink>
-              <NavLink to="/contact" className="aero-why-btn aero-why-btn--light">
+              </button>
+              <button type="button" onClick={openEnquiry} className="aero-why-btn aero-why-btn--light">
                 Book a Demo
-              </NavLink>
+              </button>
             </div>
           </div>
 
@@ -133,7 +136,8 @@ const WhyAeromodelling = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 /* =========================================================
    AEROMODELLING — WHY START YOUNG + AGE PROGRAMS + LEARN + CERTS
@@ -190,6 +194,9 @@ const AeroAgePrograms = () => (
 
 const AeroStudentsLearn = () => (
   <section className="aero-learn-section">
+    {/* invisible landing anchor for scroll-driven plane (bottom-left of section) */}
+    <div id="aero-plane-learn-anchor" aria-hidden="true"
+      style={{ position: "absolute", right: LEARN_ANCHOR_RIGHT, top: LEARN_ANCHOR_TOP, width: LEARN_ANCHOR_W, height: LEARN_ANCHOR_H, pointerEvents: "none" }} />
     <div className="container">
       <h2 className="aero-learn-title prog-section-title">
         WHAT WILL STUDENTS <span className="aero-learn-badge">LEARN?</span>
@@ -348,7 +355,9 @@ const AeroFutureCareers = () => (
   </section>
 );
 
-const AeroCompetitions = () => (
+const AeroCompetitions = () => {
+  const { openEnquiry } = useEnquiryModal();
+  return (
   <section className="aero-comp-section">
     <div className="competitions-inner container">
       <div className="competitions-left">
@@ -361,9 +370,9 @@ const AeroCompetitions = () => (
             Solve real-world challenges.
             Get recognised for what you build.
           </p>
-          <NavLink to="/programs" className="aero-comp-btn">
+          <button type="button" className="aero-comp-btn" onClick={openEnquiry}>
             ENROLL NOW
-          </NavLink>
+          </button>
         </div>
       </div>
       <div className="competitions-right">
@@ -383,7 +392,8 @@ const AeroCompetitions = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 /* =========================================================
    COMPETITIONS (section 8)
@@ -1015,7 +1025,9 @@ const FaqRobotics = () => {
    CTA — "The future won't be taught, it will be built"
 ========================================================= */
 
-const CtaRobotics = () => (
+const CtaRobotics = () => {
+  const { openEnquiry } = useEnquiryModal();
+  return (
   <section className="cta-robotics-section">
     <div className="cta-robotics-inner container">
       <div className="cta-robotics-stage" />
@@ -1032,17 +1044,18 @@ const CtaRobotics = () => (
           Every great aircraft begins with an idea. We provide the runway, tools, and guidance.
         </p>
         <div className="cta-robotics-actions">
-          <NavLink to="/student-portal" className="cta-robotics-btn cta-robotics-btn--primary">
+          <button type="button" onClick={openEnquiry} className="cta-robotics-btn cta-robotics-btn--primary">
             Enroll Now
-          </NavLink>
-          <NavLink to="/contact" className="cta-robotics-btn cta-robotics-btn--secondary">
+          </button>
+          <button type="button" onClick={openEnquiry} className="cta-robotics-btn cta-robotics-btn--secondary">
             Book a Demo
-          </NavLink>
+          </button>
         </div>
       </div>
     </div>
   </section>
-);
+  );
+};
 
 /* =========================================================
    EXPLORE PROGRAMS — autoplay card slider
@@ -1061,7 +1074,7 @@ const ExplorePrograms = () => (
       <h2 className="explore-title prog-section-title">
         <span className="explore-title-badge">EXPLORE</span> our other programs
       </h2>
-      <p>Aero modelling is just one launch. There’s more.</p>
+      <p className="prog-section-subtitle" style={{textAlign:"center"}}>Aero modelling is just one launch. There’s more.</p>
       <div className="explore-slider">
         <Swiper
           modules={[Autoplay]}
@@ -1215,12 +1228,39 @@ const SiteFooter = () => (
 const FLY_POSITION  = [0, 0.3, 0];        // x=right, y=up, z=forward
 const FLY_ROTATION  = [0.5, 2.6, 0];      // hero flying pose
 const LAND_POSITION = [0, 0, 0];
-const LAND_ROTATION = [Math.PI / -2, Math.PI, Math.PI]; // top-down plan view, nose up
+const LAND_ROTATION = [Math.PI / -2 + 0.22, Math.PI, Math.PI]; // near-flat, slight perspective tilt
 const REST_FRAC = 0.42;                   // viewport fraction where landing completes
-const WHY_SCALE = 1.25;                    // plane size multiplier at the Why landing
-const YOUNG_SCALE = 2.3;                   // plane size multiplier on the plane_surface
+const WHY_SCALE = 1.7;                     // plane size multiplier at the Why landing
+const YOUNG_SCALE = 3;                   // plane size multiplier on the plane_surface
 const YOUNG_REST_FRAC = 0.6;               // land earlier (pad higher in the viewport)
-const YOUNG_LAND_ROTATION = [0.18, 2.6 + Math.PI, 0]; // 3/4 side view, flipped horizontally
+const YOUNG_LAND_ROTATION = [Math.PI / -1 + 0.22, Math.PI - -1.75, Math.PI]; // flat on surface, nose mirrored left
+// ── "What Will Students Learn" plane – tweak everything here ──────────────────
+const LEARN_SCALE        = 1.4;   // plane size (relative to anchor height); bigger = larger plane
+const LEARN_REST_FRAC    = 0.55;  // 0–1: how far down the viewport landing completes (lower = lands higher on screen)
+const LEARN_OPACITY      = 1.0;   // final opacity on touchdown (0 = invisible, 1 = fully opaque)
+
+// Anchor position inside the .aero-learn-section (CSS values as strings)
+const LEARN_ANCHOR_RIGHT = "5%";  // distance from right edge of section
+const LEARN_ANCHOR_TOP   = "60%"; // distance from top of section  ← move up/down
+const LEARN_ANCHOR_W     = "22%"; // width  of landing zone (affects centre-X)
+const LEARN_ANCHOR_H     = "20%"; // height of landing zone (affects centre-Y)
+
+// Entry point: plane starts off-screen bottom-right before gliding in
+const LEARN_ENTRY_OVERSHOOT = 0.25; // 0.25 = starts 25 % beyond the right viewport edge
+const LEARN_ENTRY_Y         = 0.95; // 0–1+ of viewport height (0.95 = near bottom, >1 = below fold)
+
+// Rotation at the START of the approach (plane descending from bottom-right)
+//   X: pitch  – negative tilts nose down; 0 = level
+//   Y: yaw    – Math.PI faces left, 0 faces right
+//   Z: roll   – positive banks left wing down
+const LEARN_APPROACH_ROTATION = [-0.25, 0.2, Math.PI / 2 - 0.15];
+
+// Rotation at TOUCHDOWN (what the plane looks like once fully landed)
+//   X ≈ -1.35 (Math.PI/-2 + 0.22) lays the plane flat showing the top surface
+//   Y = 0            nose points right
+//   Z = Math.PI / 2  rotates 90° so plane is horizontal (nose left/right, not up/down)
+const LEARN_LAND_ROTATION = [Math.PI / -2 + 0.5, 1, Math.PI / 2];
+// ──────────────────────────────────────────────────────────────────────────────
 
 const lerp = (a, b, t) => a + (b - a) * t;
 const easeInOut = (t) =>
@@ -1247,14 +1287,20 @@ const AeroPlaneModel = ({ screenRef }) => {
   const groupRef = useRef(null);
   const { camera, size } = useThree();
 
-  const { model, maxDim } = useMemo(() => {
-    // Use the glb's own materials / textures as authored — no overrides.
+  const { model, maxDim, materials } = useMemo(() => {
     const root = scene.clone(true);
     const box = new THREE.Box3().setFromObject(root);
     const s = box.getSize(new THREE.Vector3());
     const center = box.getCenter(new THREE.Vector3());
     root.position.sub(center);
-    return { model: root, maxDim: Math.max(s.x, s.y, s.z) || 1 };
+    const mats = [];
+    root.traverse((obj) => {
+      if (obj.isMesh && obj.material) {
+        const ms = Array.isArray(obj.material) ? obj.material : [obj.material];
+        ms.forEach((m) => { m.transparent = true; mats.push(m); });
+      }
+    });
+    return { model: root, maxDim: Math.max(s.x, s.y, s.z) || 1, materials: mats };
   }, [scene]);
 
   // The canvas is full-viewport and never resizes; the tick computes the
@@ -1281,6 +1327,8 @@ const AeroPlaneModel = ({ screenRef }) => {
     g.scale.setScalar(worldH / maxDim);
 
     g.rotation.set(t.rot[0], t.rot[1], t.rot[2]);
+    const op = t.opacity ?? 1;
+    materials.forEach((mat) => { mat.opacity = op; });
   });
 
   return (
@@ -1335,6 +1383,7 @@ const PlaneShadow = ({ screenRef }) => {
 const PlaneJourney = () => {
   const progressRef = useRef(0);
   const prog2Ref = useRef(0);
+  const prog3Ref = useRef(0);
   const screenRef = useRef({ ready: false });
 
   useEffect(() => {
@@ -1343,6 +1392,7 @@ const PlaneJourney = () => {
       const heroEl = document.getElementById("aero-plane-hero-anchor");
       const whyEl = document.getElementById("aero-plane-why-anchor");
       const youngEl = document.getElementById("aero-plane-young-anchor");
+      const learnEl = document.getElementById("aero-plane-learn-anchor");
       if (heroEl && whyEl) {
         const vh = window.innerHeight;
         const vw = window.innerWidth;
@@ -1350,6 +1400,7 @@ const PlaneJourney = () => {
         const hr = heroEl.getBoundingClientRect();
         const wr = whyEl.getBoundingClientRect();
         const yr = youngEl ? youngEl.getBoundingClientRect() : null;
+        const lr = learnEl ? learnEl.getBoundingClientRect() : null;
         const restY = vh * REST_FRAC;
 
         if (wr.width < 1 || wr.height < 1) {
@@ -1366,13 +1417,32 @@ const PlaneJourney = () => {
           const whyH = wr.height * WHY_SCALE;
           const whyLandScroll = Math.max(1, wr.top + sy + wr.height / 2 - restY);
 
+          // Precompute young-section values so SEGMENT 3 can also reference them.
           const hasYoung = yr && yr.width > 1 && yr.height > 1;
+          const youngRestY = vh * YOUNG_REST_FRAC;
+          const youngX = hasYoung ? yr.left + yr.width / 2 : whyX;
+          const youngLandingY = hasYoung ? Math.min(youngRestY, yr.top + yr.height / 2) : whyLandingY;
+          const youngH = hasYoung ? yr.height * YOUNG_SCALE : whyH;
+          const youngLandScroll = hasYoung
+            ? Math.max(whyLandScroll + 1, yr.top + sy + yr.height / 2 - youngRestY)
+            : Infinity;
+
+          // Learn-section values for SEGMENT 3.
+          const hasLearn = lr && lr.width > 1 && lr.height > 1;
+          const learnRestY = vh * LEARN_REST_FRAC;
+          const learnX = hasLearn ? lr.left + lr.width / 2 : 0;
+          const learnLandingY = hasLearn ? Math.min(learnRestY, lr.top + lr.height / 2) : 0;
+          const learnH = hasLearn ? lr.height * LEARN_SCALE : 0;
+          const learnLandScroll = hasLearn
+            ? Math.max(youngLandScroll + 1, lr.top + sy + lr.height / 2 - learnRestY)
+            : Infinity;
 
           if (!hasYoung || sy <= whyLandScroll) {
             // SEGMENT 1 — hero → Why landing (top-down).
             const p = Math.min(1, Math.max(0, sy / whyLandScroll));
             progressRef.current += (p - progressRef.current) * 0.12;
             prog2Ref.current += (0 - prog2Ref.current) * 0.12;
+            prog3Ref.current += (0 - prog3Ref.current) * 0.12;
             const e = easeInOut(progressRef.current);
             screenRef.current = {
               x: lerp(startX, whyX, e),
@@ -1387,24 +1457,16 @@ const PlaneJourney = () => {
               visible: true,
               ready: true,
             };
-          } else {
+          } else if (!hasLearn || sy <= youngLandScroll) {
             // SEGMENT 2 — Why → fly off right → in from left → land on the
             // plane_surface in the Lab-of-Future-Way section.
-            const youngRestY = vh * YOUNG_REST_FRAC;
-            const youngX = yr.left + yr.width / 2;
-            const youngLandingY = Math.min(youngRestY, yr.top + yr.height / 2);
-            const youngH = yr.height * YOUNG_SCALE;
-            const youngLandScroll = Math.max(
-              whyLandScroll + 1,
-              yr.top + sy + yr.height / 2 - youngRestY,
-            );
-
             const p2 = Math.min(
               1,
               Math.max(0, (sy - whyLandScroll) / (youngLandScroll - whyLandScroll)),
             );
             progressRef.current += (1 - progressRef.current) * 0.12;
             prog2Ref.current += (p2 - prog2Ref.current) * 0.12;
+            prog3Ref.current += (0 - prog3Ref.current) * 0.12;
             const q = prog2Ref.current;
 
             const offRight = vw + vw * 0.5;
@@ -1423,6 +1485,7 @@ const PlaneJourney = () => {
                   lerp(LAND_ROTATION[1], FLY_ROTATION[1], es),
                   lerp(LAND_ROTATION[2], FLY_ROTATION[2], es),
                 ],
+                opacity: lerp(1, 0.45, es),
                 shadow: 0,
                 visible: true,
                 ready: true,
@@ -1440,7 +1503,53 @@ const PlaneJourney = () => {
                   lerp(FLY_ROTATION[1], YOUNG_LAND_ROTATION[1], es),
                   lerp(FLY_ROTATION[2], YOUNG_LAND_ROTATION[2], es),
                 ],
-                shadow: Math.max(0, (s - 0.55) / 0.45), // shadow fades in on touchdown
+                opacity: 1,
+                shadow: Math.max(0, (s - 0.55) / 0.45),
+                visible: true,
+                ready: true,
+              };
+            }
+          } else {
+            // SEGMENT 3 — young → slowly drift right off-screen → enter from
+            // bottom-left → land smaller in "What Will Students Learn" section.
+            const p3 = Math.min(
+              1,
+              Math.max(0, (sy - youngLandScroll) / (learnLandScroll - youngLandScroll)),
+            );
+            progressRef.current += (1 - progressRef.current) * 0.12;
+            prog2Ref.current += (1 - prog2Ref.current) * 0.12;
+            prog3Ref.current += (p3 - prog3Ref.current) * 0.12;
+            const q3 = prog3Ref.current;
+
+            if (q3 < 0.5) {
+              // Phase 1 — slowly drift right and fade out off-screen.
+              const s = q3 / 0.5;
+              const es = easeInOut(s);
+              screenRef.current = {
+                x: lerp(youngX, vw + vw * 0.4, es),
+                y: youngLandingY,
+                pxH: youngH,
+                rot: YOUNG_LAND_ROTATION,
+                opacity: lerp(1, 0, es),
+                shadow: 0,
+                visible: true,
+                ready: true,
+              };
+            } else {
+              // Phase 2 — come in from bottom-right and land smaller.
+              const s = (q3 - 0.5) / 0.5;
+              const es = easeInOut(s);
+              screenRef.current = {
+                x: lerp(vw + vw * LEARN_ENTRY_OVERSHOOT, learnX, es),
+                y: lerp(vh * LEARN_ENTRY_Y, learnLandingY, es),
+                pxH: lerp(youngH * 0.4, learnH, es),
+                rot: [
+                  lerp(LEARN_APPROACH_ROTATION[0], LEARN_LAND_ROTATION[0], es), // X — tilt (pitch)
+                  lerp(LEARN_APPROACH_ROTATION[1], LEARN_LAND_ROTATION[1], es), // Y — spin (yaw)
+                  lerp(LEARN_APPROACH_ROTATION[2], LEARN_LAND_ROTATION[2], es), // Z — roll
+                ],
+                opacity: lerp(0, LEARN_OPACITY, es),
+                shadow: Math.max(0, (s - 0.65) / 0.35),
                 visible: true,
                 ready: true,
               };
@@ -1498,10 +1607,12 @@ const SurfacePlaneModel = () => {
   const { model, fitScale } = useMemo(() => {
     const root = scene.clone(true);
 
-    // Flat, unlit light tone that blends into the section's sky background.
+    // Semi-transparent so the section background shows through.
     const blendMat = new THREE.MeshBasicMaterial({
-      color: new THREE.Color("#e4ebf2"),
+      color: new THREE.Color("#ffffff"),
       side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.3,
       toneMapped: false,
     });
     root.traverse((obj) => {
@@ -1517,7 +1628,7 @@ const SurfacePlaneModel = () => {
   }, [scene]);
 
   return (
-    <group scale={fitScale} rotation={[0.35, 90, 0]}>
+    <group scale={fitScale} rotation={[0.35, 90 + Math.PI, 0]}>
       <primitive object={model} />
     </group>
   );
@@ -1548,6 +1659,8 @@ const HERO_FEATURES = [
 ];
 
 const Aerospace = () => {
+  const { openEnquiry } = useEnquiryModal();
+
   // Tag <body> so this page's header CTA can opt into the aeromodelling
   // light-btn.svg frame without affecting the global header on other pages.
   useEffect(() => {

@@ -15,6 +15,24 @@
   margin: 0;
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-links a {
+  color: var(--color-muted);
+  transition: color 160ms ease;
+}
+
+.footer-links a:hover {
+  color: var(--color-white);
+}
+
 @media (max-width: 768px) {
   .footer-inner {
     flex-direction: column;

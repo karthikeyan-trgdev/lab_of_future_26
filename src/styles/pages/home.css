@@ -1356,7 +1356,7 @@ position: absolute;
   gap: 0.85rem;
   text-align: left;
   max-width: 880px;
-  margin: 0 auto;
+  margin: 50px auto 0 auto;
 }
 
 /* ---- accordion row ---- */
@@ -3005,7 +3005,7 @@ position: absolute;
 .impact-head {
   position: relative;
   z-index: 2;
-  max-width: 80%;
+  max-width: 100%;
   margin: 0 auto var(--space-l);
 }
 
@@ -3875,7 +3875,7 @@ position: absolute;
 
 .explore-section .prog-section-subtitle{
   text-align:left;
-  margin: 0 0 50px 0;
+  margin: 0;
  }
 .explore-card-label {
   font-family: var(--font-display);
@@ -4388,8 +4388,8 @@ body.space-science-page .prog-section-title {
   body.space-science-page .impact-section,
   body.space-science-page .explore-section,
   body.space-science-page .tracking-section {
-    padding-top: 56px !important;
-    padding-bottom: 56px !important;
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
   }
   .age-card-list li{
     font-size: 14px ;
@@ -4441,7 +4441,7 @@ body.space-science-page .prog-section-title {
     width: 100% !important;
   }
   body.space-science-page .spacescience-vetted-by .vetted-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(1, 1fr) !important;
     gap: 1.75rem 1rem !important;
     justify-items: center;
   }
@@ -4514,14 +4514,11 @@ body.space-science-page .prog-section-title {
     margin:auto !important;
   }
   .choose-path-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(1, 1fr) !important;
 }
 .vetted-plate{
-  width: fit-content !important;
-}
-.vetted-plate{
-  width: fit-content !important;
-  padding:15px 15px !important;
+  width: 80% !important;
+  padding:20px 25px !important;
 }
   body.space-science-page .spacescience-vetted-by .vetted-grid{
     gap: 10px !important;
@@ -4796,5 +4793,61 @@ body.space-science-page .prog-section-title {
 @media (max-width: 460px) {
   .assoc-modal-stats {
     grid-template-columns: 1fr;
+  }
+}
+
+.site-header{
+  background: #00000095;
+}
+body.space-science-page .header-btn{
+  margin-top: 0px !important;
+}
+
+@media (max-width: 760px){
+  .learn-sub{
+    margin-bottom:30px !important;
+  }
+  .careers-sub{
+    margin-bottom:30px !important;
+  }
+  .careers-skill-card{
+    width:100% !important;
+    min-width:100% !important;
+  }
+  .careers-skill-img{
+    height:200px !important;
+  }
+  .careers-skill-card{
+    padding:10px !important;
+  }
+  .careers-skill-label{
+    font-size: 15px !important;
+  }
+  .careers-skill-card {
+    aspect-ratio: 220 / 200 !important;
+  }
+  .modes-desc{
+    margin-bottom:30px !important;
+  }
+  .projects-card-img{
+    height:150px !important;
+  }
+  .projects-card{
+  background-image: none !important;
+  background : #001123b5 !important;
+  border:1px solid #5a9fff9b !important;
+  border-radius: 20px !important;
+  }
+  .projects-card-body{
+    padding:0px !important;
+  }
+  .community-section{
+    display:none
+  }
+  .faq-robotics-section{
+    padding-top:0px !important;
+  }
+  .explore-section .prog-section-subtitle{
+    margin-bottom:30px !important;
   }
 }

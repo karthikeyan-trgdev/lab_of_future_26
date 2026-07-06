@@ -35,6 +35,7 @@ import ScrollProgressBar from "../../components/common/ScrollProgressBar";
 import BackToTopButton from "../../components/common/BackToTopButton";
 import { siteConfig } from "../../data/siteConfig";
 import { canvasPerf } from "../../hooks/useDevicePerformance";
+import { useEnquiryModal } from "../../context/EnquiryModalContext";
 
 import certificateUrl from "../../assets/programs/space-robotics/certificate.png";
 
@@ -228,8 +229,18 @@ const RoboticsRobot = () => {
     return { centeredScene: cloned, fitScale: 10.6 / maxDim };
   }, [cloned]);
 
+  // On narrow (mobile) canvases the fixed vertical FOV otherwise reads
+  // as an extreme, cropped close-up of the head — zoom the robot out
+  // and settle it lower so the shorter mobile hero shows more of it.
+  const { size: viewportSize } = useThree();
+  const isMobileCanvas = viewportSize.width < 640;
+  const mobileScale = isMobileCanvas ? 0.62 : 1;
+
   return (
-    <group scale={fitScale} position={[0, -3.5, 0]}>
+    <group
+      scale={fitScale * mobileScale}
+      position={[0, isMobileCanvas ? -2.1 : -3.5, 0]}
+    >
       <primitive object={centeredScene} />
     </group>
   );
@@ -239,7 +250,9 @@ const RoboticsRobot = () => {
    WHY SPACE SCIENCE SECTION
 ========================================================= */
 
-const WhySpaceScience = () => (
+const WhySpaceScience = () => {
+  const { openEnquiry } = useEnquiryModal();
+  return (
   <section className="why-section why-section--robotics">
     <div className="why-container container">
       <div className="why-left">
@@ -251,12 +264,12 @@ const WhySpaceScience = () => (
           Space is no longer the final frontier — it's the next workplace. Rovers explore Mars. Robotic arms repair satellites. Autonomous systems go where humans can't. At Lab of Future, the space robotics program doesn't just teach technology, they run missions. Every class is hands-on. Every project is real. The benefits of robotics for kids go far beyond screens — logic, resilience, creativity and the confidence to build what comes next.
         </p>
         <div className="why-cta-row">
-          <NavLink to="/student-portal" className="why-btn why-btn--primary">
+          <button type="button" onClick={openEnquiry} className="why-btn why-btn--primary">
             Enroll Now
-          </NavLink>
-          <NavLink to="/contact" className="why-btn why-btn--secondary">
+          </button>
+          <button type="button" onClick={openEnquiry} className="why-btn why-btn--secondary">
             Book a Demo
-          </NavLink>
+          </button>
         </div>
       </div>
 
@@ -268,7 +281,8 @@ const WhySpaceScience = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 /* =========================================================
    ZEB ROBOT — used inside the "Why Space Robotics" panel.
@@ -877,6 +891,7 @@ const AGE_GROUPS = [
 // inside it) zoom up to fill the screen, then it scrolls away into the
 // age-cards section.
 const LofProgram = () => {
+  const { openEnquiry } = useEnquiryModal();
   const sectionRef = useRef(null);
   const topRef = useRef(null);
   const cellRef = useRef(null);
@@ -966,13 +981,14 @@ const LofProgram = () => {
               testing ideas, and not fearing difficult questions.
             </p>
 
-            <NavLink
-              to="/programs"
+            <button
+              type="button"
               className="glass-btn glass-btn--light header-btn"
               style={{ marginTop: "var(--space-s)" }}
+              onClick={openEnquiry}
             >
               ENROLL NOW
-            </NavLink>
+            </button>
           </div>
         </div>
       </div>
@@ -1228,7 +1244,9 @@ const COMPETITION_ITEMS = [
   },
 ];
 
-const Competitions = () => (
+const Competitions = () => {
+  const { openEnquiry } = useEnquiryModal();
+  return (
   <section className="competitions-section competitions-section--robotics">
     <div className="competitions-inner container">
       <div className="competitions-left">
@@ -1238,13 +1256,14 @@ const Competitions = () => (
           </h2>
           <p className="competitions-subtitle prog-section-subtitle">
            Showcase your creativity, technical expertise, and problem-solving abilities by building innovative robotic solutions that address real-world challenges. Collaborate with like-minded innovators, test your engineering skills under pressure, and compete with the brightest minds. Turn your ideas into intelligent machines that make a meaningful impact on the future.</p>
-          <NavLink
-          to="/programs"
+          <button
+          type="button"
           className="glass-btn glass-btn--light header-btn"
           style={{ marginTop: "var(--space-s)" }}
+          onClick={openEnquiry}
         >
           ENROLL NOW
-        </NavLink>
+        </button>
         </div>
       </div>
       <div className="competitions-right">
@@ -1268,7 +1287,8 @@ const Competitions = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 /* =========================================================
    CAREER PATHWAYS — FAQ ACCORDION (section 9)
@@ -2203,7 +2223,9 @@ const SmallRobotCanvas = () => (
    CTA — "The future won't be taught, it will be built"
 ========================================================= */
 
-const CtaRobotics = () => (
+const CtaRobotics = () => {
+  const { openEnquiry } = useEnquiryModal();
+  return (
   <section className="cta-robotics-section">
     <div className="cta-robotics-inner container">
       {/* LEFT — interactive small-robot.glb */}
@@ -2222,17 +2244,18 @@ const CtaRobotics = () => (
           Every great engineer started somewhere. We set up the foundation — and the tools to shape the world.
         </p>
         <div className="cta-robotics-actions">
-          <NavLink to="/student-portal" className="cta-robotics-btn cta-robotics-btn--primary">
+          <button type="button" onClick={openEnquiry} className="cta-robotics-btn cta-robotics-btn--primary">
             Enroll Now
-          </NavLink>
-          <NavLink to="/contact" className="cta-robotics-btn cta-robotics-btn--secondary">
+          </button>
+          <button type="button" onClick={openEnquiry} className="cta-robotics-btn cta-robotics-btn--secondary">
             Book a Demo
-          </NavLink>
+          </button>
         </div>
       </div>
     </div>
   </section>
-);
+  );
+};
 
 /* =========================================================
    EXPLORE PROGRAMS — autoplay card slider
@@ -2467,12 +2490,27 @@ const AstroHitArea = () => {
 };
 
 const SpaceRobotics = () => {
+  const { openEnquiry } = useEnquiryModal();
+
   // Tag <body> so the shared header CTA can use this page's dark-btn.svg
   // (the global .header-btn class otherwise gets overridden by whichever
   // program-page CSS loads last in the bundle).
   useEffect(() => {
     document.body.classList.add("space-robotics");
     return () => document.body.classList.remove("space-robotics");
+  }, []);
+
+  // Zeb is a page-wide travelling robot choreographed for wide desktop
+  // layouts — on mobile/tablet/laptop widths his landing spots collide
+  // with section content (age cards, headings, etc.), so he's dropped
+  // from the DOM entirely at or below the laptop breakpoint.
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== "undefined" && window.innerWidth <= 1280
+  );
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 1280);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   return (
@@ -2487,45 +2525,49 @@ const SpaceRobotics = () => {
         keywords={["Space Robotics", "Robotics", "AI", "STEM"]}
       />
 
-      {/* Fixed full-page Zeb layer — pointerEvents:none so it never
-          intercepts page clicks. Drag interaction is handled by the
-          separate <ZebHitArea /> div rendered below.*/}
+      {!isMobile && (
+        <>
+          {/* Fixed full-page Zeb layer — pointerEvents:none so it never
+              intercepts page clicks. Drag interaction is handled by the
+              separate <ZebHitArea /> div rendered below.*/}
 
-      <div
-        id="zeb-travel-layer"
-        style={{
-          position: "fixed",
-          inset: 0,
-          pointerEvents: "none",
-          zIndex: 50,
-          opacity: 0,
-        }}
-      >
-        <Canvas
-          gl={{ alpha: true, antialias: true }}
-          style={{
-            background: "transparent",
-            width: "100%",
-            height: "100%",
-            pointerEvents: "none",
-          }}
-          camera={{ position: [0, 0, 7], fov: 32, near: 0.1, far: 100 }}
-        >
-          <Suspense fallback={null}>
-            <ambientLight intensity={0.42} color="#2a4fa8" />
-            <directionalLight position={[3, 5, 4]} intensity={0.65} color="#ffffff" />
-            <directionalLight position={[-4, 2, 2]} intensity={0.5} color="#3060c8" />
-            <pointLight position={[-2, -1, -3]} intensity={1.0} distance={10} decay={2} color="#1d3b8a" />
-            <Environment preset="apartment" background={false} environmentIntensity={0.6} />
-            <ZebTraveler />
-          </Suspense>
-        </Canvas>
-      </div>
+          <div
+            id="zeb-travel-layer"
+            style={{
+              position: "fixed",
+              inset: 0,
+              pointerEvents: "none",
+              zIndex: 50,
+              opacity: 0,
+            }}
+          >
+            <Canvas
+              gl={{ alpha: true, antialias: true }}
+              style={{
+                background: "transparent",
+                width: "100%",
+                height: "100%",
+                pointerEvents: "none",
+              }}
+              camera={{ position: [0, 0, 7], fov: 32, near: 0.1, far: 100 }}
+            >
+              <Suspense fallback={null}>
+                <ambientLight intensity={0.42} color="#2a4fa8" />
+                <directionalLight position={[3, 5, 4]} intensity={0.65} color="#ffffff" />
+                <directionalLight position={[-4, 2, 2]} intensity={0.5} color="#3060c8" />
+                <pointLight position={[-2, -1, -3]} intensity={1.0} distance={10} decay={2} color="#1d3b8a" />
+                <Environment preset="apartment" background={false} environmentIntensity={0.6} />
+                <ZebTraveler />
+              </Suspense>
+            </Canvas>
+          </div>
 
-      {/* Transparent hit-area that tracks Zeb's screen position and
-          forwards horizontal drag deltas for yaw rotation. Rendered
-          outside the canvas layer so it receives normal DOM events. */}
-      <ZebHitArea />
+          {/* Transparent hit-area that tracks Zeb's screen position and
+              forwards horizontal drag deltas for yaw rotation. Rendered
+              outside the canvas layer so it receives normal DOM events. */}
+          <ZebHitArea />
+        </>
+      )}
 
       {/* (Astronaut layer removed — Space Robotics uses the interactive
          robot character inside the hero canvas instead.) */}

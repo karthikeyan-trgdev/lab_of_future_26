@@ -19,6 +19,7 @@ const Aerospace = lazy(() => import('../pages/Home/Aerospace'));
 // Category pages
 const Students = lazy(() => import('../pages/Students/Students'));
 const ComingSoon = lazy(() => import('../pages/ComingSoon/ComingSoon'));
+const IframeEmbed = lazy(() => import('../pages/IframeEmbed/IframeEmbed'));
 
 const About = lazy(() => import('../pages/About/About'));
 const Services = lazy(() => import('../pages/Services/Services'));
@@ -68,6 +69,54 @@ const AppRoutes = () => (
         <Route path="services" element={<Services />} />
         <Route path="projects" element={<Projects />} />
         <Route path="contact" element={<Contact />} />
+
+        {/* School Programs / Events — gamma.app embeds */}
+        <Route
+          path="school-programs/zero-gravity"
+          element={
+            <IframeEmbed
+              src="https://gamma.app/embed/sbmltll626kq6ud"
+              title="Zero Gravity Program"
+            />
+          }
+        />
+        <Route
+          path="events/orbita-26"
+          element={
+            <IframeEmbed
+              src="https://gamma.app/embed/fbn7ejouxgdvgh4"
+              title="Orbita 26"
+            />
+          }
+        />
+        <Route
+          path="events/asian-space-settlement-design-competition-2026"
+          element={
+            <IframeEmbed
+              src="https://gamma.app/embed/brxuo87f7e3tb7z"
+              title="Asian Space Settlement Design Competition 2026"
+            />
+          }
+        />
+        <Route
+          path="events/summer-camp-2026"
+          element={
+            <IframeEmbed
+              src="https://gamma.app/embed/r2qgxqn8dfe57vl"
+              title="Summer Camp 2026"
+            />
+          }
+        />
+        <Route
+          path="events/summer-internship-2026"
+          element={
+            <IframeEmbed
+              src="https://gamma.app/embed/h0pfs5b55hait92"
+              title="Summer Internship 2026"
+            />
+          }
+        />
+
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

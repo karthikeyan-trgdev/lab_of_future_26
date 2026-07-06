@@ -36,6 +36,7 @@ import ScrollProgressBar from "../../components/common/ScrollProgressBar";
 import BackToTopButton from "../../components/common/BackToTopButton";
 import { siteConfig } from "../../data/siteConfig";
 import { canvasPerf } from "../../hooks/useDevicePerformance";
+import { useEnquiryModal } from "../../context/EnquiryModalContext";
 
 import certificateUrl from "../../assets/certificate.png";
 
@@ -1376,7 +1377,9 @@ const HeroText = () => {
    WHY SPACE SCIENCE SECTION
 ========================================================= */
 
-const WhySpaceScience = () => (
+const WhySpaceScience = () => {
+  const { openEnquiry } = useEnquiryModal();
+  return (
   <section className="why-section">
     <div className="why-container container">
       <div className="why-left">
@@ -1385,19 +1388,21 @@ const WhySpaceScience = () => (
         </h2>
         <p className="why-desc">Children are naturally curious about the sky, but curiosity fades when learning becomes memorisation. The benefits of space science for kids go far beyond planets and rockets. Space is one of the few disciplines that blends science, engineering, creativity, observation, problem-solving, and technology into one learning journey. Astronomy doesn't just teach children about space. It teaches them how to think, question, and explore; and that changes everything.
 </p>
-        <NavLink
-          to="/programs"
+        <button
+          type="button"
           className="glass-btn glass-btn--light header-btn"
           style={{ marginTop: "var(--space-s)" }}
+          onClick={openEnquiry}
         >
           ENROLL NOW
-        </NavLink>
+        </button>
       </div>
       {/* right column is empty — the fixed astronaut canvas shows here */}
       <div className="why-right" />
     </div>
   </section>
-);
+  );
+};
 
 /* =========================================================
    WHAT LOF DOES + AGE PROGRAMS (section 3)
@@ -1450,6 +1455,7 @@ const AGE_GROUPS = [
 // inside it) zoom up to fill the screen, then it scrolls away into the
 // age-cards section.
 const LofProgram = () => {
+  const { openEnquiry } = useEnquiryModal();
   const sectionRef = useRef(null);
   const topRef = useRef(null);
   const cellRef = useRef(null);
@@ -1544,13 +1550,14 @@ const LofProgram = () => {
             children, curiosity becomes confidence, observation becomes instinct, and complex ideas
             begin to feel exciting — not intimidating.</p>
 
-            <NavLink
-              to="/programs"
+            <button
+              type="button"
               className="glass-btn glass-btn--light header-btn"
               style={{ marginTop: "var(--space-s)" }}
+              onClick={openEnquiry}
             >
               ENROLL NOW
-            </NavLink>
+            </button>
           </div>
         </div>
       </div>
@@ -1830,7 +1837,9 @@ const COMPETITION_ITEMS = [
   },
 ];
 
-const Competitions = () => (
+const Competitions = () => {
+  const { openEnquiry } = useEnquiryModal();
+  return (
   <section className="competitions-section">
     <div className="competitions-inner container">
       <div className="competitions-left">
@@ -1840,13 +1849,14 @@ const Competitions = () => (
 competitions for students and space science olympiad preparation to global innovation
 challenges, students build confidence, portfolios, and real problem-solving ability through
 structured national science competition training.</p>
-          <NavLink
-          to="/programs"
+          <button
+          type="button"
           className="glass-btn glass-btn--light header-btn"
           style={{ marginTop: "var(--space-s)" }}
+          onClick={openEnquiry}
         >
           ENROLL NOW
-        </NavLink>
+        </button>
         </div>
       </div>
       <div className="competitions-right">
@@ -1872,7 +1882,8 @@ structured national science competition training.</p>
       </div>
     </div>
   </section>
-);
+  );
+};
 
 /* =========================================================
    CAREER PATHWAYS — FAQ ACCORDION (section 9)
@@ -3015,6 +3026,7 @@ problem-solvers — with parents closely involved in the journey.</p>
 ========================================================= */
 
 const FutureBuilt = () => {
+  const { openEnquiry } = useEnquiryModal();
   const videoRef = useRef(null);
   const sectionRef = useRef(null);
   const startedRef = useRef(false);
@@ -3083,12 +3095,12 @@ const FutureBuilt = () => {
           planet.
         </p>
         <div className="future-actions">
-          <a href="#enroll" className="future-btn future-btn--primary">
+          <button type="button" onClick={openEnquiry} className="future-btn future-btn--primary">
             Enroll Now
-          </a>
-          <a href="#demo" className="future-btn future-btn--ghost">
+          </button>
+          <button type="button" onClick={openEnquiry} className="future-btn future-btn--ghost">
             Book a Demo
-          </a>
+          </button>
         </div>
       </div>
     </section>
@@ -3588,6 +3600,8 @@ const AstroHitArea = () => {
 };
 
 const SpaceScience = () => {
+  const { openEnquiry } = useEnquiryModal();
+
   // Tag <body> so this page's header CTA can opt into the dark-btn.svg
   // frame without affecting the global header on other pages.
   useEffect(() => {

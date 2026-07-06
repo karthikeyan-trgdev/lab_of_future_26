@@ -176,6 +176,11 @@
   gap: 0px;
 }
 
+.site-nav .nav-label {
+  color: #fff;
+  cursor: default;
+}
+
 .header-actions {
   display: flex;
   align-items: center;

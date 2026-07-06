@@ -34,16 +34,17 @@ import ScrollProgressBar from "../../components/common/ScrollProgressBar";
 import BackToTopButton from "../../components/common/BackToTopButton";
 import { siteConfig } from "../../data/siteConfig";
 import { canvasPerf } from "../../hooks/useDevicePerformance";
+import { useEnquiryModal } from "../../context/EnquiryModalContext";
 
 import droneCertImg from "../../assets/programs/drones/drone-certificate.webp";
 
-import learnThinkCritically from "../../assets/programs/drones/students-learn-image-1.webp";
-import learnUnderstandWorld from "../../assets/programs/drones/students-learn-image-2.webp";
-import learnBuildModels from "../../assets/programs/drones/students-learn-image-3.webp";
-import learnUseTools from "../../assets/programs/drones/students-learn-image-4.webp";
-import learnCommunicate from "../../assets/programs/drones/students-learn-image-5.webp";
-import learnWorkTeams from "../../assets/programs/drones/students-learn-image-6.webp";
-import learnSolveProblems from "../../assets/programs/drones/students-learn-image-7.webp";
+import learnThinkCritically from "../../assets/programs/drones/future-career/students-learn (1).webp";
+import learnUnderstandWorld from "../../assets/programs/drones/future-career/students-learn (2).webp";
+import learnBuildModels from "../../assets/programs/drones/future-career/students-learn (3).webp";
+import learnUseTools from "../../assets/programs/drones/future-career/students-learn (5).webp";
+import learnCommunicate from "../../assets/programs/drones/future-career/students-learn (6).webp";
+import learnWorkTeams from "../../assets/programs/drones/future-career/students-learn (8).webp";
+import learnSolveProblems from "../../assets/programs/drones/future-career/students-learn (9).webp";
 
 // Drone hero assets
 import droneGlbUrl from "../../assets/programs/drones/Drone.glb?url";
@@ -119,7 +120,9 @@ import vettedFrameRobotics from "../../assets/programs/drones/team-name-frame.pn
    WHY SPACE SCIENCE SECTION
 ========================================================= */
 
-const WhySpaceScience = () => (
+const WhySpaceScience = () => {
+  const { openEnquiry } = useEnquiryModal();
+  return (
   <section className="why-section why-section--robotics drones-why-section">
     <div className="drones-why-inner container">
       {/* Outer decorative geometric elements at the page corners */}
@@ -159,12 +162,12 @@ autonomous missions, they discover how ideas become real movement, real
 confidence, and real innovation. This is where learners stop imagining the future and
 start flying it.</p>
             <div className="drones-why-cta-row">
-              <NavLink to="/student-portal" className="drones-why-btn">
+              <button type="button" onClick={openEnquiry} className="drones-why-btn">
                 Enroll Now
-              </NavLink>
-              <NavLink to="/contact" className="drones-why-btn">
+              </button>
+              <button type="button" onClick={openEnquiry} className="drones-why-btn">
                 Book a Demo
-              </NavLink>
+              </button>
             </div>
           </div>
 
@@ -176,7 +179,8 @@ start flying it.</p>
       </div>
     </div>
   </section>
-);
+  );
+};
 
 /* =========================================================
    ZEB ROBOT — used inside the "Why Space Robotics" panel.
@@ -784,7 +788,9 @@ const COMPETITION_ITEMS = [
   },
 ];
 
-const Competitions = () => (
+const Competitions = () => {
+  const { openEnquiry } = useEnquiryModal();
+  return (
   <section className="competitions-section competitions-section--robotics">
     <div className="drone-wp-comp" aria-hidden="true" />
     <div className="competitions-inner container">
@@ -801,12 +807,13 @@ const Competitions = () => (
             Get recognised for what you build.Showcase your robotics skills. Solve real-world challenges.
             Get recognised for what you build.
           </p>
-          <NavLink
-            to="/programs"
+          <button
+            type="button"
             className="drones-comp-btn"
+            onClick={openEnquiry}
           >
             ENROLL NOW
-          </NavLink>
+          </button>
         </div>
       </div>
       <div className="competitions-right">
@@ -832,7 +839,8 @@ const Competitions = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 /* =========================================================
    CAREER PATHWAYS — FAQ ACCORDION (section 9)
@@ -1552,7 +1560,9 @@ const CtaDroneCanvas = () => (
   </Canvas>
 );
 
-const CtaRobotics = () => (
+const CtaRobotics = () => {
+  const { openEnquiry } = useEnquiryModal();
+  return (
   <section className="cta-robotics-section">
     <div className="cta-robotics-inner container">
       {/* LEFT — drone GLB playing animation 2 only. */}
@@ -1573,17 +1583,18 @@ const CtaRobotics = () => (
           planet.
         </p>
         <div className="cta-robotics-actions">
-          <NavLink to="/student-portal" className="cta-robotics-btn cta-robotics-btn--primary">
+          <button type="button" onClick={openEnquiry} className="cta-robotics-btn cta-robotics-btn--primary">
             Enroll Now
-          </NavLink>
-          <NavLink to="/contact" className="cta-robotics-btn cta-robotics-btn--secondary">
+          </button>
+          <button type="button" onClick={openEnquiry} className="cta-robotics-btn cta-robotics-btn--secondary">
             Book a Demo
-          </NavLink>
+          </button>
         </div>
       </div>
     </div>
   </section>
-);
+  );
+};
 
 /* =========================================================
    EXPLORE PROGRAMS — autoplay card slider
@@ -2181,13 +2192,28 @@ const DroneTravelerModel = ({ tiltRef }) => {
 };
 
 const Drones = () => {
+  const { openEnquiry } = useEnquiryModal();
+
+  // The drone traveler is choreographed for wide desktop layouts — at
+  // mobile/tablet/laptop widths his landing spots collide with section
+  // content (age cards, headings, etc.), so he's dropped from the DOM
+  // entirely at or below the laptop breakpoint.
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== "undefined" && window.innerWidth <= 1280
+  );
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 1280);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   return (
     <div className="drones-page">
       <ScrollProgressBar />
       <BackToTopButton />
 
       {/* Fixed 3-D drone that travels across all sections as user scrolls */}
-      <DroneTraveler />
+      {!isMobile && <DroneTraveler />}
 
       <SEO
         title={`Drones | ${siteConfig.title}`}

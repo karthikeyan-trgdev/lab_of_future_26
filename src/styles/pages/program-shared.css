@@ -7,7 +7,7 @@
 /* ── SCALE TOKENS ──────────────────────────────────────────────── */
 :root {
   --prog-fs-hero:       clamp(2.6rem,  8vw,   6.5rem);  /* hero banner title     */
-  --prog-fs-section:    clamp(1.8rem,  3.4vw, 2.5rem);    /* major section h2      */
+  --prog-fs-section:    clamp(1.3rem,  3.4vw, 2.5rem);    /* major section h2      */
   --prog-fs-eyebrow:    clamp(0.85rem, 1.1vw, 1rem); /* small label / eyebrow */
   --prog-fs-body:       clamp(0.85rem, 1vw,   0.95rem); /* section desc / body   */
   --prog-fs-card-title: clamp(0.9rem,  1.1vw, 1.05rem); /* card / box title h3   */
@@ -253,7 +253,7 @@
   text-transform: capitalize;
   text-align: center;
   opacity: 0.9;
-  margin: 0 auto 50px auto;
+  margin: 0 auto 0px auto;
   width: 75%;
   color:#fff
 }

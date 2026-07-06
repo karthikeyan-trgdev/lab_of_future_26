@@ -28,6 +28,17 @@
   background: var(--sr-deep);
 }
 
+/* Shorter hero on phones — the robot canvas fills the hero via
+   inset:0, so shrinking the container height also shrinks the
+   robot's rendered size (its vertical FOV is fixed, so it keeps
+   the same fraction of a now-smaller frame). */
+@media (max-width: 640px) {
+  .space-robotics-page .hero {
+    height: 58vh;
+    height: 58dvh;
+  }
+}
+
 /* Backdrop image — corridor / robotics studio photo. Fills the
    whole hero behind the robot canvas. */
 .space-robotics-page .hero-bg {
@@ -2237,9 +2248,8 @@ background: #ffffff !important;
    200×80 px, light-btn.svg artwork, white text. No variant differences. */
 .space-robotics-page .why-section--robotics .why-btn {
   width: fit-content;
-  height: 80px;
+  height: 100px;
   min-width: 0;
-  padding: 0;
   border: none;
   border-radius: 0;
   background: url("../../assets/dark-btn.svg") no-repeat center / 120% 100%;
@@ -2255,6 +2265,7 @@ background: #ffffff !important;
   align-items: center;
   justify-content: center;
   transition: transform 0.16s ease, filter 0.16s ease;
+  margin-top:0px !important;
 }
 
 /* Both why-section buttons now use the DARK pill artwork. */
@@ -2637,7 +2648,12 @@ background: #ffffff !important;
   background: #1d3b8a;
 }
 
-@media (max-width: 992px) {
+/* Below ~1920px the fixed aspect-ratio forces each card's WIDTH to be
+   derived from its (content-driven, often tall) stretched row height,
+   which blows every column way past its fair 1/5 share and overflows
+   the row — clipped by the section's overflow:hidden. Letting height
+   follow content instead avoids that at any tablet/laptop width. */
+@media (max-width: 1280px) {
   .space-robotics-page .age-card,
   .space-robotics-page .age-card:nth-child(1),
   .space-robotics-page .age-card:nth-child(2),
@@ -2646,6 +2662,10 @@ background: #ffffff !important;
   .space-robotics-page .age-card:nth-child(5) {
     aspect-ratio: auto;
     min-height: 260px;
+    /* base rule has 0 bottom padding (tuned for the fixed-aspect
+       frame); with auto height the last bullet otherwise sits flush
+       against the frame image's bottom edge/shadow. */
+    padding-bottom: 28px;
   }
 }
 
@@ -3064,4 +3084,145 @@ body.space-robotics .header-btn {
   width: 100%;
   object-fit: cover;
   margin-left: 0px !important;
+}
+
+@media (max-width: 740px){
+  .why-left .why-btn--secondary{
+    display:none !important;
+  }
+  .space-robotics-page .why-section--robotics .why-right img{
+    height:100%  !important;
+  }
+  .space-robotics-page .why-section--robotics .why-right{
+    min-height:100% !important;
+  }
+  .space-robotics-page .age-card-list{
+    padding-top:0px !important;
+  }
+  .space-robotics-page .age-card-label{
+    font-size: 15px !important;
+    top:1% !important;
+  }
+  .learn-foot{
+    margin-top:30px !important;
+  }
+  .space-robotics-page .cert-section--robotics .cert-robot-hand{
+    display:none !important;
+  }
+  .space-robotics-page .cert-section--robotics .cert-robotics-stage .swiper-3d{
+    perspective: none !important;
+  }
+  .space-robotics-page .cert-section--robotics .cert-robotics-swiper{
+    padding:30px 0px 30px 0px !important;
+  }
+  .careers-skill-card{
+    aspect-ratio: 220 / 170 !important;
+  }
+  .careers-skill-img{
+    height:175px !important;
+    width:100% !important;
+  }
+  /* FAQ questions collapse to one full-width column here (no more
+     centre gap for the background robot art to sit in), so the
+     translucent card background lets the busy photo underneath show
+     through too strongly. Opaque it up so the text stays legible. */
+  .space-robotics-page .faq-robotics-section .faq-robotics-q {
+    background: rgba(255, 255, 255, 0.92) !important;
+  }
+  .space-robotics-page .cert-section--robotics .cert-robotics-text{
+    text-align:center !important;
+  }
+  .space-robotics-page .competitions-section--robotics .competitions-label-badge{
+    font-size: 25px !important;
+  }
+  .space-robotics-page .vetted-section--robotics .vetted-stage{
+    min-height: 150px !important;
+  }
+  .vetted-photo{
+    height:100% !important;
+  }
+  .space-robotics-page .vetted-section--robotics .vetted-inner{
+    gap: 20px !important;
+  }
+  .space-robotics-page .vetted-right{
+    margin-bottom: 0px !important;
+  }
+  .space-robotics-page .projects-section--robotics .projects-card{
+    background:#00354516 !important;
+  }
+  .space-robotics-page .projects-section--robotics .projects-card{
+    padding:10px !important;
+  }
+  .cta-robotics-section .cta-robotics-btn--secondary{
+    display:none !important;
+  }
+  .drones-hero-stage{
+    display: none !important;
+  }
+  .drones-page .drones-hero-grid{
+    padding-top:0px !important;
+    padding-bottom:0px !important;
+  }
+  .drones-page .drones-why-shape{
+    background-image: none !important;
+  }
+  .drones-page .drones-why-text{
+    color:#000 !important;
+  }
+  .drones-page .drones-why-text p{
+    color:#000 !important;
+  }
+  .drones-page .drones-why-text{
+    padding-top:20px !important;
+  }
+  .drones-page .drones-why-content{
+    padding:40px 20px 20px 20px !important;
+  }
+  .drones-page .drones-why-section{
+    padding:30px 0px !important;
+  }
+  .drones-page .drones-why-image{
+    display:none !important;
+  }
+  .drones-page .drones-start-drone{
+    display:none !important;
+  }
+  .drones-page .drones-start-shape{
+    background-image: none !important;
+  }
+  .drones-page .age-grid {
+    grid-template-columns: repeat(1, 1fr) !important;
+}
+    .drones-page .drones-start-shape {
+      min-height: 400px !important;
+    }
+    .drones-page .drones-start-section{
+      padding-top:150px !important;
+    }
+    .drones-page .age-card-list{
+      padding:0px 20px 10px 30px !important;
+    }
+    .drones-page .drones-cert-shape{
+          background-image: none !important;
+          padding:0px !important;
+    }
+    .drones-page .drones-cert-section{
+      padding:30px 0px !important;
+    }
+    .drones-page .assoc-tree{
+      padding:0px !important;
+    }
+    .drones-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-inner{
+      padding:0px !important;
+    }
+    .drones-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-left-col{
+      text-align:center !important;
+      justify-content:center !important;
+    }
+    .drones-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-plate{
+      width:70% !important;
+    }
+    .drones-page .projects-section--robotics .projects-card{
+      margin-bottom:0px !important;
+    }
 }

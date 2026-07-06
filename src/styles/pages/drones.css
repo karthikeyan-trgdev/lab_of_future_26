@@ -2475,7 +2475,14 @@
 .age-card-list li::before {
   display: none;
 }
-@media (max-width: 992px) {
+/* Card text (.age-card-label / .age-card-list) is absolutely
+   positioned starting at top:30%, with no defined bottom — so a
+   too-short fixed-aspect-ratio card lets long copy silently spill
+   past the visual frame instead of wrapping/clipping. Below 1280px
+   the 5-column desktop grid narrows each column enough that this
+   happens for the wordier cards, so let height grow generously
+   instead of following the frame's native ratio. */
+@media (max-width: 1280px) {
   .drones-page .age-card,
   .drones-page .age-card:nth-child(1),
   .drones-page .age-card:nth-child(2),
@@ -2483,7 +2490,7 @@
   .drones-page .age-card:nth-child(4),
   .drones-page .age-card:nth-child(5) {
     aspect-ratio: auto;
-    min-height: 260px;
+    min-height: 360px;
   }
 }
 
@@ -2575,7 +2582,10 @@
   display: block;
   margin-bottom: 0.75rem;
   object-fit: cover;
-  object-position: top;
+  object-position: center;
+}
+.choose-path-grid {
+  justify-content: center;
 }
 
 /* Label */
@@ -3117,6 +3127,19 @@
   content: none !important;
 }
 
+/* This one background image is `contain`-sized and vertically
+   centred across BOTH the Associated logos and the Vetted-by cards
+   combined — fine on a short, wide desktop wrapper, but once the
+   Vetted cards stack to one column the wrapper gets much taller and
+   the same centred image lands as an oddly-placed dark box over the
+   first couple of cards. Purely decorative, so drop it once the
+   layout stacks. */
+@media (max-width: 1280px) {
+  .drones-page .drones-assoc-vetted-wrapper {
+    background: #0a0a0a;
+  }
+}
+
 /* Both inner sections become transparent — wrapper carries the bg */
 .drones-page .drones-assoc-vetted-wrapper .assoc-section--robotics {
   background: transparent !important;
@@ -3308,7 +3331,7 @@
 }
 @media (max-width: 520px) {
   .drones-page .drones-assoc-vetted-wrapper .vetted-section--robotics .vetted-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: 1fr !important;
   }
 }
 
@@ -3438,6 +3461,35 @@
   left: -1.5rem;
   transform: rotate(180deg);
   z-index: 1;
+}
+
+/* This section is intentionally overflow:visible (see .drones-why-section
+   above) so these corner flourishes can bleed past the white panel on
+   wide desktop layouts. At narrower widths the panel sits flush with
+   the viewport edge, so that same bleed pushes past the actual page
+   edge and creates a real horizontal scrollbar. Drop the purely
+   decorative bleed at mobile/tablet/laptop widths instead of fighting
+   the section's overflow (which the coverflow content still needs). */
+@media (max-width: 1280px) {
+  .drones-page .drones-why-element--tr-outer,
+  .drones-page .drones-why-element--bl-outer {
+    display: none;
+  }
+}
+
+/* "How To Choose The Right Path" cards: the 4-column grid uses 1fr
+   tracks, whose default min-width is auto (min-content) not 0. This
+   page's card copy ("Aerial mapping, Surveying, Rescue missions,
+   Agriculture, Inspection, Environmental monitoring.") is long enough
+   that its min-content forces each track past its fair share of a
+   1280px row, blowing the grid out to ~1800px and clipping the first/
+   last cards against the section's overflow:hidden. Drop to 2 columns
+   at laptop width and below, matching the grid's own ≤992px rule, so
+   each card gets roughly double the width and lays out normally. */
+@media (max-width: 1280px) {
+  .drones-page .choose-path-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* ---- Title sits IN the notch carved out of the panel's top-left.
@@ -3633,7 +3685,14 @@
     gap: 1.5rem;
   }
   .drones-page .drones-why-text {
-    padding-top: 0;
+    /* The panel background (bg-shape-1.webp, native 1514:720) gets
+       forced portrait here via aspect-ratio:auto + min-height, which
+       stretches the image's notch cutout far taller than its design
+       proportions — a percentage padding-top (which CSS always
+       resolves against the containing block's WIDTH, not height)
+       badly undershoots the clearance it actually needs. Fixed px
+       clears the stretched notch regardless of width. */
+    padding-top: 140px;
   }
   .drones-page .drones-why-image {
     height: 280px;
@@ -3750,13 +3809,18 @@
 
 /* ---- Responsive ----------------------------------------- */
 @media (max-width: 900px) {
+  /* .drones-start-grid is position:absolute (inset:0) inside this
+     shape, so it never contributes intrinsic height back to the
+     shape — with two full text blocks stacked here, content actually
+     needs ~815px, well past the old 600px floor, and the overflow
+     used to silently bleed into the next section (age cards). */
   .drones-page .drones-start-shape {
     aspect-ratio: auto;
-    min-height: 600px;
+    min-height: 900px;
   }
   .drones-page .drones-start-grid {
     grid-template-columns: 1fr;
-    grid-template-rows: 280px 1fr;
+    grid-template-rows: 280px auto;
   }
   .drones-page .drones-start-content {
     padding: 6% 7% 10%;
@@ -3764,14 +3828,9 @@
   .drones-page .age-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .drones-page .age-card,
-  .drones-page .age-card:nth-child(1),
-  .drones-page .age-card:nth-child(2),
-  .drones-page .age-card:nth-child(3),
-  .drones-page .age-card:nth-child(4),
-  .drones-page .age-card:nth-child(5) {
-    aspect-ratio: 229 / 277;
-  }
+  /* age-card sizing at this width is handled by the aspect-ratio:auto
+     rule above (now covering up to 1280px) — don't reassert the fixed
+     ratio here or long copy spills past the card frame again. */
 }
 
 /* =========================================================
@@ -3864,4 +3923,10 @@
 
 .header-btn {
     background: url(/src/assets/programs/drones/light-btn.svg) no-repeat center / 120% 100% !important;
+}
+.explore-card-imgwrap{
+  padding:0px !important;
+}
+.explore-card-img{
+  height:200px !important;
 }

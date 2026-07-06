@@ -33,6 +33,7 @@ import {
 import { MdEmail, MdPhone } from 'react-icons/md';
 
 import SEO from '../../components/common/SEO';
+import { useEnquiryModal } from '../../context/EnquiryModalContext';
 import '../../styles/pages/category-page.css';
 import '../../styles/pages/students.css';
 
@@ -420,7 +421,10 @@ const STUDENT_MISSIONS = [
   { label: 'Future City Design',          img: mission6 },
 ];
 
-const Students = () => (
+const Students = () => {
+  const { openEnquiry } = useEnquiryModal();
+
+  return (
   <main
     className="students-page"
     style={{ ['--student-hero-bg']: `url(${studentHeroBg})` }}
@@ -471,12 +475,12 @@ const Students = () => (
           transition={{ duration: 0.6, delay: 0.42, ease: 'easeOut' }}
         >
           
-          <Link to="/contact" className="student-btn student-btn--primary">
+          <button type="button" onClick={openEnquiry} className="student-btn student-btn--primary">
             Enroll Now
             <span className="student-btn-arrow" aria-hidden="true">
               <FaArrowRight />
             </span>
-          </Link>
+          </button>
           <a href="#programs" className="student-btn student-btn--ghost">
             Explore Programs
             <span className="student-btn-arrow" aria-hidden="true">
@@ -548,18 +552,18 @@ const Students = () => (
           <p className="student-wwd-desc">The Student Program is designed to help learners develop critical thinking, creativity, problem-solving, and technical skills through hands-on projects and interactive missions. Every activity is built to inspire confidence and prepare students for tomorrow's opportunities.</p>
 
           <div className="student-wwd-cta">
-            <Link to="/contact" className="student-btn student-btn--primary">
+            <button type="button" onClick={openEnquiry} className="student-btn student-btn--primary">
               Enroll Now
               <span className="student-btn-arrow" aria-hidden="true">
                 <FaArrowRight />
               </span>
-            </Link>
-            <Link to="/contact" className="student-btn student-btn--ghost">
+            </button>
+            <button type="button" onClick={openEnquiry} className="student-btn student-btn--ghost">
               Book a Demo
               <span className="student-btn-arrow" aria-hidden="true">
                 <FaArrowRight />
               </span>
-            </Link>
+            </button>
           </div>
         </motion.div>
       </div>
@@ -696,18 +700,18 @@ const Students = () => (
           <div className="student-cta-actions">
 
 
-<Link to="/contact" className="student-btn student-btn--primary">
+<button type="button" onClick={openEnquiry} className="student-btn student-btn--primary">
               Enroll Now
               <span className="student-btn-arrow" aria-hidden="true">
                 <FaArrowRight />
               </span>
-            </Link>
-            <Link to="/contact" className="student-btn student-btn--ghost">
+            </button>
+            <button type="button" onClick={openEnquiry} className="student-btn student-btn--ghost">
               Book a Demo
               <span className="student-btn-arrow" aria-hidden="true">
                 <FaArrowRight />
               </span>
-            </Link>
+            </button>
           </div>
         </div>
       </div>
@@ -813,7 +817,8 @@ const Students = () => (
     {/* ──────────────── SITE FOOTER ─────────────────────────────── */}
     <SiteFooter />
   </main>
-);
+  );
+};
 
 /* ─────────────────────── SITE FOOTER ───────────────────────
    Same layout as the other program pages (Aerospace, AI, etc.).
