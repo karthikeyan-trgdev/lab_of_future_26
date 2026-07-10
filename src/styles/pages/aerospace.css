@@ -617,7 +617,7 @@
   width: 200px;
   height: 64px;
   margin-top: var(--space-s, 1rem);
-  background: url("../../assets/programs/drones/dark-btn.svg") no-repeat center / 100% 100%;
+  background: url("../../assets/programs/drones/dark-btn.png") no-repeat center / 100% 100%;
   border: none;
   border-radius: 0;
   color: #ffffff;
@@ -1740,27 +1740,33 @@
    buttons — 200×80 px, light-btn.svg / dark-btn.svg artwork, white
    text, soft blue drop-shadow on hover. */
 .aerospace-page .cta-robotics-btn {
-  width: 200px;
-  height: 80px;
-  min-width: 0;
-  padding: 0;
-  border: none;
-  border-radius: 0;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 120% 100%;
-  backdrop-filter: none;
-  box-shadow: none;
-  color: #ffffff;
-  font-family: var(--font-display, "Conthrax", sans-serif);
-  font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 0.02em;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.16s ease, filter 0.16s ease;
+width: fit-content !important;
+    height: fit-content !important;
+    min-width: 0 !important;
+    padding: 15px 30px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: transparent !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 100% 100% !important;
+    color: #ffffff !important;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.04em !important;
+    text-transform: none !important;
+    text-shadow: none !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    white-space: nowrap !important;
+    animation: none !important;
 }
 
 /* Both CTA buttons use the DRONE-theme dark pill artwork (matches
@@ -1768,7 +1774,7 @@
    /assets/dark-btn.svg the robotics page used. */
 .aerospace-page .cta-robotics-btn--primary,
 .aerospace-page .cta-robotics-btn--secondary {
-  background-image: url("../../assets/programs/drones/dark-btn.svg");
+  background-image: url("../../assets/programs/drones/dark-btn.png");
 }
 
 .aerospace-page .cta-robotics-btn:hover,
@@ -2241,7 +2247,7 @@
   padding: 0;
   border: none;
   border-radius: 0;
-  background: url("../../assets/dark-btn.svg") no-repeat center / 120% 100%;
+  background: url("../../assets/programs/aeromodelling/dark-btn.png") no-repeat center / 120% 100%;
   backdrop-filter: none;
   box-shadow: none;
   color: #ffffff;
@@ -2259,7 +2265,7 @@
 /* Both why-section buttons now use the DARK pill artwork. */
 .aerospace-page .why-section--robotics .why-btn--primary,
 .aerospace-page .why-section--robotics .why-btn--secondary {
-  background-image: url("../../assets/dark-btn.svg");
+  background-image: url("../../assets/programs/aeromodelling/dark-btn.png");
 }
 
 .aerospace-page .why-section--robotics .why-btn:hover,
@@ -2992,7 +2998,7 @@
   border: none;
   border-radius: 0;
   background:
-    url("../../assets/programs/drones/dark-btn.svg")
+    url("../../assets/programs/drones/dark-btn.png")
     no-repeat center / 120% 100%;
   backdrop-filter: none;
   box-shadow: none;
@@ -3583,7 +3589,7 @@
   padding: 0;
   border: none;
   background:
-    url("../../assets/programs/drones/dark-btn.svg")
+    url("../../assets/programs/drones/dark-btn.png")
     no-repeat center / 120% 100%;
   color: #ffffff;
   font-family: var(--font-display, "Conthrax", sans-serif);
@@ -4305,7 +4311,6 @@
   justify-content: center;
   width: 250px;
   height: 80px;
-  margin-left:-30px;
   padding: 0;
   border: none;
   color: #ffffff;
@@ -4321,14 +4326,14 @@
 /* Primary — dark-btn.svg (filled) */
 .aerospace-page .aero-why-btn--dark {
   background:
-    url("../../assets/programs/aeromodelling/dark-btn.svg")
+    url("../../assets/programs/aeromodelling/dark-btn.png")
     no-repeat center / 120% 100%;
 }
 
 /* Secondary — light-btn.svg (outline) */
 .aerospace-page .aero-why-btn--light {
   background:
-    url("../../assets/programs/aeromodelling/light-btn.svg")
+    url("../../assets/programs/aeromodelling/light-btn.png")
     no-repeat center / 120% 100%;
 }
 
@@ -5013,7 +5018,7 @@
   margin-left:-30px;
   padding: 0;
   border: none;
-  background: url("../../assets/programs/aeromodelling/dark-btn.svg")
+  background: url("../../assets/programs/aeromodelling/dark-btn.png")
     no-repeat center / 120% 100%;
   color: #ffffff;
   font-family: var(--font-display, "Conthrax", sans-serif);
@@ -5941,7 +5946,7 @@
 /* Buttons — use aeromodelling dark-btn.svg */
 .aerospace-page .cta-robotics-btn--primary,
 .aerospace-page .cta-robotics-btn--secondary {
-  background-image: url("../../assets/programs/aeromodelling/dark-btn.svg") !important;
+  background-image: url("../../assets/programs/aeromodelling/dark-btn.png") !important;
 }
 
 .aerospace-page .cta-robotics-btn:hover,
@@ -6348,11 +6353,11 @@
 }
 
 body.aerospace-page .header-btn {
-    background: url('/src/assets/programs/aeromodelling/dark-btn.svg') no-repeat center / 120% 100% !important;
+    background: url('/src/assets/programs/aeromodelling/dark-btn.png') no-repeat center / 120% 100% !important;
 }
 .explore-section .prog-section-subtitle{
   width:100%;
-  margin-bottom:30px
+  margin-bottom:50px
 }
 .explore-section .prog-section-title{
   margin-bottom: 0px !important; 

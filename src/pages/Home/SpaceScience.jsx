@@ -305,6 +305,11 @@ const ASTRONAUT_Z = 1.2;
 // floating animation so the body sits at true viewport center
 const ASTRONAUT_Y = -2.4;
 
+// hero-only framing — applied at full strength while the hero is on screen
+// and faded out over leg 1 so the rest of the journey is untouched
+const HERO_ASTRO_SCALE_MUL = 0.78;
+const HERO_ASTRO_Y_LIFT = 0.9;
+
 // section-3 (LOF program) landing spot — astronaut flies to the LEFT here
 const LOF_ASTRO_SCALE = 2.0; // size inside the framed panel (at rest)
 const LOF_ASTRO_Y_NUDGE = -3.5; // push down so head/torso show and legs clip at the bottom
@@ -571,6 +576,10 @@ const FloatingAstronaut = ({ isMobile = false }) => {
     let tx = journeyPos.current.x;
     let ty = journeyPos.current.y;
 
+    // 1 while sitting in the hero, 0 once leg 1 is done
+    const heroFade = 1 - jT;
+    ty += HERO_ASTRO_Y_LIFT * heroFade;
+
     /* ---- leg 2: settle into the Earth box, zoom with it, then shrink
        to the top-right of the age-cards section ---- */
     const vw = size.width;
@@ -597,7 +606,7 @@ const FloatingAstronaut = ({ isMobile = false }) => {
 
     let pv = 0;
     let settleT = 0;
-    let targetScale = ASTRONAUT_SCALE;
+    let targetScale = ASTRONAUT_SCALE * (1 - (1 - HERO_ASTRO_SCALE_MUL) * heroFade);
     let boxRect = null;
 
     // section-driven "focus" orientation, blended over the idle sway.
@@ -823,7 +832,7 @@ const FloatingAstronaut = ({ isMobile = false }) => {
         let cx = vw * 0.78;
         // push the model centre well below so only HEAD + CHEST sit in frame,
         // landing around the vertical centre of the section
-        let cy = vr.top + vr.height * 0.5 + vh * 0.95;
+        let cy = vr.top + vr.height * 0.5 + vh * 0.82;
         const vtitle = document.querySelector(".vetted-title");
         if (vtitle) {
           const tr = vtitle.getBoundingClientRect();
@@ -1386,7 +1395,9 @@ const WhySpaceScience = () => {
         <h2 className="why-title prog-section-title">
           WHY <span className="why-title-bold">SPACE SCIENCE & ASTRONOMY?</span>
         </h2>
-        <p className="why-desc">Children are naturally curious about the sky, but curiosity fades when learning becomes memorisation. The benefits of space science for kids go far beyond planets and rockets. Space is one of the few disciplines that blends science, engineering, creativity, observation, problem-solving, and technology into one learning journey. Astronomy doesn't just teach children about space. It teaches them how to think, question, and explore; and that changes everything.
+        <p className="why-desc">Children are naturally curious about the sky, the stars, and the mysteries of the universe. However, that curiosity often fades when learning is reduced to memorisation instead of exploration. The benefits of space science for kids extend far beyond learning about planets, rockets, or galaxies. Space science is one of the few disciplines that seamlessly combines science, engineering, creativity, observation, critical thinking, problem-solving, and technology into a single, engaging learning journey.
+
+By exploring the universe, children learn to ask meaningful questions, think logically, experiment with ideas, and develop the confidence to discover answers on their own. Astronomy doesn't just teach children about space—it inspires curiosity, fuels imagination, and encourages innovation. It teaches them how to think, question, and explore, helping them build skills that will shape their future and prepare them to solve the challenges of tomorrow.
 </p>
         <button
           type="button"
@@ -1410,7 +1421,7 @@ const WhySpaceScience = () => {
 
 const AGE_GROUPS = [
   {
-    label: "Ages 6–7",
+    label: "Foundation",
     points: [
         "Explore planets, stars, moon phases, and galaxies through discovery.",
   "Learn about rockets, astronauts, telescopes, and early Mars missions.",
@@ -1418,7 +1429,7 @@ const AGE_GROUPS = [
     ],
   },
   {
-    label: "Ages 8–10",
+    label: "Explorer",
     points: [
       "Apply concepts through hands-on astronomy projects and model building.",
   "Understand Earth-space phenomena through observation and experiments.",
@@ -1426,7 +1437,7 @@ const AGE_GROUPS = [
     ],
   },
   {
-    label: "Ages 11–14",
+    label: "Innovator",
     points: [
        "Explore advanced astronomy, robotics, and scientific inquiry.",
   "Learn coding, programming, electronics, and engineering challenges.",
@@ -1434,7 +1445,7 @@ const AGE_GROUPS = [
     ],
   },
   {
-    label: "Ages 15–18",
+    label: "Engineer",
     points: [
        "Explore AI, rocketry, astrophotography, and spectroscopy.",
   "Work on drone systems, celestial navigation, and microgravity concepts.",
@@ -1442,7 +1453,7 @@ const AGE_GROUPS = [
       ],  
   },
   {
-    label: "Ages 18 & above",
+    label: "Researcher",
     points: [
        "Explore specialised space science, astronomy, and certification pathways.",
   "Strengthen research, technical, and interdisciplinary problem-solving skills.",
@@ -1543,7 +1554,7 @@ const LofProgram = () => {
             <h2 className="lof-title prog-section-title">
               THE LAB OF FUTURE WAY
             </h2>
-            <p className="lof-desc">We don’t hand students answers. We give them problems worth exploring.</p>
+            <p className="lof-desc">We don't hand students ready-made answers—we give them meaningful problems worth exploring. By encouraging curiosity, critical thinking, and experimentation, we help them discover solutions on their own. Every challenge becomes an opportunity to question, innovate, and build the confidence to think beyond the obvious.</p>
 
             <h2 className="lof-title prog-section-title">WHY START YOUNG?</h2>
             <p className="lof-desc">The strongest thinking habits form early. Through space and astronomy classes for young
@@ -1565,12 +1576,13 @@ const LofProgram = () => {
   );
 };
 
-// Section 4 — age titles are baked into the SVG frame; only render the bullet content
+// Section 4 — the frame image supplies the age range; the tier label is rendered
 const AgePrograms = () => (
   <section className="age-section">
     <div className="age-grid container">
       {AGE_GROUPS.map((g) => (
         <article className="age-card" key={g.label} aria-label={g.label}>
+          <div className="age-card-label">{g.label}</div>
           <ul className="age-card-list">
             {g.points.map((p, i) => (
               <li key={i}>{p}</li>
@@ -1675,7 +1687,7 @@ const Certificates = () => (
     <div className="cert-inner container">
       <div className="cert-text">
         <h2 className="cert-title prog-section-title">CERTIFICATES</h2>
-        <p>Every Skill Earned. Every Milestone Recognised.</p>
+        <p>Every skill earned is a step towards greater confidence, and every milestone achieved deserves to be recognised. We celebrate each accomplishment, inspiring students to keep learning, growing, and reaching for even greater heights on their journey of discovery.</p>
       
         
       </div>
@@ -2565,8 +2577,8 @@ const StudentProjects = () => (
                   />
                 </div>
                 <div className="projects-card-body">
-                  <h3 className="projects-card-title">{p.title}</h3>
-                  <p className="projects-card-desc">{p.desc}</p>
+                  <h3 className="projects-card-title pb-3">{p.title}</h3>
+                  <p className="projects-card-desc pb-3">{p.desc}</p>
                   <div className="projects-card-student">
                     <span className="projects-card-name">{p.student}</span>
                     <span className="projects-card-meta">{p.meta}</span>
@@ -3419,106 +3431,6 @@ const FaqRobotics = () => {
   );
 };
 
-/* =========================================================
-   SITE FOOTER
-========================================================= */
-
-const SiteFooter = () => (
-  <footer className="site-footer">
-    <div className="site-footer-inner container">
-      {/* horizontal row: logo + 4 named columns */}
-      <div className="site-footer-row">
-        {/* <div className="site-footer-brand">
-          <img
-            className="site-footer-logo"
-            src={lofLogo}
-            alt="Lab of Future"
-          />
-        </div> */}
-
-        <div className="site-footer-col">
-          <h4 className="site-footer-col-title">Quick Links</h4>
-          <ul className="site-footer-list">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#programs">Programs</a></li>
-            <li><a href="#innovation">Innovation Labs</a></li>
-            <li><a href="#partnerships">Partnerships</a></li>
-            <li><a href="#community">Join our community</a></li>
-          </ul>
-        </div>
-
-        <div className="site-footer-col">
-          <h4 className="site-footer-col-title">Explore</h4>
-          <ul className="site-footer-list">
-            <li><a href="#research">Research &amp; Projects</a></li>
-            <li><a href="#events">Events / Competitions</a></li>
-            <li><a href="#media">Media / Success Stories</a></li>
-            <li><a href="#updates">Live Updates</a></li>
-            <li><a href="#awards">Awards / Accreditations</a></li>
-            <li><a href="#contact">Contact Us</a></li>
-          </ul>
-        </div>
-
-        <div className="site-footer-col">
-          <h4 className="site-footer-col-title">Contact Us</h4>
-          <ul className="site-footer-contact">
-            <li>
-              <MdEmail className="site-footer-icon" />
-              <a href="mailto:contact@laboffuture.com">
-                contact@laboffuture.com
-              </a>
-            </li>
-            <li>
-              <MdPhone className="site-footer-icon" />
-              <span>
-                UAE: +971 - 42 856 706
-              </span>
-            </li>
-          </ul>
-          <div className="site-footer-socials">
-            <a href="#fb" aria-label="Facebook"><FaFacebookF /></a>
-            <a href="#x" aria-label="X / Twitter"><FaXTwitter /></a>
-            <a href="#yt" aria-label="YouTube"><FaYoutube /></a>
-            <a href="#ig" aria-label="Instagram"><FaInstagram /></a>
-            <a href="#in" aria-label="LinkedIn"><FaLinkedin /></a>
-          </div>
-        </div>
-
-        <div className="site-footer-col site-footer-stay">
-          <h4 className="site-footer-col-title">Stay Connected</h4>
-          <p className="site-footer-stay-desc">
-            Subscribe to our newsletter for updates, news events and
-            downloadables.
-          </p>
-          <form
-            className="site-footer-form"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <input
-              type="email"
-              placeholder="Your email address..."
-              aria-label="Email address"
-            />
-            <button type="submit" aria-label="Subscribe">
-              <FaPaperPlane />
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <div className="site-footer-bottom">
-        <p className="site-footer-copy">Copyright @2026 Lab of Future</p>
-        <p className="site-footer-policy">
-          <a href="#privacy">Privacy Policy</a> |{" "}
-          <a href="#disclaimer">Disclaimer</a> |{" "}
-          <a href="#terms">Terms</a> |{" "}
-          <a href="#refund">Refund Policy</a>
-        </p>
-      </div>
-    </div>
-  </footer>
-);
 
 /* =========================================================
    ASTRONAUT HIT AREA
@@ -3880,7 +3792,6 @@ const SpaceScience = () => {
 
       <ExplorePrograms />
 
-      <SiteFooter />
     </>
   );
 };

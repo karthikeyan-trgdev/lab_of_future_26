@@ -46,8 +46,6 @@
   }
 }
 
-
-
 /* =========================
    SPACE SCIENCE HERO
 ========================= */
@@ -99,8 +97,8 @@
       rgba(0, 4, 24, 0) 35%,
       rgba(0, 4, 24, 0.55) 100%
     ),
-    /* uploaded banner photo */
-    url('../../assets/banner-bg-2.webp') center / cover no-repeat;
+    /* uploaded banner photo */ url("../../assets/banner-bg-2.webp") center /
+      cover no-repeat;
 }
 
 .hero-canvas {
@@ -184,15 +182,17 @@
   margin: 0;
   text-align: center;
   color: #fff;
-  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   line-height: 0.92;
   font-size: clamp(2rem, 7vw, 8rem);
   /* subtle blue neon + dark base for legibility */
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55),
-    0 0 3px rgba(190, 215, 255, 0.55), 0 0 10px rgba(90, 150, 255, 0.4),
+  text-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.55),
+    0 0 3px rgba(190, 215, 255, 0.55),
+    0 0 10px rgba(90, 150, 255, 0.4),
     0 0 26px rgba(0, 83, 255, 0.28);
   animation: heroGlow 4.5s ease-in-out infinite;
 }
@@ -203,14 +203,16 @@
 @keyframes heroGlow {
   0%,
   100% {
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55),
+    text-shadow:
+      0 2px 12px rgba(0, 0, 0, 0.55),
       0 0 3px rgba(190, 215, 255, 0.5),
       0 0 10px rgba(90, 150, 255, 0.35),
       0 0 26px rgba(0, 83, 255, 0.24);
     filter: brightness(1);
   }
   50% {
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55),
+    text-shadow:
+      0 2px 12px rgba(0, 0, 0, 0.55),
       0 0 5px rgba(200, 222, 255, 0.7),
       0 0 16px rgba(90, 150, 255, 0.5),
       0 0 36px rgba(0, 83, 255, 0.34);
@@ -244,8 +246,9 @@
 
 .why-section {
   position: relative;
-  background: #000 url('../../assets/Background-images/what-does-lof-do-bg.webp.webp')
-    center / cover no-repeat;
+  background: #000
+    url("../../assets/Background-images/what-does-lof-do-bg.webp.webp") center /
+    cover no-repeat;
   width: 100%;
   min-height: 82vh;
   overflow: hidden;
@@ -254,7 +257,7 @@
 /* top + bottom black gradient overlays for smooth blending */
 .why-section::before,
 .why-section::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -273,10 +276,12 @@
 
 .why-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.5fr 1fr;
   min-height: 82vh;
 }
-
+.space-science-page .why-desc {
+  max-width: 80ch;
+}
 /* LEFT — sits above the fixed astronaut canvas (z-index 3) so text is readable */
 .why-left {
   position: relative;
@@ -294,7 +299,7 @@
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  line-height: 1.0;
+  line-height: 1;
   margin: 0 0 var(--space-m);
   color: #fff;
 }
@@ -351,14 +356,14 @@
   }
 
   .why-left {
-    padding:0px;
+    padding: 0px;
     justify-content: flex-start !important;
   }
-  .why-container{
+  .why-container {
     min-height: 100%;
   }
-  .why-right{
-    display:none;
+  .why-right {
+    display: none;
   }
 
   .why-right {
@@ -388,14 +393,14 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: #05010f url('../../assets/what-lof-does-bg.webp')
-    center / cover no-repeat;
+  background: #05010f url("../../assets/what-lof-does-bg.webp") center / cover
+    no-repeat;
 }
 
 /* top + bottom black gradient overlays */
 .lof-sticky::before,
 .lof-sticky::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -442,15 +447,16 @@
   border: 2px solid rgba(255, 255, 255, 0.35);
   border-radius: 1.5rem;
   overflow: hidden;
-  background: #000 url('../../assets/what-lof-do-frame.png')
-    center / cover no-repeat;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6),
+  background: #000 url("../../assets/what-lof-do-frame.png") center / cover
+    no-repeat;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.6),
     inset 0 0 22px rgba(0, 0, 0, 0.5);
 }
 
 /* fades the lower portion so the astronaut's legs melt into the scene */
 .lof-astro-box::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -514,29 +520,44 @@
   aspect-ratio: 265 / 289;
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  padding: 70px 50px 10px 40px;
+  padding: 80px 50px 10px 50px;
   display: flex;
   flex-direction: column;
 }
 
 .age-card:nth-child(1) {
-  background-image: url('../../assets/age-frames/age-6.png');
+  background-image: url("../../assets/age-frames/age-6.png");
 }
 
 .age-card:nth-child(2) {
-  background-image: url('../../assets/age-frames/age-8.png');
+  background-image: url("../../assets/age-frames/age-8.png");
 }
 
 .age-card:nth-child(3) {
-  background-image: url('../../assets/age-frames/age-11.png');
+  background-image: url("../../assets/age-frames/age-11.png");
 }
 
 .age-card:nth-child(4) {
-  background-image: url('../../assets/age-frames/age-15.png');
+  background-image: url("../../assets/age-frames/age-15.png");
 }
 
 .age-card:nth-child(5) {
-  background-image: url('../../assets/age-frames/age-18.png');
+  background-image: url("../../assets/age-frames/age-18.png");
+}
+
+/* Tier name — centered in the frame's header band, above the bullets */
+.age-card-label {
+  position: absolute;
+  top: 5%;
+  left: 45%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: #000000;
+  -webkit-text-fill-color: #000000;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.05em;
 }
 
 .age-card-list {
@@ -559,7 +580,7 @@
 }
 
 .age-card-list li::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0.5em;
@@ -599,7 +620,8 @@
   /* no stacking context here — the cards below need to rise ABOVE the
      global astronaut canvas (#astro-layer, z-index 3), which is only
      possible when this section doesn't trap them in a sub-context */
-  background: #05010f url('../../assets/Background-images/what-will-students-learn-bg.webp')
+  background: #05010f
+    url("../../assets/Background-images/what-will-students-learn-bg.webp")
     center / cover no-repeat;
   padding: var(--space-xl) 0;
   text-align: center;
@@ -609,7 +631,7 @@
 /* top + bottom black gradient overlays */
 .learn-section::before,
 .learn-section::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -673,30 +695,30 @@
 } */
 
 .learn-card {
-    display: flex;
-    flex-direction: column;
-    gap: 1.7rem;
-    padding: 15px;
-    min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.7rem;
+  padding: 15px;
+  min-width: 0;
 
-    /* Glassmorphism */
-    background: rgba(18, 32, 82, 0.25);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+  /* Glassmorphism */
+  background: rgba(18, 32, 82, 0.25);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 
-    border: 1px solid rgba(147, 172, 255, 0.623);
-    border-radius: 20px;
+  border: 1px solid rgba(147, 172, 255, 0.623);
+  border-radius: 20px;
 
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.25),
-        inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
 }
 
 .learn-card-img {
   min-height: 0;
   width: 100%;
   height: 200px;
-  object-fit: cover ;
+  object-fit: cover;
   border-radius: 10px;
   display: block;
 }
@@ -771,13 +793,14 @@
   display: flex;
   align-items: center;
   padding: var(--space-xl) 0;
-  background: #000 url('../../assets/Background-images/certificate-background.webp')
-    center / cover no-repeat;
+  background: #000
+    url("../../assets/Background-images/certificate-background.webp") center /
+    cover no-repeat;
 }
 
 .cert-section::before,
 .cert-section::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -788,7 +811,11 @@
 .cert-section::before {
   top: 0;
   z-index: 2;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.92) 0%, transparent 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.92) 0%,
+    transparent 100%
+  );
 }
 
 .cert-section::after {
@@ -837,7 +864,7 @@
 }
 
 .cert-list li::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0.55em;
@@ -893,26 +920,35 @@
 /* overflow: hidden intentionally omitted — it would break position: sticky on the bg holder */
 .space-careers-wrapper {
   position: relative;
-  background: #000 url('../../assets/space-theme-bg.png') center / cover no-repeat;
+  background: #000 url("../../assets/space-theme-bg.png") center / cover
+    no-repeat;
 }
 
 /* Black gradient blends into cert section above — z-index BELOW content (2) and
    astronaut fixed layer (3) so it never covers text or the floating astronaut */
 .space-careers-wrapper::before {
-  content: '';
+  content: "";
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 14%;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.96) 0%, transparent 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.96) 0%,
+    transparent 100%
+  );
 }
 
 /* Black gradient blends into section below */
 .space-careers-wrapper::after {
-  content: '';
+  content: "";
   position: absolute;
-  bottom: 0; left: 0; right: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   height: 14%;
   z-index: 1;
   pointer-events: none;
@@ -991,11 +1027,14 @@
   max-width: 290px;
   min-width: 140px;
   aspect-ratio: 220 / 200;
-  background: url('../../assets/future-career-frames.png') center / 100% 100% no-repeat;
+  background: url("../../assets/future-career-frames.png") center / 100% 100%
+    no-repeat;
   position: relative;
   overflow: hidden;
   cursor: default;
-  transition: transform 0.25s ease, filter 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease;
   border-radius: 12px;
   backdrop-filter: blur(12px);
 }
@@ -1007,14 +1046,14 @@
 
 /* Photo fills the frame's main area; the built-in label bar sits below */
 .careers-skill-img {
-position: absolute;
-    top: 0%;
-    left: 5%;
-    margin: auto;
-    width: 93%;
-    height: 190px;
-    object-fit: contain;
-    border-radius: 0.3rem;
+  position: absolute !important;
+  top: 0% !important;
+  left: 5% !important;
+  margin: auto;
+  width: 93% !important;
+  height: 190px !important;
+  object-fit: contain !important;
+  border-radius: 0.3rem;
 }
 
 .careers-skill-label {
@@ -1091,13 +1130,14 @@ position: absolute;
 
 .competitions-label-text {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 3.2vw, 3.4rem);
+  font-size: clamp(2rem, 3.2vw, 2.8rem);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: #fff;
   line-height: 1;
-  text-shadow: 0 0 40px rgba(80, 150, 255, 0.4),
+  text-shadow:
+    0 0 40px rgba(80, 150, 255, 0.4),
     0 0 80px rgba(40, 90, 220, 0.25);
   margin: 0;
 }
@@ -1147,7 +1187,8 @@ position: absolute;
     #c5cee0 56%,
     #5b6680 100%
   );
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.55),
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.55),
     inset 0 -3px 5px rgba(0, 0, 0, 0.4);
 }
 
@@ -1170,22 +1211,25 @@ position: absolute;
     flex-direction: column;
     align-items: center;
 
-    /* Glassmorphism */
-    background: rgba(18, 32, 82, 0.18);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-
-    border:1px solid rgba(147, 172, 255, 0.623);
+    overflow: hidden;
     border-radius: 20px;
 
+    /* Glass Morphism */
+    background: rgba(12, 22, 45, 0.28);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+
+    border: 1px solid rgba(255, 255, 255, 0.16);
+
     box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        0 8px 32px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.05);
 
-    transition: transform 0.25s ease, filter 0.25s ease;
-    filter: drop-shadow(0 4px 20px rgba(40, 100, 255, 0.2));
-
-    overflow: hidden;
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
 }
 
 .comp-card-outer:hover {
@@ -1195,7 +1239,7 @@ position: absolute;
 
 /* frame image overlay */
 .comp-card-outer::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: var(--comp-frame) center / 100% 100% no-repeat;
@@ -1214,7 +1258,8 @@ position: absolute;
   padding: 0.8rem;
   border-radius: 14px;
   background: #2e4685;
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.55),
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.55),
     inset 0 -3px 5px rgba(0, 0, 0, 0.4),
     0 4px 14px rgba(0, 0, 0, 0.5);
 }
@@ -1226,7 +1271,7 @@ position: absolute;
 }
 
 .comp-card-inner {
-  flex: 1;                /* fills the card height reliably */
+  flex: 1; /* fills the card height reliably */
   position: relative;
   z-index: 1;
   /* top padding reserves space for the icon badge that sits above */
@@ -1306,7 +1351,7 @@ position: absolute;
 .faq-bg-anim {
   position: absolute;
   inset: 0;
-  background: url('../../assets/faq-bg.webp') center / cover no-repeat;
+  background: url("../../assets/faq-bg.webp") center / cover no-repeat;
   z-index: 0;
 }
 
@@ -1315,7 +1360,15 @@ position: absolute;
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to bottom,  #000 0%,  rgba(0,0,0,0.82) 6%,  transparent 18%,  transparent 82%,  rgba(0,0,0,0.82) 94%,  #000 100%),
+    linear-gradient(
+      to bottom,
+      #000 0%,
+      rgba(0, 0, 0, 0.82) 6%,
+      transparent 18%,
+      transparent 82%,
+      rgba(0, 0, 0, 0.82) 94%,
+      #000 100%
+    ),
     rgba(0, 2, 20, 0.62);
   z-index: 1;
   pointer-events: none;
@@ -1372,15 +1425,19 @@ position: absolute;
   padding: 1.5px;
   background: linear-gradient(
     135deg,
-    rgba(80, 150, 255, 0.60) 0%,
-    rgba(30,  60, 180, 0.28) 50%,
-    rgba(80, 150, 255, 0.50) 100%
+    rgba(80, 150, 255, 0.6) 0%,
+    rgba(30, 60, 180, 0.28) 50%,
+    rgba(80, 150, 255, 0.5) 100%
   );
   clip-path: polygon(
-    14px 0%, calc(100% - 14px) 0%,
-    100% 14px, 100% calc(100% - 14px),
-    calc(100% - 14px) 100%, 14px 100%,
-    0% calc(100% - 14px), 0% 14px
+    14px 0%,
+    calc(100% - 14px) 0%,
+    100% 14px,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    14px 100%,
+    0% calc(100% - 14px),
+    0% 14px
   );
   border: none;
   cursor: pointer;
@@ -1399,10 +1456,14 @@ position: absolute;
   padding: 1.1rem 1.7rem;
   background: rgba(6, 10, 38, 0.84);
   clip-path: polygon(
-    14px 0%, calc(100% - 14px) 0%,
-    100% 14px, 100% calc(100% - 14px),
-    calc(100% - 14px) 100%, 14px 100%,
-    0% calc(100% - 14px), 0% 14px
+    14px 0%,
+    calc(100% - 14px) 0%,
+    100% 14px,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    14px 100%,
+    0% calc(100% - 14px),
+    0% 14px
   );
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -1418,7 +1479,7 @@ position: absolute;
 
 .faq-q-arrow {
   font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.6) !important;
   flex-shrink: 0;
   margin-left: 1rem;
   transition: transform 0.32s ease;
@@ -1452,33 +1513,19 @@ position: absolute;
   margin: 0.75rem 0 0.9rem;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
- .faq-robotics-section {
+.faq-robotics-section {
   position: relative !important;
   overflow: hidden !important;
   background:
-    linear-gradient(180deg,
-      rgba(0, 0, 0, 0.42) 0%,
-      rgba(0, 0, 0, 0.68) 100%),
-    url("../../assets/programs/ai-and-data-science/full-faq-bg.webp")
-      center / cover no-repeat !important;
+    linear-gradient(180deg, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.68) 100%),
+    url("../../assets/programs/ai-and-data-science/full-faq-bg.webp") center /
+      cover no-repeat !important;
   background-color: #03050c !important;
   color: #ffffff !important;
   padding: 150px 0 !important;
 }
- .faq-robotics-section::before,
- .faq-robotics-section::after {
+.faq-robotics-section::before,
+.faq-robotics-section::after {
   content: "" !important;
   position: absolute !important;
   left: 0 !important;
@@ -1487,7 +1534,7 @@ position: absolute;
   z-index: 2 !important;
   pointer-events: none !important;
 }
- .faq-robotics-section::before {
+.faq-robotics-section::before {
   top: 0 !important;
   background: linear-gradient(
     to bottom,
@@ -1496,7 +1543,7 @@ position: absolute;
     rgba(0, 0, 0, 0) 100%
   ) !important;
 }
- .faq-robotics-section::after {
+.faq-robotics-section::after {
   bottom: 0 !important;
   background: linear-gradient(
     to top,
@@ -1505,36 +1552,36 @@ position: absolute;
     rgba(0, 0, 0, 0) 100%
   ) !important;
 }
- .faq-robotics-section > * {
+.faq-robotics-section > * {
   position: relative;
   z-index: 3;
 }
- .faq-robotics-section .faq-robotics-title {
+.faq-robotics-section .faq-robotics-title {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
   background: none !important;
   text-shadow: none !important;
 }
- .faq-robotics-section .faq-robotics-q {
+.faq-robotics-section .faq-robotics-q {
   background: rgba(255, 255, 255, 0.06) !important;
   border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
   color: #ffffff !important;
 }
- .faq-robotics-section .faq-robotics-q:hover {
+.faq-robotics-section .faq-robotics-q:hover {
   background: rgba(255, 255, 255, 0.12) !important;
 }
- .faq-robotics-section .faq-robotics-q-text,
- .faq-robotics-section .faq-robotics-q-arrow {
+.faq-robotics-section .faq-robotics-q-text,
+.faq-robotics-section .faq-robotics-q-arrow {
   color: #ffffff !important;
 }
- .faq-robotics-section .faq-robotics-a-body {
+.faq-robotics-section .faq-robotics-a-body {
   color: rgba(255, 255, 255, 0.78) !important;
 }
 
 /* Space & Science page only — darkening overlay layered over the FAQ
    background image to improve text contrast. Sits above the bg image
    (z-index 0) but below the content (.container at z-index 3). */
- .faq-robotics-section--space .faq-robotics-overlay {
+.faq-robotics-section--space .faq-robotics-overlay {
   content: "" !important;
   position: absolute !important;
   inset: 0 !important;
@@ -1551,7 +1598,7 @@ position: absolute;
    FAQ — two-column accordion on a light background, with empty
    centre space reserved for the robot model.
 ========================================================= */
- .faq-robotics-section {
+.faq-robotics-section {
   position: relative;
   background:
     linear-gradient(
@@ -1559,15 +1606,14 @@ position: absolute;
       rgba(255, 255, 255, 0) 0%,
       rgba(255, 255, 255, 0) 100%
     ),
-    url("../../assets/faq-bg.webp") 
-      center / cover no-repeat !important; 
+    url("../../assets/faq-bg.webp") center / cover no-repeat !important;
   background-color: #f3f6fc;
   padding: 100px 0px;
   color: #0d1b3a;
   overflow: hidden;
 }
 
- .faq-robotics-title {
+.faq-robotics-title {
   font-family: var(--font-display, "Conthrax", sans-serif);
   font-weight: 900;
   letter-spacing: 0.04em;
@@ -1578,32 +1624,32 @@ position: absolute;
 
 /* Two columns with a wide centre gap to leave room for the robot.
    On smaller screens the gap collapses and rows stack. */
- .faq-robotics-grid {
+.faq-robotics-grid {
   display: grid;
   grid-template-columns: 1fr clamp(50px, 24vw, 50px) 1fr;
   gap: 1.2rem clamp(1rem, 3vw, 2rem);
   align-items: start;
 }
 
- .faq-robotics-grid > .faq-robotics-col:first-child {
+.faq-robotics-grid > .faq-robotics-col:first-child {
   grid-column: 1;
 }
- .faq-robotics-grid > .faq-robotics-col:last-child {
+.faq-robotics-grid > .faq-robotics-col:last-child {
   grid-column: 3;
 }
 
- .faq-robotics-col {
+.faq-robotics-col {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
 }
 
- .faq-robotics-item {
+.faq-robotics-item {
   display: flex;
   flex-direction: column;
 }
 
- .faq-robotics-q {
+.faq-robotics-q {
   width: 100%;
   display: flex;
   align-items: center;
@@ -1619,17 +1665,19 @@ position: absolute;
   font-size: clamp(0.85rem, 1vw, 0.95rem);
   text-align: left;
   cursor: pointer;
-  transition: filter 0.18s ease, transform 0.18s ease,
+  transition:
+    filter 0.18s ease,
+    transform 0.18s ease,
     background 0.18s ease;
 }
 
- .faq-robotics-q:hover {
+.faq-robotics-q:hover {
   background: rgba(218, 228, 248, 0.75);
   filter: drop-shadow(0 6px 14px rgba(29, 59, 138, 0.18));
   transform: translateY(-1px);
 }
 
- .faq-robotics-q-arrow {
+.faq-robotics-q-arrow {
   display: inline-flex;
   font-size: 0.7rem;
   color: #1d3b8a;
@@ -1637,12 +1685,12 @@ position: absolute;
   flex-shrink: 0;
 }
 
- .faq-robotics-item.is-open .faq-robotics-q-arrow {
+.faq-robotics-item.is-open .faq-robotics-q-arrow {
   transform: rotate(180deg);
 }
 
 /* Smooth grid-row accordion */
- .faq-robotics-a {
+.faq-robotics-a {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.36s ease;
@@ -1651,11 +1699,11 @@ position: absolute;
      its content's intrinsic height and the panel never closes. */
   min-height: 0;
 }
- .faq-robotics-item.is-open .faq-robotics-a {
+.faq-robotics-item.is-open .faq-robotics-a {
   grid-template-rows: 1fr;
 }
 
- .faq-robotics-a-body {
+.faq-robotics-a-body {
   overflow: hidden;
   min-height: 0;
   padding: 0 1.2rem;
@@ -1665,38 +1713,20 @@ position: absolute;
   color: #3a4252;
 }
 
- .faq-robotics-item.is-open .faq-robotics-a-body {
+.faq-robotics-item.is-open .faq-robotics-a-body {
   padding: 0.6rem 1.2rem 0.9rem;
 }
 
 /* Collapse the centre robot-gap on small screens */
 @media (max-width: 900px) {
-   .faq-robotics-grid {
+  .faq-robotics-grid {
     grid-template-columns: 1fr;
   }
-   .faq-robotics-grid > .faq-robotics-col:first-child,
-   .faq-robotics-grid > .faq-robotics-col:last-child {
+  .faq-robotics-grid > .faq-robotics-col:first-child,
+  .faq-robotics-grid > .faq-robotics-col:last-child {
     grid-column: 1;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* =========================
    HOW TO CHOOSE THE RIGHT PATH (section 10)
@@ -1735,14 +1765,17 @@ position: absolute;
 /* Card uses choose-path-frame.svg — SVG viewBox is 344×242 (landscape) */
 .choose-card {
   aspect-ratio: 344 / 242;
-  background: url('../../assets/choose-path-frame.png') center / 100% 100% no-repeat;
+  background: url("../../assets/choose-path-frame.png") center / 100% 100%
+    no-repeat;
   position: relative;
   display: flex;
   flex-direction: column;
   /* top: clears the top tab (~9% of height)  left: clears the left parallelogram bar (~9% of width) */
-  padding: 18% 8% 10% 15%;
+  padding: 17% 8% 10% 15%;
   text-align: left;
-  transition: transform 0.25s ease, filter 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease;
   backdrop-filter: blur(5px);
   border-radius: 12px;
 }
@@ -1789,7 +1822,7 @@ position: absolute;
 }
 
 .choose-card-list li::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0.55em;
@@ -1822,8 +1855,8 @@ position: absolute;
 .assoc-section {
   position: relative;
   z-index: 1;
-  background: #02030a url('../../assets/associated-bg.webp')
-    center / cover no-repeat;
+  background: #02030a url("../../assets/associated-bg.webp") center / cover
+    no-repeat;
   padding: var(--space-xl) var(--space-m);
   overflow: hidden;
 }
@@ -1844,45 +1877,151 @@ position: absolute;
   will-change: transform, opacity;
   border-radius: 50%;
   background: #cfe2ff;
-  box-shadow: 0 0 8px rgba(180, 210, 255, 0.9),
+  box-shadow:
+    0 0 8px rgba(180, 210, 255, 0.9),
     0 0 14px rgba(120, 170, 255, 0.5);
   opacity: 0;
   animation: assocStarBlink 3.6s infinite;
 }
-.assoc-blink-stars i:nth-child(1)  { top: 12%; left: 7%;  animation-delay: 0.0s; }
-.assoc-blink-stars i:nth-child(2)  { top: 22%; left: 18%; animation-delay: 0.7s; }
-.assoc-blink-stars i:nth-child(3)  { top: 8%;  left: 34%; animation-delay: 1.3s; }
-.assoc-blink-stars i:nth-child(4)  { top: 26%; left: 52%; animation-delay: 1.9s; }
-.assoc-blink-stars i:nth-child(5)  { top: 14%; left: 68%; animation-delay: 0.4s; }
-.assoc-blink-stars i:nth-child(6)  { top: 30%; left: 82%; animation-delay: 2.4s; }
-.assoc-blink-stars i:nth-child(7)  { top: 6%;  left: 92%; animation-delay: 1.0s; }
-.assoc-blink-stars i:nth-child(8)  { top: 48%; left: 4%;  animation-delay: 2.1s; }
-.assoc-blink-stars i:nth-child(9)  { top: 56%; left: 22%; animation-delay: 0.8s; }
-.assoc-blink-stars i:nth-child(10) { top: 64%; left: 44%; animation-delay: 1.5s; }
-.assoc-blink-stars i:nth-child(11) { top: 50%; left: 60%; animation-delay: 0.3s; }
-.assoc-blink-stars i:nth-child(12) { top: 58%; left: 76%; animation-delay: 2.6s; }
-.assoc-blink-stars i:nth-child(13) { top: 72%; left: 12%; animation-delay: 1.7s; }
-.assoc-blink-stars i:nth-child(14) { top: 82%; left: 30%; animation-delay: 0.6s; }
-.assoc-blink-stars i:nth-child(15) { top: 86%; left: 52%; animation-delay: 2.2s; }
-.assoc-blink-stars i:nth-child(16) { top: 78%; left: 72%; animation-delay: 0.1s; }
-.assoc-blink-stars i:nth-child(17) { top: 90%; left: 88%; animation-delay: 1.2s; }
-.assoc-blink-stars i:nth-child(18) { top: 38%; left: 38%; animation-delay: 2.8s; width: 4px; height: 4px; }
-.assoc-blink-stars i:nth-child(19) { top: 18%; left: 80%; animation-delay: 0.9s; width: 4px; height: 4px; }
-.assoc-blink-stars i:nth-child(20) { top: 70%; left: 96%; animation-delay: 1.8s; width: 4px; height: 4px; }
+.assoc-blink-stars i:nth-child(1) {
+  top: 12%;
+  left: 7%;
+  animation-delay: 0s;
+}
+.assoc-blink-stars i:nth-child(2) {
+  top: 22%;
+  left: 18%;
+  animation-delay: 0.7s;
+}
+.assoc-blink-stars i:nth-child(3) {
+  top: 8%;
+  left: 34%;
+  animation-delay: 1.3s;
+}
+.assoc-blink-stars i:nth-child(4) {
+  top: 26%;
+  left: 52%;
+  animation-delay: 1.9s;
+}
+.assoc-blink-stars i:nth-child(5) {
+  top: 14%;
+  left: 68%;
+  animation-delay: 0.4s;
+}
+.assoc-blink-stars i:nth-child(6) {
+  top: 30%;
+  left: 82%;
+  animation-delay: 2.4s;
+}
+.assoc-blink-stars i:nth-child(7) {
+  top: 6%;
+  left: 92%;
+  animation-delay: 1s;
+}
+.assoc-blink-stars i:nth-child(8) {
+  top: 48%;
+  left: 4%;
+  animation-delay: 2.1s;
+}
+.assoc-blink-stars i:nth-child(9) {
+  top: 56%;
+  left: 22%;
+  animation-delay: 0.8s;
+}
+.assoc-blink-stars i:nth-child(10) {
+  top: 64%;
+  left: 44%;
+  animation-delay: 1.5s;
+}
+.assoc-blink-stars i:nth-child(11) {
+  top: 50%;
+  left: 60%;
+  animation-delay: 0.3s;
+}
+.assoc-blink-stars i:nth-child(12) {
+  top: 58%;
+  left: 76%;
+  animation-delay: 2.6s;
+}
+.assoc-blink-stars i:nth-child(13) {
+  top: 72%;
+  left: 12%;
+  animation-delay: 1.7s;
+}
+.assoc-blink-stars i:nth-child(14) {
+  top: 82%;
+  left: 30%;
+  animation-delay: 0.6s;
+}
+.assoc-blink-stars i:nth-child(15) {
+  top: 86%;
+  left: 52%;
+  animation-delay: 2.2s;
+}
+.assoc-blink-stars i:nth-child(16) {
+  top: 78%;
+  left: 72%;
+  animation-delay: 0.1s;
+}
+.assoc-blink-stars i:nth-child(17) {
+  top: 90%;
+  left: 88%;
+  animation-delay: 1.2s;
+}
+.assoc-blink-stars i:nth-child(18) {
+  top: 38%;
+  left: 38%;
+  animation-delay: 2.8s;
+  width: 4px;
+  height: 4px;
+}
+.assoc-blink-stars i:nth-child(19) {
+  top: 18%;
+  left: 80%;
+  animation-delay: 0.9s;
+  width: 4px;
+  height: 4px;
+}
+.assoc-blink-stars i:nth-child(20) {
+  top: 70%;
+  left: 96%;
+  animation-delay: 1.8s;
+  width: 4px;
+  height: 4px;
+}
 
 @keyframes assocStarBlink {
-  0%, 100% { opacity: 0; transform: scale(0.6); }
-  45%      { opacity: 0; transform: scale(0.6); }
-  55%      { opacity: 1; transform: scale(1.2); }
-  60%      { opacity: 0.5; transform: scale(1); }
-  65%      { opacity: 1; transform: scale(1.15); }
-  75%      { opacity: 0; transform: scale(0.6); }
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  45% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  60% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  75% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
 }
 
 /* top + bottom black gradient overlays */
 .assoc-section::before,
 .assoc-section::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -1913,7 +2052,7 @@ position: absolute;
   font-size: clamp(1.5rem, 3.4vw, 3rem);
   margin: 0;
 }
-.assoc-title .subtitle{
+.assoc-title .subtitle {
   font-size: 18px !important;
   text-align: center;
   align-items: center;
@@ -1945,7 +2084,8 @@ position: absolute;
   vector-effect: non-scaling-stroke;
   stroke-dasharray: 1000;
   stroke-dashoffset: 600;
-  animation: assocDraw 1.8s ease forwards,
+  animation:
+    assocDraw 1.8s ease forwards,
     assocLinePulse 2.8s ease-in-out 1.8s infinite;
   filter: drop-shadow(0 0 3px rgba(90, 150, 255, 0.7));
 }
@@ -1958,7 +2098,8 @@ position: absolute;
 
 /* ongoing pulse on the connector tracks AFTER the draw-in completes */
 @keyframes assocLinePulse {
-  0%, 100% {
+  0%,
+  100% {
     stroke: #a7c4ff;
     filter: drop-shadow(0 0 3px rgba(90, 150, 255, 0.7));
   }
@@ -1982,7 +2123,7 @@ position: absolute;
   z-index: 2;
   width: 100%;
   aspect-ratio: 196 / 113;
-  background: url('../../assets/assocoated-section/associated-client-frame.svg')
+  background: url("../../assets/assocoated-section/associated-client-frame.svg")
     center / 100% 100% no-repeat;
   display: flex;
   align-items: center;
@@ -2010,15 +2151,28 @@ position: absolute;
 } */
 
 @keyframes assocBoxBlink {
-  0%, 100% { opacity: 0.25; }
-  35%       { opacity: 1;    }
-  55%       { opacity: 0.2;  }
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  35% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 0.2;
+  }
 }
 
 /* stagger the per-box blink so the grid never pulses in unison */
-.assoc-box:nth-child(3n) .assoc-box-frame { animation-delay: 0.8s; }
-.assoc-box:nth-child(3n + 1) .assoc-box-frame { animation-delay: 1.6s; }
-.assoc-box:nth-child(3n + 2) .assoc-box-frame { animation-delay: 0.3s; }
+.assoc-box:nth-child(3n) .assoc-box-frame {
+  animation-delay: 0.8s;
+}
+.assoc-box:nth-child(3n + 1) .assoc-box-frame {
+  animation-delay: 1.6s;
+}
+.assoc-box:nth-child(3n + 2) .assoc-box-frame {
+  animation-delay: 0.3s;
+}
 
 .assoc-box-logo {
   max-width: 100%;
@@ -2082,7 +2236,7 @@ position: absolute;
   position: absolute;
   transform: translate(-50%, -50%);
   z-index: 3;
-  width: 30.0%;
+  width: 30%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2131,8 +2285,8 @@ position: absolute;
 .vetted-section {
   position: relative;
   z-index: 1;
-  background: #02050f url('../../assets/vetted-team/vetted-bg.webp')
-    center / cover no-repeat;
+  background: #02050f url("../../assets/vetted-team/vetted-bg.webp") center /
+    cover no-repeat;
   padding: var(--space-xl) var(--space-m);
   overflow: hidden;
 }
@@ -2140,7 +2294,7 @@ position: absolute;
 /* top + bottom black gradient overlays */
 .vetted-section::before,
 .vetted-section::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -2237,7 +2391,7 @@ position: absolute;
 /* bright intersection glow where the two beams cross, just under the feet */
 .vetted-stage::after {
   display: none;
-  content: '';
+  content: "";
   position: absolute;
   bottom: -4%;
   left: 50%;
@@ -2251,7 +2405,7 @@ position: absolute;
     rgba(110, 175, 255, 0.45) 40%,
     rgba(80, 150, 255, 0) 75%
   );
-  filter: blur(2px);   /* static — no per-frame repaint */
+  filter: blur(2px); /* static — no per-frame repaint */
   opacity: 0;
   transition: opacity 0.7s ease;
   pointer-events: none;
@@ -2268,7 +2422,8 @@ position: absolute;
   transform: translateY(34%) scaleY(0.92);
   transform-origin: bottom center;
   will-change: transform, opacity;
-  transition: opacity 0.9s ease,
+  transition:
+    opacity 0.9s ease,
     transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
   /* feet dissolve into the projector light for a holographic emergence */
   -webkit-mask-image: linear-gradient(
@@ -2325,8 +2480,13 @@ position: absolute;
 
 @keyframes vettedBasePulse {
   /* opacity-only — compositor thread, zero repaint */
-  0%, 100% { opacity: 0.7; }
-  50%       { opacity: 1;   }
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .vetted-photo img {
@@ -2345,7 +2505,7 @@ position: absolute;
    Masked by the PNG's alpha so the wash only paints over the actual
    subject — never the empty rectangle around it. */
 .vetted-photo::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -2370,7 +2530,7 @@ position: absolute;
 /* moving scanlines + horizontal interference band over the portrait —
    also clipped to the PNG alpha */
 .vetted-photo::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background:
@@ -2385,16 +2545,19 @@ position: absolute;
     ),
     /* fine scanlines */
     repeating-linear-gradient(
-      to bottom,
-      rgba(150, 200, 255, 0.16) 0 1px,
-      transparent 1px 4px
-    );
-  background-size: 100% 220%, 100% 4px;
+        to bottom,
+        rgba(150, 200, 255, 0.16) 0 1px,
+        transparent 1px 4px
+      );
+  background-size:
+    100% 220%,
+    100% 4px;
   background-repeat: no-repeat, repeat;
   mix-blend-mode: screen;
   pointer-events: none;
   z-index: 2;
-  animation: vettedScan 5s linear infinite,
+  animation:
+    vettedScan 5s linear infinite,
     vettedBand 4.5s ease-in-out infinite;
   -webkit-mask-image: var(--vetted-mask);
   -webkit-mask-size: 100% 100%;
@@ -2408,17 +2571,23 @@ position: absolute;
 
 @keyframes vettedScan {
   to {
-    background-position: 0 0, 0 40px;
+    background-position:
+      0 0,
+      0 40px;
   }
 }
 
 /* the bright band drifts from bottom to top */
 @keyframes vettedBand {
   0% {
-    background-position: 0 120%, 0 0;
+    background-position:
+      0 120%,
+      0 0;
   }
   100% {
-    background-position: 0 -120%, 0 0;
+    background-position:
+      0 -120%,
+      0 0;
   }
 }
 
@@ -2485,8 +2654,8 @@ position: absolute;
   z-index: 3;
   width: 300px;
   aspect-ratio: 1183 / 412;
-  background: url('../../assets/vetted-team/vetted-frame.png')
-    center / 100% 100% no-repeat;
+  background: url("../../assets/vetted-team/vetted-frame.png") center / 100%
+    100% no-repeat;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2507,12 +2676,13 @@ position: absolute;
   color: #fff;
   font-size: clamp(0.72rem, 0.95vw, 0.95rem);
   line-height: 1.1;
+  margin-bottom: 10px;
 }
 
 .vetted-role {
   font-family: var(--font-sans);
   color: rgba(190, 215, 255, 0.72);
-  font-size: clamp(0.55rem, 0.72vw, 0.72rem);
+  font-size: clamp(0.55rem, 0.72vw, 1.2rem);
   line-height: 1.1;
 }
 
@@ -2523,7 +2693,9 @@ position: absolute;
   justify-content: center;
   color: #fff;
   font-size: clamp(0.9rem, 1.3vw, 1.2rem);
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 .vetted-li:hover {
   color: #4f9dff;
@@ -2599,7 +2771,7 @@ position: absolute;
   animation: smokePuffLand 1.2s ease-out forwards;
 }
 .astro-smoke--lift {
-  animation: smokePuffLift 1.0s ease-out forwards;
+  animation: smokePuffLift 1s ease-out forwards;
 }
 
 @keyframes smokePuffLand {
@@ -2645,13 +2817,13 @@ position: absolute;
   position: relative;
   overflow: hidden;
   /* updated to the new uploaded backdrop */
-  background: #000 url("../../assets/Background-images/modes-bg.webp") center / cover
-    no-repeat;
+  background: #000 url("../../assets/Background-images/modes-bg.webp") center /
+    cover no-repeat;
 }
 
 .modes-stage-wrapper::before,
 .modes-stage-wrapper::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -2743,7 +2915,7 @@ position: absolute;
   gap: 1rem;
   padding: clamp(1rem, 1.6vw, 1.5rem);
   aspect-ratio: 4 / 5;
-  background: url('../../assets/modes-to-join/students_learning_box_frame.svg')
+  background: url("../../assets/modes-to-join/students_learning_box_frame.svg")
     center / 100% 100% no-repeat;
 }
 
@@ -2776,8 +2948,9 @@ position: absolute;
   position: relative;
   padding: var(--space-xl) 0;
   text-align: center;
-  background: #02060f url("../../assets/Background-images/modes-to-join-bg.webp") center /
-    cover no-repeat;
+  background: #02060f
+    url("../../assets/Background-images/modes-to-join-bg.webp") center / cover
+    no-repeat;
 }
 
 /* black fade overlays at top + bottom */
@@ -2841,17 +3014,33 @@ position: absolute;
 .projects-slide {
   height: auto;
 }
-
 .projects-card {
-  position: relative;
-  display: grid;
-  grid-template-columns: 0.85fr 1.3fr;
-  align-items: stretch;
-  gap: 1.2rem;
-  padding: 1.2rem 1.5rem;
-  min-height: 240px;
-  background: url('../../assets/projects/project-box-frame.svg') center / 100%
-    100% no-repeat;
+    position: relative;
+    display: grid;
+    grid-template-columns: 0.85fr 1.3fr;
+    align-items: stretch;
+    gap: 1.2rem;
+    padding: 1.2rem 1.5rem;
+    min-height: 240px;
+
+    /* Glass Morphism */
+    background: rgba(12, 22, 45, 0.28) !important;
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+
+    border: 1px solid rgba(255, 255, 255, 0.16);
+
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.projects-card-img {
+  height: 100% !important;
 }
 
 .projects-card-imgwrap {
@@ -2866,7 +3055,7 @@ position: absolute;
   height: 100%;
   object-fit: contain;
   display: block;
-  margin-left:25px
+  margin-left: 25px;
 }
 
 .projects-card-body {
@@ -2978,14 +3167,15 @@ position: absolute;
 .impact-section {
   position: relative;
   padding: var(--space-xl) 0;
-  background: #02060f url("../../assets/Background-images/project-impact-bg.webp") center / cover
+  background: #02060f
+    url("../../assets/Background-images/project-impact-bg.webp") center / cover
     no-repeat;
   text-align: center;
 }
 
 .impact-section::before,
 .impact-section::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -3048,23 +3238,32 @@ position: absolute;
 }
 
 .impact-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.9rem;
-  padding: clamp(1.3rem, 2vw, 1.8rem) clamp(1rem, 1.6vw, 1.4rem);
-  border-radius: 22px;
-  background: linear-gradient(
-    180deg,
-    rgba(15, 28, 58, 0.85) 0%,
-    rgba(10, 20, 44, 0.9) 100%
-  );
-  border: 1px solid rgba(120, 170, 255, 0.4);
-  box-shadow: 0 0 0 1px rgba(120, 170, 255, 0.08) inset,
-    0 0 40px rgba(50, 110, 200, 0.18);
-  text-align: center;
-  color: #fff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    padding: clamp(1.3rem, 2vw, 1.8rem) clamp(1rem, 1.6vw, 1.4rem);
+
+    border-radius: 22px;
+    overflow: hidden;
+
+    /* Glass Morphism */
+    background: rgba(12, 22, 45, 0.28);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+
+    border: 1px solid rgba(255, 255, 255, 0.16);
+
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+
+    text-align: center;
+    color: #fff;
+
+    transition: all 0.35s ease;
 }
 
 .impact-card-icon {
@@ -3122,7 +3321,7 @@ position: absolute;
 
 .community-section::before,
 .community-section::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -3154,7 +3353,8 @@ position: absolute;
   z-index: 1;
   margin-bottom: -100vh;
   pointer-events: auto;
-  background: url('../../assets/Background-images/globe-bg.webp') center / cover no-repeat;
+  background: url("../../assets/Background-images/globe-bg.webp") center / cover
+    no-repeat;
 }
 
 /* Sticky content layer above the 3D — fades in once the planets have split */
@@ -3167,7 +3367,9 @@ position: absolute;
   align-items: center;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
   pointer-events: none;
 }
 .community-section--in .community-content {
@@ -3213,10 +3415,12 @@ position: absolute;
   align-items: center;
   justify-content: center;
   border: none;
-  background: url('../../assets/community-says/testimonial-category-btn-bg.png')
+  background: url("../../assets/community-says/testimonial-category-btn-bg.png")
     center / 100% 100% no-repeat;
   cursor: pointer;
-  transition: transform 0.2s ease, filter 0.25s ease;
+  transition:
+    transform 0.2s ease,
+    filter 0.25s ease;
 }
 .community-tab:hover {
   filter: brightness(1.15);
@@ -3258,27 +3462,39 @@ position: absolute;
   grid-template-columns: 0.85fr 1.2fr;
   gap: 1.2rem;
   padding: 1.4rem 1.6rem;
-  /* lock the card to the source PNG's exact ratio (1660 × 965) so the
-     100% 100% background never stretches the artwork. Height-driven from
-     the slide so 3 always fit; width derives from the aspect-ratio. */
+
   height: 100%;
   aspect-ratio: 1660 / 965;
   width: auto;
   max-width: 100%;
-  background: url('../../assets/community-says/testimonial-card-bg.png') center
-    / 100% 100% no-repeat;
-  border: none;
-  /* non-active cards: noticeably smaller + faded so the centred one pops */
+
   transform: scale(0.78);
   opacity: 0.4;
-  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
-    opacity 0.45s ease, filter 0.45s ease;
+  transition:
+    transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    opacity 0.45s ease,
+    filter 0.45s ease;
+
+  /* Glass Morphism */
+  background: rgba(15, 25, 50, 0.25);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
 }
 .community-slider .swiper-slide-active .community-card {
   transform: scale(1.12);
   opacity: 1;
-  filter: brightness(1.08)
-    drop-shadow(0 0 32px rgba(60, 130, 220, 0.45));
+  filter: brightness(1.08) drop-shadow(0 0 32px rgba(60, 130, 220, 0.45));
 }
 
 .community-card-imgwrap {
@@ -3290,7 +3506,7 @@ position: absolute;
 .community-card-img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
 }
 
@@ -3314,16 +3530,16 @@ position: absolute;
 .community-card-role {
   display: block;
   margin-top: -0.25rem;
-  font-size: 0.70rem;
+  font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.04em;
   color: #00eeff;
   text-transform: capitalize;
-  margin-bottom:10px
+  margin-bottom: 10px;
 }
 
 .community-card-desc {
-  font-size: clamp(0.78rem, 0.92vw, 0.70rem);
+  font-size: clamp(0.78rem, 0.92vw, 0.7rem);
   color: rgba(255, 255, 255, 0.78);
   margin: 0;
   line-height: 1.5;
@@ -3342,7 +3558,9 @@ position: absolute;
   font-size: 0.82rem;
   letter-spacing: 0.04em;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 .community-card-btn:hover {
   background: rgba(40, 80, 160, 0.95);
@@ -3431,13 +3649,12 @@ position: absolute;
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    radial-gradient(
-      ellipse 70% 55% at 50% 55%,
-      rgba(0, 0, 0, 0.25) 0%,
-      rgba(0, 0, 0, 0.55) 60%,
-      rgba(0, 0, 0, 0.75) 100%
-    );
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 55%,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.55) 60%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
 }
 
 /* sticky content overlay — fades in once the video reaches its end */
@@ -3455,7 +3672,9 @@ position: absolute;
   color: #fff;
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
   pointer-events: none;
 }
 .future-section--in .future-content {
@@ -3472,7 +3691,8 @@ position: absolute;
   margin: 0 0 1.3rem;
   line-height: 1.05;
   text-transform: uppercase;
-  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.6),
+  text-shadow:
+    0 4px 28px rgba(0, 0, 0, 0.6),
     0 0 14px rgba(50, 90, 200, 0.25);
 }
 
@@ -3504,7 +3724,9 @@ position: absolute;
   font-size: clamp(0.9rem, 1.05vw, 1rem);
   cursor: pointer;
   text-decoration: none;
-  transition: transform 0.22s ease, filter 0.22s ease,
+  transition:
+    transform 0.22s ease,
+    filter 0.22s ease,
     box-shadow 0.22s ease;
 }
 
@@ -3531,6 +3753,31 @@ position: absolute;
 }
 .future-btn--ghost:hover {
   background: rgba(30, 60, 130, 0.7);
+}
+
+/* =========================================================
+   SPACE & SCIENCE — custom CTA button frames (this page only)
+   Primary → space-science-light-btn.png · Ghost → space-science-dark-btn.png
+   Strip the gradient/glass/border/shadow so the PNG frame art shows.
+========================================================= */
+body.space-science-page .future-btn--primary,
+body.space-science-page .future-btn--ghost {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background-color: transparent !important;
+  animation: none !important;
+  color: #fff !important;
+}
+body.space-science-page .future-btn--primary {
+  background: url("../../assets/space-science-light-btn.png") center / 100% 100%
+    no-repeat !important;
+}
+body.space-science-page .future-btn--ghost {
+  background: url("../../assets/space-science-dark-btn.png") center / 100% 100%
+    no-repeat !important;
 }
 
 @media (max-width: 720px) {
@@ -3690,7 +3937,9 @@ position: absolute;
   letter-spacing: 0.04em;
   cursor: pointer;
   filter: drop-shadow(0 5px 18px rgba(60, 120, 240, 0.4));
-  transition: transform 0.22s ease, filter 0.22s ease;
+  transition:
+    transform 0.22s ease,
+    filter 0.22s ease;
 }
 .tracking-mission-btn:hover {
   transform: translateY(-3px) scale(1.03);
@@ -3718,18 +3967,22 @@ position: absolute;
 ========================================================= */
 
 @keyframes cardGlowPulse {
-  0%, 100% {
-    box-shadow: 0 0 0 1px rgba(120, 170, 255, 0.08) inset,
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(120, 170, 255, 0.08) inset,
       0 0 28px rgba(50, 110, 200, 0.18);
   }
   50% {
-    box-shadow: 0 0 0 1px rgba(120, 170, 255, 0.14) inset,
+    box-shadow:
+      0 0 0 1px rgba(120, 170, 255, 0.14) inset,
       0 0 44px rgba(70, 140, 230, 0.34);
   }
 }
 
 @keyframes cardGlowPulseDrop {
-  0%, 100% {
+  0%,
+  100% {
     filter: drop-shadow(0 0 18px rgba(50, 110, 200, 0.22));
   }
   50% {
@@ -3750,29 +4003,20 @@ position: absolute;
 .community-card:hover,
 .impact-card:hover {
   transform: translateY(-4px) scale(1.015);
-  filter: brightness(1.06); 
+  filter: brightness(1.06);
 }
 
 /* cards backed by PNG artwork — pulse via filter so we don't drown the bg */
-.projects-card,
-.vetted-card,
-.tracking-mission {
-  animation: cardGlowPulseDrop 4.8s ease-in-out infinite;
-  transition: transform 0.3s ease, filter 0.3s ease;
-}
-.projects-card:hover,
-.vetted-card:hover,
-.tracking-mission:hover {
-  transform: translateY(-4px) scale(1.02);
-  filter: drop-shadow(0 0 32px rgba(80, 150, 240, 0.55)) brightness(1.08);
-}
 
 /* primary nav / CTA buttons get a hover-lift too */
 .future-btn,
 .community-tab,
 .community-card-btn {
-  transition: transform 0.25s ease, filter 0.25s ease,
-    box-shadow 0.25s ease, background 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
 }
 .future-btn:hover,
 .community-card-btn:hover {
@@ -3786,8 +4030,8 @@ position: absolute;
 .explore-section {
   position: relative;
   padding: var(--space-xl) 0;
-  background: #02060f
-    url("../../assets/Background-images/explore-bg.webp") center / cover no-repeat;
+  background: #02060f url("../../assets/Background-images/explore-bg.webp")
+    center / cover no-repeat;
   overflow: hidden;
 }
 
@@ -3839,15 +4083,19 @@ position: absolute;
   align-items: stretch;
   gap: 0.9rem;
   /* inner padding leaves a safe area inside the box-frame SVG */
-  padding:10px;
+  padding: 10px;
   min-height: 250px;
   background: rgba(18, 32, 82, 0.18);
   backdrop-filter: blur(18px);
   border: 1px solid rgba(147, 172, 255, 0.623);
   border-radius: 20px;
   filter: drop-shadow(0 4px 20px rgba(40, 100, 255, 0.2));
-  transition: transform 0.3s ease, filter 0.3s ease;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 /* .explore-card:hover {
@@ -3873,10 +4121,10 @@ position: absolute;
   border-radius: 10px;
 }
 
-.explore-section .prog-section-subtitle{
-  text-align:left;
+.explore-section .prog-section-subtitle {
+  text-align: left;
   margin: 0;
- }
+}
 .explore-card-label {
   font-family: var(--font-display);
   color: #fff;
@@ -3894,10 +4142,10 @@ position: absolute;
 ========================================================= */
 .site-footer {
   position: relative;
-  background: #000 url("../../assets/Background-images/modes-to-join-bg.webp") center / cover
-    no-repeat;
+  background: #000 url("../../assets/footer-bg.webp")
+    center / cover no-repeat !important;
   color: rgba(220, 230, 250, 0.88);
-  padding:150px 0px;
+  padding: 150px 0px 150px 0px;
   font-family: var(--font-sans);
   /* leave room on the right for the floating astronaut */
 }
@@ -3960,8 +4208,10 @@ position: absolute;
 .site-footer-contact a {
   color: rgba(220, 230, 250, 0.78);
   text-decoration: none;
-  font-size: clamp(0.82rem, 0.95vw, 1.00rem);
-  transition: color 0.2s ease, transform 0.2s ease;
+  font-size: clamp(0.82rem, 0.95vw, 1rem);
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 .site-footer-list a:hover,
 .site-footer-contact a:hover {
@@ -3973,7 +4223,7 @@ position: absolute;
   display: flex;
   align-items: flex-start;
   gap: 0.55rem;
-  font-size: clamp(0.82rem, 0.95vw, 1.10rem);
+  font-size: clamp(0.82rem, 0.95vw, 1.1rem);
   color: rgba(220, 230, 250, 0.85);
 }
 
@@ -3993,7 +4243,10 @@ position: absolute;
 .site-footer-socials a {
   color: #6db4ff;
   font-size: 1.15rem;
-  transition: transform 0.2s ease, filter 0.2s ease, color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease,
+    color 0.2s ease;
   filter: drop-shadow(0 0 5px rgba(80, 160, 255, 0.45));
 }
 .site-footer-socials a:hover {
@@ -4046,7 +4299,9 @@ position: absolute;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.2s ease, filter 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
 }
 .site-footer-form button:hover {
   transform: translateY(-1px);
@@ -4071,7 +4326,7 @@ position: absolute;
 .site-footer-policy {
   font-family: "JetBrains Mono", "Courier New", monospace;
   color: rgba(170, 200, 240, 0.7);
-  font-size: 0.90rem;
+  font-size: 0.9rem;
   margin: 0;
   letter-spacing: 0.04em;
 }
@@ -4115,7 +4370,8 @@ position: absolute;
 
 /* breathing neon glow used on PNG/SVG frames (drop-shadow based) */
 @keyframes neonPulse {
-  0%, 100% {
+  0%,
+  100% {
     filter: drop-shadow(0 0 6px rgba(80, 160, 255, 0.55))
       drop-shadow(0 0 14px rgba(50, 110, 200, 0.32));
   }
@@ -4128,13 +4384,16 @@ position: absolute;
 
 /* breathing neon glow used on solid CSS frames (box-shadow based) */
 @keyframes neonPulseBox {
-  0%, 100% {
-    box-shadow: 0 0 0 1px rgba(120, 180, 255, 0.18) inset,
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(120, 180, 255, 0.18) inset,
       0 0 18px rgba(60, 130, 220, 0.28),
       0 0 32px rgba(40, 110, 200, 0.18);
   }
   50% {
-    box-shadow: 0 0 0 1px rgba(160, 200, 255, 0.32) inset,
+    box-shadow:
+      0 0 0 1px rgba(160, 200, 255, 0.32) inset,
       0 0 30px rgba(90, 170, 240, 0.55),
       0 0 56px rgba(60, 130, 220, 0.32);
   }
@@ -4142,8 +4401,12 @@ position: absolute;
 
 /* gentle title underline sweep */
 @keyframes neonScanLine {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* card boxes — neon pulse removed per design request */
@@ -4157,7 +4420,9 @@ position: absolute;
 .site-footer-form button {
   position: relative;
   filter: drop-shadow(0 0 8px rgba(60, 130, 220, 0.45));
-  transition: transform 0.22s ease, filter 0.22s ease,
+  transition:
+    transform 0.22s ease,
+    filter 0.22s ease,
     box-shadow 0.22s ease;
 }
 
@@ -4228,8 +4493,13 @@ position: absolute;
 
 /* subtle parallax flicker on each section so the page feels alive */
 @keyframes sectionAmbient {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.985; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.985;
+  }
 }
 .modes-section,
 .projects-section,
@@ -4240,17 +4510,6 @@ position: absolute;
 .assoc-section,
 .vetted-section {
   animation: sectionAmbient 7s ease-in-out infinite;
-}
-
-/* card hover — subtle lift only, no neon glow */
-.modes-card:hover,
-.projects-card:hover,
-.vetted-card:hover,
-.tracking-mission:hover,
-.community-card:hover,
-.impact-card:hover {
-  transform: translateY(-5px) scale(1.02);
-  transition: transform 0.25s ease;
 }
 
 /* =========================================================
@@ -4289,31 +4548,30 @@ position: absolute;
     drop-shadow(0 0 10px rgba(90, 150, 255, 0.45));
 }
 
-
-@media screen and (min-width: 1500px) and (max-width: 1600px){
-  .age-card-list li{
-    font-size: clamp(0.80rem, 0.72vw, 0.75rem);
+@media screen and (min-width: 1500px) and (max-width: 1600px) {
+  .age-card-list li {
+    font-size: clamp(0.8rem, 0.72vw, 0.75rem);
   }
 }
 
-.spacescience-vetted-by::before{
-    top: 0;
-    background: linear-gradient(to bottom, #000000 0%, transparent 100%);
+.spacescience-vetted-by::before {
+  top: 0;
+  background: linear-gradient(to bottom, #000000 0%, transparent 100%);
 }
-.spacescience-vetted-by::after{
-    top: 0;
-    background: linear-gradient(to bottom, #000000 0%, transparent 100%);
+.spacescience-vetted-by::after {
+  top: 0;
+  background: linear-gradient(to bottom, #000000 0%, transparent 100%);
 }
-.spacescience-vetted-by .vetted-right{
-  right:0 !important;
-  left:auto !important;
-  text-align:right!important;
+.spacescience-vetted-by .vetted-right {
+  right: 0 !important;
+  left: auto !important;
+  text-align: right !important;
   max-width: 40% !important;
 }
 
-.spacescience-vetted-by .prog-section-subtitle{
-    text-align:right!important;
-    width: 100%;
+.spacescience-vetted-by .prog-section-subtitle {
+  text-align: right !important;
+  width: 100%;
 }
 
 /* =============================================================
@@ -4324,7 +4582,7 @@ position: absolute;
 /* Every section heading carries .prog-section-title — render them all at
    the same size across the page. */
 body.space-science-page .prog-section-title {
-  font-size: clamp(1.6rem, 3.4vw, 2.5rem) !important;
+  font-size: clamp(1.6rem, 3.4vw, 2.8rem) !important;
   line-height: 1.15;
 }
 
@@ -4340,10 +4598,10 @@ body.space-science-page .prog-section-title {
   body.space-science-page .prog-section-subtitle {
     font-size: 0.8rem !important;
     line-height: 1.6 !important;
-    color:#b1b1b1;
+    color: #b1b1b1;
   }
-
   /* ---- LOF section: static (no pinned zoom, no Earth box) ---- */
+
   body.space-science-page .lof-section {
     height: auto;
   }
@@ -4391,29 +4649,28 @@ body.space-science-page .prog-section-title {
     padding-top: 30px !important;
     padding-bottom: 30px !important;
   }
-  .age-card-list li{
-    font-size: 14px ;
+  .age-card-list li {
+    font-size: 14px;
   }
-  .age-card{
+  .age-card {
     aspect-ratio: 265 / 232;
   }
-  .header-btn{
-    margin-top:0px !important;
+  .header-btn {
+    margin-top: 0px !important;
   }
-  .learn-card-img{
+  .learn-card-img {
     height: 150px !important;
   }
-  .learn-card-slider{
+  .learn-card-slider {
     height: 150px;
   }
-  .learn-card-slider .learn-card-img{
+  .learn-card-slider .learn-card-img {
     height: 100% !important;
   }
-  .learn-grid{
-    gap:20px
+  .learn-grid {
+    gap: 20px;
   }
 }
-
 /* =============================================================
    SPACE SCIENCE — VETTED BY section, mobile fix.
    Desktop pins the title block to the right (max-width 40%) so the
@@ -4448,93 +4705,95 @@ body.space-science-page .prog-section-title {
   body.space-science-page .spacescience-vetted-by .vetted-card {
     max-width: 100%;
   }
-  .hero-heading{
+  .hero-heading {
     font-size: clamp(3rem, 7vw, 8rem);
   }
-  .careers-skill-img{
-    height:100% !important;
-    width:93% !important;
-    top:-13% !important;
+  .careers-skill-img {
+    height: 100% !important;
+    width: 93% !important;
+    top: -13% !important;
   }
-  .comp-card-outer{
-    height:100% !important;
+  .comp-card-outer {
+    height: 100% !important;
   }
-  .comp-card-inner{
+  .comp-card-inner {
     padding: 10px 10px 0px 10px;
   }
   .comp-card-icon {
     width: 3.5rem;
     height: 3.5rem;
   }
-  .faq-q-inner{
-    padding:10px 13px !important;
+  .faq-q-inner {
+    padding: 10px 13px !important;
   }
-  .choose-card-title{
+  .choose-card-title {
     font-size: 16px !important;
-    font-weight:500 !important;
+    font-weight: 500 !important;
   }
-  .prog-section-subtitle{
-    width:100% !important;
+  .prog-section-subtitle {
+    width: 100% !important;
     font-size: 0.75rem !important;
   }
-  .choose-card{
+  .choose-card {
     aspect-ratio: auto !important;
   }
-  .choose-card-consider{
+  .choose-card-consider {
     font-size: 15px !important;
   }
-  .choose-card-consider li{
+  .choose-card-consider li {
     font-size: 15px !important;
   }
-  .choose-card{
+  .choose-card {
     padding: 15% 16%;
   }
-  .choose-card-list li{
+  .choose-card-list li {
     font-size: 13px !important;
   }
-  .assoc-section::before, .assoc-section::after{
-    display:none !important;
+  .assoc-section::before,
+  .assoc-section::after {
+    display: none !important;
   }
-  .assoc-box-light{
-    display:none !important;
+  .assoc-box-light {
+    display: none !important;
   }
   .assoc-center-box {
     width: 80%;
   }
-  .why-section{
+  .why-section {
     min-height: 100% !important;
   }
   .age-card {
-      aspect-ratio: auto !important;
+    aspect-ratio: auto !important;
   }
-  .age-card{
-    padding: 70px 50px 30px 40px !important; 
+  .age-card {
+    padding: 70px 50px 30px 40px !important;
   }
-  .learn-grid{
-    margin:auto !important;
+  .learn-grid {
+    margin: auto !important;
   }
   .choose-path-grid {
     grid-template-columns: repeat(1, 1fr) !important;
-}
-.vetted-plate{
-  width: 80% !important;
-  padding:20px 25px !important;
-}
-  body.space-science-page .spacescience-vetted-by .vetted-grid{
+  }
+  .vetted-plate {
+    width: 80% !important;
+    padding: 20px 25px !important;
+  }
+  body.space-science-page .spacescience-vetted-by .vetted-grid {
     gap: 10px !important;
-    padding:0px  !important;
+    padding: 0px !important;
   }
-  body.space-science-page section p, body.space-science-page .prog-section-subtitle{
-    margin-bottom:0px
+  body.space-science-page section p,
+  body.space-science-page .prog-section-subtitle {
+    margin-bottom: 0px;
   }
-  .vetted-section{
-    padding:0px
+  .vetted-section {
+    padding: 0px;
   }
-  .vetted-name{
-    line-height:normal !important;
+  .vetted-name {
+    line-height: normal !important;
   }
-  .vetted-role{
-    font-size:10px
+  .vetted-role {
+    font-size: 10px;
   }
 }
 
@@ -4569,8 +4828,12 @@ body.space-science-page .prog-section-title {
   animation: assocModalFade 0.25s ease;
 }
 @keyframes assocModalFade {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .assoc-modal {
@@ -4581,7 +4844,11 @@ body.space-science-page .prog-section-title {
   padding: clamp(1.5rem, 3vw, 2.75rem);
   border-radius: 22px;
   background:
-    radial-gradient(120% 100% at 80% 0%, rgba(40, 80, 180, 0.18), transparent 60%),
+    radial-gradient(
+      120% 100% at 80% 0%,
+      rgba(40, 80, 180, 0.18),
+      transparent 60%
+    ),
     rgba(8, 14, 30, 0.94);
   border: 1px solid rgba(94, 160, 255, 0.5);
   box-shadow:
@@ -4593,8 +4860,14 @@ body.space-science-page .prog-section-title {
   animation: assocModalPop 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 @keyframes assocModalPop {
-  from { transform: translateY(16px) scale(0.97); opacity: 0; }
-  to { transform: none; opacity: 1; }
+  from {
+    transform: translateY(16px) scale(0.97);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
 }
 
 .assoc-modal-close {
@@ -4612,7 +4885,9 @@ body.space-science-page .prog-section-title {
   color: #fff;
   font-size: 1.05rem;
   cursor: pointer;
-  transition: background 0.18s ease, transform 0.18s ease;
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
   z-index: 2;
 }
 .assoc-modal-close:hover {
@@ -4704,7 +4979,9 @@ body.space-science-page .prog-section-title {
   font-weight: 700;
   font-size: 0.95rem;
   text-decoration: none;
-  transition: background 0.18s ease, transform 0.18s ease;
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
 }
 .assoc-modal-btn:hover {
   background: rgba(40, 90, 180, 0.45);
@@ -4796,58 +5073,68 @@ body.space-science-page .prog-section-title {
   }
 }
 
-.site-header{
+.site-header {
   background: #00000095;
 }
-body.space-science-page .header-btn{
+body.space-science-page .header-btn {
   margin-top: 0px !important;
 }
 
-@media (max-width: 760px){
-  .learn-sub{
-    margin-bottom:30px !important;
+@media (max-width: 760px) {
+  .learn-sub {
+    margin-bottom: 30px !important;
   }
-  .careers-sub{
-    margin-bottom:30px !important;
+  .careers-sub {
+    margin-bottom: 30px !important;
   }
-  .careers-skill-card{
-    width:100% !important;
-    min-width:100% !important;
+  .careers-skill-card {
+    width: 100% !important;
+    min-width: 100% !important;
   }
-  .careers-skill-img{
-    height:200px !important;
+  .careers-skill-img {
+    height: 200px !important;
   }
-  .careers-skill-card{
-    padding:10px !important;
+  .careers-skill-card {
+    padding: 10px !important;
   }
-  .careers-skill-label{
+  .careers-skill-label {
     font-size: 15px !important;
   }
   .careers-skill-card {
     aspect-ratio: 220 / 200 !important;
   }
-  .modes-desc{
-    margin-bottom:30px !important;
+  .modes-desc {
+    margin-bottom: 30px !important;
   }
-  .projects-card-img{
-    height:150px !important;
+  .projects-card-img {
+    height: 150px !important;
   }
-  .projects-card{
-  background-image: none !important;
-  background : #001123b5 !important;
-  border:1px solid #5a9fff9b !important;
-  border-radius: 20px !important;
+  .projects-card {
+    background-image: none !important;
+    background: #001123b5 !important;
+    border: 1px solid #5a9fff9b !important;
+    border-radius: 20px !important;
   }
-  .projects-card-body{
-    padding:0px !important;
+  .projects-card-body {
+    padding: 0px !important;
   }
-  .community-section{
-    display:none
+  .community-section {
+    display: none;
   }
-  .faq-robotics-section{
-    padding-top:0px !important;
+  .faq-robotics-section {
+    padding-top: 0px !important;
   }
-  .explore-section .prog-section-subtitle{
-    margin-bottom:30px !important;
+  .explore-section .prog-section-subtitle {
+    margin-bottom: 30px !important;
   }
+}
+.header-btn {
+  background: url(/src/assets/main_landing_pages/students/light-btn.png)
+    no-repeat center / 100% 100% !important;
+  width: fit-content;
+  height: fit-content;
+  padding: 15px 30px !important;
+}
+.space-science-page .faq-q-arrow {
+  color: #fff !important;
 }

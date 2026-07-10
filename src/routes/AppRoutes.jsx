@@ -22,6 +22,9 @@ const ComingSoon = lazy(() => import('../pages/ComingSoon/ComingSoon'));
 const IframeEmbed = lazy(() => import('../pages/IframeEmbed/IframeEmbed'));
 
 const About = lazy(() => import('../pages/About/About'));
+const Career = lazy(() => import('../pages/Career/Career'));
+const MediaStories = lazy(() => import('../pages/Media/MediaStories'));
+const ResearchProjects = lazy(() => import('../pages/Research/ResearchProjects'));
 const Services = lazy(() => import('../pages/Services/Services'));
 const Projects = lazy(() => import('../pages/Projects/Projects'));
 const Contact = lazy(() => import('../pages/Contact/Contact'));
@@ -66,6 +69,9 @@ const AppRoutes = () => (
         />
 
         <Route path="about" element={<About />} />
+        <Route path="media" element={<MediaStories />} />
+        <Route path="research-and-projects" element={<ResearchProjects />} />
+        <Route path="career" element={<Career />} />
         <Route path="services" element={<Services />} />
         <Route path="projects" element={<Projects />} />
         <Route path="contact" element={<Contact />} />

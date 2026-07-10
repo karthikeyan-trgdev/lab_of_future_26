@@ -621,7 +621,7 @@
   height: 80px;
   margin-left:-30px;
   margin-top: var(--space-s, 1rem);
-  background: url("../../assets/programs/drones/dark-btn.svg") no-repeat center / 100% 100%;
+  background: url("../../assets/programs/drones/dark-btn.png") no-repeat center / 100% 100%;
   border: none;
   border-radius: 0;
   color: #ffffff;
@@ -1357,7 +1357,7 @@
 }
 
 .drones-page .drones-project-card .projects-card-img {
-  object-fit: cover !important;
+  object-fit: contain !important;
   margin-left: 0 !important;
 }
 
@@ -1383,9 +1383,10 @@
 /* Project card chrome — keep the original home.css frame artwork
    (it was working). Only text colours need swapping for the light
    section background. */
-.drones-page .projects-section--robotics .projects-card {
+.drones-page .projects-section--robotics .projects-card { 
   color: #1a1a1a !important;
-  padding:30px
+  padding:30px;
+  align-items: flex-start;
 }
 
 .drones-page .projects-section--robotics .projects-card-title {
@@ -1741,28 +1742,33 @@
    buttons — 200×80 px, light-btn.svg / dark-btn.svg artwork, white
    text, soft blue drop-shadow on hover. */
 .drones-page .cta-robotics-btn {
-  width: 250px;
-  height: 80px;
-  margin-left:-30px;
-  min-width: 0;
-  padding: 0;
-  border: none;
-  border-radius: 0;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 120% 100%;
-  backdrop-filter: none;
-  box-shadow: none;
-  color: #ffffff;
-  font-family: var(--font-display, "Conthrax", sans-serif);
-  font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 0.02em;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.16s ease, filter 0.16s ease;
+width: fit-content !important;
+    height: fit-content !important;
+    min-width: 0 !important;
+    padding: 15px 30px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: transparent !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 100% 100% !important;
+    color: #ffffff !important;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.04em !important;
+    text-transform: none !important;
+    text-shadow: none !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    white-space: nowrap !important;
+    animation: none !important;
 }
 
 /* Both CTA buttons use the DRONE-theme dark pill artwork (matches
@@ -1770,7 +1776,7 @@
    /assets/dark-btn.svg the robotics page used. */
 .drones-page .cta-robotics-btn--primary,
 .drones-page .cta-robotics-btn--secondary {
-  background-image: url("../../assets/programs/drones/dark-btn.svg");
+  background-image: url("../../assets/programs/drones/dark-btn.png");
 }
 
 .drones-page .cta-robotics-btn:hover,
@@ -2241,7 +2247,7 @@
   padding: 0;
   border: none;
   border-radius: 0;
-  background: url("../../assets/dark-btn.svg") no-repeat center / 120% 100%;
+  background: url("../../assets/programs/drones/dark-btn.png") no-repeat center / 120% 100%;
   backdrop-filter: none;
   box-shadow: none;
   color: #ffffff;
@@ -2259,7 +2265,7 @@
 /* Both why-section buttons now use the DARK pill artwork. */
 .drones-page .why-section--robotics .why-btn--primary,
 .drones-page .why-section--robotics .why-btn--secondary {
-  background-image: url("../../assets/dark-btn.svg");
+  background-image: url("../../assets/programs/drones/dark-btn.png");
 }
 
 .drones-page .why-section--robotics .why-btn:hover,
@@ -2654,32 +2660,44 @@
   cursor: grabbing;
 }
 
-/* #4a FAQ-robotics accordion — max-height transition (the grid
-   trick was failing silently). */
+/* #4a FAQ-robotics accordion — smooth grid-row height animation.
+   The previous max-height:0→800px transition animated to a fixed height
+   far taller than the content, so the panel snapped open and lagged on
+   close (max-height shrank through ~680px of empty space before the box
+   visibly collapsed). The grid-row 0fr↔1fr trick animates to the exact
+   content height, giving a smooth, symmetric open/close. */
 .drones-page .faq-robotics-a {
-  display: block !important;
-  grid-template-rows: unset !important;
-  max-height: 0;
+  display: grid !important;
+  grid-template-rows: minmax(0, 0fr) !important;
+  max-height: none !important;
   overflow: hidden;
-  transition: max-height 0.4s ease;
+  min-height: 0;
+  transition: grid-template-rows 0.36s ease !important;
 }
 .drones-page .faq-robotics-item.is-open .faq-robotics-a {
-  max-height: 800px;
+  grid-template-rows: minmax(0, 1fr) !important;
 }
 .drones-page .faq-robotics-a-body {
+  overflow: hidden;
+  min-height: 0;
   padding: 0.5rem 1.2rem 1rem;
 }
 
-/* #4b Career-pathways accordion — same max-height fix. */
+/* #4b Career-pathways accordion — same smooth grid-row animation. */
 .drones-page .career-pathways-section--robotics .faq-answer {
-  display: block !important;
-  grid-template-rows: unset !important;
-  max-height: 0;
+  display: grid !important;
+  grid-template-rows: minmax(0, 0fr) !important;
+  max-height: none !important;
   overflow: hidden;
-  transition: max-height 0.4s ease;
+  min-height: 0;
+  transition: grid-template-rows 0.36s ease !important;
 }
 .drones-page .career-pathways-section--robotics .faq-item.is-open .faq-answer {
-  max-height: 800px;
+  grid-template-rows: minmax(0, 1fr) !important;
+}
+.drones-page .career-pathways-section--robotics .faq-answer-body {
+  overflow: hidden;
+  min-height: 0;
 }
 
 /* #5 Vetted-by — uniform photo, 100%-wide plate. */
@@ -2990,35 +3008,37 @@
    `120% 100%`.  All other typography/colour rules match the header
    button so the two pills read as a family. */
 .drones-page .drones-hero-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45rem;
-  width: 250px;
-  height: 80px;
-  margin-left:-30px;
-  min-width: 0;
-  margin-top: 0.6rem;
-  padding: 0;
-  border: none;
-  border-radius: 0;
-  background:
-    url("../../assets/programs/drones/dark-btn.svg")
-    no-repeat center / 120% 100%;
-  backdrop-filter: none;
-  box-shadow: none;
-  color: #ffffff;
-  font-family: var(--font-display, "Conthrax", sans-serif);
-  font-weight: 700;
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  text-decoration: none;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: transform 0.18s ease, filter 0.18s ease;
+width: fit-content !important;
+    height: fit-content !important;
+    min-width: 0 !important;
+    padding: 15px 30px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: transparent !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 100% 100% !important;
+    color: #ffffff !important;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.04em !important;
+    text-transform: none !important;
+    text-shadow: none !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    white-space: nowrap !important;
+    animation: none !important;
+    background-image: url(/src/assets/programs/drones/light-btn.png) !important;
 }
 .drones-page .drones-hero-cta-arrow {
-  color: #ff3344;
+  color: #fff;
   font-weight: 900;
 }
 .drones-page .drones-hero-cta:hover {
@@ -3633,11 +3653,10 @@
   justify-content: center;
   width: 250px;
   height:80px;
-  margin-left:-30px;
   padding: 0;
   border: none;
   background:
-    url("../../assets/programs/drones/dark-btn.svg")
+    url("../../assets/programs/drones/dark-btn.png")
     no-repeat center / 120% 100%;
   color: #ffffff;
   font-family: var(--font-display, "Conthrax", sans-serif);
@@ -3866,6 +3885,19 @@
   pointer-events: none;
 }
 
+/* Full-viewport traveling-drone layer (.drone-traveler, rendered by
+   <DroneTraveler/>) must let every click pass through to the page
+   beneath it. The wrapper div sets pointer-events: none inline, but
+   @react-three/fiber's <Canvas> renders its own wrapper <div> +
+   <canvas> with an inline "pointer-events: auto" that wins over the
+   inherited "none" — silently turning the fixed, scroll-following
+   drone into a click-blocker over whatever is behind it. Force it
+   back off on every descendant. */
+.drones-page .drone-traveler,
+.drones-page .drone-traveler * {
+  pointer-events: none !important;
+}
+
 /* WHY ROBOTICS FOR FUTURE CAREERS — top-left, smaller drone */
 .drone-wp-careers {
   position: absolute;
@@ -3922,11 +3954,29 @@
 }
 
 .header-btn {
-    background: url(/src/assets/programs/drones/light-btn.svg) no-repeat center / 120% 100% !important;
+    background: url(/src/assets/programs/drones/light-btn.png) no-repeat center / 120% 100% !important;
 }
 .explore-card-imgwrap{
   padding:0px !important;
 }
 .explore-card-img{
   height:200px !important;
+}
+.faq-q-arrow{
+  color: #000 !important;
+}
+.site-footer-socials a{
+  color: #e7e7e7 !important;
+}
+
+.site-footer-icon{
+    color: #e7e7e7 !important;
+}
+
+.site-footer-form button{
+    background: linear-gradient(180deg, #ffffff 0%, #ececec 100%);
+    color: #000 !important;
+}
+.drones-page .cta-robotics-btn{
+  background-color: transparent !important;
 }

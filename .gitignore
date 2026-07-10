@@ -30,3 +30,6 @@ Thumbs.db
 .claude/
 .vite/
 .env*
+
+# local backup archives (exceed GitHub's 100MB file limit)
+backup.zip

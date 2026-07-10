@@ -81,8 +81,6 @@
 
 .space-robotics-page .hero-heading {
   margin: 0;
-  display: flex;
-  flex-wrap: wrap;
   gap: 0.4em;
   justify-content: center;
   align-items: center;
@@ -967,7 +965,7 @@ background: #ffffff !important;
    across the logo. */
 .space-robotics-page .assoc-section--robotics .assoc-box-light {
   top: auto !important;
-  bottom: -50% !important;
+  bottom: -55% !important;
   width: 100% !important;
   transform: translateX(-50%) !important;
   z-index: 0 !important;
@@ -1324,6 +1322,30 @@ background: #ffffff !important;
 .space-robotics-page .projects-section--robotics .projects-card {
   color: #0d1b3a !important;
   padding:30px
+
+}
+
+.space-robotics-page .projects-section--robotics .projects-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 0.85fr 1.3fr;
+    align-items: stretch;
+    gap: 1.2rem;
+    padding: 1.2rem 1.5rem;
+    min-height: 240px;
+
+    /* Glass Morphism */
+    background: rgb(255, 255, 255) !important;
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    box-shadow:none !important;
+   border: 1.5px solid rgba(29, 59, 138, 0.25) !important;
+    border-radius: 20px;
+    overflow: hidden;
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
 }
 
 .space-robotics-page .projects-section--robotics .projects-card-title {
@@ -1691,33 +1713,44 @@ background: #ffffff !important;
    buttons — 200×80 px, light-btn.svg / dark-btn.svg artwork, white
    text, soft blue drop-shadow on hover. */
 .space-robotics-page .cta-robotics-btn {
-  width: 200px;
-  height: 80px;
+  width: fit-content;
+  height: fit-content;
   min-width: 0;
-  padding: 0;
+  padding: 15px 30px;
   border: none;
   border-radius: 0;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 120% 100%;
+  background-size: 100% 100%;
+  background-color: transparent;
   backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   box-shadow: none;
   color: #ffffff;
   font-family: var(--font-display, "Conthrax", sans-serif);
   font-weight: 700;
   font-size: 0.95rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
+  text-transform: none;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.16s ease, filter 0.16s ease;
+  gap: 0.5rem;
+  white-space: nowrap;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+.space-robotics-page .cta-robotics-btn::after {
+  content: "\2192"; /* → */
+  font-size: 1.05em;
+  line-height: 1;
+  display: inline-block;
 }
 
-/* Both CTA buttons now use the DARK pill artwork. */
+/* Both CTA buttons use the DARK pill artwork (PNG). */
 .space-robotics-page .cta-robotics-btn--primary,
 .space-robotics-page .cta-robotics-btn--secondary {
-  background-image: url("../../assets/dark-btn.svg");
+  background-image: url("../../assets/programs/space-robotics/dark-btn.png");
 }
 
 .space-robotics-page .cta-robotics-btn:hover,
@@ -1866,7 +1899,7 @@ background: #ffffff !important;
       rgba(255, 255, 255, 0.962) 0%,
       rgba(255, 255, 255, 0.763) 100%
     ),
-    url("../../assets/programs/space-robotics/student-projects.webp")
+    url("../../assets/programs/space-robotics/footer-bg.webp")
       bottom / cover no-repeat !important;
   background-color: #eef2fa !important;
   color: #2a3142 !important;
@@ -2244,34 +2277,49 @@ background: #ffffff !important;
   flex-wrap: wrap;
 }
 
-/* Both Why-section buttons match the header "Enroll Now" pill exactly:
-   200×80 px, light-btn.svg artwork, white text. No variant differences. */
+/* Why-section buttons — match the students-page button exactly and use
+   the space-robotics dark-btn.png frame. */
 .space-robotics-page .why-section--robotics .why-btn {
   width: fit-content;
-  height: 100px;
+  height: fit-content;
   min-width: 0;
+  padding: 15px 30px;
   border: none;
-  border-radius: 0;
-  background: url("../../assets/dark-btn.svg") no-repeat center / 120% 100%;
+  border-radius: 0 !important;
+  background: url("../../assets/programs/space-robotics/dark-btn.png")
+    no-repeat center / 100% 100%;
+  background-color: transparent;
   backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   box-shadow: none;
   color: #ffffff;
   font-family: var(--font-display, "Conthrax", sans-serif);
   font-weight: 700;
   font-size: 0.95rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  text-shadow: none;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.16s ease, filter 0.16s ease;
-  margin-top:0px !important;
+  gap: 0.5rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.18s ease, filter 0.18s ease;
+  margin-top: 0px !important;
+}
+.space-robotics-page .why-section--robotics .why-btn::after {
+  content: "\2192"; /* → */
+  font-size: 1.05em;
+  line-height: 1;
+  display: inline-block;
 }
 
-/* Both why-section buttons now use the DARK pill artwork. */
+/* Both why-section buttons use the DARK pill artwork. */
 .space-robotics-page .why-section--robotics .why-btn--primary,
 .space-robotics-page .why-section--robotics .why-btn--secondary {
-  background-image: url("../../assets/dark-btn.svg");
+  background-image: url("../../assets/programs/space-robotics/dark-btn.png");
 }
 
 .space-robotics-page .why-section--robotics .why-btn:hover,
@@ -2613,8 +2661,9 @@ background: #ffffff !important;
 .space-robotics-page .age-card-label {
   width: 100%;
   position:absolute;
-  top: 2%;
-  left: 25%;
+  top: 1.5%;
+  left: 23%;
+  transform: none;
   color: #ffffff;
   -webkit-text-fill-color: #ffffff;
   font-family: var(--font-display, "Conthrax", sans-serif);
@@ -3077,7 +3126,7 @@ background: #ffffff !important;
    other program-page CSS (e.g. drones.css) loads later and would
    otherwise win on every page. body.space-robotics + !important beats it. */
 body.space-robotics .header-btn {
-    background: url(/src/assets/programs/space-robotics/dark-btn.svg) no-repeat center / 120% 100% !important;
+    background: url(/src/assets/programs/space-robotics/dark-btn.png) no-repeat center / 100% 100% !important;
 }
 .projects-card-img{
   height: 300px;
@@ -3225,4 +3274,18 @@ body.space-robotics .header-btn {
     .drones-page .projects-section--robotics .projects-card{
       margin-bottom:0px !important;
     }
+}
+
+
+
+.site-footer {
+    background: #000 url("/src/assets/programs/space-robotics/footer-bg.webp")
+    center / cover no-repeat !important;
+}
+
+.modes-title::after, .projects-title::after, .impact-title::after, .community-title::after, .tracking-title::after, .explore-title::after {
+    background: none !important;
+}
+.space-robotics-page .competitions-section--robotics .competitions-label-badge{
+  font-size: clamp(1.3rem,  3.4vw, 2.2rem);
 }

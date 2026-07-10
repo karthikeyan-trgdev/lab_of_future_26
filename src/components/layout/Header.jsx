@@ -5,87 +5,119 @@ import Logo from "../../assets/light-logo.svg";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useEnquiryModal } from "../../context/EnquiryModalContext";
 
+// Grouped navigation. Parent items (no `path`) render as expandable
+// dropdowns; leaf items link to a route ("/…"), an external URL
+// (`external: true`), or a "#" placeholder for pages not built yet.
 const navItems = [
   {
-    label: "Home",
-    path: "/",
+    label: "About",
+    submenu: [
+      { label: "About Us", path: "/about" },
+      { label: "Research & Projects", path: "/research-and-projects" },
+      { label: "Careers", path: "/career" },
+    ],
   },
   {
-    label: "About Us",
-    path: "/about",
-  },
-  {
-    label: "School Programs",
+    label: "Programs",
     submenu: [
       {
-        label: "Labs In School",
-        path: "https://laboffuture.odoo.com/lab-verse",
-        external: true,
+        label: "School Programs",
+        submenu: [
+          {
+            label: "Labs In School",
+            path: "https://laboffuture.odoo.com/lab-verse",
+            external: true,
+          },
+          {
+            label: "Dubai Lab Tour",
+            path: "https://laboffuture.odoo.com/lab-tours-book-a-lab-tour",
+            external: true,
+          },
+          { label: "Zero Gravity", path: "/school-programs/zero-gravity" },
+          {
+            label: "Week Without Walls",
+            path: "https://laboffuture.odoo.com/week-without-walls",
+            external: true,
+          },
+          {
+            label: "ECA",
+            path: "https://laboffuture.odoo.com/eca",
+            external: true,
+          },
+          {
+            label: "Leadership & Advisory Team",
+            path: "https://laboffuture.odoo.com/leadership-advisory-team",
+            external: true,
+          },
+        ],
       },
-      {
-        label: "Dubai Lab Tour",
-        path: "https://laboffuture.odoo.com/lab-tours-book-a-lab-tour",
-        external: true,
-      },
-      { label: "Zero Gravity", path: "/school-programs/zero-gravity" },
-      {
-        label: "Week Without Walls",
-        path: "https://laboffuture.odoo.com/week-without-walls",
-        external: true,
-      },
-      {
-        label: "ECA",
-        path: "https://laboffuture.odoo.com/eca",
-        external: true,
-      },
-      {
-        label: "Leadership & Advisory Team",
-        path: "https://laboffuture.odoo.com/leadership-advisory-team",
-        external: true,
-      },
+      { label: "Workshops", path: "#" },
+      { label: "Summer Camp", path: "/events/summer-camp-2026" },
+      { label: "Certifications", path: "#" },
     ],
   },
   {
     label: "Events",
     submenu: [
-      { label: "Orbita 26", path: "/events/orbita-26" },
+      { label: "Upcoming Events", path: "/events/orbita-26" },
       {
-        label: "Asian Space Settlement Design Competition 2026",
+        label: "Competitions",
         path: "/events/asian-space-settlement-design-competition-2026",
       },
-      { label: "Summer Camp 2026", path: "/events/summer-camp-2026" },
-      {
-        label: "Summer Internship 2026",
-        path: "/events/summer-internship-2026",
-      },
+      { label: "Past Events", path: "#" },
     ],
   },
   {
-    label: "Get Involved",
+    label: "Community",
     submenu: [
       {
-        label: "Internship",
-        path: "https://laboffuture.odoo.com/internship",
+        label: "Get Involved",
+        submenu: [
+          {
+            label: "Internship",
+            path: "https://laboffuture.odoo.com/internship",
+            external: true,
+          },
+          {
+            label: "Jobs",
+            path: "https://laboffuture.odoo.com/jobs",
+            external: true,
+          },
+          {
+            label: "Become LOF Ambassador",
+            path: "https://laboffuture.odoo.com/student-ambassador-program",
+            external: true,
+          },
+          {
+            label: "Join the Curiosity Crew",
+            path: "https://laboffuture.odoo.com/lof-community",
+            external: true,
+          },
+          {
+            label: "Ivy League Colleges",
+            path: "https://laboffuture.odoo.com/ivy-league-colleges",
+            external: true,
+          },
+        ],
+      },
+      { label: "Partners", path: "#" },
+      { label: "Volunteers", path: "#" },
+      { label: "Mentors", path: "#" },
+    ],
+  },
+  {
+    label: "Resources",
+    submenu: [
+      { label: "Media & Stories", path: "/media" },
+      {
+        label: "Blog",
+        path: "https://laboffuture.odoo.com/blog/our-blog-1",
         external: true,
       },
+      { label: "Gallery", path: "#" },
       {
-        label: "Jobs",
-        path: "https://laboffuture.odoo.com/jobs",
-        external: true,
-      },
-      {
-        label: "Become LOF Ambassador",
-        path: "https://laboffuture.odoo.com/student-ambassador-program",
-        external: true,
-      },
-      {
-        label: "Join the Curiosity Crew",
-        path: "https://laboffuture.odoo.com/lof-community",
-        external: true,
-      },
-      {
-        label: "Ivy League Colleges",
-        path: "https://laboffuture.odoo.com/ivy-league-colleges",
+        label: "News",
+        path: "https://laboffuture.odoo.com/newsletter",
         external: true,
       },
     ],
@@ -157,6 +189,20 @@ const Header = () => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={closeMenu}
+          >
+            {item.label}
+          </a>
+        );
+      } else if (item.path === "#") {
+        // Placeholder (page not built yet) — plain anchor so it never
+        // resolves to the current route and shows a false "active" state.
+        labelEl = (
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              closeMenu();
+            }}
           >
             {item.label}
           </a>

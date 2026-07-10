@@ -1,5 +1,40 @@
+* {
+  scrollbar-color: #5EC8FF rgba(255, 255, 255, 0.05);
+}
+
 .header-btn {
-    background: url('/src/assets/main_landing_pages/students/light-btn.svg') no-repeat center / 120% 100%;
+    background: url('/src/assets/main_landing_pages/students/light-btn.png') no-repeat center / 120% 100%;
+}
+
+/* On the Students page, make the header "Enroll Now" CTA identical to
+   the hero section buttons (.student-btn) — same size, padding, frame,
+   font, letter-spacing and gap. Scoped via the body.is-students-page
+   class so other pages' header buttons are untouched. */
+body.is-students-page .header-btn {
+  width: fit-content;
+  height: fit-content;
+  min-width: 0;
+  padding: 15px 30px;
+  background:
+    url("../../assets/main_landing_pages/students/light-btn.png")
+      center / 100% 100% no-repeat;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  color: #ffffff;
+  font-family: var(--font-display, "Conthrax", sans-serif);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
 }
 
 
@@ -1628,28 +1663,21 @@ background: linear-gradient(90deg, rgba(0, 0, 0, 0.93) 0%, rgba(0, 0, 0, 0.33) 1
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg,
-    rgba(3, 6, 14, 0.55) 0%,
+    rgba(3, 6, 14, 0.856) 0%,
     rgba(3, 6, 14, 0.35) 45%,
-    rgba(3, 6, 14, 0.70) 100%);
+    rgba(3, 6, 14, 0.918) 100%);
 }
 
 .students-page .student-partnership-title {
   position: relative;
   z-index: 2;
   text-align: center;
-  font-family: var(--font-display, "Conthrax", sans-serif);
-  font-weight: 900;
-  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #5EC8FF;
-  margin: 0 0 clamp(40px, 6vh, 70px);
 }
 
 .students-page .student-partnership-tree {
   position: relative;
   z-index: 2;
-  width: min(1240px, 92%);
+  width: min(1500px, 92%);
   margin: 0 auto;
   aspect-ratio: 1000 / 600;
 }
@@ -1714,11 +1742,7 @@ background: linear-gradient(90deg, rgba(0, 0, 0, 0.93) 0%, rgba(0, 0, 0, 0.33) 1
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 4;
-  width: clamp(160px, 16vw, 220px);
-  padding: 14px 22px;
-  background: rgba(255, 255, 255, 0.96);
-  border-radius: 10px;
-  box-shadow: 0 10px 28px rgba(60, 130, 220, 0.30);
+  width: clamp(160px, 16vw, 270px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2000,7 +2024,7 @@ background: linear-gradient(90deg, rgba(0, 0, 0, 0.93) 0%, rgba(0, 0, 0, 0.33) 1
   .site-footer{
     padding:50px 0px 20px 0px !important;
     background-position:top !important;
-    background:#000 url("/src/assets/Background-images/modes-to-join-bg.webp");
+    background:#000 url("/src/assets/Background-images/footer-bg.webp");
   }
   .site-footer-bottom p{
     font-size:12px !important;
@@ -2068,3 +2092,15 @@ background: linear-gradient(90deg, rgba(0, 0, 0, 0.93) 0%, rgba(0, 0, 0, 0.33) 1
 }
 
 
+.header-btn{
+background: url(/src/assets/main_landing_pages/students/light-btn.png) no-repeat center / 100% 100% !important;
+width: fit-content;
+height: fit-content;
+padding: 15px 30px !important;
+}
+
+
+.site-footer {
+    background: #000 url("/src/assets/students/footer-bg.webp") center / cover
+    no-repeat;
+}

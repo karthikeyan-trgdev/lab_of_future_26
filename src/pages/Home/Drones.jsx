@@ -769,22 +769,22 @@ const COMPETITION_ITEMS = [
   {
     icon: calenderIcon,
     title: "Monthly Themed Drone Competitions",
-    desc: "Keep learners engaged all year with fresh monthly drone challenges focused on <br/> flying, coding, teamwork, and missions.",
+    desc: "Keep learners engaged all year with fresh monthly drone challenges focused on  flying, coding, teamwork, and missions.",
   },
   {
     icon: olympiadIcon,
     title: "National / Regional Level Competitions",
-    desc: "Prepare students for bigger competition platforms through structured training, flight <br/> tasks, documentation, and presentation skills.",
+    desc: "Prepare students for bigger competition platforms through structured training, flight  tasks, documentation, and presentation skills.",
   },
   {
     icon: portfolioIcon,
     title: "Global Drone Competitions",
-    desc: "Build future-ready confidence for international drone challenges involving autonomy, <br/> innovation, rescue missions, and UAV engineering.",
+    desc: "Build future-ready confidence for international drone challenges involving autonomy,  innovation, rescue missions, and UAV engineering.",
   },
   {
     icon: recognitionIcon,
     title: "Portfolio-Based Drone Competitions",
-    desc: "Turn drone builds, flight logs, code records, design notes, and mission outcomes into <br/> strong student portfolio entries.",
+    desc: "Turn drone builds, flight logs, code records, design notes, and mission outcomes into  strong student portfolio entries.",
   },
 ];
 
@@ -849,23 +849,23 @@ const Competitions = () => {
 const FAQ_ITEMS = [
   {
     q: "Drone Pilot",
-    a: "Learn how drones are used in industries like rescue operations, agriculture, <br/> inspections, logistics, and mission-based    flying opening pathways into real aviation and UAV operations.",
+    a: "Learn how drones are used in industries like rescue operations, agriculture,  inspections, logistics, and mission-based    flying opening pathways into real aviation and UAV operations.",
   },
   {
     q: "Aerial Photography & Media",
-    a: "Explore how drones capture stunning aerial visuals for filmmaking, tourism, <br/> events, sports, real estate and digital storytelling.",
+    a: "Explore how drones capture stunning aerial visuals for filmmaking, tourism,  events, sports, real estate and digital storytelling.",
   },
   {
     q: "UAV Engineer",
-    a: "Discover the technology behind drones by understanding flight systems, <br/> sensors, controls, design, testing, and innovation in unmanned aerial vehicles.",
+    a: "Discover the technology behind drones by understanding flight systems,  sensors, controls, design, testing, and innovation in unmanned aerial vehicles.",
   },
   {
     q: "Aerial Mapping & Surveying",
-    a: "See how drones help create maps, collect data, and support construction, <br/> environmental studies, urban planning, and land surveys.",
+    a: "See how drones help create maps, collect data, and support construction,  environmental studies, urban planning, and land surveys.",
   },
   {
     q: "Drone Research & Innovation",
-    a: "Explore emerging fields like autonomous drones, AI-powered navigation, <br/> smart safety systems, and future flying technologies.",
+    a: "Explore emerging fields like autonomous drones, AI-powered navigation,  smart safety systems, and future flying technologies.",
   },
 ];
 
@@ -1656,106 +1656,6 @@ const ExplorePrograms = () => (
   </section>
 );
 
-/* =========================================================
-   SITE FOOTER
-========================================================= */
-
-const SiteFooter = () => (
-  <footer className="site-footer">
-    <div className="site-footer-inner container">
-      {/* horizontal row: logo + 4 named columns */}
-      <div className="site-footer-row">
-        {/* <div className="site-footer-brand">
-          <img
-            className="site-footer-logo"
-            src={lofLogo}
-            alt="Lab of Future"
-          />
-        </div> */}
-
-        <div className="site-footer-col">
-          <h4 className="site-footer-col-title">Quick Links</h4>
-          <ul className="site-footer-list">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#programs">Programs</a></li>
-            <li><a href="#innovation">Innovation Labs</a></li>
-            <li><a href="#partnerships">Partnerships</a></li>
-            <li><a href="#community">Join our community</a></li>
-          </ul>
-        </div>
-
-        <div className="site-footer-col">
-          <h4 className="site-footer-col-title">Explore</h4>
-          <ul className="site-footer-list">
-            <li><a href="#research">Research &amp; Projects</a></li>
-            <li><a href="#events">Events / Competitions</a></li>
-            <li><a href="#media">Media / Success Stories</a></li>
-            <li><a href="#updates">Live Updates</a></li>
-            <li><a href="#awards">Awards / Accreditations</a></li>
-            <li><a href="#contact">Contact Us</a></li>
-          </ul>
-        </div>
-
-        <div className="site-footer-col">
-          <h4 className="site-footer-col-title">Contact Us</h4>
-          <ul className="site-footer-contact">
-            <li>
-              <MdEmail className="site-footer-icon" />
-              <a href="mailto:contact@laboffuture.com">
-                contact@laboffuture.com
-              </a>
-            </li>
-            <li>
-              <MdPhone className="site-footer-icon" />
-              <span>
-                UAE: +971 - 42 856 706
-              </span>
-            </li>
-          </ul>
-          <div className="site-footer-socials">
-            <a href="#fb" aria-label="Facebook"><FaFacebookF /></a>
-            <a href="#x" aria-label="X / Twitter"><FaXTwitter /></a>
-            <a href="#yt" aria-label="YouTube"><FaYoutube /></a>
-            <a href="#ig" aria-label="Instagram"><FaInstagram /></a>
-            <a href="#in" aria-label="LinkedIn"><FaLinkedin /></a>
-          </div>
-        </div>
-
-        <div className="site-footer-col site-footer-stay">
-          <h4 className="site-footer-col-title">Stay Connected</h4>
-          <p className="site-footer-stay-desc">
-            Subscribe to our newsletter for updates, news events and
-            downloadables.
-          </p>
-          <form
-            className="site-footer-form"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <input
-              type="email"
-              placeholder="Your email address..."
-              aria-label="Email address"
-            />
-            <button type="submit" aria-label="Subscribe">
-              <FaPaperPlane />
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <div className="site-footer-bottom">
-        <p className="site-footer-copy">Copyright @2026 Lab of Future</p>
-        <p className="site-footer-policy">
-          <a href="#privacy">Privacy Policy</a> |{" "}
-          <a href="#disclaimer">Disclaimer</a> |{" "}
-          <a href="#terms">Terms</a> |{" "}
-          <a href="#refund">Refund Policy</a>
-        </p>
-      </div>
-    </div>
-  </footer>
-);
 
 
 const DroneTraveler = () => {
@@ -2194,6 +2094,12 @@ const DroneTravelerModel = ({ tiltRef }) => {
 const Drones = () => {
   const { openEnquiry } = useEnquiryModal();
 
+  // Tag <body> so this page's header CTA frame can be scoped to it.
+  useEffect(() => {
+    document.body.classList.add("drones-page");
+    return () => document.body.classList.remove("drones-page");
+  }, []);
+
   // The drone traveler is choreographed for wide desktop layouts — at
   // mobile/tablet/laptop widths his landing spots collide with section
   // content (age cards, headings, etc.), so he's dropped from the DOM
@@ -2332,7 +2238,6 @@ const Drones = () => {
 
       <ExplorePrograms />
 
-      <SiteFooter />
     </div>
   );
 };

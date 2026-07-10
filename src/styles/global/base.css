@@ -13,6 +13,67 @@ background-color: rgb(0, 0, 0);
   color-scheme: dark;
 }
 
+/* =========================================================
+   GLOBAL CUSTOM SCROLLBAR — brand #1a408c → cyan pill
+   Applies to the page and every inner scroll area (filters,
+   modals, etc.). Element-specific overrides still win.
+========================================================= */
+/* Firefox */
+* {
+  scrollbar-width: thick;
+  scrollbar-color: #3d6dcf rgba(255, 255, 255, 0.05);
+}
+
+/* WebKit / Chromium / Edge */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+/* Remove the up/down (and left/right) stepper arrow buttons.
+   Some Chromium builds ignore `display:none` on the generic
+   ::-webkit-scrollbar-button, so every button variant is zeroed out
+   explicitly (each as its own rule so one unknown selector can't drop
+   the group). */
+::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+  -webkit-appearance: none;
+  background: transparent;
+}
+::-webkit-scrollbar-button:single-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+::-webkit-scrollbar-button:vertical:decrement,
+::-webkit-scrollbar-button:vertical:increment {
+  display: none;
+  height: 0;
+}
+::-webkit-scrollbar-button:horizontal:decrement,
+::-webkit-scrollbar-button:horizontal:increment {
+  display: none;
+  width: 0;
+}
+::-webkit-scrollbar-track {
+  background: rgba(5, 8, 20, 0.75);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #1a408c 0%, #22d3ee 100%);
+  border-radius: 999px;
+  /* transparent border + padding-box clip = floating inset pill */
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #2f6fd6 0%, #22d3ee 100%);
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
     max-width: 1440px;
 }

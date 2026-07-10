@@ -447,8 +447,8 @@
   font-weight: 900;
 }
 .careers-skill-img {
-  object-fit: cover;
-  position: static;
+  object-fit: cover !important;
+  position: static !important;
   width:100%;
   border-radius: 10px;
   height:160px;
@@ -482,7 +482,26 @@
   font-weight: 800;
   text-shadow: none !important;
   font-size: 17px;
+  white-space: pre-wrap !important;
+  bottom:10% !important;
 }
+
+
+.ai-data-science-page  .careers-skill-card{
+  aspect-ratio: none !important;
+}
+
+.ai-data-science-page .careers-section--robotics .careers-skill-card{
+    background: rgba(15, 25, 50, 0.25) !important;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 220 / 220 !important;
+}
+
 
 /* =========================================================
    SPACE-CAREERS WRAPPER — robotics override.
@@ -1003,7 +1022,7 @@
 .ai-data-science-page .vetted-section--robotics .vetted-photo img {
   width: 100% !important;
   height: 100% !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   object-position: top center !important;
   animation: none !important;
   filter: drop-shadow(0 0 16px rgba(90, 160, 255, 0.4)) !important;
@@ -1452,12 +1471,13 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.16s ease, filter 0.16s ease;
+  background-color: transparent !important;
 }
 
 /* Both CTA buttons now use the DARK pill artwork. */
 .ai-data-science-page .cta-robotics-btn--primary,
 .ai-data-science-page .cta-robotics-btn--secondary {
-  background-image: url("../../assets/dark-btn.svg");
+  background-image: url("../../assets/programs/ai-and-data-science/dark-btn.png");
 }
 
 .ai-data-science-page .cta-robotics-btn:hover,
@@ -1983,31 +2003,15 @@
 /* Both Why-section buttons match the header "Enroll Now" pill exactly:
    200×80 px, light-btn.svg artwork, white text. No variant differences. */
 .ai-data-science-page .why-section--robotics .why-btn {
-  width: 240px;
-  height: 80px;
-  min-width: 0;
-  padding: 0;
-  border: none;
-  border-radius: 0;
-  background: url("../../assets/dark-btn.svg") no-repeat center / 120% 100%;
-  backdrop-filter: none;
-  box-shadow: none;
-  color: #ffffff;
-  font-family: var(--font-display, "Conthrax", sans-serif);
-  font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 0.02em;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.16s ease, filter 0.16s ease;
+  background: url("../../assets/programs/ai-and-data-science/dark-btn.png")
+    no-repeat center / 100% 100%;
+  background-color: transparent;
 }
 
-/* Both why-section buttons now use the DARK pill artwork. */
+/* Both why-section buttons use the DARK pill artwork (PNG). */
 .ai-data-science-page .why-section--robotics .why-btn--primary,
 .ai-data-science-page .why-section--robotics .why-btn--secondary {
-  background-image: url("../../assets/dark-btn.svg");
+  background-image: url("../../assets/programs/ai-and-data-science/dark-btn.png");
 }
 
 .ai-data-science-page .why-section--robotics .why-btn:hover,
@@ -2549,10 +2553,10 @@
   width: 100%;
 }
 .ai-data-science-page .vetted-section--robotics .vetted-stage {
-  width: 180px !important;
-  max-width: 180px !important;
-  min-width: 180px !important;
-  height: 180px !important;
+  width: 250px !important;
+  max-width: 250px !important;
+  min-width: 250px !important;
+  height: 250px !important;
   aspect-ratio: 1 / 1 !important;
   margin: 0 auto;
 }
@@ -2794,34 +2798,37 @@
 
 /* CTA pill — dark-btn.svg artwork, 210 x 80 px. */
 .ai-data-science-page .ai-hero-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45rem;
-  width: 210px;
-  height: 80px;
-  min-width: 0;
-  margin-top: 0.6rem;
-  padding: 0;
-  border: none;
-  border-radius: 0;
-  background:
-    url("../../assets/programs/ai-and-data-science/dark-btn.svg")
-    no-repeat center / 120% 100%;
-  backdrop-filter: none;
-  box-shadow: none;
-  color: #ffffff;
-  font-family: var(--font-display, "Conthrax", sans-serif);
-  font-weight: 700;
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  text-decoration: none;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: transform 0.18s ease, filter 0.18s ease;
+width: fit-content !important;
+    height: fit-content !important;
+    min-width: 0 !important;
+    padding: 15px 30px !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: transparent !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 100% 100% !important;
+    color: #ffffff !important;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.04em !important;
+    text-transform: none !important;
+    text-shadow: none !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    white-space: nowrap !important;
+    animation: none !important;
+    background-image: url(/src/assets/programs/ai-and-data-science/light-btn.png) !important;
 }
 .ai-data-science-page .ai-hero-cta-arrow {
-  color: #ff3344;
+  color: #fff;
   font-weight: 900;
 }
 .ai-data-science-page .ai-hero-cta:hover {
@@ -3720,16 +3727,30 @@
   -webkit-text-fill-color: #000000 !important;
 }
 .ai-data-science-page .projects-section--robotics .projects-card {
-  background:
-    url("../../assets/programs/ai-and-data-science/project-box-frame.png")
-      center / 100% 100% no-repeat,
-    rgba(5, 8, 18, 0.55) !important;
-  background-color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  padding: clamp(1.2rem, 2vw, 1.8rem) !important;
+.ai-data-science-page .projects-section--robotics .projects-card {
+    position: relative;
+
+    /* Glass Morphism */
+    background: rgba(12, 22, 45, 0.28) !important;
+    backdrop-filter: blur(22px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(180%) !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    border-radius: 20px;
+
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.05) !important;
+
+    overflow: hidden;
+    padding: clamp(1.2rem, 2vw, 1.8rem) !important;
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+}
 }
 .ai-data-science-page .projects-section--robotics .projects-stat + .projects-stat {
   border-left-color: rgba(255, 255, 255, 0.28) !important;
@@ -4089,6 +4110,16 @@
 .assoc-modal--ai .assoc-modal-stat-value {
   color: #6ec8ff;
 }
+.assoc-box-frame{
+  padding:20px ! important;
+}
+.assoc-box-logo{
+  max-height: 100% !important;
+  width: 70%;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
 
 
 @media (max-width: 740px){
@@ -4152,4 +4183,12 @@
   .ai-data-science-page .cta-robotics-section{
         padding:50px 0px !important;
   }
+}
+
+.ai-data-science-page .career-pathways-section--robotics
+  .career-pathways-title {
+    margin-bottom: 20px;
+}
+.careers-sub{
+  margin-bottom: 20px;
 }

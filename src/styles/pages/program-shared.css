@@ -7,7 +7,7 @@
 /* ── SCALE TOKENS ──────────────────────────────────────────────── */
 :root {
   --prog-fs-hero:       clamp(2.6rem,  8vw,   6.5rem);  /* hero banner title     */
-  --prog-fs-section:    clamp(1.3rem,  3.4vw, 2.5rem);    /* major section h2      */
+  --prog-fs-section:    clamp(1.3rem,  3.4vw, 2.2rem);    /* major section h2      */
   --prog-fs-eyebrow:    clamp(0.85rem, 1.1vw, 1rem); /* small label / eyebrow */
   --prog-fs-body:       clamp(0.85rem, 1vw,   0.95rem); /* section desc / body   */
   --prog-fs-card-title: clamp(0.9rem,  1.1vw, 1.05rem); /* card / box title h3   */
@@ -244,7 +244,7 @@
   letter-spacing: 0.04em;
   line-height: 1.15;
   text-transform: uppercase;
-  margin-bottom: clamp(0.6rem, 1.2vw, 1rem);
+  margin-bottom: clamp(0.6rem, 1.2vw, 2rem);
 }
 
 .prog-section-subtitle {
@@ -287,4 +287,154 @@
 .aerospace-page .aero-impact-card-desc,
 .aerospace-page .aero-project-card-desc {
   font-size: var(--prog-fs-card-body) !important;
+}
+
+/* =========================================================
+   FAQ BACKGROUND — stop the "stretching" on accordion open.
+
+   The FAQ sections paint a `cover` background image. When an
+   accordion item opens, the section grows taller, and because
+   `cover` is sized against the element, the image rescales
+   (zooms) — read as stretching. Pinning the background to the
+   viewport (`fixed`) decouples its size from the section height,
+   so opening/closing an item no longer resizes the image.
+
+   Appended last (program-shared.css is the final @import) so it
+   overrides the per-page `.X-page .faq-*` background shorthands
+   at equal specificity via source order.
+========================================================= */
+[class*="-page"] .faq-robotics-section,
+[class*="-page"] .career-pathways-section--robotics,
+[class*="-page"] .faq-section-wrapper .faq-bg-anim,
+.faq-robotics-section,
+.career-pathways-section,
+.faq-bg-anim {
+  background-attachment: fixed !important;
+}
+
+/* =========================================================
+   PROGRAM-PAGE CTA BUTTONS — SINGLE SOURCE OF TRUTH
+   The button size / design / font / gap / arrow are defined ONCE
+   here for every program page's CTA button. Per page, only the
+   background frame image changes (see the per-program blocks below
+   and each page's own CSS). Appended last so it wins over the
+   scattered per-page rules.
+========================================================= */
+body.space-science-page .header-btn,
+body.space-robotics .header-btn,
+body.drones-page .header-btn,
+body.ai-data-science-page .header-btn,
+body.aerospace-page .header-btn,
+.space-science-page .future-btn,
+.space-robotics-page .future-btn,
+.drones-page .future-btn,
+.ai-data-science-page .future-btn,
+.aerospace-page .future-btn,
+.space-robotics-page .why-section--robotics .why-btn,
+.space-robotics-page .cta-robotics-btn,
+.ai-data-science-page .why-section--robotics .why-btn,
+.ai-data-science-page .cta-robotics-btn,
+.drones-page .why-section--robotics .why-btn,
+.drones-page .cta-robotics-btn,
+.drones-page .drones-why-btn,
+.drones-page .drones-comp-btn,
+.aerospace-page .aero-why-btn,
+.aerospace-page .aero-comp-btn {
+  width: fit-content !important;
+  height: fit-content !important;
+  min-width: 0 !important;
+  padding: 15px 30px !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background-color: transparent !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 100% 100% !important;
+  color: #ffffff !important;
+  font-family: var(--font-display) !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.04em !important;
+  text-transform: none !important;
+  text-shadow: none !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  white-space: nowrap !important;
+  animation: none !important;
+}
+
+/* Trailing arrow (the frame buttons had no arrow element) */
+body.space-science-page .header-btn::after,
+body.space-robotics .header-btn::after,
+body.drones-page .header-btn::after,
+body.ai-data-science-page .header-btn::after,
+body.aerospace-page .header-btn::after,
+.space-science-page .future-btn::after,
+.space-robotics-page .future-btn::after,
+.drones-page .future-btn::after,
+.ai-data-science-page .future-btn::after,
+.aerospace-page .future-btn::after,
+.space-robotics-page .why-section--robotics .why-btn::after,
+.space-robotics-page .cta-robotics-btn::after,
+.ai-data-science-page .why-section--robotics .why-btn::after,
+.ai-data-science-page .cta-robotics-btn::after,
+.drones-page .why-section--robotics .why-btn::after,
+.drones-page .cta-robotics-btn::after,
+.drones-page .drones-why-btn::after,
+.drones-page .drones-comp-btn::after,
+.aerospace-page .aero-why-btn::after,
+.aerospace-page .aero-comp-btn::after {
+  content: "\2192"; /* → */
+  font-size: 1.05em;
+  line-height: 1;
+  display: inline-block;
+}
+
+/* Per-program PNG frames — primary/header = light, ghost = dark */
+body.space-science-page .header-btn,
+.space-science-page .future-btn--primary {
+  background-image: url("../../assets/space-science-light-btn.png") !important;
+}
+.space-science-page .future-btn--ghost {
+  background-image: url("../../assets/space-science-dark-btn.png") !important;
+}
+
+.space-robotics-page .future-btn--primary {
+  background-image: url("../../assets/programs/space-robotics/light-btn.png") !important;
+}
+/* space-robotics header CTA uses the DARK frame (its original design) */
+body.space-robotics .header-btn,
+.space-robotics-page .future-btn--ghost {
+  background-image: url("../../assets/programs/space-robotics/dark-btn.png") !important;
+}
+
+body.drones-page .header-btn,
+.drones-page .future-btn--primary {
+  background-image: url("../../assets/programs/drones/light-btn.png") !important;
+}
+.drones-page .future-btn--ghost {
+  background-image: url("../../assets/programs/drones/dark-btn.png") !important;
+}
+
+body.ai-data-science-page .header-btn,
+.ai-data-science-page .future-btn--primary {
+  background-image: url("../../assets/programs/ai-and-data-science/light-btn.png") !important;
+}
+.ai-data-science-page .future-btn--ghost {
+  background-image: url("../../assets/programs/ai-and-data-science/dark-btn.png") !important;
+}
+
+.aerospace-page .future-btn--primary {
+  background-image: url("../../assets/programs/aeromodelling/light-btn.png") !important;
+}
+/* aeromodelling header CTA uses the DARK frame (its original design) */
+body.aerospace-page .header-btn,
+.aerospace-page .future-btn--ghost {
+  background-image: url("../../assets/programs/aeromodelling/dark-btn.png") !important;
 }

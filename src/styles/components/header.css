@@ -66,13 +66,23 @@
 
 .site-nav > ul {
   display: flex;
-  gap: var(--space-s);
+  align-items: center;
+  gap: 1rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
+/* Keep every top-level item on one line so labels don't wrap
+   ("About Us", "Media & Stories", "Research & Projects", …). */
+.site-nav > ul > li {
+  white-space: nowrap;
+}
+.site-nav > ul > li > .nav-item-wrapper > a,
+.site-nav > ul > li > .nav-item-wrapper > .nav-label {
+  font-size: 0.94rem;
+}
 .site-nav > ul li:first-child{
-    margin-right: 20px;
+    margin-right: 10px;
 }
 .site-nav .submenu {
   display: block;
@@ -134,9 +144,19 @@
 .site-nav .submenu a {
   display: block;
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1.4rem;
   color: var(--color-muted);
   white-space: nowrap;
+}
+/* Nested-parent labels (e.g. "School Programs") sit inside a
+   .nav-item-wrapper with no padding — give them the same indent as
+   the leaf links so every submenu title lines up. */
+.site-nav .submenu .nav-item-wrapper {
+  width: 100%;
+}
+.site-nav .submenu .nav-label {
+  display: block;
+  padding: 0.75rem 1.4rem;
 }
 
 .site-nav .submenu a:hover,
@@ -228,7 +248,7 @@
   padding: 0;
   border: none;
   border-radius: 0;
-  background: url('../../assets/dark-btn.svg') no-repeat center / 120% 100%;
+  background: url('../../assets/main_landing_pages/students/light-btn.png') no-repeat center / 120% 100%;
   backdrop-filter: none;
   box-shadow: none;
   color: #fff;
@@ -246,26 +266,26 @@
   filter: drop-shadow(0 6px 18px rgba(86, 138, 255, 0.45));
 }
 
-/* Space Science page: force the dark-btn.svg frame. The body-class
-   selector wins by specificity over the unscoped `.header-btn` rule in
-   students.css (light-btn.svg), so only this page is affected. */
+/* Space Science page: primary "Enroll Now" CTAs use the custom
+   space-science light-btn frame. The body-class selector wins by
+   specificity, so only this page is affected. */
 body.space-science-page .header-btn {
-  background: url('../../assets/dark-btn.svg') no-repeat center / 120% 100%;
+  background: url('../../assets/space-science-light-btn.png') no-repeat center / 100% 100% !important;
 }
 
 /* Space Robotics page: use the page-specific dark-btn.svg frame. */
 body.space-robotics-page .header-btn {
-  background: url('../../assets/programs/space-robotics/dark-btn.svg') no-repeat center / 120% 100% !important;
+  background: url('../../assets/programs/space-robotics/dark-btn.png') no-repeat center / 120% 100% !important;
 }
 
 /* Drones page: use the drones light-btn.svg frame. */
 body.drones-page .header-btn {
-  background: url('../../assets/programs/drones/light-btn.svg') no-repeat center / 120% 100% !important;
+  background: url('../../assets/programs/drones/light-btn.png') no-repeat center / 120% 100% !important;
 }
 
 /* Aeromodelling page: use the aeromodelling light-btn.svg frame. */
 body.aerospace-page .header-btn {
-  background: url('../../assets/programs/aeromodelling/light-btn.svg') no-repeat center / 120% 100% !important;
+  background: url('../../assets/programs/aeromodelling/light-btn.png') no-repeat center / 120% 100% !important;
 }
 
 .submenu-toggle {
